@@ -4,7 +4,7 @@
 
 This template helps Pivotal development teams prepare documentation for Pivotal Cloud Foundry (PCF) services that appear on [Pivotal Network](https://network.pivotal.io/). 
 
-### <a id='overview'></a>Overview
+## <a id='overview'></a>Overview
 
 Every PCF service has (or should have) documentation on the main Pivotal documentation site, [docs.pivotal.io](http://docs.pivotal.io) under **Pivotal Cloud Foundry Services**.
 
