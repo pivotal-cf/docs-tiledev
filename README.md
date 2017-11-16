@@ -129,10 +129,6 @@ In Terminal window:
    
 1. Browse to `localhost:4567` to view the book locally and "watch" any changes that you make to source `html.md.erb` files. As you make and save changes to the local source files for your site, you will see them in your browser after a slight delay.
 
-![PCF Service Template landing page](book/master_middleman/source/images/pcfservices-template-landing.png)
-
-![PCF Service Template service index page](book/master_middleman/source/images/pcfservices-template-service-index.png)
-
 After each session of writing or revising your docs source files, commit and push them to your github repo.
 
 Happy documenting!
