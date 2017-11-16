@@ -1,4 +1,4 @@
-## This repo is for the Tile Developer Guide content only. See the [Tile Developer Guide Book Repo](https://github.com/pivotal-cf/docs-book-tiledev) for the book that publishes this content.
+## This repo is for Tile Developer Guide content only. See the [Tile Developer Guide Book Repo](https://github.com/pivotal-cf/docs-book-tiledev) for the book that publishes this content.
 
 ## PCF Services Documentation Template
 
