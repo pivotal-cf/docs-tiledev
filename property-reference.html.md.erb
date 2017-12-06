@@ -97,7 +97,21 @@ Outside of properties, you can also retrieve information about various configura
   <td>ca_public_key</td>
   <td>Provides the public key that is used to sign the Director VM</td>
   </tr>
+  <td>hostname</td>
+  <td>Provides the hostname for the Director VM</td>
+  </tr>
+  <td>tld</td>
+  <td>Returns the string <code>bosh</code> as the top-level domain (TLD) of the BOSH Director</td>
+  </tr>
+  <td>bosh_metrics_forwarder_client_name</td>
+  <td>Provides the BOSH Metrics Forwarder client name</td>
+  </tr>
+  <td>bosh_metrics_forwarder_client_secret</td>
+  <td>Provides the BOSH Metrics Forwarder client secret</td>
+  </tr>
 </table>
+
+<p class="note"><strong>Note</strong>: Support for the <code>$director.username</code> and <code>$director.password</code> accessors will be removed in future versions of Ops Manager.</p>
 
 #### $self
 
