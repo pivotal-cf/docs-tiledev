@@ -101,6 +101,59 @@ job_types:
     max_in_flight: 1
 ```
 
+### <a id='compatibility'></a>Backward Compatibility for Colocated Errands
+
+Colocated errand support is available in Ops Manager 2.0 and later.
+If your tile uses colocated errands, use the instructions in this section to ensure your tile is also compatible with Ops Manager 1.12 and earlier.
+
+When your tile no longer requires Ops Manager 1.12 support, configure your errands as either colocated or non-colocated. 
+Future versions of Ops Manager will not support the workaround described in this section.
+
+The following example manifest shows an `example_colocated_errand` configured as a colocated errand in Ops Manager 2.0 and as an instance group errand in Ops Manager 1.12:
+
+```yaml
+post_deploy_errands:
+  - name: example_colocated_errand
+    colocated: true
+    run_default: on
+    instances:
+      - web_server/first
+    label: colocated errand on web_server
+    description: This errand does little more than print a message in order to prove colocated errands work.
+...
+job_types:
+  - name: example_colocated_errand
+    description: The very best illustrative errand that prints all the properties, including secrets.
+    templates:
+      - name: example_colocated_errand
+        release: example-release
+    errand: true
+...
+  - name: web_server
+    resource_label: Web Server
+    templates:
+      - name: example_colocated_errand
+        release: example-release
+```
+
+To make your tile compatible with both colocated and non-colocated errands, perform the following steps:
+
+1. Configure your colocated errand for Ops Manager 2.0, as shown in the [Colocated Errand Example Manifest](#colocated-example).
+Ops Manager versions 1.12 and earlier ignore this property in the manifest.
+
+1. In the `job_types` section, define the same errand in the `web_server` instance group, as shown in the example above.
+Ops Manager 1.12 and earlier runs the errand on every VM in the `web_server` instance group.
+If you want the errand to run only once, configure the errand to run on an instance group with only one instance.
+
+1. Configure the instance group that corresponds to your errand:
+    * Set `instance_definition.configurable: false`
+    * Set `instance_definition.default: 0`
+    * Configure at least one non-errand job in the instance group. Ops Manager requires each instance group to contain at least one job.
+    <p class="note"><strong>Note</strong>: If your release does not have a job, you can use the <code>dummy</code> job from the <a href="https://github.com/pivotal-cf-experimental/dummy-boshrelease/tree/master/jobs">Dummy BOSH release</a>.</p>
+
+1. Ops Manager 1.12 and earlier displays the following warning, but runs the errand on the specified instance group:
+  <pre class="terminal">Warning: Ambiguous request: the requested errand name 'example\_colocated\_errand' matches both a job name and an errand instance group</pre>
+
 ##<a id='post-deploy'></a>Post-Deploy Errands
 
 Post-deploy errands run after a product installs, but before Ops Manager makes it available for use.
