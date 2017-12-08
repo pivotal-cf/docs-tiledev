@@ -55,6 +55,10 @@ disable_security_protocols: '(( .properties.secure_the_system ? false : true ))'
 When using this syntax, enclose everything following the initial colon with either single or double
 quotation marks and include the space between the boolean expression and the question mark, as shown above.
 
+## <a id='double-parens'>Support for Empty Arrays in Double Parentheses
+
+Ops Manager now supports empty arrays in double parentheses. For more information, see the [Double-Paren Expressions](http://docs.pivotal.io/tiledev/1-12/property-reference.html) section of the Property Reference topic.
+
 ## <a id="zero-instance"></a>Resource Config Pane Hides Zero-Instance Jobs
 
 A service tile's [**Resource Config**](./tile-structure.html#process) pane lists the jobs that the service runs and lets operators allocate resources to the jobs that are configurable.
