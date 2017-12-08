@@ -51,4 +51,9 @@ and includes a UAA client with the correct authorities and scopes.
 To access BOSH Metrics Server UAA credentials, tile authors can use the following two accessors:
 
 * `( ( $director.bosh_metrics_forwarder_client_name ) )` returns the name of the client. 
-* `( ( $director.bosh_metrics_forwarder_client_secret ) )` returns the value of the auto generated client secret. 
+* `( ( $director.bosh_metrics_forwarder_client_secret ) )` returns the value of the auto generated client secret.
+
+
+## <a id='accessor'></a>Double-Parens Accessor Returns Network Name
+
+Tile authors can use a double-parens accessor to return a network name for a product. For more information, see the network_name section in [Property Blueprint Reference](./property-reference.html#property-blueprints).
