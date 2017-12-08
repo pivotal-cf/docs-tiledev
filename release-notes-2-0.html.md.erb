@@ -40,3 +40,15 @@ Tile authors can use the new `$opsmanager.dns_release_present` accessor in tile 
 If an operator has chosen to opt out of BOSH DNS, `disable_dns_release` is set to `true`.
 
 See [Property Reference](./property-reference.html#dollar) for more information.
+
+## <a id='bosh-metrics-creds'></a>BOSH Metrics Server UAA Credentials
+
+PCF now forwards BOSH health metrics generated for all VMs in a deployment to the Loggregator Firehose by default. 
+
+To support this feature, Ops Manager 2.0.0 colocates the new BOSH Metrics Server on the BOSH Director 
+and includes a UAA client with the correct authorities and scopes. 
+
+To access BOSH Metrics Server UAA credentials, tile authors can use the following two accessors:
+
+* `( ( $director.bosh_metrics_forwarder_client_name ) )` returns the name of the client. 
+* `( ( $director.bosh_metrics_forwarder_client_secret ) )` returns the value of the auto generated client secret. 
