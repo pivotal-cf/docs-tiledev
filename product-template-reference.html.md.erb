@@ -301,8 +301,6 @@ Collections appear as follows:
 
 ![Collection](img/collection.png)
 
-For more information about specifying and rendering named manifests for collection, see [named_manifest](#named-manifest).
-
 ## <a id='property-blueprints'></a> Property Blueprints
 
 The following is an example of the `property_blueprints` that appear in a product template.
@@ -819,14 +817,14 @@ To include these BOSH deploy-time properties in a manifest snippet, use "triple-
 Ops Manager strips the outer parentheses from these expressions and
 includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
 
-
 ### <a id='named-manifest'></a> named_manifest
 
-<p class="note"><strong>Note</strong>: Ops Manager 2.0 and later supports specifying and rendering named manifests in a collection property.</p>
+Specify a property for collection within the `named_manifest` section of the metadata.
+See the [Simple vs. Complex Inputs](#simple-vs-complex) section for more information about collections.
 
-Specify a collection property in a product's metadata such as:
+The following example uses a named manifest called `for_routing` that belongs to the `certificate_collection` job:
 
-```yaml
+```
   - name: certificate_collection
     type: collection
     configurable: true
@@ -844,15 +842,18 @@ Specify a collection property in a product's metadata such as:
         certificate: (( current_record.some_cert.cert_pem ))
 ```
 
-Specify a manifest snippet containing:
+Use the `current_record` property within a collection record to refer to other properties in the same record.
+For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
+
+<p class="note"><strong>Note:</strong> The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.</p>
+
+After defining a named manifest, you can reference it using a manifest snippet in the following format:
 
 ```
 routing_certificates: (( .properties.certificate_collection.parsed_manifest(for_routing) ))
 ```
 
-The operator will then add the certificates to `certificate_collection`.
-
-Inspect the manifests in `/debug/files`. You will see the following rendered in your manifest:
+Ops Manager renders the following manifest from this example:
 
 ```
 routing_certificates:
@@ -865,8 +866,6 @@ routing_certificates:
     public_key: PUBLIC-KEY
     certificate: CERTIFICATE
 ```
-
-<p class="note"><strong>Note:</strong> <code>current_record</code> should only refer to this property when it is a single collection record referring to its other properties. If you create a property with the name <code>current_record</code>, it will not work.</p>
 
 ### <a id='selector-snippets'></a> Selector Manifest Snippets
 

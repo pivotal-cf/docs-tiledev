@@ -50,14 +50,35 @@ and includes a UAA client with the correct authorities and scopes.
 
 To access BOSH Metrics Server UAA credentials, tile authors can use the following two accessors:
 
-* `( ( $director.bosh_metrics_forwarder_client_name ) )` returns the name of the client. 
-* `( ( $director.bosh_metrics_forwarder_client_secret ) )` returns the value of the auto generated client secret.
+* `(( $director.bosh_metrics_forwarder_client_name ))` returns the name of the client. 
+* `(( $director.bosh_metrics_forwarder_client_secret ))` returns the value of the auto generated client secret.
 
+## <a id='accessor'></a>Double-Parentheses Accessor Returns a Network Name
 
-## <a id='accessor'></a>Double-Parentheses Accessor Returns Network Name
+Tile authors can use a double-parentheses accessor to return a network name for a product.
 
-Tile authors can use a double-parentheses accessor to return a network name for a product. For more information, see the network_name section in [Property Blueprint Reference](./property-reference.html#property-blueprints).
+See the `network_name` section in [Property Blueprint Reference](./property-reference.html#property-blueprints) for more information.
 
-## <a id='named-manifest'></a>Named Manifests
+## <a id='named-manifest'></a>Named Manifests for Collection
 
-Ops Manager 2.0.0 supports specifying and rendering named manifests in a collection property. For more information, see the [named_manifest](https://docs.pivotal.io/tiledev/product-template-reference.html#named-manifest) section of the Product Template Reference topic.
+<p class="note breaking"><strong>Breaking Change</strong>: The <code>current_record</code> property is now reserved. You can no longer create a new property named <code>current_record</code>.</p>
+
+Tile authors can specify a property for collection within the `named_manifest` section of tile metadata.
+Use the `current_record` property within a collection record to refer to other properties in the same record.
+
+For example:
+
+```
+  - name: collection-job
+    type: collection
+    configurable: true
+    property_blueprints:
+      - name: blueprint-name
+        type: string
+    named_manifests:
+    - name: example-manifest
+      manifest: |
+        name:  (( current_record.blueprint-name.value ))
+```
+
+See the `named_manifest` section of the [Product Template Reference](./product-template-reference.html#named-manifest) topic for more information.
