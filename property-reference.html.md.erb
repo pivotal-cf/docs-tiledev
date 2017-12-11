@@ -5,15 +5,15 @@ owner: Ops Manager
 
 This topic explains how PCF Tiles describe properties.
 
-## <a id='expressions'></a>Double-Paren Expressions
+## <a id='expressions'></a>Double-parentheses Expressions
 
 The product template `.yml` file in a tile's `metadata` subdirectory defines how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into the deployment manifest that it creates.
 
 The product template contains `manifest` snippets in both the `form_types` section that defines the tile interface, and the `job_types` section describing the jobs that the manifest deploys. Within these snippets, you can use special expressions to include property values that are otherwise not known ahead of time, such as configurable properties or system properties:
 
-* Double-paren expressions designate property values that Ops Manager fills in when it generates the deployment manifest, after the user clicks **Apply Changes**. These values include configurable properties and properties supplied by Ops Manager.
+* Double-parentheses expressions designate property values that Ops Manager fills in when it generates the deployment manifest, after the user clicks **Apply Changes**. These values include configurable properties and properties supplied by Ops Manager.
 
-* Triple-paren expressions designate property values that BOSH supplies when it deploys instances of the tile service, such as CredHub credentials.
+* Triple-parentheses expressions designate property values that BOSH supplies when it deploys instances of the tile service, such as CredHub credentials.
 
 ### <a id='property-refs'></a>Referencing Properties
 
@@ -22,7 +22,7 @@ Evaluating a property can be represented by piecing two segments together:
 * The location of the property
 * What information from the property you are looking to access, or _accessors_
 
-Together, the double-paren expression can be written as:
+Together, the double-parentheses expression can be written as:
 
 `(( LOCATION_OF_PROPERTY.ACCESSOR ))`
 
@@ -48,11 +48,11 @@ The method of referencing the location of the property varies. Here is a complet
 
 Accessors vary between property blueprint types. See the [Property Blueprint Reference](#property-blueprints) for available properties and their accessors.
 
-The following example uses the property blueprint type `string` with its one accessor, `value`. A valid double-paren expression to access the value of this property (assuming it is top-level, and has the name `example-string`) would look like:
+The following example uses the property blueprint type `string` with its one accessor, `value`. A valid double-parentheses expression to access the value of this property (assuming it is top-level, and has the name `example-string`) would look like:
 
 `(( .properties.example-string.value ))`
 
-<p class="note"><strong>Note:</strong> Ops Manager 1.12 and later support using empty arrays in double-paren syntax.</p>
+<p class="note"><strong>Note:</strong> Ops Manager 1.12 and later support using empty arrays in double-parentheses syntax.</p>
 
 ### <a id='dollar'></a>Dollar Contexts
 
