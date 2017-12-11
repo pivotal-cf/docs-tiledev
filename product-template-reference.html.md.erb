@@ -301,8 +301,6 @@ Collections appear as follows:
 
 ![Collection](img/collection.png)
 
-For more information about specifying and rendering named manifests for collection, see [named_manifest](#named-manifest).
-
 ## <a id='property-blueprints'></a> Property Blueprints
 
 The following is an example of the `property_blueprints` that appear in a product template.
@@ -818,55 +816,6 @@ To include these BOSH deploy-time properties in a manifest snippet, use "triple-
 
 Ops Manager strips the outer parentheses from these expressions and
 includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
-
-
-### <a id='named-manifest'></a> named_manifest
-
-<p class="note"><strong>Note</strong>: Ops Manager 2.0 and later supports specifying and rendering named manifests in a collection property.</p>
-
-Specify a collection property in a product's metadata such as:
-
-```yaml
-  - name: certificate_collection
-    type: collection
-    configurable: true
-    property_blueprints:
-      - name: some_cert_name
-        type: string
-      - name: some_cert
-        type: rsa_cert_credentials
-    named_manifests:
-    - name: for_routing
-      manifest: |
-        name:  (( current_record.some_cert_name.value ))
-        private_key:  (( current_record.some_cert.private_key_pem ))
-        public_key:  (( current_record.some_cert.public_key_pem ))
-        certificate: (( current_record.some_cert.cert_pem ))
-```
-
-Specify a manifest snippet containing:
-
-```
-routing_certificates: (( .properties.certificate_collection.parsed_manifest(for_routing) ))
-```
-
-The operator will then add the certificates to `certificate_collection`.
-
-Inspect the manifests in `/debug/files`. You will see the following rendered in your manifest:
-
-```
-routing_certificates:
-  - name: foo_cert
-    private_key: PRIVATE-KEY
-    public_key: PUBLIC-KEY
-    certificate: CERTIFICATE
-  - name: bar_cert
-    private_key: PRIVATE-KEY
-    public_key: PUBLIC-KEY
-    certificate: CERTIFICATE
-```
-
-<p class="note"><strong>Note:</strong> <code>current_record</code> should only refer to this property when it is a single collection record referring to its other properties. If you create a property with the name <code>current_record</code>, it will not work.</p>
 
 ### <a id='selector-snippets'></a> Selector Manifest Snippets
 
