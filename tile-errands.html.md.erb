@@ -125,8 +125,8 @@ job_types:
   - name: example_colocated_errand
     description: The very best illustrative errand that prints all the properties, including secrets.
     templates:
-      - name: example_colocated_errand
-        release: example-release
+      - name: dummy
+        release: dummy
     errand: true
 ...
   - name: web_server
@@ -149,7 +149,7 @@ If you want the errand to run only once, configure the errand to run on an insta
     * Set `instance_definition.configurable: false`
     * Set `instance_definition.default: 0`
     * Configure at least one non-errand job in the instance group. Ops Manager requires each instance group to contain at least one job.
-    <p class="note"><strong>Note</strong>: If your release does not have a job, you can use the <code>dummy</code> job from the <a href="https://github.com/pivotal-cf-experimental/dummy-boshrelease/tree/master/jobs">Dummy BOSH release</a>.</p>
+    <p class="note"><strong>Note</strong>: The example manifest above uses the <code>dummy</code> job from the <a href="https://github.com/pivotal-cf-experimental/dummy-boshrelease/tree/master/jobs">Dummy BOSH release</a>. You can use any no-op job.</p>
 
 1. Ops Manager 1.12 and earlier displays the following warning, but runs the errand on the specified instance group:
   <pre class="terminal">Warning: Ambiguous request: the requested errand name 'example\_colocated\_errand' matches both a job name and an errand instance group</pre>
