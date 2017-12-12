@@ -193,4 +193,21 @@ The following tables list the properties that Pivotal [removed](#removed), [adde
   <code>.properties.system_blobstore.external.region</code></td><td><code>dropdown_select</code></td><td><code>string</code>
   </td></tr></table>
 
+## <a id='dependencies'></a>Product Dependency Syntax
 
+Tile authors can specify product version dependencies in tile metadata using `~>`.
+Ops Manager interprets this operator based on the context in the metadata.
+For example:
+
+```
+- name: cf
+  version: "~> 1.8"
+- name: example-product
+  version: "~> 1.12.1"
+```
+
+If the version number contains only two segments, Ops Manager interprets `~>` as `>=`.
+In the example above, this includes all versions of `cf` greater than `1.8`.
+
+If the version number contains more than two segments, Ops Manager evaluates `~>` for the final segment.
+In the example above, this includes versions `1.12.x` only of `example-product`. 
