@@ -1,0 +1,82 @@
+---
+title: Securing Service Credential Delivery with PAS CredHub
+owner: Services
+---
+
+This topic describes you can engineer your Pivotal Cloud Foundry (PCF) service to support secure service instance credentials.
+
+## <a id="intro"></a> Introduction
+
+When developers want their app to use a service, such as those provided by the Spring Cloud Services tile for PCF, they must bind their app to an instance of that service. Service bindings include credentials that developers can use to access the service from their app.
+
+Traditionally, service instance credentials have been stored in the Cloud Controller database. The PCF 2.0 release includes PAS CredHub to support and alternative workflow that allows service brokers to write and apps to retrieve service credentials directly from and to CredHub.
+
+This alternative workflow helps address the following concerns:
+
+* Leaking environment variables to logs, which increases risk of disclosure
+	* Developers often need to write environment variables to logs for debugging. If environment variables are written to logs for an application that has bound to a service, the service credentials will be included in logs. Log files tend to have less access control than application environments, so this increase the likelihood of disclosing the credentials.
+* Transiting credentials between components, which increases risk of disclosure
+	* The current model passes a service credential from the service broker through the cloud controller to the runtime to be places in the application environment. As more components interact are involved, the risk of disclosure increases.
+* Rotating credentials delivered via the environment, which requires container recreation
+	* If you wish to rotate a credential delivered via environment variables, the container must be recreated. This requirement creates friction in an environment with short-lived credentials, because credential rotation incurs an overhead cost on the plaform due to increased lifecycle events. This encourages long-lived credentials, which increases the risk of disclosure.
+
+See the next section for details about how to implement this new workflow.   
+
+## <a id="intro"></a> Engineer Your Service to Support Secure Service Instance Credentials
+
+Thoughts from Logan: How to engineer the Service to interact with the CredHub portion of ERT/PAS to write the credentials. How to engineer the Service to interact with CAPI to to handle requests as they come in.
+
+Main source Google doc: https://docs.google.com/a/pivotal.io/document/d/1HKVQXp6kGUvB3psTM5m_Ea9HPCoxAnEczfqszk2k-pc/edit?usp=sharing
+
+Other source links:
+
+* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/secure-service-credentials.md
+* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/spring-java-credhub-integration.md
+* https://docs.google.com/a/pivotal.io/document/d/1asb_VtRWNnff7aSpOJIXEK3WnkMFk8WGlajZ9re0k4E/edit?usp=sharing
+
+-------------
+
+### <a id="step1"></a> Step 1: Store Binding Credentials in CredHub
+
+Service brokers that support binding of service instances to applications typically return a set of binding credentials in response to a binding request from Cloud Controller (CC). 
+
+1. In your service broker code, locate where your broker handles binding requests from the CC.
+
+1. Update your code to store your binding credentials in CredHub using the `set credential` API endpoint with a credential type `json`. See the following example for how to format your API call. You can also view [Set Credentials](https://credhub-api.cfapps.io/#set-credentials) in the CredHub API docs for reference.
+
+	```
+	curl "https://credhub.cf.example.com/api/v1/data" \
+  -X PUT \
+  -d '{
+      "name": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
+      "type": "json",
+      "value": {
+        "uri": "https://my-service.cf.example.com",
+        "username": "user",
+        "password": "secret"
+      }
+     }' \
+  -H 'Content-type: application/json'
+  	```
+Where:
+	* `CLIENT-IDENTIFIER`: is a value provided by the service broker to uniquely identify the broker
+	* `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog
+	* `BINDING-GUID` is the GUID created by CC and passed to the service broker in the service binding request
+	* `CREDENTIAL-NAME` is a value provided by the service broker to name the credential
+
+
+1. Modify your service broker so that it returns a reference to these stored credentials in response to the binding request from CC. To facilitate retrieval of the credentials by bound applications, the credentials returned to CC should contain the single key “credhub-ref”, and the name of the stored credential as the value for that key. That binding response might look like this:
+
+ 	```
+	{
+	  "credentials": {
+	    "credhub-ref": "((/c/my-service-broker/my-service/faa677f5-25cd-4f1e-8921-14a9d5ab48b8/credentials))"
+	  }
+	}
+	```
+
+<p class="note"><strong>Note</strong>: Service brokers that are deployed as Cloud Foundry applications are recommended to use the instance identity credentials to authenticate with CredHub. Service brokers that are deployed as a platform instance or third party service must use a UAA client credential. For more information, see <a href="https://credhub-api.cfapps.io/#authentication">Authentication</a> in the CredHub API docs.</p>
+
+### Step 2
+
+### etc...
