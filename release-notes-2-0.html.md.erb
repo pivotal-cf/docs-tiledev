@@ -63,7 +63,7 @@ bosh_tld: (( $director.tld ))
 
 The snippet above returns the string `bosh`.
 
-See the _Dollar Contexts_ section in [Property Blueprint Reference](./property-reference.html#dollar) for more information.
+See [Dollar Contexts](./property-reference.html#dollar) in the _Property Blueprint Reference_ topic for more information.
 
 ## <a id='bosh-metrics-creds'></a>BOSH Metrics Server UAA Credentials
 
@@ -83,7 +83,6 @@ To access BOSH Metrics Server UAA credentials, tile authors can use the followin
 
 Tile authors can specify a property for collection within the `named_manifest` section of tile metadata.
 Use the `current_record` property within a collection record to refer to other properties in the same record.
-
 For example:
 
 ```
@@ -100,3 +99,22 @@ For example:
 ```
 
 See the `named_manifest` section of the [Product Template Reference](./product-template-reference.html#named-manifest) topic for more information.
+
+## <a id='dependencies'></a>Product Dependency Syntax
+
+Tile authors can specify product version dependencies in tile metadata using `~>`.
+Ops Manager interprets this operator based on the context in the metadata.
+For example:
+
+```
+- name: cf
+  version: "~> 1.8"
+- name: example-product
+  version: "~> 1.12.1"
+```
+
+If the version number contains only two segments, Ops Manager interprets `~>` as `>=`.
+In the example above, this includes all versions of `cf` greater than `1.8`.
+
+If the version number contains more than two segments, Ops Manager evaluates `~>` for the final segment.
+In the example above, this includes versions `1.12.x` only of `example-product`.

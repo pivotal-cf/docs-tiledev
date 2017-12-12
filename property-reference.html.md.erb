@@ -24,7 +24,9 @@ Evaluating a property can be represented by piecing two segments together:
 
 Together, the double-parentheses expression can be written as:
 
-`(( LOCATION_OF_PROPERTY.ACCESSOR ))`
+````
+(( LOCATION_OF_PROPERTY.ACCESSOR ))
+```
 
 The method of referencing the location of the property varies. Here is a complete list of ways to reference a property with some help text to indicate the situation.
 
@@ -50,9 +52,15 @@ Accessors vary between property blueprint types. See the [Property Blueprint Ref
 
 The following example uses the property blueprint type `string` with its one accessor, `value`. A valid double-parentheses expression to access the value of this property (assuming it is top-level, and has the name `example-string`) would look like:
 
-`(( .properties.example-string.value ))`
+```
+(( .properties.example-string.value ))
+```
 
-<p class="note"><strong>Note:</strong> Ops Manager 1.12 and later support using empty arrays in double-parentheses syntax.</p>
+Ops Manager allows empty arrays in double-parentheses expressions. For example:
+
+```
+(( .properties.example-string.value || [] ))
+```
 
 ### <a id='dollar'></a>Dollar Contexts
 
