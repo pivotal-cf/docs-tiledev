@@ -59,15 +59,9 @@ Define the runtime config job properties in the `properties` section.
 
 ## <a id="delete"></a>Delete a Runtime Config
 
-Tile authors can remove an existing runtime config from a tile by uploading a blank runtime config in its place. Remove the configuration for the named runtime config from the tile metadata, leaving the name in place.
+Tile authors can remove an existing runtime config from a tile by removing the reference from the metadata.
+When the operator upgrades the tile, Ops Manager detects the missing reference and deletes the runtime config.
 
-The following example deletes `example-runtime-config`:
-
-```
-runtime_configs:
-  - name: example-runtime-config
-    runtime_config:
-```
 
 ## <a id="config-only"></a>Create a Runtime Config-Only Tile
 
