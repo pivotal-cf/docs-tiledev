@@ -36,7 +36,7 @@ See [Configuring Disk and VM Type Defaults for On-Demand Service Tiles](./odb-re
 Ops Manager 2.0.0 introduces BOSH DNS as a runtime config colocated on every VM in a deployment.
 Since BOSH DNS is a beta feature in PCF 2.0, operators can opt out of the feature in this release.
 
-Tile authors can use the new `$opsmanager.dns_release_present` accessor in tile metadata to expose the `disable_dns_release` setting on the BOSH Director.
+Tile authors can use the new `$director.dns_release_present` accessor in tile metadata to expose the `disable_dns_release` setting on the BOSH Director.
 If an operator has chosen to opt out of BOSH DNS, `disable_dns_release` is set to `true`.
 
 See [Property Reference](./property-reference.html#dollar) for more information.

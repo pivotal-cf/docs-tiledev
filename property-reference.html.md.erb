@@ -87,9 +87,7 @@ Outside of properties, you can also retrieve information about various configura
   </tr><tr>
   <td>no_proxy</td>
   <td>Provides the comma separated values that should not go through a proxy</td></tr>
-</tr><tr>
-  <td>dns_release_present</td>
-  <td>Exposes the Director configuration for <code>disable_dns_release</code>
+</tr>
 </table>
 
 #### $director
@@ -100,26 +98,37 @@ Outside of properties, you can also retrieve information about various configura
   </tr><tr>
   <td>username</td>
   <td>Provides the username for the Director VM</td>
-  </tr><tr>
+  </tr>
+  <tr>
   <td>password</td><td>Provides the password for the Director VM</td>
-  </tr><tr>
+  </tr>
+  <tr>
   <td>ntp_servers</td><td>Provides a list of ntp servers that are deployed by the Director</td>
-  </tr><tr>
+  </tr>
+  <tr>
   <td>ca_public_key</td>
   <td>Provides the public key that is used to sign the Director VM</td>
   </tr>
+  <tr>
   <td>hostname</td>
   <td>Provides the hostname for the Director VM</td>
   </tr>
+  <tr>
   <td>tld</td>
   <td>Returns the string <code>bosh</code> as the top-level domain (TLD) of the BOSH Director</td>
   </tr>
+  <tr>
   <td>bosh_metrics_forwarder_client_name</td>
   <td>Provides the BOSH Metrics Forwarder client name</td>
   </tr>
+  <tr>
   <td>bosh_metrics_forwarder_client_secret</td>
   <td>Provides the BOSH Metrics Forwarder client secret</td>
   </tr>
+  <tr>
+  <td>dns_release_present</td>
+  <td>Exposes the Director configuration for <code>disable_dns_release</code></td>
+</tr>
 </table>
 
 <p class="note"><strong>Note</strong>: Support for the <code>$director.username</code> and <code>$director.password</code> accessors will be removed in future versions of Ops Manager.</p>
