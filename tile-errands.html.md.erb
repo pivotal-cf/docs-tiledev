@@ -7,99 +7,10 @@ Lifecycle errands are BOSH errands (scripts) that run at the beginning and end o
 
 For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands), and for more information about errands in Pivotal Cloud Foundry (PCF), see [Managing Errands in Ops Manager](http://docs.pivotal.io/pivotalcf/1-10/customizing/managing_errands.html).
 
-In Ops Manager 2.0 and later, tile authors can choose to [colocate errands](#colocated) on existing VMs.
-When errands are not colocated, BOSH deploys a new VM for each errand defined in the tile metadata.
-Colocated errands can run alongside other jobs or errands on existing VMs in an operator's deployment.
-
 Products can have two kinds of errands. [Post-deploy errands](#post-deploy) run after a product installs but before Ops Manager displays makes it available for use.
 [Pre-delete errands](#pre-delete) run after an operator chooses to delete a product, but before Ops Manager finishes removing it from use.
 
 To save deployment time, operators can set [errand run rules](#run-rules) that dictate whether or not errands run. Tile authors can [set defaults](./product-template-reference.html#top-level) for these run rules.
-
-## <a id="colocated"></a>Define a Colocated Errand
-
-<p class="note"><strong>Note</strong>: Ops Manager 2.0 and later supports colocated errands.</p>
-
-Instead of deploying a new VM for each errand, colocated errands run on an existing VM.
-Errands can run alongside other jobs on a VM, and multiple errands can be colocated on the same VM.
-Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
-
-To configure a colocated errand, define the following properties in the `pre_delete_errands` and `post_deploy_errands` sections of the tile metadata:
-
-<table>
-  <tr>
-    <th>Property</th>
-    <th>Description</th>
-  </tr><tr>
-    <td width="28%"><code>name: MY-ERRAND</code></td>
-    <td>Provide the name of the errand job. The example manifest in the following section uses <code>example_colocated_errand</code>.</td>
-  </tr><tr>
-    <td><code>colocated: true</code></td>
-    <td>Set this value to <code>true</code> to enable colocated errands. If you do not set this value, Ops Manager ignores all other errand attributes in this section.</td>
-  </tr><tr>
-    <td><code>run_default: on</code></td>
-    <td>(Optional) You can set the run rules to <code>on</code>, <code>off</code>, or <code>when-changed</code>. See <a href="#run-rules">Errand Run Rules</a> for more information.<br><br>
-    If you do not define this property, Ops Manager sets the run default to <code>on</code>.
-    The operator can override this setting using the Ops Manager API or the tile's <strong>Errand Config</strong> tab.</td>
-  </tr><tr>
-    <td><code>instances: []</code></td>
-    <td>(Optional) Provide an array that tells BOSH where to run the errand.
-    Use the name of an instance group, such as <code>web_server</code>, or a single instance, such as <code>web_server/first</code>.<br><br>
-    If you do not define this property or you provide an empty array, the errand runs on every instance of the job in the operator's deployment.</td>
-  </tr><tr>
-    <td><code>label: ERRAND-LABEL</code></td>
-    <td>Define the errand name to be shown in the tile's <strong>Errand Config</strong> page and above <strong>Apply Changes</strong>.
-    The example manifest in the following section uses <code>colocated errand on web_server</code>.</td>
-  </tr><tr>
-    <td><code>description: TEXT</code></td>
-    <td>(Optional) Provide a description for the errand that appears in the tile's <strong>Errand Config</strong> page.</td>
-  </tr>
-</table>
-
-After defining the errand in the sections above, add the errand to the job properties in the `job_types` section.
-
-### <a id="colocated-example"></a>Colocated Errand Example Manifest
-
-The following example shows colocated `post_deploy_errands` and `pre_delete_errands` sections in the tile metadata:
-
-```yaml
-post_deploy_errands:
-  - name: example-errand
-    colocated: false
-  - name: example_colocated_errand
-    colocated: true
-    run_default: on
-    instances:
-      - web_server/first
-    label: colocated errand on web_server
-    description: This errand does little more than print a message in order to prove colocated errands work.
-
-pre_delete_errands:
-  - name: example-errand
-  ```
-
-The following example shows the colocated errands referenced within the `job_type`:
-
-```yaml
-job_types:
- - name: web_server
-    resource_label: Web Server
-    templates:
-      - name: web_server
-        release: example-release
-        provides: |
-          web_server_info: (( .properties.example_selector.selected_option.parsed_manifest(provides_section) ))
-        consumes: |
-          web_server_info: (( .properties.example_selector.selected_option.parsed_manifest(consumes_section) ))
-      - name: time_logger
-        release: example-release
-      - name: example_colocated_errand
-        release: example-release
-    release: example-release
-    static_ip: 1
-    dynamic_ip: 0
-    max_in_flight: 1
-```
 
 ##<a id='post-deploy'></a>Post-Deploy Errands
 
