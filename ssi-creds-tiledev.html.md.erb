@@ -24,19 +24,17 @@ See the next section for details about how to implement this new workflow.
 
 ## <a id="intro"></a> Engineer Your Service to Support Secure Service Instance Credentials
 
-Thoughts from Logan: How to engineer the Service to interact with the CredHub portion of ERT/PAS to write the credentials. How to engineer the Service to interact with CAPI to to handle requests as they come in.
+### <a id="step1"></a> Step 1: Update your BOSH release
 
-Main source Google doc: https://docs.google.com/a/pivotal.io/document/d/1HKVQXp6kGUvB3psTM5m_Ea9HPCoxAnEczfqszk2k-pc/edit?usp=sharing
+1. Edit your BOSH release so that it contains a BOSH link to CredHub. See the following example for how to format your BOSH link. 
 
-Other source links:
+```
+- name: credhub
+  type: credhub
+  optional: true
+```
 
-* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/secure-service-credentials.md
-* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/spring-java-credhub-integration.md
-* https://docs.google.com/a/pivotal.io/document/d/1asb_VtRWNnff7aSpOJIXEK3WnkMFk8WGlajZ9re0k4E/edit?usp=sharing
-
--------------
-
-### <a id="step1"></a> Step 1: Store Binding Credentials in CredHub
+### <a id="step2"></a> Step 2: Store Binding Credentials in CredHub
 
 Service brokers that support binding of service instances to applications typically return a set of binding credentials in response to a binding request from Cloud Controller (CC). 
 
@@ -77,13 +75,21 @@ Where:
 
 <p class="note"><strong>Note</strong>: Service brokers that are deployed as Cloud Foundry applications are recommended to use the instance identity credentials to authenticate with CredHub. Service brokers that are deployed as a platform instance or third party service must use a UAA client credential. For more information, see <a href="https://credhub-api.cfapps.io/#authentication">Authentication</a> in the CredHub API docs.</p>
 
-### Step 2
 
-### etc...
 
-Based on our understanding of the materials, we think these are the things tile authors have to do. Did we miss anything? 
+<!--!Based on our understanding of the materials, we think these are the things tile authors have to do. Did we miss anything? 
 1. Update your bosh release to use links to get the URL and port from credhub so that you can form the URL for step 2 below. (This may require tile UI toggle to only use bosh links in 2.0 and later)
 2. Update how your broker handles binding requests from the cloud controller by...
 	a. Writing credentials to credhub using the credhub API instead of writing credentials to the cloud controller
-	b. Returning a bind response that includes the CredHub ref
+	b. Returning a bind response that includes the CredHub ref-->
 
+<!--Thoughts from Logan: How to engineer the Service to interact with the CredHub portion of ERT/PAS to write the credentials. How to engineer the Service to interact with CAPI to to handle requests as they come in.
+
+Main source Google doc: https://docs.google.com/a/pivotal.io/document/d/1HKVQXp6kGUvB3psTM5m_Ea9HPCoxAnEczfqszk2k-pc/edit?usp=sharing
+
+Other source links:
+
+* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/secure-service-credentials.md
+* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/spring-java-credhub-integration.md
+* https://docs.google.com/a/pivotal.io/document/d/1asb_VtRWNnff7aSpOJIXEK3WnkMFk8WGlajZ9re0k4E/edit?usp=sharing
+-->
