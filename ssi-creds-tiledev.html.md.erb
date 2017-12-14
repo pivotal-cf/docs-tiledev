@@ -9,9 +9,9 @@ This topic describes you can engineer your Pivotal Cloud Foundry (PCF) service t
 
 When developers want their app to use a service, such as those provided by the Spring Cloud Services tile for PCF, they must bind their app to an instance of that service. Service bindings include credentials that developers can use to access the service from their app.
 
-Traditionally, service instance credentials have been stored in the Cloud Controller database. The PCF 2.0 release includes PAS CredHub to support and alternative workflow that allows service brokers to write and apps to retrieve service credentials directly from and to CredHub.
+The PCF 2.0 release includes PAS CredHub, which supports service brokers writing and apps retrieving service credentials directly to and from CredHub.
 
-This alternative workflow helps address the following concerns:
+This workflow helps address the following concerns around the service binding workflow that does not include CredHub:
 
 * Leaking environment variables to logs, which increases risk of disclosure
 	* Developers often need to write environment variables to logs for debugging. If environment variables are written to logs for an application that has bound to a service, the service credentials will be included in logs. Log files tend to have less access control than application environments, so this increases the likelihood of disclosing the credentials.
@@ -80,7 +80,7 @@ Where:
 ```
 properties:
       aliases:
-        (( dig credhub.service.cf.internal @169.256.0.2)):
+        (( dig credhub.service.cf.internal @169.256.0.2 )):
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
