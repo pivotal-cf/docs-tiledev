@@ -14,15 +14,13 @@ Traditionally, service instance credentials have been stored in the Cloud Contro
 This alternative workflow helps address the following concerns:
 
 * Leaking environment variables to logs, which increases risk of disclosure
-	* Developers often need to write environment variables to logs for debugging. If environment variables are written to logs for an application that has bound to a service, the service credentials will be included in logs. Log files tend to have less access control than application environments, so this increase the likelihood of disclosing the credentials.
+	* Developers often need to write environment variables to logs for debugging. If environment variables are written to logs for an application that has bound to a service, the service credentials will be included in logs. Log files tend to have less access control than application environments, so this increases the likelihood of disclosing the credentials.
 * Transiting credentials between components, which increases risk of disclosure
 	* The current model passes a service credential from the service broker through the cloud controller to the runtime to be places in the application environment. As more components interact are involved, the risk of disclosure increases.
 * Rotating credentials delivered via the environment, which requires container recreation
 	* If you wish to rotate a credential delivered via environment variables, the container must be recreated. This requirement creates friction in an environment with short-lived credentials, because credential rotation incurs an overhead cost on the plaform due to increased lifecycle events. This encourages long-lived credentials, which increases the risk of disclosure.
 
-See the next section for details about how to implement this new workflow.   
-
-## <a id="intro"></a> Engineer Your Service to Support Secure Service Instance Credentials
+The following steps detail how to implement this workflow:
 
 ### <a id="step1"></a> Step 1: Update your BOSH release
 
@@ -75,6 +73,16 @@ Where:
 
 <p class="note"><strong>Note</strong>: Service brokers that are deployed as Cloud Foundry applications are recommended to use the instance identity credentials to authenticate with CredHub. Service brokers that are deployed as a platform instance or third party service must use a UAA client credential. For more information, see <a href="https://credhub-api.cfapps.io/#authentication">Authentication</a> in the CredHub API docs.</p>
 
+### <a id="step3"></a> Step 3: Engineering your broker to discover the location of PAS CredHub instances 
+
+1. Edit your BOSH instance in the following way to validate whether PAS CredHub has been deployed.
+
+```
+properties:
+      aliases:
+        (( dig credhub.service.cf.internal @169.256.0.2)):
+        - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
+```
 
 
 <!--!Based on our understanding of the materials, we think these are the things tile authors have to do. Did we miss anything? 
