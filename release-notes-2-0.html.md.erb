@@ -125,11 +125,11 @@ To ensure compatibility with PCF 2.0, tiles using consul must update to consul a
 
 ## <a id='syslog'></a> Syslog Formatting Requirement
 
-Pivotal requires that 2.0 compatible service tile components emit syslog messages according to the standard documented in [Log Format for PCF Compoents](./nozzle.html#syslog-format-pcf) 
+Pivotal requires that PCF 2.0 compatible service tile components emit syslog messages according to the standard documented in [Log Format for PCF Compoents](./nozzle.html#syslog-format-pcf) 
 
 ## <a id='boshlinks'></a> Requirement to Use BOSH Links for Credentials and IP Addresses
 
-To ensure compatibility with PCF 2.0, tiles must use BOSH links to retrieve IP addresses and credentials from other components. For credentials, BOSH links allows your service to receive credentials without the security risk of them being exposed in the BOSH deployment manifest. For IP addresses, BOSH links allows your service to receive IP addresses assigned by BOSH. This enables PCF users to do more automation with Ops Manger-generated manifests because IP address management (IPAM) will not be done by Ops Manager, removing the potential conflict from changes made through automation. 
+To ensure compatibility with PCF 2.0, tiles must use BOSH links to retrieve IP addresses and credentials from other components. For credentials, BOSH links allows your service to receive credentials without the security risk of them being exposed in the BOSH deployment manifest. For IP addresses, BOSH links allows your service to receive IP addresses assigned by BOSH instead of Ops Manager. This enables PCF users to do more automation with Ops Manger-generated manifests because IP address management (IPAM) will not be done by Ops Manager, removing the potential conflict from changes made through automation. 
 
 ### <a id='links-procedure'></a> Procedure for Using BOSH Links
 
@@ -142,8 +142,8 @@ To ensure compatibility with PCF 2.0, tiles must use BOSH links to retrieve IP a
   * `..cf.doppler.shared_secret_credentials`
   * `..cf.nats.credentials.identity`
   * `..cf.nats.credentials.password`
-  * `..cf.properties.consul_encrypt_key`
-  If your tile uses any of these properties, you can get them from a BOSH link provided by its respective job. See the following table:<br><br>
+  * `..cf.properties.consul_encrypt_key`<br><br>
+  If your tile uses any of these properties, you can get them from a BOSH link provided by its respective job. See the following table:
   <table>
     <tr>
       <th>Property</th>
