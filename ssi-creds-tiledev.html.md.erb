@@ -84,6 +84,9 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
+The PAS CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a consul agent, you can resolve the address with consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.256.0.2`. This command will use the PAS BOSH DNS server to do lookup. 
+
+
 
 <!--!Based on our understanding of the materials, we think these are the things tile authors have to do. Did we miss anything? 
 1. Update your bosh release to use links to get the URL and port from credhub so that you can form the URL for step 2 below. (This may require tile UI toggle to only use bosh links in 2.0 and later)
