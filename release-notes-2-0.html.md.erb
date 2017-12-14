@@ -118,3 +118,67 @@ In the example above, this includes all versions of `cf` greater than `1.8`.
 
 If the version number contains more than two segments, Ops Manager evaluates `~>` for the final segment.
 In the example above, this includes versions `1.12.x` only of `example-product`.
+
+## <a id='consul-ver'></a> Consul Version Requirement
+
+To ensure compatibility with PCF 2.0, tiles using consul must update to consul agent v174 or later. This change supports the effort to transition from consul to BOSH DNS for service discovery. 
+
+## <a id='syslog'></a> Syslog Formatting Requirement
+
+Pivotal requires that 2.0 compatible service tile components emit syslog messages according to the standard documented in [Log Format for PCF Compoents](./nozzle.html#syslog-format-pcf) 
+
+## <a id='boshlinks'></a> Requirement to Use BOSH Links for Credentials and IP Addresses
+
+To ensure compatibility with PCF 2.0, tiles must use BOSH links to retrieve IP addresses and credentials from other components. For credentials, BOSH links allows your service to receive credentials without the security risk of them being exposed in the BOSH deployment manifest. For IP addresses, BOSH links allows your service to receive IP addresses assigned by BOSH. This enables PCF users to do more automation with Ops Manger-generated manifests because IP address management (IPAM) will not be done by Ops Manager, removing the potential conflict from changes made through automation. 
+
+### <a id='links-procedure'></a> Procedure for Using BOSH Links
+
+1. If you use tile-generator to build your tile, update to the latest version and rebuild.
+1. If you have BOSH jobs defined in your tile, use `dynamic_ips: 1` and `static_ips: 0` for each job. This uses BOSH for IPAM instead of Ops Manager. 
+  <p class="note"><strong>Note</strong>: Though the property is called <i>dynamic</i>, BOSH keeps your job at the same IP address unless that is not possible, such as when the operator changes the IP address range and that IP address is no longer available.</p>
+1. If a BOSH release in your tile needs the IP address of another component, consume its BOSH link.
+1. If other components need your the IP address of your BOSH job, provide a BOSH link.
+1. The following properties are not present in PCF 2.0:
+  * `..cf.doppler.shared_secret_credentials`
+  * `..cf.nats.credentials.identity`
+  * `..cf.nats.credentials.password`
+  * `..cf.properties.consul_encrypt_key`
+  If your tile uses any of these properties, you can get them from a BOSH link provided by its respective job. See the following table:<br><br>
+  <table>
+    <tr>
+      <th>Property</th>
+      <th>BOSH Link</th>
+    </tr>
+    <tr>
+      <td>`.cf.doppler.shared_secret_credentials`</td>
+      <td><a href="https://github.com/cloudfoundry/loggregator/releases/tag/v87">No longer needed</a></td>
+    </tr>
+    <tr>
+      <td>`..cf.nats.credentials.identity`</td>
+      <td><a href="https://github.com/cloudfoundry/nats-release/blob/master/jobs/nats/spec"><code>nats</code></a></td>
+    </tr>
+    <tr>
+      <td>`..cf.nats.credentials.password`</td>
+      <td><a href="https://github.com/cloudfoundry/nats-release/blob/master/jobs/nats/spec"><code>nats</code></a></td>
+    </tr>
+    <tr>
+      <td>`..cf.properties.consul_encrypt_key`</td>
+      <td><a href="https://github.com/cloudfoundry/loggregator/releases/tag/v87"><code>consul_common</code></a></td>
+    </tr>
+  </table><br>
+  For implementation details, refer to the with-link examples in our [pcf-examples repository](https://github.com/cf-platform-eng/pcf-examples) and the [Tile Generator documentation](http://docs.pivotal.io/tiledev/1-12/tile-generator.html). For more background and context on BOSH links, see [BOSH Links: Why and How](https://gist.github.com/Amit-PivotalLabs/c39528248b8cdc4ba8e347f8aa68abb6) and the official [BOSH links documentation](https://bosh.io/docs/links.html).
+
+## <a id='uaa'></a> UAA Endpoint Changes
+
+If your tile uses the `/oauth/token` and `/check_token` endpoints of the UAA API, you must ensure you are using HTTP POST with body instead of HTTP GET requests. Using HTTP GET is no longer supported as it presents a security risk due to the access logs recording query parameters and exposing the UAA token. 
+
+## <a id='sha2'></a> BOSH Releases: Use SHA-2 Hash
+
+You must ensure that your tile signs its components using SHA-2, as SHA-1 has been proven insecure. Follow these steps: 
+
+1. If you use tile-generator to build your tile, update to the latest version and rebuild. 
+1. If you create a BOSH release for your tile, use the --sha2 flag of the `bosh create-release` command. 
+1. If you include third-party BOSH releases in your tile, update those to newer versions that are signed with SHA-2 hash. 
+
+
+
