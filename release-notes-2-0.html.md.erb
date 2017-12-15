@@ -7,7 +7,7 @@ This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.0 introduce
 
 ## <a id='colocated-errands'></a>Colocated Errands
 
-Tile authors can configure the errands defined in their product tile to run on existing VMs in a deployment.
+Tile authors can configure the errands defined in their product tile to run on existing virtual machines (VMs) in a deployment.
 Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
 
 See [Tile Errands](./tile-errands.html#colocated) for more information.
@@ -17,33 +17,33 @@ See [Tile Errands](./tile-errands.html#colocated) for more information.
 Tile authors can include `runtime_configs` as a top-level key in tile metadata to define global deployment configurations.
 Named runtime config settings apply to all VMs in a deployment.
 
-Version 2.0.0 of Ops Manager supports defining any number of runtime configs in an existing tile.
-Tile authors can also create a tile that includes a runtime config only and does not define any job types or errands.
+Ops Manager v2.0.0 supports defining any number of runtime configs in an existing tile.
+Tile authors can also create a tile that only includes a runtime config and does not define any job types or errands.
 
 See [Managing Runtime Configs](./runtime-config.html) for more information.
 
 ## <a id='type-defaults'></a>On-Demand Disk and VM Type Defaults
 
 On-demand service tiles have a configuration pane for each service plan.
-Operators use dropdown menus on the plan configuration pane to set the VM type and persistent disk type for each instance of that plan.
+Operators use drop-down menus on the plan configuration pane to set the VM type and persistent disk type for each instance of that plan.
 
-Ops Manager 2.0.0 allows tile authors to specify the default values for VM types and persistent disk types in their tile's plan configuration pane.
+Ops Manager v2.0.0 allows tile authors to specify the default values for VM types and persistent disk types in their tile's plan configuration pane.
 
 See [Configuring Disk and VM Type Defaults for On-Demand Service Tiles](./odb-resource-defaults.html) for more information.
 
 ## <a id='bosh-dns'></a>BOSH DNS
 
-Ops Manager 2.0.0 introduces BOSH DNS as a runtime config colocated on every VM in a deployment.
-Since BOSH DNS is a beta feature in PCF 2.0, operators can opt out of the feature in this release.
+Ops Manager v2.0.0 introduces BOSH DNS as a runtime config colocated on every VM in a deployment.
+Since BOSH DNS is a beta feature in PCF v2.0, operators can opt out of the feature in this release.
 
 Tile authors can use the new `$director.dns_release_present` accessor in tile metadata to expose the `disable_dns_release` setting on the BOSH Director.
-If an operator has chosen to opt out of BOSH DNS, `disable_dns_release` is set to `true`.
+If an operator chooses to opt out of BOSH DNS, `disable_dns_release` is set to `true`.
 
 See [Property Reference](./property-reference.html#dollar) for more information.
 
 ## <a id='accessors'></a>Network Name Accessors
 
-Ops Manager 2.0.0 adds new accessors to return network information, including the network name for a product and the top-level domain (TLD) of the BOSH Director.
+Ops Manager v2.0.0 adds new accessors to return network information, including the network name for a product and the top-level domain (TLD) of the BOSH Director.
 Ops Manager uses these values when constructing BOSH DNS aliases.
  
 The following manifest snippet returns the names of the networks where the products are installed:
@@ -69,13 +69,12 @@ See [Dollar Contexts](./property-reference.html#dollar) in the _Property Bluepri
 
 PCF now forwards BOSH health metrics generated for all VMs in a deployment to the Loggregator Firehose by default. 
 
-To support this feature, Ops Manager 2.0.0 colocates the new BOSH Metrics Server on the BOSH Director 
-and includes a UAA client with the correct authorities and scopes. 
+To support this feature, Ops Manager v2.0.0 colocates the new BOSH Metrics Server on the BOSH Director and includes a UAA client with the correct authorities and scopes. 
 
 To access BOSH Metrics Server UAA credentials, tile authors can use the following two accessors:
 
 * `(( $director.bosh_metrics_forwarder_client_name ))` returns the name of the client. 
-* `(( $director.bosh_metrics_forwarder_client_secret ))` returns the value of the auto generated client secret.
+* `(( $director.bosh_metrics_forwarder_client_secret ))` returns the value of the auto-generated client secret.
 
 ## <a id='named-manifest'></a>Named Manifests for Collection
 
@@ -114,31 +113,34 @@ For example:
 ```
 
 If the version number contains only two segments, Ops Manager interprets `~>` as `>=`.
-In the example above, this includes all versions of `cf` greater than `1.8`.
+In the example above, this includes all versions of `cf` later than `1.8`.
 
 If the version number contains more than two segments, Ops Manager evaluates `~>` for the final segment.
-In the example above, this includes versions `1.12.x` only of `example-product`.
+In the example above, this includes only versions `1.12.x` of `example-product`.
 
 ## <a id='consul-ver'></a> Consul Version Requirement
 
-To ensure compatibility with PCF 2.0, tiles using consul must update to consul agent v174 or later. This change supports the effort to transition from consul to BOSH DNS for service discovery. 
+To ensure compatibility with PCF v2.0, tiles using consul must update to consul agent v174 or later. This change supports the effort to transition from consul to BOSH DNS for service discovery. 
 
 ## <a id='syslog'></a> Syslog Formatting Requirement
 
-Pivotal requires that PCF 2.0 compatible service tile components emit syslog messages according to the standard documented in [Log Format for PCF Compoents](./nozzle.html#syslog-format-pcf) 
+Pivotal requires that PCF v2.0 compatible service tile components emit syslog messages according to the standard documented in [Log Format for PCF Components](./nozzle.html#syslog-format-pcf).
 
 ## <a id='boshlinks'></a> Requirement to Use BOSH Links for Credentials and IP Addresses
 
-To ensure compatibility with PCF 2.0, tiles must use BOSH links to retrieve IP addresses and credentials from other components. For credentials, BOSH links allows your service to receive credentials without the security risk of them being exposed in the BOSH deployment manifest. For IP addresses, BOSH links allows your service to receive IP addresses assigned by BOSH instead of Ops Manager. This enables PCF users to do more automation with Ops Manger-generated manifests because IP address management (IPAM) will not be done by Ops Manager, removing the potential conflict from changes made through automation. 
+To ensure compatibility with PCF v2.0, tiles must use BOSH links to retrieve IP addresses and credentials from other components. 
+
+* For credentials, BOSH links allows your service to receive credentials without the security risk of them being exposed in the BOSH deployment manifest. 
+* For IP addresses, BOSH links allows your service to receive IP addresses assigned by BOSH instead of Ops Manager. This enables PCF users to do more automation with Ops Manger-generated manifests because IP address management (IPAM) will not be done by Ops Manager, removing the potential conflict from changes made through automation. 
 
 ### <a id='links-procedure'></a> Procedure for Using BOSH Links
 
 1. If you use tile-generator to build your tile, update to the latest version and rebuild.
-1. If you have BOSH jobs defined in your tile, use `dynamic_ips: 1` and `static_ips: 0` for each job. This uses BOSH for IPAM instead of Ops Manager. 
-  <p class="note"><strong>Note</strong>: Though the property is called <i>dynamic</i>, BOSH keeps your job at the same IP address unless that is not possible, such as when the operator changes the IP address range and that IP address is no longer available.</p>
+1. If you define BOSH jobs in your tile, use `dynamic_ips: 1` and `static_ips: 0` for each job. This uses BOSH for IPAM instead of Ops Manager. 
+  <p class="note"><strong>Note</strong>: Despite the property name <em>dynamic</em>, BOSH keeps your job at the same IP address unless that is not possible, such as when the operator changes the IP address range and that IP address is no longer available.</p>
 1. If a BOSH release in your tile needs the IP address of another component, consume its BOSH link.
-1. If other components need your the IP address of your BOSH job, provide a BOSH link.
-1. The following properties are not present in PCF 2.0:
+1. If other components need the IP address of your BOSH job, provide a BOSH link.
+1. The following properties are not present in PCF v2.0:
   * `..cf.doppler.shared_secret_credentials`
   * `..cf.nats.credentials.identity`
   * `..cf.nats.credentials.password`
@@ -177,8 +179,6 @@ If your tile uses the `/oauth/token` and `/check_token` endpoints of the UAA API
 You must ensure that your tile signs its components using SHA-2, as SHA-1 has been proven insecure. Follow these steps: 
 
 1. If you use tile-generator to build your tile, update to the latest version and rebuild. 
-1. If you create a BOSH release for your tile, use the --sha2 flag of the `bosh create-release` command. 
+1. If you create a BOSH release for your tile, use the `--sha2` flag of the `bosh create-release` command. 
 1. If you include third-party BOSH releases in your tile, update those to newer versions that are signed with SHA-2 hash. 
-
-
 
