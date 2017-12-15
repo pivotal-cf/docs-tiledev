@@ -3,24 +3,21 @@ title: Securing Service Credential Delivery with PAS CredHub
 owner: Services
 ---
 
-This topic describes you can engineer your Pivotal Cloud Foundry (PCF) service to support secure service instance credentials.
+This topic describes to engineer your Pivotal Cloud Foundry (PCF) service to support secure service instance credentials.
 
 ## <a id="intro"></a> Introduction
 
-When developers want their app to use a service, such as those provided by the Spring Cloud Services tile for PCF, they must bind their app to an instance of that service. Service bindings include credentials that developers can use to access the service from their app.
+When developers want their app to use a service, they must bind their app to an instance of that service. Service bindings include credentials that developers can use to access a service from their app.
 
-The PCF 2.0 release includes PAS CredHub, which supports service brokers writing and apps retrieving service credentials directly to and from CredHub.
+The PCF 2.0 release includes PAS CredHub, which supports service brokers writing apps directly to CredHub and apps retrieving service credentials directly from CredHub.
 
-This workflow helps address the following concerns around the service binding workflow that does not include CredHub:
+This workflow improves upon the traditional service binding workflow, which is subject to the following issues: 
 
 * Leaking environment variables to logs, which increases risk of disclosure
-	* Developers often need to write environment variables to logs for debugging. If environment variables are written to logs for an application that has bound to a service, the service credentials will be included in logs. Log files tend to have less access control than application environments, so this increases the likelihood of disclosing the credentials.
 * Transiting credentials between components, which increases risk of disclosure
-	* The current model passes a service credential from the service broker through the cloud controller to the runtime to be places in the application environment. As more components interact are involved, the risk of disclosure increases.
-* Rotating credentials delivered via the environment, which requires container recreation
-	* If you wish to rotate a credential delivered via environment variables, the container must be recreated. This requirement creates friction in an environment with short-lived credentials, because credential rotation incurs an overhead cost on the plaform due to increased lifecycle events. This encourages long-lived credentials, which increases the risk of disclosure.
+* Rotating credentials delivered by usinga the environment, which requires container recreation
 
-The following steps detail how to implement this workflow:
+The following steps detail how to secure service instance credential delivery with PAS CredHub.
 
 ### <a id="step1"></a> Step 1: Update your BOSH release
 
@@ -38,7 +35,7 @@ Service brokers that support binding of service instances to applications typica
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
-1. Update your code to store your binding credentials in CredHub using the `set credential` API endpoint with a credential type `json`. See the following example for how to format your API call. You can also view [Set Credentials](https://credhub-api.cfapps.io/#set-credentials) in the CredHub API docs for reference.
+1. Update your code to store your binding credentials in CredHub using the `set credential` API endpoint with the `json` credential type. See the following example for how to format your API call. For further reference, see the[Set Credentials](https://credhub-api.cfapps.io/#set-credentials) section of the CredHub API docs for reference.
 
 	```
 	curl "https://credhub.cf.example.com/api/v1/data" \
@@ -47,7 +44,7 @@ Service brokers that support binding of service instances to applications typica
       "name": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
       "type": "json",
       "value": {
-        "uri": "https://my-service.cf.example.com",
+        "uri": "SERVICE-URL",
         "username": "user",
         "password": "secret"
       }
@@ -55,13 +52,13 @@ Service brokers that support binding of service instances to applications typica
   -H 'Content-type: application/json'
   	```
 Where:
-	* `CLIENT-IDENTIFIER`: is a value provided by the service broker to uniquely identify the broker
-	* `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog
-	* `BINDING-GUID` is the GUID created by CC and passed to the service broker in the service binding request
-	* `CREDENTIAL-NAME` is a value provided by the service broker to name the credential
+	* `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
+	* `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
+	* `BINDING-GUID` is the GUID created by CC and passed to the service broker in the service binding request.
+	* `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
+	* `SERVICE-URL` is the URL of your service.
 
-
-1. Modify your service broker so that it returns a reference to these stored credentials in response to the binding request from CC. To facilitate retrieval of the credentials by bound applications, the credentials returned to CC should contain the single key “credhub-ref”, and the name of the stored credential as the value for that key. That binding response might look like this:
+1. Modify your service broker so that it returns a reference to the stored credentials in response to the binding request from CC. To facilitate the retrieval of credentials by bound applications, the credentials returned to CC should contain the single key “credhub-ref”, and the name of the stored credential as the value for that key. That binding response might look like this:
 
  	```
 	{
@@ -71,9 +68,9 @@ Where:
 	}
 	```
 
-<p class="note"><strong>Note</strong>: Service brokers that are deployed as Cloud Foundry applications are recommended to use the instance identity credentials to authenticate with CredHub. Service brokers that are deployed as a platform instance or third party service must use a UAA client credential. For more information, see <a href="https://credhub-api.cfapps.io/#authentication">Authentication</a> in the CredHub API docs.</p>
+<p class="note"><strong>Note</strong>: Service brokers that are deployed as Cloud Foundry applications are recommended to use the instance identity credentials to authenticate with CredHub. Service brokers that are deployed as a platform instance or third party service must use a UAA client credential. For more information, see the <a href="https://credhub-api.cfapps.io/#authentication">Authentication</a> section of the CredHub API documentation.</p>
 
-### <a id="step3"></a> Step 3: Engineering your broker to discover the location of PAS CredHub instances 
+### <a id="step3"></a> Step 3: Engineer your service broker to discover the location of PAS CredHub instances 
 
 1. Edit your BOSH instance in the following way to validate whether PAS CredHub has been deployed.
 
@@ -84,21 +81,54 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-The PAS CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a consul agent, you can resolve the address with consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.256.0.2`. This command will use the PAS BOSH DNS server to do lookup. 
+The PAS CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a consul agent, you can resolve the address with consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.256.0.2`. This command uses the PAS BOSH DNS server to do lookup. 
 
-<!--!Based on our understanding of the materials, we think these are the things tile authors have to do. Did we miss anything? 
-1. Update your bosh release to use links to get the URL and port from credhub so that you can form the URL for step 2 below. (This may require tile UI toggle to only use bosh links in 2.0 and later)
-2. Update how your broker handles binding requests from the cloud controller by...
-	a. Writing credentials to credhub using the credhub API instead of writing credentials to the cloud controller
-	b. Returning a bind response that includes the CredHub ref-->
+### <a id="step4"></a> Step 4: Engineer your Broker to provide operators with the choice to use CredHub to store Service Instance Credentials
 
-<!--Thoughts from Logan: How to engineer the Service to interact with the CredHub portion of ERT/PAS to write the credentials. How to engineer the Service to interact with CAPI to to handle requests as they come in.
 
-Main source Google doc: https://docs.google.com/a/pivotal.io/document/d/1HKVQXp6kGUvB3psTM5m_Ea9HPCoxAnEczfqszk2k-pc/edit?usp=sharing
+1. Edit your Property Template in the following way to provide operators with the choice to select the option to support secure service instance credentials
 
-Other source links:
+```
+form_types:
+- name: scs_configuration
+  label: LABEL-NAME
+  description: DESCRIPTION
+  property_inputs:
+  - reference: .deploy-service-broker.secure_credentials
+    label: Secure service instance credentials
+    description: "When checked, service instance credentials will be stored in CredHub. Enable only when installing with PCF 2.0 or greater and this feature is also enabled in the PAS tile."
 
-* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/secure-service-credentials.md
-* https://github.com/cloudfoundry-incubator/credhub/blob/master/docs/spring-java-credhub-integration.md
-* https://docs.google.com/a/pivotal.io/document/d/1asb_VtRWNnff7aSpOJIXEK3WnkMFk8WGlajZ9re0k4E/edit?usp=sharing
--->
+property_blueprints:
+  - name: hidden_credhub_selector
+    type: selector
+    configurable: false
+    default: "default"
+    option_templates:
+      - name: default_option
+        select_value: "default"
+        named_manifests:
+          - name: consumes_section_credhub_disabled
+            manifest: |
+              credhub: {}
+          - name: consumes_section_credhub_enabled
+            manifest: |
+              credhub: {from: credhub, deployment: "(( ..cf.deployment_name ))"}
+
+job_types:
+- name: deploy-service-broker
+  resource_label: Broker Deployer
+  templates:
+  - name: deploy-service-broker
+    release: SERVICE-BROKER-RELEASE-NAME
+    consumes: |
+      "(( secure_credentials.value ? .properties.hidden_credhub_selector.selected_option.parsed_manifest(consumes_section_credhub_enabled) : .properties.hidden_credhub_selector.selected_option.parsed_manifest(consumes_section_credhub_disabled) ))"
+  errand: true
+  resource_definitions:
+     ...
+  property_blueprints:
+  ...
+  - name: secure_credentials
+    type: boolean
+    configurable: true
+    default: false
+```
