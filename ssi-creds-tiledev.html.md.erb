@@ -3,19 +3,19 @@ title: Securing Service Credential Delivery with PAS CredHub
 owner: Services
 ---
 
-This topic describes to engineer your Pivotal Cloud Foundry (PCF) service to support secure service instance credentials.
+This topic describes how to engineer your Pivotal Cloud Foundry (PCF) service to support secure service instance credentials.
 
 ## <a id="intro"></a> Introduction
 
 When developers want their app to use a service, they must bind their app to an instance of that service. Service bindings include credentials that developers can use to access a service from their app.
 
-The PCF 2.0 release includes PAS CredHub, which supports service brokers writing apps directly to CredHub and apps retrieving service credentials directly from CredHub.
+The PCF 2.0 release includes PAS CredHub, which supports service brokers writing credentials directly to CredHub and apps retrieving service credentials directly from CredHub.
 
 This workflow improves upon the traditional service binding workflow, which is subject to the following issues: 
 
 * Leaking environment variables to logs, which increases risk of disclosure
 * Transiting credentials between components, which increases risk of disclosure
-* Rotating credentials delivered by usinga the environment, which requires container recreation
+* Rotating credentials delivered by using the environment, which requires container recreation
 
 The following steps detail how to secure service instance credential delivery with PAS CredHub.
 
@@ -35,7 +35,7 @@ Service brokers that support binding of service instances to applications typica
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
-1. Update your code to store your binding credentials in CredHub using the `set credential` API endpoint with the `json` credential type. See the following example for how to format your API call. For further reference, see the[Set Credentials](https://credhub-api.cfapps.io/#set-credentials) section of the CredHub API docs for reference.
+1. Update your code to store your binding credentials in CredHub using the `set credential` API endpoint with the `json` credential type. See the following example for how to format your API call. For further reference, see the [Set Credentials](https://credhub-api.cfapps.io/#set-credentials) section of the CredHub API docs.
 
 	```
 	curl "https://credhub.cf.example.com/api/v1/data" \
