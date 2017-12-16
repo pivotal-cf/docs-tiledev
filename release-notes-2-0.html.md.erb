@@ -99,6 +99,126 @@ For example:
 
 See the `named_manifest` section of the [Product Template Reference](./product-template-reference.html#named-manifest) topic for more information.
 
+## <a id="pas-props"></a>Pivotal Application Servive Tile Property Changes
+
+<p class='note'><strong>Note:</strong> Elastic Runtime has been renamed Pivotal Application Service.</p>
+
+Properties in the Pivotal Application Service (PAS) tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
+
+The following tables list the properties that Pivotal [removed](#removed), [added](#added), [renamed](#renamed), and [retyped] (#retyped) between PAS v1.12 and v2.0:
+
+<table id='removed' border="1" class="nice" >
+    <tr><th>
+  Removed Properties
+    </th></tr><tr><td>
+  <code>.diego_cell.dns_servers</code>
+  </td></tr><tr><td>
+  <code>.doppler.shared_secret_credentials</code>
+  </td></tr><tr><td>
+  <code>.properties.networking_point_of_entry</code>
+  </td></tr><tr><td>
+  <code>.properties.secure_diego_communication</code>
+  </td></tr></table>
+
+<table id='added' border="1" class="nice" >
+    <tr><th>
+  Added Properties
+    </th></tr><tr><td>
+   <code>.properties.cf_networking_enable_space_developer_self_service</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_interface_plugin</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.host</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.password</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.port</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.tls_ca</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.username</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database_name</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_key_encryption_passwords</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_tls</code>
+    </td></tr><tr><td>
+  <code>.properties.haproxy_client_certificate</code>
+    </td></tr><tr><td>
+  <code>.properties.routing_custom_ca_certificates</code>
+    </td></tr><tr><td>
+  <code>.properties.secure_service_instance_credentials</code>
+    </td></tr><tr><td>
+  <code>.properties.syslog_rule</code>
+    </td></tr><tr><td>
+  <code>.uaa.cc_service_key_credentials</code>
+    </td></tr><tr><td>
+  <code>.uaa.container_networking_interface_client_credentials</code>
+    </td></tr><tr><td>
+  <code>.uaa.services_credhub_credentials</code>
+  </td></tr></table>
+
+<table id='renamed' border="1" class="nice" >
+    <tr><th colspan=2>
+  Renamed Properties
+    </th></tr><tr><th>
+  v1.12 Name</th><th>v2.0 Name
+    </th></tr><tr><td>
+  <code>.diego_cell.garden_network_mtu</code></td><td><code>.properties.container_networking_interface_plugin.silk.network_mtu</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_log_traffic</code></td><td><code>.properties.container_networking_interface_plugin.silk.enable_log_traffic</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_log_traffic.enable.iptables_accepted_udp_logs_per_sec</code></td><td><code>.properties.container_networking_interface_plugin.silk.iptables_accepted_udp_logs_per_sec</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_log_traffic.enable.iptables_denied_logs_per_sec</code></td><td><code>.properties.container_networking_interface_plugin.silk.iptables_denied_logs_per_sec</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_network_cidr</code></td><td><code>.properties.container_networking_interface_plugin.silk.network_cidr</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_vtep_port</code></td><td><code>.properties.container_networking_interface_plugin.silk.vtep_port</code>
+    </td></tr><tr><td>
+  <code>.properties.router_forward_client_cert</code></td><td><code>.properties.routing_tls_termination</code>
+    </td></tr><tr><td>
+  <code>.properties.routing_frontend_idle_timeout</code></td><td><code>.router.frontend_idle_timeout</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.accent_color</code></td><td><code>.properties.push_apps_manager_accent_color</code>
+  <code>.push-apps-manager.company_name</code></td><td><code>.properties.push_apps_manager_company_name</code>
+  <code>.push-apps-manager.currency_lookup</code></td><td><code>.properties.push_apps_manager_currency_lookup</code>
+  <code>.push-apps-manager.display_plan_prices</code></td><td><code>.properties.push_apps_manager_display_plan_prices</code>
+  <code>.push-apps-manager.enable_invitations</code></td><td><code>.properties.push_apps_manager_enable_invitations</code>
+  <code>.push-apps-manager.favicon</code></td><td><code>.properties.push_apps_manager_favicon</code>
+  <code>.push-apps-manager.footer_links</code></td><td><code>.properties.push_apps_manager_footer_links</code>
+  <code>.push-apps-manager.footer_text</code></td><td><code>.properties.push_apps_manager_footer_text</code>
+  <code>.push-apps-manager.global_wrapper_bg_color</code></td><td><code>.properties.push_apps_manager_global_wrapper_bg_color</code>
+  <code>.push-apps-manager.global_wrapper_footer_content</code></td><td><code>.properties.push_apps_manager_global_wrapper_footer_content</code>
+  <code>.push-apps-manager.global_wrapper_header_content</code></td><td><code>.properties.push_apps_manager_global_wrapper_header_content</code>
+  <code>.push-apps-manager.global_wrapper_text_color</code></td><td><code>.properties.push_apps_manager_global_wrapper_text_color</code>
+  <code>.push-apps-manager.logo</code></td><td><code>.properties.push_apps_manager_logo</code>
+  <code>.push-apps-manager.marketplace_name</code></td><td><code>.properties.push_apps_manager_marketplace_name</code>
+  <code>.push-apps-manager.nav_links</code></td><td><code>.properties.push_apps_manager_nav_links</code>
+  <code>.push-apps-manager.product_name</code></td><td><code>.properties.push_apps_manager_product_name</code>
+  <code>.push-apps-manager.square_logo</code></td><td><code>.properties.push_apps_manager_square_logo</code>
+  </td></tr></table>
+
+<table id='retyped' border="1" class="nice" >
+    <tr><th colspan=3>
+  Properties Moved to CredHub
+    </th></tr><tr><th>
+  Name in PAS 1.12</th><th>CredHub Name</th></tr><tr><td>
+  <code>.autoscaling.broker_credentials</code></td><td><code>deploy-autoscaling-broker-credentials</code></td></tr><tr><td>
+  <code>.autoscaling.encryption_key</code></td><td><code>deploy-autoscaling-encryption-key</code></td></tr><tr><td>
+  <code>.backup-prepare.backup_encryption_key</code></td><td><code>backup-prepare-backup-encryption-key</code></td></tr><tr><td>
+  <code>.diego_database.bbs_encryption_passphrase</code></td><td><code>diego-db-bbs-encryption-passphrase</code></td></tr><tr><td>
+  <code>.nats.credentials</code></td><td><code>nats-credentials</code></td></tr><tr><td>
+  <code>.nfs_server.blobstore_secret</code></td><td><code>nfs-server-blobstore-secret</code></td></tr><tr><td>
+  <code>.notifications.encryption_key</code></td><td><code>deploy-notifications-encryption-key</code></td></tr><tr><td>
+  <code>.properties.consul_encrypt_key</code></td><td><code>consul-encryption-key</code></td></tr><tr><td>
+  <code>.push-pivotal-account.encryption_key</code></td><td><code>push-pivotal-account-encryption-key</code></td></tr><tr><td>
+  <code>.push-usage-service.secret_token</code></td><td><code>push-usage-service-secret-token</code></td></tr><tr><td>
+  <code>.router.route_services_secret</code></td><td><code>router-route-services-secret</code></td></tr></table>
+
 ## <a id='dependencies'></a>Product Dependency Syntax
 
 Tile authors can specify product version dependencies in tile metadata using `~>`.
