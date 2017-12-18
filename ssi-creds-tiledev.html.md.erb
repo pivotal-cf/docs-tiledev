@@ -3,25 +3,21 @@ title: Securing Service Credential Delivery with PAS CredHub
 owner: Services
 ---
 
-This topic describes how to engineer your Pivotal Cloud Foundry (PCF) service to support secure service instance credentials.
+This topic describes how to develop your Pivotal Cloud Foundry (PCF) service tile to support secure service instance credentials (SSI) using [runtime CredHub](http://docs.pivotal.io/pivotalcf/2-0/credhub/#runtime).
 
-## <a id="intro"></a> Introduction
+## <a id="background"></a> Background
 
-When developers want their app to use a service, they must bind their app to an instance of that service. Service bindings include credentials that developers can use to access a service from their app.
+When developers bind an app to a service instance, the binding typically includes credentials required to access the service.
 
-The PCF 2.0 release includes PAS CredHub, which supports service brokers writing credentials directly to CredHub and apps retrieving service credentials directly from CredHub.
-
-This workflow improves upon the traditional service binding workflow, which is subject to the following issues: 
+In PCF 2.0, service brokers can store these credentials in runtime CredHub and apps can retrieve the service credentials from CredHub. This secures service instance credential management by avoiding the following:
 
 * Leaking environment variables to logs, which increases risk of disclosure
-* Transiting credentials between components, which increases risk of disclosure
-* Rotating credentials delivered by using the environment, which requires container recreation
+* Sending credentials between components, which increases risk of disclosure
+* Requiring users to rotate credentials through the environment, which requires container recreation
 
-The following steps detail how to secure service instance credential delivery with PAS CredHub.
+### <a id="step1"></a> Step 1: Update Your BOSH Release
 
-### <a id="step1"></a> Step 1: Update your BOSH release
-
-1. Edit your BOSH release so that it contains a BOSH link to CredHub. See the following example for how to format your BOSH link. 
+1. In the BOSH release for your tile, edit the deployment manifest `.yml` file so that it contains a BOSH link to CredHub. See the following example for how to format your BOSH link. 
 
 ```
 - name: credhub
@@ -30,6 +26,8 @@ The following steps detail how to secure service instance credential delivery wi
 ```
 
 ### <a id="step2"></a> Step 2: Store Binding Credentials in CredHub
+
+When the Cloud Controller (CC) receives a request to bind a service instance to an app, it forwards the request to the service broker. The service broker then returns the _binding credentials_ that allow access to the service.
 
 Service brokers that support binding of service instances to applications typically return a set of binding credentials in response to a binding request from Cloud Controller (CC). 
 
