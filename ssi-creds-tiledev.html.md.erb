@@ -17,29 +17,27 @@ In PCF 2.0 and later, service brokers can store these credentials in runtime Cre
 
 To store credentials in runtime CredHub, your service tile needs to support the following:
 
-* Discover the location of CredHub, which requires modifying the BOSH release and the product template of your tile.
-* Provide this CredHub location to the broker app. The service broker uses the provided address and port to store binding credentials in CredHub.
+* Discover the location of CredHub.
+* Provide this CredHub location to the broker app. The service broker uses the provided location to store binding credentials in CredHub.
 * Enable operators to select the SSI credentials option in the tile UI. 
 
-The sections below give an example implementation of this functionality for your service tile.
+The sections below describe an example implementation of this functionality for your service tile.
 
 ## <a id="step1"></a> Step 1: Modify Your BOSH Release
 
-To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the Pivotal Application Service (PAS) tile, through a BOSH link. For more information about BOSH links, see [BOSH Links](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links).
+To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the Pivotal Application Service (PAS) tile, through a BOSH link.
 
-### <a id="manifest"></a> Update Deployment Manifest
-
-In the BOSH release for your tile, edit the deployment manifest `.yml` file so that it contains a BOSH link to CredHub. See the following example:
-
-```
-- name: credhub
-  type: credhub
-  optional: true
-```
+<p class="note"><strong>Note</strong>: BOSH links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH links, see <a href="http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links">BOSH Links</a>.</p>
 
 ### <a id="spec"></a> Update Spec File and Templates
 
-The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the PAS tile. To enable your tile to retrieve these values, you need to modify the spec file of the BOSH job that will consume them and the job's templates.
+The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the PAS tile. To enable your service tile to retrieve these CredHub-provided properties, add a `consumes:` section with the BOSH link from the PAS tile to the spec file of the BOSH job that will use them and edit the job's templates to access the values in the link.
+
+For information about using BOSH links in the spec file and templates of a job and consuming shared properties provided by other jobs, see [Links in Spec Files](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-spec) and [Links in Templates](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-template).
+
+### <a id="manifest"></a> Update Deployment Manifest
+
+In the BOSH release for your tile, edit the deployment manifest `.yml` file so that it contains the BOSH link to CredHub. For more information about using BOSH links in deployment manifests, see [Links in Manifests](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-manifest).
 
 ## <a id="step2"></a> Step 2: Enable Your Tile to Find Runtime CredHub
 
@@ -56,7 +54,7 @@ job_types:
       credhub: {from: credhub, deployment: "(( ..cf.deployment_name ))"}
 ```
 
-You can also use the CredHub address from the BOSH link to verify that there is a CredHub server available at that address during tile installation. See the following example:
+You can also use the address from the BOSH link to verify that the CredHub server is available at that address during tile installation. See the following example:
 
 ```
 properties:
@@ -65,7 +63,7 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-The PAS CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a consul agent, you can resolve the address with consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.256.0.2`. This command uses the PAS BOSH DNS server to do lookup. 
+In the example, the runtime CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.256.0.2`. This command uses the PAS BOSH DNS server to do lookup.
 
 ## <a id="step3"></a> Step 3: Provide Operators with the Choice to Use CredHub
 
@@ -73,7 +71,7 @@ To provide operators with the choice to select the SSI credentials option, edit 
 
 ```
 form_types:
-- name: example_configuration
+- name: FORM-NAME
   label: LABEL-NAME
   description: DESCRIPTION
   property_inputs:
@@ -125,13 +123,15 @@ To enable your service broker to store binding credentials in CredHub, do the fo
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
 1. Because all API requests to CredHub must include an authentication method, you need to determine how your service broker authenticates with CredHub. The authentication method depends on how your tile deploys the service broker:
-  * **Service broker pushed as Cloud Foundry app**: Broker authenticates to CredHub using mutual TLS.
-  * **Service broker runs outside of PAS, for example, in a BOSH-managed VM**: Broker authenticates to CredHub, using OAuth2 tokens from UAA. All calls to CredHub API must include an authorization header. For more information, see the [Authentication](https://credhub-api.cfapps.io/#authentication) section of the CredHub API documentation.
+  * **Service broker pushed as a Cloud Foundry app**: Broker authenticates to CredHub using mutual TLS.
+  * **Service broker runs outside of PAS, for example, in a BOSH-managed VM**: Broker authenticates to CredHub, using OAuth2 tokens from UAA. All calls to CredHub API must include an authorization header.
 
-1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint for setting credentials with the `json` credential type. See the following example for how to format your API call.
+    For more information about CredHub authentication, see the [Authentication](https://credhub-api.cfapps.io/#authentication) section of the CredHub API documentation.
+
+1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint for setting the `json` credential type with a user-provided value. See the following example for how to format your API call:
 
     ```
-  curl "https://credhub.service.cf.internal:8844/api/v1/data" \
+  curl "https://CREDHUB.INTERNAL_URL:CREDHUB.PORT/api/v1/data" \
   -X PUT \
   -d '{
       "name": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
@@ -145,16 +145,17 @@ To enable your service broker to store binding credentials in CredHub, do the fo
   -H 'Content-type: application/json'
     ```
   Where:
+  * `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub. `CREDHUB.INTERNAL_URL`resolves to  `credhub.service.cf.internal` and the default port is 8844.
   * `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
   * `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
-  * `BINDING-GUID` is the GUID created by CC and passed to the service broker in the service binding request.
+  * `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
   * `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
   * `SERVICE-URL` is the URL of your service.
   * `USERNAME` and `PASSWORD` are your binding credentials.
 
     For further reference, see the [Set Credentials](https://credhub-api.cfapps.io/#set-credentials) section of the CredHub API docs.
 
-1. Modify your service broker so that it returns a reference to the stored credentials in response to the binding request from the CC. Return the credentials as a single key `credhub-ref` with its value formatted as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`. For example, the binding response might look like this:
+1. Modify your service broker so that it returns a reference to the stored credentials in response to the binding request from the CC. Return the credentials as a single key `credhub-ref` with its value formatted as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`. For example, the binding response might look like the following:
 
     ```
   {
