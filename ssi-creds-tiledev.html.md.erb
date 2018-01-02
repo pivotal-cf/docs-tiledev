@@ -11,9 +11,9 @@ When developers bind an app to a service instance, the binding typically include
 
 In PCF 2.0 and later, service brokers can store these credentials in runtime CredHub and apps can retrieve the service credentials from CredHub. This secures service instance credential management by avoiding the following:
 
-* Leaking environment variables to logs, which increases risk of disclosure
-* Sending credentials between components, which increases risk of disclosure
-* Requiring users to rotate credentials through the environment, which requires container recreation
+* Leaking environment variables to logs, which increases risk of disclosure.
+* Sending credentials between components, which increases risk of disclosure.
+* Requiring users to rotate credentials through the environment, which requires container recreation.
 
 To store credentials in runtime CredHub, your service tile needs to support the following:
 
@@ -122,7 +122,7 @@ To enable your service broker to store binding credentials in CredHub, do the fo
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
-1. Because all API requests to CredHub must include an authentication method, you need to determine how your service broker authenticates with CredHub. The authentication method depends on how your tile deploys the service broker:
+1. Determine how your service broker authenticates with CredHub because all API requests to CredHub must include an authentication method. The authentication method depends on how your tile deploys the service broker:
   * **Service broker pushed as a Cloud Foundry app**: Broker authenticates to CredHub using mutual TLS.
   * **Service broker runs outside of PAS, for example, in a BOSH-managed VM**: Broker authenticates to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header.
 
