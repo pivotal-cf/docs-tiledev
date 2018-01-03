@@ -696,9 +696,6 @@ job_types:
         persistent_disk: (( persistent_disk ))
         instances: (( instances ))
         availability_zone: (( availability_zone ))
-        first_ip: (( first_ip ))
-        ips: (( ips ))
-        ips_by_availability_zone: (( ips_by_availability_zone ))
         bosh_job_partition_stats: (( bosh_job_partition_stats ))
 ```
 
@@ -878,17 +875,16 @@ Only one of these sets is evaluated and inserted into the job's manifest.
 The following double-parens accessors retrieve your job properties:
 
   * name: `(( name ))`
-  * ips: `(( ips ))`
   * ram: `(( ram ))`
   * ephemeral\_disk: `(( ephemeral_disk ))`
   * persistent\_disk: `(( persistent_disk ))`
-  * ips\_by\_availability\_zone: `(( ips_by_availability_zone ))` (deprecated)
   * instances: `(( instances ))`
   * availability\_zone: `(( availability_zone ))` (deprecated)
   * bosh\_job\_partition\_stats: `(( bosh_job_partition_stats ))` (deprecated)
-  * first\_ip: `(( first_ip ))` (deprecated)
   * first\_network\_deprecated: `(( first_network_deprecated ))` (deprecated)
   * subnet\_cidrs: `(( subnet_cidrs ))`
+
+<p class="note"><strong>Note: </strong> As of PCF v2.1, IP accessors no are no longer supported.</p>
 
 The following is a list of all typed values with the accessor "value":
 
