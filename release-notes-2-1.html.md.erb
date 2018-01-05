@@ -1,0 +1,10 @@
+---
+title: PCF v2.1 Partners Release Notice
+owner: Technical Program Management
+---
+
+This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.1 introduces which may be relevant to partner service tiles.
+
+## <a id="ip-discontinued"></a> Ops Manager IP Management Removed
+
+Ops Manager no longer allows operators to allocate or manage IPs. Instead, only the BOSH Director manages IP allocation. This change is to keep IP management in one central location without redundancy. To learn more about BOSH Director and how it handles both networks and IPs, see [Dynamic Networks](https://bosh.io/docs/networks.html) in the BOSH documentation.
