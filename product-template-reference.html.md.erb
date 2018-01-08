@@ -492,6 +492,8 @@ it asks a user for values to those settings and generates a manifest based on wh
 Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically,
 and you can find them in the release manifest. 
 
+<p class="note"><strong>Note: </strong> Starting PCF v2.1, Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys.</p>
+
 ```
 job_types:
   - name: web_server
@@ -736,17 +738,6 @@ This is a BOSH feature (creating jobs from different releases). See the [BOSH do
 
 String. Required.
 The name of the BOSH release contained in your product archive (.pivotal file).
-
-### <a id='job-static-ip'></a> static_ip
-
-Boolean. Required.
-Sets whether the BOSH job should have a static or dynamic IP.
-Static IPs are set by the user, and reserved, while Dynamic IPs are set by BOSH. Both are, in effect, static, in that they should not change between deployments.
-
-### <a id='job-dynamic-ip'></a> dynamic_ip
-
-Boolean. Required.
-Set the opposite of `static_ip`. This will eventually be eliminated as a property as it is obviously redundant and unnecessary.
 
 ### <a id='job-single-az'></a> single\_az\_only
 
