@@ -1,11 +1,13 @@
 ---
-title: Securing Service Credential Delivery with Runtime CredHub
+title: Securing Service Credentials with Runtime CredHub
 owner: Services
 ---
 
 This topic describes how to develop your Pivotal Cloud Foundry (PCF) service tile to support secure service instance (SSI) credentials using [runtime CredHub](http://docs.pivotal.io/pivotalcf/2-0/credhub/#runtime).
 
-SSI credentials, which let apps access services through service instances, are [distinct](#ssi-vs-internal) from the credentials that a service tile stores in BOSH CredHub for its own internal use.
+SSI credentials, which let apps access services through service instances, are [distinct](#ssi-vs-internal) from the credentials that service tiles store in [BOSH CredHub](./credhub.html) for their own internal use.
+
+Both runtime CredHub and BOSH CredHub are instances of the CredHub credential management component. See the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html) for more information.
 
 ## <a id="background"></a> Background
 
