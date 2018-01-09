@@ -1,5 +1,5 @@
 ---
-title: Securing Service Credential Delivery with PAS CredHub
+title: Securing Service Credential Delivery with Runtime CredHub
 owner: Services
 ---
 
@@ -19,7 +19,7 @@ In PCF 2.0 and later, service brokers can store these SSI credentials in runtime
 
 To store credentials in runtime CredHub, your service tile needs to support the following:
 
-* Discover the location of CredHub.
+* Discover the location of runtime CredHub.
 * Provide this CredHub location to the broker app. The service broker uses the provided location to store binding credentials in CredHub.
 * Enable operators to select the SSI credentials option in the tile UI. 
 
@@ -43,7 +43,7 @@ The location of runtime CredHub is stored in the `credhub.internal_url` and `cre
 
 For information about using BOSH links in the spec file and templates of a job and consuming shared properties provided by other jobs, see [Links in Spec Files](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-spec) and [Links in Templates](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-template).
 
-### <a id="errand"></a> Save the CredHub Location
+### <a id="errand"></a> Save the Runtime CredHub Location
 
 To use the runtime CredHub location retrieved from the PAS tile, you must write a `post_deploy` [tile errand](https://docs.pivotal.io/tiledev/tile-structure.html#errands) that saves the value out in some way that enables the service broker to access it.
 
@@ -139,11 +139,11 @@ job_types:
     default: false
 ```
 
-## <a id="step4"></a> Step 4: Store Binding Credentials in CredHub
+## <a id="step4"></a> Step 4: Store Binding Credentials in Runtime CredHub
 
 When the Cloud Controller (CC) receives a request to bind a service instance to an app, it forwards the request to the service broker. The service broker then returns the binding credentials that allow access to the service.
 
-To enable your service broker to store binding credentials in CredHub, do the following:
+To enable your service broker to store binding credentials in runtime CredHub, do the following:
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
@@ -192,6 +192,6 @@ To enable your service broker to store binding credentials in CredHub, do the fo
 
 ## <a id="ssi-vs-internal"></a>SSI vs. Internal Service Credentials
 
-When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when PAS binds an app binds to an instance of the service, the broker retrieves the credentials from Runtime CredHub and delivers them to the app to enable it to access the service.
+When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when PAS binds an app binds to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the app to enable it to access the service.
 
 These SSI credentials are different from credentials that the tile uses internally, for example to give the service broker access to an internal database. PAS generates the internal tile credentials for a service when the service is first installed, and stores them in BOSH CredHub, not runtime CredHub.
