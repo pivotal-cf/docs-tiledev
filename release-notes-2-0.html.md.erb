@@ -1,0 +1,320 @@
+---
+title: PCF v2.0 Partners Release Notice
+owner: Technical Program Management
+---
+
+This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.0 introduces which may be relevant to partner service tiles.
+
+## <a id='colocated-errands'></a>Colocated Errands
+
+Tile authors can configure the errands defined in their product tile to run on existing virtual machines (VMs) in a deployment.
+Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
+
+See [Tile Errands](./tile-errands.html#colocated) for more information.
+
+## <a id='runtime-configs'></a>Runtime Configs
+
+Tile authors can include `runtime_configs` as a top-level key in tile metadata to define global deployment configurations.
+Named runtime config settings apply to all VMs in a deployment.
+
+Ops Manager v2.0.0 supports defining any number of runtime configs in an existing tile.
+Tile authors can also create a tile that only includes a runtime config and does not define any job types or errands.
+
+See [Managing Runtime Configs](./runtime-config.html) for more information.
+
+## <a id='type-defaults'></a>On-Demand Disk and VM Type Defaults
+
+On-demand service tiles have a configuration pane for each service plan.
+Operators use drop-down menus on the plan configuration pane to set the VM type and persistent disk type for each instance of that plan.
+
+Ops Manager v2.0.0 allows tile authors to specify the default values for VM types and persistent disk types in their tile's plan configuration pane.
+
+See [Configuring Disk and VM Type Defaults for On-Demand Service Tiles](./odb-resource-defaults.html) for more information.
+
+## <a id='bosh-dns'></a>BOSH DNS
+
+Ops Manager v2.0.0 introduces BOSH DNS as a runtime config colocated on every VM in a deployment.
+Since BOSH DNS is a beta feature in PCF v2.0, operators can opt out of the feature in this release.
+
+Tile authors can use the new `$director.dns_release_present` accessor in tile metadata to expose the `disable_dns_release` setting on the BOSH Director.
+If an operator chooses to opt out of BOSH DNS, `disable_dns_release` is set to `true`.
+
+See [Property Reference](./property-reference.html#dollar) for more information.
+
+## <a id='accessors'></a>Network Name Accessors
+
+Ops Manager v2.0.0 adds new accessors to return network information, including the network name for a product and the top-level domain (TLD) of the BOSH Director.
+Ops Manager uses these values when constructing BOSH DNS aliases.
+ 
+The following manifest snippet returns the names of the networks where the products are installed:
+
+```
+my_network_name: (( .network_name ))
+other_network_name: (( ..other_product.network_name ))
+```
+
+See the `network_name` section in [Property Blueprint Reference](./property-reference.html#property-blueprints) for more information.
+
+The following manifest snippet returns the BOSH Director TLD:
+
+```
+bosh_tld: (( $director.tld ))
+```
+
+The snippet above returns the string `bosh`.
+
+See [Dollar Contexts](./property-reference.html#dollar) in the _Property Blueprint Reference_ topic for more information.
+
+## <a id='bosh-metrics-creds'></a>BOSH Metrics Server UAA Credentials
+
+PCF now forwards BOSH health metrics generated for all VMs in a deployment to the Loggregator Firehose by default. 
+
+To support this feature, Ops Manager v2.0.0 colocates the new BOSH Metrics Server on the BOSH Director and includes a UAA client with the correct authorities and scopes. 
+
+To access BOSH Metrics Server UAA credentials, tile authors can use the following two accessors:
+
+* `(( $director.bosh_metrics_forwarder_client_name ))` returns the name of the client. 
+* `(( $director.bosh_metrics_forwarder_client_secret ))` returns the value of the auto-generated client secret.
+
+## <a id='named-manifest'></a>Named Manifests for Collection
+
+<p class="note breaking"><strong>Breaking Change</strong>: The <code>current_record</code> property is now reserved. You can no longer create a new property named <code>current_record</code>.</p>
+
+Tile authors can specify a property for collection within the `named_manifest` section of tile metadata.
+Use the `current_record` property within a collection record to refer to other properties in the same record.
+For example:
+
+```
+  - name: collection-job
+    type: collection
+    configurable: true
+    property_blueprints:
+      - name: blueprint-name
+        type: string
+    named_manifests:
+    - name: example-manifest
+      manifest: |
+        name:  (( current_record.blueprint-name.value ))
+```
+
+See the `named_manifest` section of the [Product Template Reference](./product-template-reference.html#named-manifest) topic for more information.
+
+## <a id="pas-props"></a>Pivotal Application Service Tile Property Changes
+
+<p class='note'><strong>Note:</strong> Elastic Runtime has been renamed Pivotal Application Service.</p>
+
+Properties in the Pivotal Application Service (PAS) tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
+
+The following tables list the properties that Pivotal [removed](#removed), [added](#added), [renamed](#renamed), and [retyped] (#retyped) between PAS v1.12 and v2.0:
+
+<table id='removed' border="1" class="nice" >
+    <tr><th>
+  Removed Properties
+    </th></tr><tr><td>
+  <code>.diego_cell.dns_servers</code>
+  </td></tr><tr><td>
+  <code>.doppler.shared_secret_credentials</code>
+  </td></tr><tr><td>
+  <code>.properties.networking_point_of_entry</code>
+  </td></tr><tr><td>
+  <code>.properties.secure_diego_communication</code>
+  </td></tr></table>
+
+<table id='added' border="1" class="nice" >
+    <tr><th>
+  Added Properties
+    </th></tr><tr><td>
+   <code>.properties.cf_networking_enable_space_developer_self_service</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_interface_plugin</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.host</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.password</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.port</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.tls_ca</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database.external.username</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_database_name</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_key_encryption_passwords</code>
+    </td></tr><tr><td>
+  <code>.properties.credhub_tls</code>
+    </td></tr><tr><td>
+  <code>.properties.haproxy_client_certificate</code>
+    </td></tr><tr><td>
+  <code>.properties.routing_custom_ca_certificates</code>
+    </td></tr><tr><td>
+  <code>.properties.secure_service_instance_credentials</code>
+    </td></tr><tr><td>
+  <code>.properties.syslog_rule</code>
+    </td></tr><tr><td>
+  <code>.uaa.cc_service_key_credentials</code>
+    </td></tr><tr><td>
+  <code>.uaa.container_networking_interface_client_credentials</code>
+    </td></tr><tr><td>
+  <code>.uaa.services_credhub_credentials</code>
+  </td></tr></table>
+
+<table id='renamed' border="1" class="nice" >
+    <tr><th colspan=2>
+  Renamed Properties
+    </th></tr><tr><th>
+  v1.12 Name</th><th>v2.0 Name
+    </th></tr><tr><td>
+  <code>.diego_cell.garden_network_mtu</code></td><td><code>.properties.container_networking_interface_plugin.silk.network_mtu</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_log_traffic</code></td><td><code>.properties.container_networking_interface_plugin.silk.enable_log_traffic</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_log_traffic.enable.iptables_accepted_udp_logs_per_sec</code></td><td><code>.properties.container_networking_interface_plugin.silk.iptables_accepted_udp_logs_per_sec</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_log_traffic.enable.iptables_denied_logs_per_sec</code></td><td><code>.properties.container_networking_interface_plugin.silk.iptables_denied_logs_per_sec</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_network_cidr</code></td><td><code>.properties.container_networking_interface_plugin.silk.network_cidr</code>
+    </td></tr><tr><td>
+  <code>.properties.container_networking_vtep_port</code></td><td><code>.properties.container_networking_interface_plugin.silk.vtep_port</code>
+    </td></tr><tr><td>
+  <code>.properties.router_forward_client_cert</code></td><td><code>.properties.routing_tls_termination</code>
+    </td></tr><tr><td>
+  <code>.properties.routing_frontend_idle_timeout</code></td><td><code>.router.frontend_idle_timeout</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.accent_color</code></td><td><code>.properties.push_apps_manager_accent_color</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.company_name</code></td><td><code>.properties.push_apps_manager_company_name</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.currency_lookup</code></td><td><code>.properties.push_apps_manager_currency_lookup</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.display_plan_prices</code></td><td><code>.properties.push_apps_manager_display_plan_prices</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.enable_invitations</code></td><td><code>.properties.push_apps_manager_enable_invitations</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.favicon</code></td><td><code>.properties.push_apps_manager_favicon</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.footer_links</code></td><td><code>.properties.push_apps_manager_footer_links</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.footer_text</code></td><td><code>.properties.push_apps_manager_footer_text</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.global_wrapper_bg_color</code></td><td><code>.properties.push_apps_manager_global_wrapper_bg_color</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.global_wrapper_footer_content</code></td><td><code>.properties.push_apps_manager_global_wrapper_footer_content</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.global_wrapper_header_content</code></td><td><code>.properties.push_apps_manager_global_wrapper_header_content</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.global_wrapper_text_color</code></td><td><code>.properties.push_apps_manager_global_wrapper_text_color</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.logo</code></td><td><code>.properties.push_apps_manager_logo</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.marketplace_name</code></td><td><code>.properties.push_apps_manager_marketplace_name</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.nav_links</code></td><td><code>.properties.push_apps_manager_nav_links</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.product_name</code></td><td><code>.properties.push_apps_manager_product_name</code>
+    </td></tr><tr><td>
+  <code>.push-apps-manager.square_logo</code></td><td><code>.properties.push_apps_manager_square_logo</code>
+  </td></tr></table>
+
+<table id='retyped' border="1" class="nice" >
+    <tr><th colspan=3>
+  Properties Moved to CredHub
+    </th></tr><tr><th>
+  PAS 1.12 Name</th><th>CredHub Name</th></tr><tr><td>
+  <code>.autoscaling.broker_credentials</code></td><td><code>deploy-autoscaling-broker-credentials</code></td></tr><tr><td>
+  <code>.autoscaling.encryption_key</code></td><td><code>deploy-autoscaling-encryption-key</code></td></tr><tr><td>
+  <code>.backup-prepare.backup_encryption_key</code></td><td><code>backup-prepare-backup-encryption-key</code></td></tr><tr><td>
+  <code>.diego_database.bbs_encryption_passphrase</code></td><td><code>diego-db-bbs-encryption-passphrase</code></td></tr><tr><td>
+  <code>.nats.credentials</code></td><td><code>nats-credentials</code></td></tr><tr><td>
+  <code>.nfs_server.blobstore_secret</code></td><td><code>nfs-server-blobstore-secret</code></td></tr><tr><td>
+  <code>.notifications.encryption_key</code></td><td><code>deploy-notifications-encryption-key</code></td></tr><tr><td>
+  <code>.properties.consul_encrypt_key</code></td><td><code>consul-encryption-key</code></td></tr><tr><td>
+  <code>.push-pivotal-account.encryption_key</code></td><td><code>push-pivotal-account-encryption-key</code></td></tr><tr><td>
+  <code>.push-usage-service.secret_token</code></td><td><code>push-usage-service-secret-token</code></td></tr><tr><td>
+  <code>.router.route_services_secret</code></td><td><code>router-route-services-secret</code></td></tr></table>
+
+## <a id='dependencies'></a>Product Dependency Syntax
+
+Tile authors can specify product version dependencies in tile metadata using `~>`.
+Ops Manager interprets this operator based on the context in the metadata.
+For example:
+
+```
+- name: cf
+  version: "~> 1.8"
+- name: example-product
+  version: "~> 1.12.1"
+```
+
+If the version number contains only two segments, Ops Manager interprets `~>` as `>=`.
+In the example above, this includes all versions of `cf` later than `1.8`.
+
+If the version number contains more than two segments, Ops Manager evaluates `~>` for the final segment.
+In the example above, this includes only versions `1.12.x` of `example-product`.
+
+## <a id='consul-ver'></a> Consul Version Requirement
+
+To ensure compatibility with PCF v2.0, tiles using consul must update to consul agent v174 or later. This change supports the effort to transition from consul to BOSH DNS for service discovery. 
+
+## <a id='syslog'></a> Syslog Formatting Requirement
+
+Pivotal requires that PCF v2.0 compatible service tile components emit syslog messages according to the standard documented in [Log Format for PCF Components](./nozzle.html#syslog-format-pcf).
+
+## <a id='boshlinks'></a> Requirement to Use BOSH Links for Credentials and IP Addresses
+
+To ensure compatibility with PCF v2.0, tiles must use BOSH links to retrieve IP addresses and credentials from other components. 
+
+* For credentials, BOSH links allows your service to receive credentials without the security risk of them being exposed in the BOSH deployment manifest. 
+* For IP addresses, BOSH links allows your service to receive IP addresses assigned by BOSH instead of Ops Manager. This enables PCF users to do more automation with Ops Manger-generated manifests because IP address management (IPAM) will not be done by Ops Manager, removing the potential conflict from changes made through automation. 
+
+### <a id='links-procedure'></a> Procedure for Using BOSH Links
+
+1. If you use tile-generator to build your tile, update to the latest version and rebuild.
+1. If you define BOSH jobs in your tile, use `dynamic_ips: 1` and `static_ips: 0` for each job. This uses BOSH for IPAM instead of Ops Manager. 
+  <p class="note"><strong>Note</strong>: Despite the property name <em>dynamic</em>, BOSH keeps your job at the same IP address unless that is not possible, such as when the operator changes the IP address range and that IP address is no longer available.</p>
+1. If a BOSH release in your tile needs the IP address of another component, consume its BOSH link.
+1. If other components need the IP address of your BOSH job, provide a BOSH link.
+1. The following properties are not present in PCF v2.0:
+  * `..cf.doppler.shared_secret_credentials`
+  * `..cf.nats.credentials.identity`
+  * `..cf.nats.credentials.password`
+  * `..cf.properties.consul_encrypt_key`<br><br>
+  If your tile uses any of these properties, you can get them from a BOSH link provided by its respective job. See the following table:
+  <table>
+    <tr>
+      <th>Property</th>
+      <th>BOSH Link</th>
+    </tr>
+    <tr>
+      <td>`.cf.doppler.shared_secret_credentials`</td>
+      <td><a href="https://github.com/cloudfoundry/loggregator/releases/tag/v87">No longer needed</a></td>
+    </tr>
+    <tr>
+      <td>`..cf.nats.credentials.identity`</td>
+      <td><a href="https://github.com/cloudfoundry/nats-release/blob/master/jobs/nats/spec"><code>nats</code></a></td>
+    </tr>
+    <tr>
+      <td>`..cf.nats.credentials.password`</td>
+      <td><a href="https://github.com/cloudfoundry/nats-release/blob/master/jobs/nats/spec"><code>nats</code></a></td>
+    </tr>
+    <tr>
+      <td>`..cf.properties.consul_encrypt_key`</td>
+      <td><a href="https://github.com/cloudfoundry/loggregator/releases/tag/v87"><code>consul_common</code></a></td>
+    </tr>
+  </table><br>
+  For implementation details, refer to the with-link examples in our [pcf-examples repository](https://github.com/cf-platform-eng/pcf-examples) and the [Tile Generator documentation](http://docs.pivotal.io/tiledev/1-12/tile-generator.html). For more background and context on BOSH links, see [BOSH Links: Why and How](https://gist.github.com/Amit-PivotalLabs/c39528248b8cdc4ba8e347f8aa68abb6) and the official [BOSH links documentation](https://bosh.io/docs/links.html).
+
+## <a id='uaa'></a> UAA Endpoint Changes
+
+If your tile uses the `/oauth/token` and `/check_token` endpoints of the UAA API, you must ensure you are using HTTP POST with body instead of HTTP GET requests. Using HTTP GET is no longer supported as it presents a security risk due to the access logs recording query parameters and exposing the UAA token. 
+
+## <a id='sha2'></a> BOSH Releases: Use SHA-2 Hash
+
+You must ensure that your tile signs its components using SHA-2, as SHA-1 has been proven insecure. Follow these steps: 
+
+1. If you use tile-generator to build your tile, update to the latest version and rebuild. 
+1. If you create a BOSH release for your tile, use the `--sha2` flag of the `bosh create-release` command. 
+1. If you include third-party BOSH releases in your tile, update those to newer versions that are signed with SHA-2 hash. 
+
