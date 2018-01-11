@@ -196,6 +196,6 @@ To enable your service broker to store binding credentials in runtime CredHub, d
 
 ## <a id="ssi-vs-internal"></a>SSI vs. Internal Service Credentials
 
-When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when PAS binds an app binds to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the app to enable it to access the service.
+When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when PAS binds an app to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the CC to enable the app to access the service.
 
-These SSI credentials are different from credentials that the tile uses internally, for example to give the service broker access to an internal database. PAS generates the internal tile credentials for a service when the service is first installed, and stores them in BOSH CredHub, not runtime CredHub.
+These SSI credentials are different from credentials that the tile uses internally, for example, to give the service broker access to an internal database. PAS generates the internal tile credentials for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
