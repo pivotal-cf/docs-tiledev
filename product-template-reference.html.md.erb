@@ -100,6 +100,17 @@ Pivotal recommends that you set it to 1.
 Ops Manager sorts tiles alphabetically if all tiles have the same rank.
 This is a known weak point.
 
+### <a id='top-service-broker'></a> service_broker
+
+Boolean. Optional, default `false`.
+Should be set to `true` for on-demand service brokers, which will:
+
+- Enable the service network selector property type.
+- Require the operator to select a service network during tile configuration.
+  Tile authors can reference the selected service network with `(( $self.service_network ))`.
+- Include a UAA client for the service to use.
+  Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
+
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
 
 Hash. Required.
