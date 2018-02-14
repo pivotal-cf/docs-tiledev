@@ -757,6 +757,8 @@ Boolean. Required.
 You can give users control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
 To limit a job to a single AZ, set this to `true`. 
 
+<p class="breaking note"><strong>WARNING: </strong> Changing the <code>single_az_only</strong> setting may switch your VM AZ, which may cause an orphaned disk.</p>
+
 ### <a id='job-max-in-flight'></a> max\_in\_flight
 
 Integer. Required.
