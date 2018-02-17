@@ -23,36 +23,42 @@ tiles, except for Pivotal's Ops Manager. But if you followed the recommended
 [staged development approach](development.html) you will not need an actual full
 PCF environment until the later phases of your development.
 
-## Setting up BOSH-Lite
+### <a id="setup-boshlite"></a>Setting up BOSH-Lite
 
 - [Install BOSH-Lite](https://github.com/cloudfoundry/bosh-lite)
 
 	<p class="note"><strong>Note</strong>: For this type of development environment, you only need BOSH-Lite itself to deploy managed service releases. You do **not** need to follow the instructions to Deploy Cloud Foundry in BOSH-Lite, as Cloud Foundry is provided by the PCF Dev installation above.</p>
 
-## Setting up PCF Dev
+### <a id="setup-pcfdev"></a>Setting up PCF Dev
 
 - [Try PCF on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
 
 
 ## <a id="pws"></a>PWS or Other Supported CF Infrastructure
 
-- [Set Up Your PWS Account and Download the cf CLI](http://docs.run.pivotal.io/starting/index.html) explains how to get started with Pivotal Web Services (PWS), a highly-available, production-scale PCF environment hosted by Pivotal.
+Pivotal Web Services (PWS) is a highly-available, production-scale PCF environment hosted by Pivotal. You can use it to develop and run PCF apps, but a PWS account does not give access to Ops Manager and its Installation Dashboard, which is where PCF operators install and configure tiles.
+
+- [Set Up Your PWS Account and Download the cf CLI](http://docs.run.pivotal.io/starting/index.html) explains how to get started with Pivotal Web Services (PWS).
 
 ## <a id="pcf"></a>PCF with Ops Manager
 
-<a name="setup"></a> 
+### <a id="shared"></a>Shared PCF Development Environments
 
-Partners who participate in our program have access to a number of shared
-PCF environments that are operated and managed by Pivotal. If you are not
-(yet) in our program, need a dedicated environment, or want to be able to
-work offline, you can set up your own environment. Often, a
-[developer environment](./environments.html#pcfdev) is sufficient for the early
-phases of an integration effort. But eventually, you will need access to
-a complete environment that includes Pivotal's Ops Manager on one of the
-supported infrastructures:
+Pivotal operates and manages a number of shared PCF environments for Pivotal Technical Partnership Program (PTPP) program members to develop their tiles on.
+
+To access the URLs and login credentials for these environments, log into the [Tile Dashboard](https://tile-dashboard.cfapps.io/static/index.html#/environments) using the same credentials that you use for [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
+
+If you are not in the PTPP or cannot access Pivotal Partners Slack, email isv@pivotal.io.
+
+### <a id="diy"></a>Install Your Own PCF Environment
+
+If you need an isolated or dedicated PCF development environment, or you need to work offline, you can install your own environment that includes Pivotal's Ops Manager:
 
 - [Installing Pivotal Cloud Foundry](http://docs.pivotal.io/pivotalcf/installing/index.html)
 <a name="operations"></a> 
 - [Operating Pivotal Cloud Foundry](http://docs.pivotal.io/pivotalcf/opsguide/index.html)
 <a name="upgrade"></a> 
 - [Upgrading Pivotal Cloud Foundry](http://docs.pivotal.io/pivotalcf/customizing/upgrading-pcf.html)
+
+The PTPP program does not troubleshoot partner installations of PCF development environments.
+
