@@ -197,7 +197,11 @@ Elastic Runtime use the following format:
   health_check: none                 # optional
   configurable_persistence: true     # optional
   needs_cf_credentials: true         # optional
-  auto_services: p-mysql p-redis     # optional
+  auto_services:                     # optional
+  - name: p-mysql
+    plan: 100MB
+  - name: p-redis
+    plan: shared-vm
   consumes:                          # optional
     redis:
       from: redis
@@ -257,7 +261,11 @@ of just `app` or `docker-app`:
     path:
     # ...
   needs_cf_credentials: true           # optional
-  auto_services: p-mysql p-redis       # optional
+  auto_services:                       # optional
+  - name: p-mysql
+    plan: 100MB
+  - name: p-redis
+    plan: shared-vm
   enable_global_access_to_plans: true  # optional
 ```
 
