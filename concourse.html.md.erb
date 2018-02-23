@@ -1,29 +1,80 @@
 ---
-title: Concourse
+title: Continuous Integration Testing
 owner: Services
 ---
 
-This topic explains how to use [Concourse](http://concourse.ci) continuous integration (CI) to help develop and integrate apps for Pivotal Cloud Foundry (PCF).
+This topic explains how to use the [Tile Dashboard](https://tile-dashboard.cfapps.io/static/index.html#/environments) continuous integration (CI) system and its underlying [Concourse](http://concourse.ci) platform to help develop and integrate software services for Pivotal Cloud Foundry (PCF).
 
-## <a id="overview"></a> Overview
+## <a id="tile-dashboard-ci"></a> Tile Dashboard CI
 
-PCF is a fast moving platform as we are constantly extending and enhancing it. When you integrate your software with PCF, you should make sure that your integration continues to work with every new release of the platform. One way to ensure that is to set up a CI pipeline for your tile against a PCF deployment that is constantly updated with the latest Alpha release of the platform.
+With your tile in our Tile Dashboard continuous integration testing system, we all win. You stay on top of changes to PCF that may require changes in your tile. Our field representatives gain a clear understanding of your tile’s compatibility across PCF versions, underlying IaaS, and different flavors of environments. This also relieves you from maintaining your own CI system, keeping up with latest PCF versions, etc. Further, the Tile Dashboard CI is part of our [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0), which is used to inform the field of the quality and capabilities of your tile, so it is important to get your tile performing well.
 
-Our tool of choice for setting up CI is [concourse](http://concourse.ci/).
-While you are of course free to use whatever system you are familiar with,
-our tools and documentation are built to make concourse CI as easy as
-possible.
+### <a id="td-ci-steps"></a> Tile Dashboard Steps
 
-## <a id="server"></a> Set Up a Concourse Server
+Tile Dashboard runs your tile through a series of steps, which include:
 
-You will need a concourse server to host your pipeline. If you partner with
-us, we have servers that can host your pipeline, and S3 storage that can be
-used to transfer artifacts to and from your servers. If you choose to set
-up your own, instructions can be found here:
+* Download your tile from PivNet and check hash integrity.
+* Scan your tile for known issues or potential problems, like:
+  - Use of deprecated properties.
+  - Use of properties whose values/meanings have changed.
+  - Use of features that are no longer supported.
+* Configure, install, test, and uninstall your tile in several PCF environments:
+  - A patch release of every supported ERT/PAS minor version.
+  - Every supported IaaS.
+  - Environments with extra configuration (e.g., multiple availability zones, IPsec).
 
-- [Setting up concourse](http://concourse.ci/setting-up.html)
+Tile Dashboard reports the results of each step. The results report for each step includes a general pass/fail status, the execution log, and output. If a test failed for a reason unrelated to a tile (e.g., a network glitch), you can retry the step from Tile Dashboard.
+
+### <a id="what-we-need"></a> What Pivotal Needs from You
+
+To integrate your tile with [Tile Dashboard](https://tile-dashboard.cfapps.io/static/index.html#/environments) CI, Pivotal needs you to upload or send the following:
+
+* Your pre-release [tile](#upload)
+* Your tile's [configuration parameters](#params)
+* One or more [test configurations](#test)
+* Any [backing services](#backing) that the tile requires
+
+These requirements are discussed below.
+
+#### <a id="upload"></a> Uploaded Tile
+
+If this is your first tile, Marina or Jake can upload pre-releases of your product. Tile Dashboard will then pick up those pre-releases and run them through CI.
+
+After the first release of your tile, the admin for your tile can continue to upload new pre-releases for future versions to network.pivotal.io.
+
+#### <a id="params"></a> Tile Configuration Parameters
+
+To automate the installation of your tile, we need the configuration parameters the operator would enter into Ops Manager forms. Tile Dashboard includes an interface for you to enter this configuration directly for properties, in the format used by the [om tool](https://github.com/pivotal-cf/om). Click on your tile’s slug, then click the “Configure” link near the top of the screen, and you can enter the following information:
+
+* **Properties**: Configure your tile’s properties, if necessary, using the [JSON product properties format used by om](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties). (Note: this is the same format used by the Operations Manager product properties API.)
+
+* **UAA Users**: Include a list of UAA users to use for testing your tile. The format is a JSON array, with the specific format described on the configuration page.
+
+#### <a id="test"></a> Test Configuration
+
+After your tile is installed, Tile Dashboard will run any post-deploy errands your tile has defined, including tests. Ideally your tile will include tests that exercise all of its functionality. We have some ideas for expanding the Tile Dashboard testing capabilities; if you’re interested in other ways of defining tests, please reach out to us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
+
+#### <a id="backing"></a> Backing Services
+
+If your tile requires a backing service outside of the existing PCF environment (e.g., your tile is a service broker to a SaaS offering), you are responsible for maintaining the backing service in an environment that the Tile Dashboard can reach (i.e., it must be internet-facing).
+
+## <a id="overview"></a> Concourse
+
+The [Tile Dashboard CI](#tile-dashboard-ci) that Pivotal runs for its technical partnership program members uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue to work with every new release of the platform.
+
+With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline that integrates and tests your tile on your own deployment of the latest PCF.
+
+While you are of course also free to use any other CI system you are familiar with, Pivotal's tools and documentation are built to make Concourse CI as easy as possible.
+
+### <a id="server"></a> Set Up a Concourse Server
+
+You will need a Concourse server to host your pipeline. If you partner with
+Pivotal, the [Tile Dashboard CI](#tile-dashboard-ci) servers can host your pipeline and provide S3 storage to exchange artifacts with your own servers. If you choose to set
+up your own Concourse server, instructions can be found here:
+
+- [Setting up Concourse](http://concourse.ci/setting-up.html)
  
-## <a id="pipeline"></a> Create a Concourse Pipeline for Your Tile
+### <a id="pipeline"></a> Create a Concourse Pipeline for Your Tile
 
 A typical CI pipeline for a tile consists of the following jobs:
 
@@ -33,11 +84,11 @@ A typical CI pipeline for a tile consists of the following jobs:
 - Remove it from PCF
 
 You describe this pipeline in a `pipeline.yml` file that is then uploaded to the
-concourse server. [Tile Generator](tile-generator.html) contains a sample
+Concourse server. [Tile Generator](tile-generator.html) contains a sample
 pipeline that you can clone for your own tile. We are working on automating
 the process of generating a pipeline template for you.
  
-## <a id="pool"></a> Set Up PCF for Your CI Pipeline
+### <a id="pool"></a> Set Up PCF for Your CI Pipeline
 
 Pivotal partners who have us host their pipeline have access to a pool of PCF
 instances that are managed by us and are regularly updated with the latest
