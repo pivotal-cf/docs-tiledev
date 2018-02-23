@@ -61,3 +61,14 @@ has the potential for bugs, downtime, and security vulnerabilities.
 stemcells and application dependencies, like frameworks and libraries. Instead,
 you become directly responsible for managing all software that is in the Docker
 images you deploy.
+
+## <a id="enhancing"></a>Enhancing the BOSH Release
+
+After the basic BOSH release is in place, additional features for logging
+help operators run the service. For logging information, see 
+[syslog-migration-release](https://github.com/pivotal-cf/syslog-migration-release).
+
+Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded to the configured syslog server by the release.
+Integrating syslog forwarding into a tile should not require code changes; 
+it only requires including the release and configuration forms in the `tile.yml`.
+For an example, see [pcf-examples/tile-for-bosh-with-syslog](https://github.com/cf-platform-eng/pcf-examples/tree/master/tile-for-bosh-with-syslog).
