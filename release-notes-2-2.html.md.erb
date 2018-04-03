@@ -1,12 +1,16 @@
 ---
-title: PCF v2.1 Partners Release Notice
+title: PCF v2.2 Partners Release Notice
 owner: Technical Program Management
 ---
 
-This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.1 introduces which may be relevant to partner service tiles.
+This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.2 introduces which may be relevant to partner service tiles.
 
-## <a id="ip-discontinued"></a> Ops Manager IP Management Removed
+### <a id="om-credhub"></a> Ops Manager Credentials Stored in CredHub
 
-Ops Manager no longer allows operators to allocate or manage IPs. Instead, only the BOSH Director manages IP allocation. This change is to keep IP management in one central location without redundancy. To learn more about BOSH Director and how it handles both networks and IPs, see [Dynamic Networks](https://bosh.io/docs/networks.html) in the BOSH documentation.
+Ops Manager sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with asterisk. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens GitHub link beginning with `/opsmgr/`.
 
-As a result of this change, Ops Manager no longer supports the `first_ip`, `ips`, and `ips_by_availability_zone` accessors. For a list of Ops Manager accessors, see [Ops Manager Provided Snippets](product-template-reference.html#ops-man-snippets).
+Ops Manager sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes the Ops Manager-specified credentials from CredHub.
+
+This feature offers greater security for credentials. For more information about where your credentials are stored, see [BOSH CredHub](https://docs.pivotal.io/pivotalcf/credhub/#bosh).
+
+<p><strong>Note:</strong> Only operators can make changes to Ops Manager credentials through the Ops Manager UI or API. Any change you attempt to the tile manifest or CredHub is overriden by Ops Manager on the next deploy.</p>
