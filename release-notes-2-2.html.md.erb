@@ -7,11 +7,11 @@ This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.2 introduce
 
 ## <a id="om-credhub"></a> Ops Manager Credentials Stored in CredHub
 
-Ops Manager sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with asterisk. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens GitHub link beginning with `/opsmgr/`.
+Ops Manager sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with the asterisk character. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens CredHub link beginning with `/opsmgr/`.
 
-Ops Manager sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes the Ops Manager-specified credentials from CredHub.
+Ops Manager sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes its credentials from CredHub.
 
 This feature offers greater security for credentials. For more information about where your credentials are stored, see [BOSH CredHub](https://docs.pivotal.io/pivotalcf/credhub/#bosh).
 
-<p><strong>Note:</strong> Only operators can make changes to Ops Manager credentials through the Ops Manager UI or API. Any change you attempt to the tile manifest or CredHub is overriden by Ops Manager on the next deploy.</p>
+<p class="note"><strong>Note:</strong> Only operators can make changes to Ops Manager credentials through the Ops Manager UI or API. Any change you attempt to the tile manifest or CredHub is overriden by Ops Manager on the next deploy.</p>
 
