@@ -67,8 +67,8 @@ images you deploy.
 After the basic BOSH release is in place, additional features for logging
 help operators run the service. For logging information, see 
 [syslog-release](https://github.com/cloudfoundry/syslog-release).
-You should expose the property `syslog.migration.disabled` using the tile's forms,
-as not all customers configure syslog draining.
+You should expose the property `syslog.migration.disabled` using the tile's forms
+because not all customers configure syslog draining.
 
 Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded to the configured syslog server by the release.
 Integrating syslog forwarding into a tile should not require code changes; 
