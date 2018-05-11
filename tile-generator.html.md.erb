@@ -564,6 +564,7 @@ $ docker pull k8s.gcr.io/spark:1.5.1_v3
 $ docker save k8s.gcr.io/spark:1.5.1_v3 -o spark-1.5.1_v3.tgz
 $ docker pull apache/zeppelin:0.7.3
 $ docker save apache/zeppelin:0.7.3 -o zeppelin-0.7.3.tgz
+$ chmod 644 *.tgz
 ```
 NOTE: in order to find the Docker images paths, look in [values.yml](https://github.com/kubernetes/charts/blob/master/stable/spark/values.yaml). 
 
