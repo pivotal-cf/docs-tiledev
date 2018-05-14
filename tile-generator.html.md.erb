@@ -514,6 +514,108 @@ In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sy
       - "8080:8080"
 ```
 
+#### <a id="helm_chart_kibosh"></a> Helm Charts with Kibosh
+
+Pivotal Container Services (PKS) provides the capability to run Kubernetes services
+in a Pivotal Cloud Foundry (PCF) environment. [Helm](https://helm.sh/) is a method to
+package Kubernetes services.
+
+Tile Generator provides a convenient way to package your Helm Chart, along with 
+the [Kibosh](https://github.com/cf-platform-eng/kibosh) OSBAPI broker, into a PCF Tile.
+
+When the tile is deployed, your Helm chart service will be available in the cf marketplace. 
+Developers can then `cf create-service` causing the chart to be Helm installed on a 
+Kubernetes cluster, and developer can `cf bind` the service to their application. 
+
+Use the following format in your tile.yml: 
+
+```
+- name: name
+  type: kibosh
+  helm_chart_dir: directory/to/helm/chart
+```
+By convention the name should match the name of the Helm chart found in Chart.yaml. The
+`helm_chart_dir` is the path to the directory that contains Chart.yaml. 
+
+Prior to running `tile build`, there are some minor modifications that 
+may need to be done to your Helm chart. As described in the Configuration section of the 
+[Kibosh Readme](https://github.com/cf-platform-eng/kibosh/blob/master/README.md) you will need to: 
+  - Create a `plans.yaml` file that defines the naming of your service in the cf marketplace. 
+  - Create an `images` directory under `helm_chart_dir`. 
+  - Download the Docker images used by your Helm chart from your repository 
+    (such as hub.docker.com) and put them into the `images` directory as .tgz files (See example below). You can name the 
+    files arbitrarily as long as they have a .tgz extension.  All .tgz Docker images in this directory
+    will be loaded by the tile into the private registry and the metadata inside the Docker image 
+    is the link to the image definitions in `values.yaml`. 
+  - Reference each of those Docker images in your `values.yaml` file.
+  - Modify any references to images in your Helm templates to point to the images using the 
+    required `values.yaml` structure. 
+These additions to the Helm chart allow the Kibosh broker and your tile to 
+manage and deploy your Helm chart in a consistent way across the PCF environment. 
+
+Example of building [Apache Spark Helm Chart](https://github.com/kubernetes/charts/tree/master/stable/spark) into a tile: 
+
+First, fetch the chart and the Docker images: 
+```
+$ git clone git@github.com:kubernetes/charts.git
+$ cd charts/stable/spark
+$ mkdir images && cd images
+$ docker pull k8s.gcr.io/spark:1.5.1_v3
+$ docker save k8s.gcr.io/spark:1.5.1_v3 -o spark-1.5.1_v3.tgz
+$ docker pull apache/zeppelin:0.7.3
+$ docker save apache/zeppelin:0.7.3 -o zeppelin-0.7.3.tgz
+```
+NOTE: in order to find the Docker images paths, look in [values.yml](https://github.com/kubernetes/charts/blob/master/stable/spark/values.yaml). 
+
+Next, modify `values.yml` and add: 
+```
+images:
+  spark:
+    image: "k8s.gcr.io/spark"
+    imageTag: "1.5.1_v3"
+  zeppelin:
+    image: "apache/zeppelin"
+    imageTag: "0.7.3"
+```
+
+Then, update your templates. Change references to `Image` and `ImageTag` (like this `{{ .Values.Master.Image }}`) to 
+the new image pattern (like `{{ .Values.images.spark.image }}`).   Note that Helm charts may use different
+patterns for specifying images.   The purpose of this step is to make those references consistent.
+
+Create the tile. 
+```
+# Create a directory outside the helm chart used above.  
+$ mkdir spark-tile && cd spark-tile
+$ tile init
+```
+Replace the contents of tile.yml with the following: 
+```
+---
+name: spark
+icon_file: icon.jpg
+label: Spark
+description: Spark k8s Tile
+
+packages:
+- name: spark
+  type: kibosh
+  helm_chart_dir: <path to spark helm chart created above>
+```
+Finally, generate the tile. (It is located at spark-tile/product/spark-<version>.pivotal)
+```
+$ tile build
+```
+
+Some limitations to be aware of when deploying Helm charts into PKS Kubernetes clusters: 
+  - Once deployed, a persistent volume claim cannot be resized. This is the error that
+    you may get if you try to resize: `Error: UPGRADE FAILED: 
+    PersistentVolumeClaim is invalid: spec: Forbidden: field is immutable after creation`
+  - Some other disk types can be resized, but this requires enabling alpha
+    [Feature Gates](https://kubernetes.io/docs/reference/feature-gates) 
+  - [Selectors](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector) 
+    are immutable. Many Helm charts use name and other things as selectors, so cautions around changes. 
+
+    
 ### <a id="custom-forms"></a> Custom Forms and Properties
 
 You can pass custom properties to all apps deployed by your tile by adding
