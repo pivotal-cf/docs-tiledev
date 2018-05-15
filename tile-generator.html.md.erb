@@ -558,22 +558,21 @@ manage and deploy your Helm chart in a consistent way across the PCF environment
 
 Example of building [Apache Spark Helm Chart](https://github.com/kubernetes/charts/tree/master/stable/spark) into a tile: 
 
-First, fetch the chart and the Docker images: 
-```
-$ git clone git@github.com:kubernetes/charts.git
-$ cd charts/stable/spark
-$ mkdir images && cd images
-$ docker pull k8s.gcr.io/spark:1.5.1_v3
-$ docker save k8s.gcr.io/spark:1.5.1_v3 -o spark-1.5.1_v3.tgz
-$ docker pull apache/zeppelin:0.7.3
-$ docker save apache/zeppelin:0.7.3 -o zeppelin-0.7.3.tgz
-```
+First, fetch the chart and the Docker images. To find the Docker images paths examine values.yml. 
 
-<p class="note"><strong>Note</strong>: To find the Docker images paths,
-   see <a href="https://github.com/kubernetes/charts/blob/master/stable/spark/values.yaml">values.yml</a>. </p>
+```bash
+git clone git@github.com:kubernetes/charts.git
+cd charts/stable/spark
+mkdir images && cd images
+docker pull k8s.gcr.io/spark:1.5.1_v3
+docker save k8s.gcr.io/spark:1.5.1_v3 -o spark-1.5.1_v3.tgz
+docker pull apache/zeppelin:0.7.3
+docker save apache/zeppelin:0.7.3 -o zeppelin-0.7.3.tgz
+```
 
 Next, modify `values.yml` and add: 
-```
+
+```yaml
 images:
   spark:
     image: "k8s.gcr.io/spark"
@@ -589,14 +588,16 @@ Helm charts may use different
 patterns for specifying images.
 The purpose of this step is to make those references consistent.
 
-Create the tile. 
+Create the tile in a directory outside the helm chart. 
+
+```bash
+mkdir spark-tile && cd spark-tile
+tile init
 ```
-# Create a directory outside the helm chart used above.  
-$ mkdir spark-tile && cd spark-tile
-$ tile init
-```
+
 Replace the contents of tile.yml with the following: 
-```
+
+```yaml
 ---
 name: spark
 icon_file: icon.jpg
@@ -608,12 +609,15 @@ packages:
   type: kibosh
   helm_chart_dir: <path to spark helm chart created above>
 ```
+
 Finally, generate the tile. (It is located at spark-tile/product/spark-<version>.pivotal)
-```
-$ tile build
+
+```bash
+tile build
 ```
 
-Some limitations to be aware of when deploying Helm charts into PKS Kubernetes clusters: 
+Some limitations to be aware of when deploying Helm charts into PKS Kubernetes clusters:
+ 
   - Once deployed, a persistent volume claim cannot be resized. This is the error that
     you may get if you try to resize: `Error: UPGRADE FAILED: 
     PersistentVolumeClaim is invalid: spec: Forbidden: field is immutable after creation`
