@@ -547,7 +547,7 @@ might need to be done to your Helm chart. As described in the Configuration sect
     (such as hub.docker.com) and put them into the `images` directory as TGZ files. 
     See the example below. You can name the 
     files arbitrarily as long as they have a `.tgz` extension.  All TGZ Docker images in this directory
-    are loaded by the tile into the private registry and the metadata inside the Docker image 
+    are loaded by the tile into the private registry, and the metadata inside the Docker image 
     is the link to the image definitions in `values.yaml`. 
   - Reference each of those Docker images in your `values.yaml` file.
   - Modify any references to images in your Helm templates to point to the images using the 
@@ -558,7 +558,7 @@ manage and deploy your Helm chart in a consistent way across the PCF environment
 
 Example of building [Apache Spark Helm Chart](https://github.com/kubernetes/charts/tree/master/stable/spark) into a tile: 
 
-First, fetch the chart and the Docker images. To find the Docker images paths examine values.yml. 
+First, fetch the chart and the Docker images. To find the Docker images paths examine `values.yml`. 
 
 ```bash
 git clone git@github.com:kubernetes/charts.git
@@ -588,14 +588,14 @@ Helm charts may use different
 patterns for specifying images.
 The purpose of this step is to make those references consistent.
 
-Create the tile in a directory outside the helm chart. 
+Create the tile in a directory outside the Helm chart. 
 
 ```bash
 mkdir spark-tile && cd spark-tile
 tile init
 ```
 
-Replace the contents of tile.yml with the following: 
+Replace the contents of `tile.yml` with the following: 
 
 ```yaml
 ---
@@ -610,7 +610,8 @@ packages:
   helm_chart_dir: <path to spark helm chart created above>
 ```
 
-Finally, generate the tile. (It is located at spark-tile/product/spark-<version>.pivotal)
+Finally, generate the tile.
+It is located at `spark-tile/product/spark-<version>.pivotal`.
 
 ```bash
 tile build
@@ -618,8 +619,8 @@ tile build
 
 Some limitations to be aware of when deploying Helm charts into PKS Kubernetes clusters:
  
-  - Once deployed, a persistent volume claim cannot be resized. This is the error that
-    you may get if you try to resize: `Error: UPGRADE FAILED: 
+  - After it is deployed, a persistent volume claim cannot be resized. This is the error that
+    you might get if you try to resize: `Error: UPGRADE FAILED: 
     PersistentVolumeClaim is invalid: spec: Forbidden: field is immutable after creation`
   - Some other disk types can be resized, but this requires enabling alpha
     [Feature Gates](https://kubernetes.io/docs/reference/feature-gates) 
@@ -737,7 +738,7 @@ Service instances provisioned this way survive updates, but are deleted
 when the tile is uninstalled.
 
 <p class="note"><strong>Note</strong>:  The name is the name of the provided <em>service, not the broker</em>.
-    In many cases these are not the same, and a single broker may even offer
+    In many cases these are not the same, and a single broker might even offer
     multiple services. Use <code>cf service-access</code> to see the services and plans
     offered by installed service brokers.</p>
 
