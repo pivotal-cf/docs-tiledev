@@ -1,5 +1,17 @@
 ## This repo is for Tile Developer Guide content only. See the [Tile Developer Guide Book Repo](https://github.com/pivotal-cf/docs-book-tiledev) for the book that publishes this content.
 
+## Which branch to use?
+
+**Note**: Provide instructions in your PRs to indicate which branches you want Docs to apply your commits to. 
+
+| Branch name | Use for… |
+|-------------| ------|
+| master      | https://docs-pcf-staging.cfapps.io/tiledev/2-3/ This is the "edge" build. |
+| 2.2         | v2.2 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-2/ and https://docs.pivotal.io/tiledev/2-2 | 
+| 2.1         | v2.1 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-1/ and https://docs.pivotal.io/tiledev/2-1 | 
+| 2.0         | v2.0 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-0/ and https://docs.pivotal.io/tiledev/2-0 | 
+| 1.12        | v1.12 publishes to https://docs-pcf-staging.cfapps.io/tiledev/1-12/ and https://docs.pivotal.io/tiledev/1-12 | 
+
 ## PCF Services Documentation Template
 
 This template helps Pivotal development teams prepare documentation for Pivotal Cloud Foundry (PCF) services that appear on [Pivotal Network](https://network.pivotal.io/). 
