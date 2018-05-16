@@ -289,7 +289,7 @@ broker registration fails.
 
 Some service brokers support operator-defined service plans, for instance when
 the plans reflect customer license keys. To allow operators to add plans from
-the tile configuration, add the following section at the top level of your tile.yml:
+the tile configuration, add the following section at the top level of your `tile.yml`:
 
 ```
 service_plan_forms:
@@ -527,7 +527,7 @@ When the tile is deployed, your Helm chart service is available in the Marketpla
 Developers can then `cf create-service` causing the chart to be Helm installed on a 
 Kubernetes cluster, and developer can `cf bind` the service to their app. 
 
-Use the following format in your tile.yml: 
+Use the following format in your `tile.yml`: 
 
 ```
 - name: name
