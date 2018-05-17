@@ -709,6 +709,19 @@ page is saved. The API does not return the value entered in this field.
   
 If you want to mark a single-line text field as `secret`, you must set `type: secret` 
 in your property blueprint, as seen in the example below.
+  
+```
+- name: account-info-1
+  label: Account Info
+  description: Example Account Information Form
+  properties:
+  - name: username
+    type: string
+    label: Username
+  - name: password
+    type: secret
+    label: Password
+```
 
 If you want to mark a multi-line text area as `secret`, you must set `type: secret` 
 and `display_type: text_area` in your property blueprint, as seen in the example 
