@@ -703,7 +703,16 @@ obfuscated in the installation logs (all but the first two characters are
 replaced by `*****`). But their value is passed to your apps in
 plain text as all other value types.
 
-Ops Manager supports a text area in its UI that tile authors can mark as `secret`. When a text area is marked as `secret`, the UI shows `*` when the page is saved. The API does not return the value entered in this field. If you want a `secret` property to use a text area instead of the default text field, you must set `display_type` to `’text_area’` in your property blueprint, as seen in the example below.
+Ops Manager supports a text area in its UI that tile authors can mark as 
+`secret`. When a text area is marked as `secret`, the UI shows `*` when the 
+page is saved. The API does not return the value entered in this field.
+  
+If you want to specify a single-line text field, you must set `type: secret` 
+in your property blueprint, as seen in the example below.
+
+If you want to specify a multi-line text area, you must set `type: secret` 
+and `display_type: text_area` in your property blueprint, as seen in the example 
+below.
 
 ```
 property_inputs:
