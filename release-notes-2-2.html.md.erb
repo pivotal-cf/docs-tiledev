@@ -8,9 +8,9 @@ This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.2 introduce
 
 ## <a id="om-credhub"></a> Ops Manager Credentials Stored in CredHub
 
-Ops Manager sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with the asterisk character. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens CredHub link beginning with `/opsmgr/`.
+Ops Manager v2.2 sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with the asterisk character. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens CredHub link beginning with `/opsmgr/`.
 
-Ops Manager sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes its credentials from CredHub.
+Ops Manager v2.2 sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes its credentials from CredHub.
 
 This feature offers greater security for credentials. For more information about where your credentials are stored, see [BOSH CredHub](https://docs.pivotal.io/pivotalcf/credhub/index.html#bosh).
 
@@ -24,3 +24,60 @@ Ops Manager v2.2 supports a text area in its UI that tile authors can mark as `s
 If you want to mark a text area as `secret`, you must set `type: secret` and `display_type: text_area` in your property blueprint.
 
 For more information, see the [Custom Forms and Properties](./tile-generator.html#custom-forms) section of the _Tile Generator_ topic.
+
+
+## <a id='om-release-notes'></a> Other Ops Manager v2.2 Release Notes
+
+For other Ops Manager v2.2 release notes, see [PCF Ops Manager Release v2.2 Release Notes](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/opsmanager-rn.html).
+
+
+## <a id='breaking-changes'></a> Breaking Changes
+
+### <a id='bosh-dns'></a> BOSH DNS Enabled By Default
+
+BOSH DNS will be enabled by default, rather than Consul.
+
+
+## <a id='deprecations'></a> Upcoming Deprecations
+
+### <a id='stemcells'></a> Stemcell 3363 and Earlier
+
+For every PCF release, Pivotal recommends you upgrade the stemcell used in your BOSH releases and tiles to the latest available on [Pivotal Network](https://network.pivotal.io/products/stemcells). This will ensure you get all the latest features and important security updates. In the PCF v2.2 timeframe, the 3363 stemcell line will be deprecated. Update your BOSH releases and rebuild your tile with Tile Generator to use the latest stemcell version.
+
+### <a id='non-tls-blobstore'></a> Non-TLS Blobstore Communications
+
+Non-TLS communication to the blobstore will be deprecated in PCF v2.2 and removed in PCF v2.3.
+
+### <a id='mysql-v1'></a> MySQL v1 Tile
+
+The Pivotal MySQL for PCF v1 (p-mysql) tile will be deprecated in PCF v2.2 and removed in PCF v2.3. Partner tiles that depend on this tile should start migrating to the MySQL for PCF v2 (pivotal-mysql) tile. If you use p-mysql, you should change your tile to use pivotal-mysql, update your tile to declare a dependency on pivotal-mysql, and document a strategy for data migration.
+
+
+## <a id='pcf-2-1'></a> PCF v2.1 Compatibility Reminder
+
+### <a id='ip-accessors'></a> Removal of IP Accessors .ips and .first_ip
+
+Tiles must use BOSH links to retrieve IP addresses for other components.
+
+#### <a id='bosh-links-ipam'></a> How BOSH Links Simplify IP Address Management
+
+Customers want to do more automation using Ops Manager-generated manifests. This is difficult because any IP address management done by Ops Manager might conflict with changes made through the customer's own automation.
+
+BOSH can now handle all IP address management. Using BOSH links, your software can receive IP addresses assigned by BOSH.
+
+#### <a id='enabling-bosh-links-ipam'></a> Enabling IP Address Management with BOSH Links
+
+1. If you use Tile Generator to build your tile, update to the latest version and rebuild.
+
+1. If you have BOSH jobs defined in your tile, specify `dynamic_ips: 1` and `static_ips: 0` for each job. This will set BOSH for IP address management instead of Ops Manager.
+<p class='note'><strong>Note:</strong> BOSH will keep your job at the same IP address unless it is not possible to do so, such as if the operator changes the IP address range and that IP address is no longer available.</p>
+
+1. If a BOSH release in your tile needs the IP address of another component, consume its BOSH link. If other components need your BOSH job's IP address, provide a BOSH link.
+<p class='note'></a><strong>Note:</strong> IP address accessors `.ips` and `.first_ip` will not be available in PCF v2.1.</p>
+
+For more information about implementation, please refer to the with-link examples in the [`pcf-examples` GitHub repository](https://github.com/cf-platform-eng/pcf-examples) and the [Tile Generator](./tile-generator.html) topic. For more background and context on BOSH links, see [BOSH Links: Why and How](https://gist.github.com/Amit-PivotalLabs/c39528248b8cdc4ba8e347f8aa68abb6) and [Sharing Links](https://bosh.io/docs/links/).
+
+
+## <a id='pcf-2-0'></a> PCF v2.0 Compatibility Reminder
+
+PCF v2.0 included breaking changes for which several partner products have not yet updated. For more information, see [PCF v2.0 Partners Release Notice](https://docs.pivotal.io/tiledev/2-0/release-notes-2-0.html).
