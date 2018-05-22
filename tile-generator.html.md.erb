@@ -5,6 +5,7 @@ owner: Services
 
 This topic describes the Tile Generator tool, which helps tile authors develop, package, test, and deploy services and other add-ons to Pivotal Cloud Foundry (PCF).
 
+
 ## <a id="overview"></a> Overview
 
 Tiles are the
@@ -41,7 +42,7 @@ combination of the following package types:
 - Cloud Foundry Service Brokers (both inside and outside the Elastic Runtime)
 - Docker images (both inside and outside the Elastic Runtime)
 
-### <a id="legacy"></a>Legacy Tiles and OSS-Compatible Service Brokers
+### <a id="legacy"></a> Legacy Tiles and OSS-Compatible Service Brokers
 
 Many tile authors, in both Pivotal-internal teams and at external partner companies, built their PCF tiles before Tile Generator existed.
 
@@ -50,10 +51,12 @@ They want to continue serving both sets of users.
 
 All of these tile authors can now use Tile Generator to simplify and speed up their development. Tile Generator can generate an OSS-compatible BOSH release service broker BOSH release in addition to a PivNet-ready PCF tile.
 
+
 ## <a id="screencast"></a> Screencast
 
 For a 7-minute introduction into what Tile Generator is and does, see
 [this screencast](https://www.youtube.com/watch?v=_WeJbqNJWzQ).
+
 
 ## <a id="how-to"></a> How to Use
 
@@ -123,6 +126,7 @@ image in your Dockerfile:
 ```
 FROM cfplatformeng/tile-generator
 ```
+
 
 ## <a id="sample"></a> Build the Sample
 
@@ -626,7 +630,6 @@ Some limitations to be aware of when deploying Helm charts into PKS Kubernetes c
     [Feature Gates](https://kubernetes.io/docs/reference/feature-gates) 
   - [Selectors](https://kubernetes.io/docs/concepts/workloads/controllers/deployment/#selector) 
     are immutable. Many Helm charts use name and other things as selectors, so cautions around changes. 
-
     
 ### <a id="custom-forms"></a> Custom Forms and Properties
 
@@ -698,12 +701,7 @@ is included in the form itself. For a complete list of supported property
 types and syntax, see the
 [Ops Manager Product Template Reference](./product-template-reference.html).
 
-Properties of type `secret` have their value hidden on the forms and
-obfuscated in the installation logs (all but the first two characters are
-replaced by `*****`). But their value is passed to your apps in
-plain text as all other value types.
-
-Ops Manager supports a text area in its UI that tile authors can mark as `secret`. When a text area is marked as `secret`, the UI shows `*` when the page is saved. The API does not return the value entered in this field. If you want a `secret` property to use a text area instead of the default text field, you must set `display_type` to `’text_area’` in your property blueprint, as seen in the example below.
+Ops Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint.
 
 ```
 property_inputs:
@@ -713,7 +711,7 @@ property_inputs:
     display_type: 'text_area'
 ```
 
-### Automatic Provisioning of Services
+### <a id='auto-provision'></a> Automatic Provisioning of Services
 
 Tile Generator automates the provisioning of services. Any app (including
 service brokers and Docker-based apps) that are being pushed into the
@@ -752,7 +750,7 @@ does not support plan changes, this causes the upgrade to fail.
 `configurable_persistence` is really just a special case of `auto_services`,
 letting the user choose between some standard brokers.
 
-### Declaring Product Dependencies
+### <a id='declare-dependencies'></a> Declaring Product Dependencies
 
 When your product has dependencies on others, you can have Ops Manager
 enforce that dependency by declaring it in your `tile.yml` file as follows:
@@ -773,7 +771,7 @@ often appropriate to add those products as a dependency. Tile Generator can
 not do this automatically as it can't always determine which product provides
 the requested service.
 
-### Orgs and Spaces
+### <a id='orgs-spaces'></a> Orgs and Spaces
 
 By default, Tile Generator creates a single new org and space for any
 packages that install into the Elastic Runtime, using the name of the tile and
@@ -846,6 +844,7 @@ package in which you include them. If you want to keep the standard commands, bu
 add additional commands to execute before or after the standard errand, use
 `pre_deploy`, `post_deploy`, `pre_delete`, and/or `post_delete` instead.
 
+
 ## <a id="versioning"></a> Versioning
 
 Tile Generator uses [semver versioning](http://semver.org/). By default, `tile build` 
@@ -867,6 +866,7 @@ tile build <new-version>
 
 The new tile then supports upgrades from `old-version`.
 
+
 ## <a id="upgrades"></a> Upgrades
 
 By default, Tile Generator produces all code necessary to do a blue/green,
@@ -875,9 +875,7 @@ over an older one. For most tile versions this is all that is needed.
 
 Ops Manager has support for performing upgrade actions, like database migrations,
 during a tile upgrade, but this capability is not yet exposed through tile
-generator.
-
-## Example
+generator. For example:
 
 ```bash
 $ tile build
@@ -906,12 +904,14 @@ created tile tibco-bwce-0.0.2.pivotal
 This tile includes a single large buildpack and takes less than 15 seconds
 to build including the CF CLI download and the BOSH release generation.
 
+
 ## <a id="commands"></a> Supported Commands
 
 ```bash
 tile init [<tile-name>]
 tile build [patch|minor|major|<version>]
 ```
+
 
 ## <a id="credits"></a> Credits
 
