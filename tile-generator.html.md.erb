@@ -702,8 +702,8 @@ is included in the form itself. For a complete list of supported property
 types and syntax, see the
 [Ops Manager Product Template Reference](./product-template-reference.html).
 
-Ops Manager supports text areas for any type of multi-line credential. If you want a secret property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
-  
+Ops Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
+
 ```
 property_inputs:
   - reference: secret_meaning
