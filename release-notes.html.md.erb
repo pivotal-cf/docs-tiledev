@@ -1,17 +1,24 @@
 ---
-title: Release Notes
-owner: Services
+title: PCF v2.3 Partners Release Notice
+owner: Technical Program Management
 ---
 
-This topic collects Partners Release Notices for past versions of Pivotal Cloud Foundry (PCF).
+This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.3 introduces which may be relevant to partner service tiles.
 
-* [PCF v2.3 Partners Release Notice](./release-notes-2-3.html)
-* [PCF v2.2 Partners Release Notice](http://docs.pivotal.io/tiledev/2-2/release-notes-2-2.html)
-* [PCF v2.1 Partners Release Notice](http://docs.pivotal.io/tiledev/2-1/release-notes-2-1.html)
-* [PCF v2.0 Partners Release Notice](http://docs.pivotal.io/tiledev/2-0/release-notes-2-0.html)
-* [PCF v1.12 Partners Release Notice](http://docs.pivotal.io/tiledev/1-12/release-notes-1-12.html)
-* [PCF v1.11 Partners Release Notice](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html)
-* [PCF v1.10 Partners Release Notice](http://docs.pivotal.io/tiledev/1-12/release-notes-1-10.html)
-* [PCF v1.9 Partners Release Notice](http://docs.pivotal.io/tiledev/1-12/release-notes-1-9.html)
-* [PCF v1.8 Partners Release Notice](http://docs.pivotal.io/tiledev/1-12/release-notes-1-8.html)
-* [PCF v1.7 Partners Release Notice](http://docs.pivotal.io/tiledev/1-12/release-notes-1-7.html)
+
+## <a id="om-credhub"></a> Ops Manager Credentials Stored in CredHub
+
+Ops Manager sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with the asterisk character. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens CredHub link beginning with `/opsmgr/`.
+
+Ops Manager sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes its credentials from CredHub.
+
+This feature offers greater security for credentials. For more information about where your credentials are stored, see [BOSH CredHub](https://docs.pivotal.io/pivotalcf/credhub/index.html#bosh).
+
+<p class="note"><strong>Note:</strong> Only operators can make changes to Ops Manager credentials through the Ops Manager UI or API. Any change you attempt to the tile manifest or CredHub is overriden by Ops Manager on the next deploy.</p>
+
+
+## <a id='secret-text-field'></a> Secret Text Areas
+
+Ops Manager v2.3 supports a text area in its UI that tile authors can mark as `secret`. When a text area is marked as `secret`, the UI shows an `*` when the page is saved, and the API does not return the value entered in this field.
+
+For more information, see the [Custom Forms and Properties](./tile-generator.html#custom-forms) section of the _Tile Generator_ topic.
