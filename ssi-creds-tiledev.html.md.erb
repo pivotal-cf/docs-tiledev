@@ -39,7 +39,7 @@ The sections below describe an example implementation of how to add SSI credenti
 
 To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the Pivotal Application Service (PAS) tile, through a BOSH link.
 
-<p class="note"><strong>Note</strong>: BOSH Links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links">BOSH Links</a>.</p>
+<p class="note"><strong>Note</strong>: BOSH Links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links">BOSH Links</a>.</p>
 
 ### <a id="spec"></a> Update Spec File and Templates
 
@@ -51,7 +51,7 @@ The location of runtime CredHub is stored in the `credhub.internal_url` and `cre
 ```
 
 
-For information about using BOSH Links in the spec file and templates of a job and consuming shared properties provided by other jobs, see [Links in Spec Files](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-spec) and [Links in Templates](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-template).
+For information about using BOSH Links in the spec file and templates of a job and consuming shared properties provided by other jobs, see [Links in Spec Files](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-spec) and [Links in Templates](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-template).
 
 ### <a id="errand"></a> Save the Runtime CredHub Location
 
@@ -72,7 +72,7 @@ In the BOSH release for your tile, edit the deployment manifest `.yml` file so t
       deployment: cf-XXXXXXXXX
 ```
 
-For more information about using BOSH links in deployment manifests, see [Links in Manifests](http://docs.pivotal.io/tiledev/1-12/release-notes-1-11.html#bosh-links-manifest)
+For more information about using BOSH links in deployment manifests, see [Links in Manifests](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-manifest)
 
 ## <a id="step2"></a> Step 2: Enable Your Tile to Find Runtime CredHub
 
