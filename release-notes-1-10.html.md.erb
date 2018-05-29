@@ -11,7 +11,7 @@ Pivotal recommends that you test your tiles against Pivotal Cloud Foundry v1.10 
 
 ## Default Errand Run Rules and New **When Changed** Rule
 
-<p class="note warning"><strong>WARNING</strong>: As of Ops Manager v10.0.0, errands set to the <strong>When Changed</strong> rule do not always run when the tile has relevant changes. Instead of using <strong>When Changed</strong>, Pivotal recommends that tile developers leave the default run rule for errands as <strong>On</strong> and let operators use <a href="http://docs.pivotal.io/pivotalcf/1-10/customizing/managing_errands.html#changes-view">one-time rules</a> to turn errands off and save deploy time.</p>
+<p class="note warning"><strong>WARNING</strong>: As of Ops Manager v10.0.0, errands set to the <strong>When Changed</strong> rule do not always run when the tile has relevant changes. Instead of using <strong>When Changed</strong>, Pivotal recommends that tile developers leave the default run rule for errands as <strong>On</strong> and let operators use <a href="http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html#changes-view">one-time rules</a> to turn errands off and save deploy time.</p>
 
 In Ops Manager v1.9 and earlier, the checkboxes on a tile's **Errands** pane defaulted to selected, to run all errands. Users deselected specific errands to save to save installation time. Ops Manager v1.8 added the same checkboxes to the **Pending Changes** list above the **Apply changes** button, to quick-pick errands to run during the next installation only.
 
@@ -30,6 +30,6 @@ To apply these properties to an errand in the tile:
 * **Post-deploy errands**: Add a `run_post_deploy_errand_default` property set to `on`, `off`, or `when-changed`.
 * **Pre-delete errands**: Add a `run_pre_delete_errand_default` property set to `on` or `off`. You cannot set a pre-delete errand run rule to `when-changed`.
 
-In the Ops Manager **Errands** pane, a drop-down menu for each errand shows the options as **On**, **Off**, **When Changed**, and a default option that appears as **Default (On)**, **Default (Off)**, and **Default (When Changed)**. See [Ops Manager Defaults and Tile Defaults](http://docs.pivotal.io/pivotalcf/1-10/customizing/customizing/managing_errands.html#defaults) for how this default option is determined whether or not the tile defines a default.
+In the Ops Manager **Errands** pane, a drop-down menu for each errand shows the options as **On**, **Off**, **When Changed**, and a default option that appears as **Default (On)**, **Default (Off)**, and **Default (When Changed)**. See [Ops Manager Defaults and Tile Defaults](http://docs.pivotal.io/pivotalcf/customizing/customizing/managing_errands.html#defaults) for how this default option is determined whether or not the tile defines a default.
 
 Under **Pending Changes**, in Ops Manager, above the **Apply changes** button on the Installation Dashboard, the four drop-down options for each errand show as **On**, **Off**, **When Changed**, and **Default**.

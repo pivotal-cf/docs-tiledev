@@ -5,7 +5,7 @@ owner: Services
 
 Lifecycle errands are BOSH errands (scripts) that run at the beginning and end of an installed product's availability time. Product teams create errands as part of a product package, and a product can only run errands it includes.
 
-For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands), and for more information about errands in Pivotal Cloud Foundry (PCF), see [Managing Errands in Ops Manager](http://docs.pivotal.io/pivotalcf/1-10/customizing/managing_errands.html).
+For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands), and for more information about errands in Pivotal Cloud Foundry (PCF), see [Managing Errands in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html).
 
 Products can have two kinds of errands. [Post-deploy errands](#post-deploy) run after a product installs but before Ops Manager displays makes it available for use.
 [Pre-delete errands](#pre-delete) run after an operator chooses to delete a product, but before Ops Manager finishes removing it from use.
@@ -47,7 +47,7 @@ Pre-delete errands run by default. An operator can prevent a pre-delete errand f
 
 <p class="note warning"><strong>WARNING</strong>: In Ops Manager v1.10.0 and later, errands set to the <strong>When Changed</strong> rule do not always run when the tile has relevant changes.
    Instead of using <strong>When Changed</strong>, Pivotal recommends that tile developers leave the default run rule for errands as <strong>On</strong>
-   and let operators use <a href="http://docs.pivotal.io/pivotalcf/1-10/customizing/managing_errands.html#changes-view">one-time rules</a> to turn errands off and save deploy time.</p>
+   and let operators use <a href="http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html#changes-view">one-time rules</a> to turn errands off and save deploy time.</p>
 
 Some errands do not always need to run. For example, installing a minor patch to a existing service might not require re-registering its broker. Ops Manager lets operators save installation time by turning errands off or on. They set these errand run rules in two places:
 
@@ -56,5 +56,5 @@ Some errands do not always need to run. For example, installing a minor patch to
 
 * **Persistent Rules** in the tile's **Errands** pane. These rules persist through subsequent installations, until changed in the **Errands** pane.
 
-For more information, see [Configure Run Rules in Ops Manager](http://docs.pivotal.io/pivotalcf/1-10/customizing/managing_errands.html#modify).
+For more information, see [Configure Run Rules in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html#modify).
 
