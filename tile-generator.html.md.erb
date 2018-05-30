@@ -155,7 +155,9 @@ You can build this sample using the following steps:
 
 All required configuration for your tile is in the file called `tile.yml`.
 `tile init` creates an initial version for you that can serve as a template.
-The first section in the file describes the general properties of your tile:
+
+### <a id="branding"></a> Branding
+The first section in the file describes the branding of your tile:
 
 ```yaml
 name: tile-name # Match Pivotal Network product name, lowercase with dashes
@@ -164,16 +166,25 @@ label: Brief Text for the Tile Icon
 description: Longer description of the tile's purpose
 ```
 
-The `name` should be informative, for example, your company name followed
-by the product name, e.g., `acme-anvil`. The name should match your product slug on
-Pivotal Network, which enables update notifications for customers. Coordinate
-with your product team to agree upon a name; marketing teams often care about the
-name because it shows up in Pivotal Network URLs.
+- The `name` should be informative, for example, your company name followed
+  by the product name, e.g., `acme-anvil`. The name should match your product slug on
+  Pivotal Network, which enables update notifications for customers. Coordinate
+  with your product team to agree upon a name; marketing teams often care about the
+  name because it shows up in Pivotal Network URLs.
 
-The `icon_file` should be a 128x128 pixel image that appears on your tile in
-the Ops Manager GUI. By convention, any resources used by the tile should be
-placed in the `resources` sub-directory of your repository, although this is not
-mandatory. The `label` text appears on the tile under your icon.
+- The `icon_file` should be a 128x128 pixel image that appears on your tile in
+  the Ops Manager GUI. By convention, any resources used by the tile should be
+  placed in the `resources` sub-directory of your repository, although this is not
+  mandatory.
+
+- The `label` text appears on the tile under your icon. This should
+  match your product name on Pivotal Network. Coordinate with your
+  product team to agree upon a name; marketing teams often care about
+  the product name on Pivotal Network.
+
+- The `description` should contain a description of the product. This
+  is not currently used, but may be displayed in a future version of
+  Ops Manager.
 
 ### <a id="packages"></a> Packages
 
