@@ -166,21 +166,18 @@ label: Brief Text for the Tile Icon
 description: Longer description of the tile's purpose
 ```
 
-- The `name` should be informative, for example, your company name followed
-  by the product name, e.g., `acme-anvil`. The name should match your product slug on
+- The `name` should be informative. For example, you may want to use a name composed of your company and product names such as `acme-anvil`. The name should also match your product slug on
   Pivotal Network, which enables update notifications for customers. Coordinate
-  with your product team to agree upon a name; marketing teams often care about the
-  name because it shows up in Pivotal Network URLs.
+  with your product team to agree on a name; marketing teams often care about the
+  name because it appears in Pivotal Network URLs.
 
-- The `icon_file` should be a 128x128 pixel image that appears on your tile in
-  the Ops Manager GUI. By convention, any resources used by the tile should be
-  placed in the `resources` sub-directory of your repository, although this is not
-  mandatory.
+- The `icon_file` should be a 128 x 128 pixel image that appears on your tile in
+  the Ops Manager GUI. By convention, place any resources used by the tile in the `resources` sub-directory of your repository.
 
 - The `label` text appears on the tile under your icon. This should
   match your product name on Pivotal Network. Coordinate with your
-  product team to agree upon a name; marketing teams often care about
-  the product name on Pivotal Network.
+  product team to agree on a product name; marketing teams often care about
+  the product name because it appears on Pivotal Network.
 
 - The `description` should contain a description of the product. This
   is not currently used, but may be displayed in a future version of
