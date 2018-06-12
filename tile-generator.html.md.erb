@@ -61,32 +61,24 @@ For a 7-minute introduction into what Tile Generator is and does, see
 
 ## <a id="how-to"></a> How to Use
 
-1. Install the tile-generator python package.
+1. Install by downloading the tile binary for your platform 
+   from the [releases](https://github.com/cf-platform-eng/tile-generator/releases). 
+   Make executable and available. 
 
-     <p class="note"><strong>Note</strong>: The tile-generator requires **Python 2** and  does *not* work with Python 3.</p>
-   Pivotal recommends using a
-   [virtualenv](https://virtualenv.pypa.io/en/stable/) environment to
-   avoid conflicts with other Python packages.
-   A virtualenv is simply a directory containing dependencies for a project.
-   When a virtual environment is *active*, packages install into the
-   virtualenv instead of the system-wide Python installation.
-   Create a virtualenv with the `virtualenv` command:
+        chmod +x tile_darwin-64bit
+        mv tile_darwin-64bit /usr/local/bin/tile
+  
+    Or, if you wish to use the python source (to debug or fork) rather than the 
+    above binary you can use [virtualenv](https://virtualenv.pypa.io/en/stable/) like this:
 
-        virtualenv -p python2 tile-generator-env
-
-    To activate the virtualenv, source the bin/activate script in the virtualenv directory:
-
-        source tile-generator-env/bin/activate
-
-    Then install the tile-generator package inside the virtualenv with:
-
-        pip install tile-generator
-
-    This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
-    To deactivate the virtualenv, simply run the command `deactivate`.
-
-    <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run the following command with the virtualenv activated: <code>pip install tile-generator --upgrade</code></p>
-
+          git clone git@github.com:cf-platform-eng/tile-generator.git
+          cd tile-generator
+          virtualenv -p python2 tile-generator-env
+          source tile-generator-env/bin/activate
+          pip install -e .
+          # use the tile or pcf cli
+          deactivate
+   
 2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html)
 
 3. From within the root directory of the project for which you want to create a tile, initialize it as a tile repository.
@@ -603,6 +595,24 @@ Helm charts may use different
 patterns for specifying images.
 The purpose of this step is to make those references consistent.
 
+Define your marketplace plans in the same directory as Chart.yaml (this example shows only one default plan) 
+
+```bash
+cat > plans.yaml
+- name: "default"
+  description: "default plan"
+  file: "default.yaml"
+mkdir plans
+touch plans/default.yaml
+```
+
+Ensure that your chart has a .helmignore file that contains the images directory.  If you need to create it: 
+
+```bash
+cat > .helmignore
+images
+```
+
 Create the tile in a directory outside the Helm chart. 
 
 ```bash
@@ -631,6 +641,13 @@ It is located at `spark-tile/product/spark-<version>.pivotal`.
 ```bash
 tile build
 ```
+
+Some tools that can be used to view artifacts deployed by the Kibosh tile: 
+
+  - [kubectl](https://docs.pivotal.io/runtimes/pks/1-0/installing-kubectl-cli.html). Kibosh-created pods and namespaces begin with "kibosh-". 
+  - [helm](https://docs.pivotal.io/runtimes/pks/1-0/helm.html).  Tiller and the necessary ClusterRoleBinding are installed by Kibosh. Kibosh-created helm deployments are named starting with "kibosh-". 
+  - [bosh](https://bosh.io/docs/cli-v2/). The Kibosh tile creates a deployment named starting with the name in your tile.yml. That deployment contains a VM called "kibosh", and logs can be found in /var/vcap/sys/log/kibosh. 
+  - Additional information can be found at [kibosh](https://github.com/cf-platform-eng/kibosh)
 
 Some limitations to be aware of when deploying Helm charts into PKS Kubernetes clusters:
  
