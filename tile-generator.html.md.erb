@@ -59,35 +59,50 @@ For a 7-minute introduction into what Tile Generator is and does, see
 
 ## <a id="how-to"></a> How to Use
 
-1. Install by downloading the tile binary for your platform 
-   from the [releases](https://github.com/cf-platform-eng/tile-generator/releases). 
-   Make executable and available. 
+1. Install the Tile Generator by doing one of the following:<br><br>
+  - Download the Tile Generator binary for your platform from [GitHub](https://github.com/cf-platform-eng/tile-generator/releases), 
+    then make it executable and available by running the following commands:
 
+        ```
+        chmod +x TILE-BINARY
+        mv TILE-BINARY /usr/local/bin/tile
+        ```
+        Where:<br>
+        `TILE-BINARY` is the name of the tile binary file.<br><br>
+
+        For example:
+
+        <pre class="terminal">
         chmod +x tile_darwin-64bit
         mv tile_darwin-64bit /usr/local/bin/tile
-  
-    Or, if you wish to use the python source (to debug or fork) rather than the 
-    above binary you can use [virtualenv](https://virtualenv.pypa.io/en/stable/) like this:
+        </pre>
+        <br>
+  - If you want to use the python source (to debug or fork) rather than the 
+    above binary, you can use Virtualenv by running the following commands:
 
-          git clone git@github.com:cf-platform-eng/tile-generator.git
-          cd tile-generator
-          virtualenv -p python2 tile-generator-env
-          source tile-generator-env/bin/activate
-          pip install -e .
-          # use the tile or pcf cli
-          deactivate
-   
-2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html)
+        ```
+        git clone git@github.com:cf-platform-eng/tile-generator.git
+        cd tile-generator
+        virtualenv -p python2 tile-generator-env
+        source tile-generator-env/bin/activate
+        pip install -e .
+        # use the tile or pcf cli
+        deactivate
+        ```
+   For more information, see the [Virtualenv](https://virtualenv.pypa.io/en/stable/) documentation.
+2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html).
 
-3. From within the root directory of the project for which you want to create a tile, initialize it as a tile repository.
-   Pivotal recommends that you use a git repository:
+3. From within the root directory of the project for which you want to create a tile, 
+initialize the directory as a tile repository by running the following commands:
+<p class="note"><strong>Note</strong>: Pivotal recommends that you use a git repository.</p>
 
-        cd YOUR-PROD-DIRECTORY
-        tile init
-
+    ```
+    cd YOUR-PROD-DIRECTORY
+    tile init
+    ```
 4. Edit the generated `tile.yml` file to define your tile. 
 
-5. Build your tile:
+5. Build your tile by running:
 
         tile build
 
@@ -582,7 +597,8 @@ Helm charts may use different
 patterns for specifying images.
 The purpose of this step is to make those references consistent.
 
-Define your marketplace plans in the same directory as Chart.yaml (this example shows only one default plan) 
+Define your marketplace plans in the same directory as `Chart.yaml`. 
+The example below shows only one default plan:
 
 ```bash
 cat > plans.yaml
@@ -593,7 +609,8 @@ mkdir plans
 touch plans/default.yaml
 ```
 
-Ensure that your chart has a .helmignore file that contains the images directory.  If you need to create it: 
+Ensure that your chart has a `.helmignore` file that contains the `images` directory.  
+To create the `.helmignore` file, run the following: 
 
 ```bash
 cat > .helmignore
@@ -629,14 +646,20 @@ It is located at `spark-tile/product/spark-<version>.pivotal`.
 tile build
 ```
 
-Some tools that can be used to view artifacts deployed by the Kibosh tile: 
+The following tools are used to view artifacts deployed by the Kibosh tile:
 
-  - [kubectl](https://docs.pivotal.io/runtimes/pks/1-0/installing-kubectl-cli.html). Kibosh-created pods and namespaces begin with "kibosh-". 
-  - [helm](https://docs.pivotal.io/runtimes/pks/1-0/helm.html).  Tiller and the necessary ClusterRoleBinding are installed by Kibosh. Kibosh-created helm deployments are named starting with "kibosh-". 
-  - [bosh](https://bosh.io/docs/cli-v2/). The Kibosh tile creates a deployment named starting with the name in your tile.yml. That deployment contains a VM called "kibosh", and logs can be found in /var/vcap/sys/log/kibosh. 
-  - Additional information can be found at [kibosh](https://github.com/cf-platform-eng/kibosh)
+  - [kubectl](https://docs.pivotal.io/runtimes/pks/1-0/installing-kubectl-cli.html). 
+  Kibosh creates pods and namespaces beginning with "kibosh-". 
+  - [helm](https://docs.pivotal.io/runtimes/pks/1-0/helm.html). 
+  Kibosh installs Tiller and the necessary ClusterRoleBinding. 
+  Kibosh creates helm deployments are with names starting with "kibosh-". 
+  - [bosh](https://bosh.io/docs/cli-v2/). 
+  The Kibosh tile creates a deployment name starting with the name in your `tile.yml`. 
+  That deployment contains a VM called "kibosh", and logs can be found in /var/vcap/sys/log/kibosh. 
 
-Some limitations to be aware of when deploying Helm charts into PKS Kubernetes clusters:
+For more information, see the [kibosh](https://github.com/cf-platform-eng/kibosh) GitHub repository.
+
+The following are limitations of deploying Helm charts into PKS Kubernetes clusters:
  
   - After it is deployed, a persistent volume claim cannot be resized. This is the error that
     you might get if you try to resize: `Error: UPGRADE FAILED: 
