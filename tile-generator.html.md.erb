@@ -77,28 +77,21 @@ For a 7-minute introduction into what Tile Generator is and does, see
         mv tile_darwin-64bit /usr/local/bin/tile
         </pre>
         <br>
-  - Use Python2 and Virtualenv. Pivotal recommends using a
-   [virtualenv](https://virtualenv.pypa.io/en/stable/) environment to
-   avoid conflicts with other Python packages.
-   A virtualenv is simply a directory containing dependencies for a project.
-   When a virtual environment is *active*, packages install into the
-   virtualenv instead of the system-wide Python installation.
-   Create a virtualenv with the `virtualenv` command:
+  - Use Python2 and Virtualenv. 
+    Pivotal recommends using a [virtualenv](https://virtualenv.pypa.io/en/stable/) environment
+    to avoid conflicts with other Python packages.
+    A virtualenv is simply a directory containing dependencies for a project.
+    When a virtual environment is *active*, packages install into the
+    virtualenv instead of the system-wide Python installation.
 
-        virtualenv -p python2 tile-generator-env
+            virtualenv -p python2 tile-generator-env
+            source tile-generator-env/bin/activate
+            pip install tile-generator
 
-    To activate the virtualenv, source the bin/activate script in the virtualenv directory:
+        This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
+        To deactivate the virtualenv, simply run the command `deactivate`.
 
-        source tile-generator-env/bin/activate
-
-    Then install the tile-generator package inside the virtualenv with:
-
-        pip install tile-generator
-
-    This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
-    To deactivate the virtualenv, simply run the command `deactivate`.
-
-    <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run the following command with the virtualenv activated: <code>pip install tile-generator --upgrade</code></p>
+        <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run the following command with the virtualenv activated: <code>pip install tile-generator --upgrade</code></p>
 
 
 2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html).
