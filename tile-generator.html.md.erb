@@ -60,7 +60,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
 ## <a id="how-to"></a> How to Use
 
 1. Install the Tile Generator by doing one of the following:<br><br>
-  - Download the Tile Generator binary for your platform from [GitHub](https://github.com/cf-platform-eng/tile-generator/releases), 
+  - Download the Tile Generator binary for your platform from [GitHub](https://github.com/cf-platform-eng/tile-generator/releases/latest), 
     then make it executable and available by running the following commands:
 
         ```
@@ -77,19 +77,23 @@ For a 7-minute introduction into what Tile Generator is and does, see
         mv tile_darwin-64bit /usr/local/bin/tile
         </pre>
         <br>
-  - If you want to use the python source (to debug or fork) rather than the 
-    above binary, you can use Virtualenv by running the following commands:
+  - Use Python2 and Virtualenv. 
+    Pivotal recommends using a [virtualenv](https://virtualenv.pypa.io/en/stable/) environment
+    to avoid conflicts with other Python packages.
+    A virtualenv is simply a directory containing dependencies for a project.
+    When a virtual environment is *active*, packages install into the
+    virtualenv instead of the system-wide Python installation.
 
-        ```
-        git clone git@github.com:cf-platform-eng/tile-generator.git
-        cd tile-generator
-        virtualenv -p python2 tile-generator-env
-        source tile-generator-env/bin/activate
-        pip install -e .
-        # use the tile or pcf cli
-        deactivate
-        ```
-   For more information, see the [Virtualenv](https://virtualenv.pypa.io/en/stable/) documentation.
+            virtualenv -p python2 tile-generator-env
+            source tile-generator-env/bin/activate
+            pip install tile-generator
+
+        This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
+        To deactivate the virtualenv, simply run the command `deactivate`.
+
+        <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run the following command with the virtualenv activated: <code>pip install tile-generator --upgrade</code></p>
+
+
 2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html).
 
 3. From within the root directory of the project for which you want to create a tile, 
@@ -607,14 +611,6 @@ cat > plans.yaml
   file: "default.yaml"
 mkdir plans
 touch plans/default.yaml
-```
-
-Ensure that your chart has a `.helmignore` file that contains the `images` directory.  
-To create the `.helmignore` file, run the following: 
-
-```bash
-cat > .helmignore
-images
 ```
 
 Create the tile in a directory outside the Helm chart. 
