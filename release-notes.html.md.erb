@@ -38,6 +38,68 @@ For more information, see the [Custom Forms and Properties](./tile-generator.htm
 
 For other Ops Manager v2.2 release notes, see [PCF Ops Manager Release v2.2 Release Notes](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/opsmanager-rn.html).
 
+## <a id="pas-properties"></a>Pivotal Application Service Tile Property Changes
+
+Properties in the Pivotal Application Service (PAS) v2.2 tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
+
+The following tables list the properties that Pivotal removed and added in PAS v2.2:
+
+<table id='removed' border="1" class="nice" >
+  <tr>
+    <th>Removed Properties</th>
+  </tr>
+  <tr>
+    <td><code>.properties.push_apps_manager_invitations_memory</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.push_apps_manager_memory</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.rep_server_cert</code></td>
+  </tr>
+</table>
+
+<table id='added' border="1" class="nice" >
+  <tr>
+    <th>Added Properties</th>
+  </tr>
+  <tr>
+    <td><code>.properties.autoscale_enable_verbose_logging</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.cf_networking_search_domains</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.diego_log_timestamp_format</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.enable_log_cache</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.log_cache_auth_proxy_client_tls_cert</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.log_cache_nozzle_client_tls_cert</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.log_cache_server_tls_cert</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.pxc_internal_certificate</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.pxc_server_certificate</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.rep_server_cert_v2</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.routing_backends_client_cert</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.syslog_drop_debug</code></td>
+  </tr>
+</table>
 
 ## <a id='breaking-changes'></a> Breaking Changes
 
