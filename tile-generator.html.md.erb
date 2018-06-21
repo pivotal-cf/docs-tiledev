@@ -119,14 +119,14 @@ initialize the directory as a tile repository by running the following commands:
         tile build
 
 The generator first creates a BOSH release in the `release` subdirectory,
-then wrap that release into a Pivotal tile (in the `product` subdirectory).
+then wraps that release into a Pivotal tile, in the `product` subdirectory.
 If required for the installation, it automatically pulls down the latest
 release version of the Cloud Foundry CLI.
 
 Tile Generator is also available pre-installed in a Docker image on
 [Docker Hub](https://hub.docker.com/r/cfplatformeng/tile-generator/).
-This image contains the tile-generator `tile` and `pcf` commands, all the
-necessary Python dependencies, as well as the BOSH CLI.
+This image contains the tile-generator `tile` and `pcf` commands, the
+necessary Python dependencies and the BOSH CLI.
 
 You can use this in Concourse pipelines by specifying it as the base image
 for your tasks:
