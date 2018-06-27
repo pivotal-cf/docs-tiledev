@@ -152,7 +152,7 @@ Outside of properties, you can also retrieve information about various configura
   </tr>
 </table>
 
-### <a id='property-blueprints'></a>Property Blueprint Reference
+### <a id='property-blueprints'></a>Property Reference Guide
 
 #### string
 
@@ -169,16 +169,58 @@ Accessors:
 Product template example:
 
 ```
-- name: example_string
-  type: string
-  configurable: true
-  default: 'Hello world'
-  constraints:
-  - must_match_regex: '\A[^!@#$%^&*()]*\z'
-    error_message: 'This name cannot contain special characters.'
-  - must_match_regex: '\A[^0-9]*\z'
-    error_message: 'This name cannot contain digits.'
+property_blueprints:
+  - name: example_string
+    type: string
+    configurable: true
+    default: 'Hello world'
+    constraints:
+    - must_match_regex: '\A[^!@#$%^&*()]*\z'
+      error_message: 'This name cannot contain special characters.'
+    - must_match_regex: '\A[^0-9]*\z'
+      error_message: 'This name cannot contain digits.'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_string
+        label: 'Example string'
+        description: 'This is an example'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_key: (( .properties.example_string.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+
+![Example Product with String Information](img/example-string-tile.png)
 
 #### boolean
 
@@ -192,14 +234,56 @@ Accessors:
   </tr>
 </table>
 
-Example:
+Product template example:
 
 ```
-- name: example_boolean
-  type: boolean
-  configurable: true
-  default: false
+property_blueprints:
+  - name: example_boolean
+    type: boolean
+    configurable: true
+    default: false
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_boolean
+        label: 'Example boolean'
+        description: 'This is an example checkbox'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_key: (( .properties.example_boolean.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+
+![Example Product with Boolean Information](img/example-boolean-tile.png)
 
 #### collection
 
@@ -217,34 +301,57 @@ Accessors:
 Example:
 
 ```
-- name: example_collection
-  type: collection
-  configurable: true
-  property_blueprints:
-    - name: album
-      type: string
-      freeze_on_deploy: true
-    - name: artist
-      type: string
-      freeze_on_deploy: true
-    - name: explicit
-      type: boolean
-    - name: genre
-      type: dropdown_select
-      configurable: true
-      optional: true
-      options:
-        - name: rock
-          label: 'Rock'
-        - name: country
-          label: 'Country'
-        - name: edm
-          label: 'Beep Boop PSH'
-  default:
-    - album: Christmas Carols
-      artist: Ops Manatee
-      explicit: true
-      genre: edm
+property_blueprints:
+  - name: example_collection
+    type: collection
+    configurable: true
+    property_blueprints:
+      - name: album
+        type: string
+        freeze_on_deploy: true
+      - name: artist
+        type: string
+        freeze_on_deploy: true
+      - name: explicit
+        type: boolean
+      - name: genre
+        type: dropdown_select
+        configurable: true
+        optional: true
+        options:
+          - name: rock
+            label: 'Rock'
+          - name: country
+            label: 'Country'
+          - name: edm
+            label: 'Beep Boop PSH'
+    default:
+      - album: Christmas Carols
+        artist: Ops Manatee
+        explicit: true
+        genre: edm
+
+form_types:
+  - name: example_collections_form
+    label: 'Collection example'
+    description: 'A collection example form'
+    property_inputs:
+      - reference: .properties.example_collection
+        label: 'Albums collection'
+        description: 'The albums'
+        property_inputs:
+          - reference: album
+            label: 'Name of the Album'
+            description: 'ex Graceland'
+          - reference: artist
+            label: 'Name of the Artist'
+            slug: true
+          - reference: explicit
+            label: 'Explicit?'
+            description: '$#!%&'
+          - reference: genre
+            label: 'Genre'
+            description: Are there others?
 ```
 
 #### <a id='selector'></a>Selector
@@ -293,57 +400,91 @@ Example, option group:
 
 
 ```
-- name: example_selector
-  type: selector
-  configurable: true
-  default: Pizza
-  freeze_on_deploy: true
-  option_templates:
-    - name: pizza_option
-      select_value: Pizza
-      named_manifests:
-        - name: my_snippet
-          manifest: |
-            pizza_toppings:
-              pepperoni: (( .properties.example_selector.pizza_option.pepperoni.value ))
-              pineapple: (( .properties.example_selector.pizza_option.pineapple.value ))
-              other: (( .properties.example_selector.pizza_option.other_toppings.value ))
-      property_blueprints:
-        - name: pepperoni
-          type: boolean
-          configurable: true
-          freeze_on_deploy: true
-        - name: other_toppings
-          type: string
-          configurable: true
-          optional: true
-          constraints:
-          - must_match_regex: '\A[^!@#$%^&*()]*\z'
-            error_message: 'This name cannot contain special characters.'
-    - name: filet_mignon_option
-      select_value: Filet Mignon
-      named_manifests:
-        - name: my_snippet
-          manifest: |
-            rarity: (( .properties.example_selector.filet_mignon_option.rarity_dropdown.value ))
-            review: (( .properties.example_selector.filet_mignon_option.review.value ))
-            secret_sauce: (( .properties.example_selector.filet_mignon_option.secret_sauce.value ))
-      property_blueprints:
-        - name: rarity_dropdown
-          type: dropdown_select
-          configurable: true
-          default: rare
-          options:
-            - name: rare
-              label: 'Rare'
-            - name: medium
-              label: 'Medium'
-            - name: well-done
-              label: 'Well done'
-        - name: secret_sauce
-          type: secret
-          configurable: true
-          optional: true
+property_blueprints:
+  - name: example_selector
+    type: selector
+    configurable: true
+    default: Pizza
+    freeze_on_deploy: true
+    option_templates:
+      - name: pizza_option
+        select_value: Pizza
+        named_manifests:
+          - name: my_snippet
+            manifest: |
+              pizza_toppings:
+                pepperoni: (( .properties.example_selector.pizza_option.pepperoni.value ))
+                pineapple: (( .properties.example_selector.pizza_option.pineapple.value ))
+                other: (( .properties.example_selector.pizza_option.other_toppings.value ))
+        property_blueprints:
+          - name: pepperoni
+            type: boolean
+            configurable: true
+            freeze_on_deploy: true
+          - name: other_toppings
+            type: string
+            configurable: true
+            optional: true
+            constraints:
+            - must_match_regex: '\A[^!@#$%^&*()]*\z'
+              error_message: 'This name cannot contain special characters.'
+      - name: filet_mignon_option
+        select_value: Filet Mignon
+        named_manifests:
+          - name: my_snippet
+            manifest: |
+              rarity: (( .properties.example_selector.filet_mignon_option.rarity_dropdown.value ))
+              review: (( .properties.example_selector.filet_mignon_option.review.value ))
+              secret_sauce: (( .properties.example_selector.filet_mignon_option.secret_sauce.value ))
+        property_blueprints:
+          - name: rarity_dropdown
+            type: dropdown_select
+            configurable: true
+            default: rare
+            options:
+              - name: rare
+                label: 'Rare'
+              - name: medium
+                label: 'Medium'
+              - name: well-done
+                label: 'Well done'
+          - name: secret_sauce
+            type: secret
+            configurable: true
+            optional: true
+
+form_types:
+  - name: example_selector_form
+    label: 'Selector Example'
+    description: 'A selector example form'
+    property_inputs:
+      - reference: .properties.example_selector
+        label: 'Food Choices'
+        selector_property_inputs:
+          - reference: .properties.example_selector.pizza_option
+            label: 'Pizza'
+            property_inputs:
+              - reference: .properties.example_selector.pizza_option.pepperoni
+                label: 'Add Pepperoni'
+              - reference: .properties.example_selector.pizza_option.pineapple
+                label: 'Add Pineapple'
+                description: 'Nothing like an apple, would not buy again'
+              - reference: .properties.example_selector.pizza_option.other_toppings
+                label: 'Other toppings'
+              - reference: .properties.example_selector.pizza_option.cheesy_vm_type
+                label: 'Cheesy VM Type'
+          - reference: .properties.example_selector.filet_mignon_option
+            label: 'Filet Mignon'
+            property_inputs:
+              - reference: .properties.example_selector.filet_mignon_option.rarity_dropdown
+                label: 'How rare?'
+                description: 'Extinct.'
+              - reference: .properties.example_selector.filet_mignon_option.review
+                label: 'Write your review'
+                description: '"Contained live jaguar, would not buy again."'
+              - reference: .properties.example_selector.filet_mignon_option.secret_sauce
+                label: 'Secret Sauce'
+                description: 'Probably mayonnaise'
 ```
 
 #### ldap\_url
@@ -362,11 +503,52 @@ Example:
 
 
 ```
-- name: example_ldap_url
-  type: ldap_url
-  configurable: true
-  default: 'ldap://example.com'
+property_blueprints:
+  - name: example_ldap_url
+    type: ldap_url
+    configurable: true
+    default: 'ldap://example.com'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_ldap_url
+        label: Example ldap_url
+        description: 'Configure a property of type ldap_url'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_key: (( .properties.example_ldap_url.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with LDAP Information](img/example-ldap-tile.png)
 
 #### domain
 
@@ -384,11 +566,52 @@ Example:
 
 
 ```
-- name: example_domain
-  type: domain
-  configurable: true
-  default: 'example.com'
+property_blueprints:
+  - name: example_domain
+    type: domain
+    configurable: true
+    default: 'example.com'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_domain
+        label: Example domain
+        description: 'Configure a property of type domain'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_key: (( .properties.example_domain.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Domain](img/example-domain-tile.png)
 
 #### wildcard\_domain
 
@@ -408,11 +631,52 @@ Accessors:
 Example:
 
 ```
-- name: example_wildcard_domain
-  type: wildcard_domain
-  configurable: true
-  default: '*.example.com'
+property_blueprints:
+  - name: example_wildcard_domain
+    type: wildcard_domain
+    configurable: true
+    default: 'example.com'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_wildcard_domain
+        label: Example Wildcard Domain
+        description: 'Configure a property of type wildcard_domain'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_key: (( .properties.example_wildcard_domain.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Wildcard Domain](img/example-wildcard-domain-tile.png)
 
 #### ip\_ranges
 
@@ -432,11 +696,53 @@ Accessors:
 Example:
 
 ```
-- name: example_ip_ranges
-  type: ip_ranges
-  configurable: true
-  default: '1.1.1.1-1.1.14,2.2.2.1-2.2.2.4'
+property_blueprints:
+  - name: example_ip_ranges
+    type: ip_ranges
+    configurable: true
+    default: 1.1.1.1-1.1.1.4,2.2.2.1-2.2.2.4
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_ip_ranges
+        label: Example IP Ranges
+        description: 'Configure a property of type ip_ranges'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_ip_ranges.value ))
+          example_parsed_ip_ranges: (( .properties.example_ip_ranges.parsed_ip_ranges ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with IP Ranges](img/example-ip-ranges-tile.png)
 
 #### ip\_address
 
@@ -453,11 +759,52 @@ Accessors:
 Example:
 
 ```
-- name: example_ip_address
-  type: ip_address
-  configurable: true
-  default: '192.168.0.1'
+property_blueprints:
+  - name: example_ip_address
+    type: ip_address
+    configurable: true
+    default: 192.168.0.1
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_ip_address
+        label: Example IP Address
+        description: 'Configure a property of type ip_address'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_ip_address.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with IP Address](img/example-ip-address-tile.png)
 
 #### email
 
@@ -474,11 +821,52 @@ Accessors:
 Example:
 
 ```
-- name: example_string
-  type: email
-  configurable: true
-  default: 'john@example.com'
+property_blueprints:
+  - name: example_email
+    type: email
+    configurable: true
+    default: 'john@example.com'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_email
+        label: Example Email
+        description: 'Configure a property of type email'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_email.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Email](img/example-email-tile.png)
 
 #### port
 
@@ -495,11 +883,52 @@ Accessors:
 Example:
 
 ```
-- name: example_port
-  type: port
-  configurable: true
-  default: 3000
+property_blueprints:
+  - name: example_port
+    type: port
+    configurable: true
+    default: 3000
+
+form_types:
+  - name: example_port
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_port
+        label: Example Port
+        description: 'Configure a property of type port'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_port.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Port](img/example-port-tile.png)
 
 #### integer
 
@@ -516,11 +945,52 @@ Accessors:
 Example:
 
 ```
-- name: example_integer
-  type: integer
-  configurable: true
-  default: 100
+property_blueprints:
+  - name: example_integer
+    type: integer
+    configurable: true
+    default: 100
+
+form_types:
+  - name: example_integer
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_integer
+        label: Example Integer
+        description: 'Configure a property of type integer'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_integer.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Integer](img/example-integer-tile.png)
 
 #### text
 
@@ -537,13 +1007,54 @@ Accessors:
 Example:
 
 ```
-- name: example_text
-  type: text
-  configurable: true
-  default: |
-    Example
-    Text
+property_blueprints:
+  - name: example_text
+    type: text
+    configurable: true
+    default: |
+      Example
+      Text
+
+form_types:
+  - name: example_text
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_text
+        label: Example Text
+        description: 'Configure a property of type text'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_text.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Text](img/example-text-tile.png)
 
 #### smtp\_authentication
 
@@ -560,32 +1071,52 @@ Accessors:
 Example:
 
 ```
-- name: example_smtp_authentication
-  type: smtp_authentication
-  configurable: true
-  default: plain
+property_blueprints:
+  - name: example_smtp_authentication
+    type: smtp_authentication
+    configurable: true
+    default: plain
+
+form_types:
+  - name: example_text
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_smtp_authentication
+        label: Example SMTP Authentication
+        description: 'Configure a property of type smtp_authentication'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_smtp_authentication.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
-
-#### network\_name
-
-Ensure the string is a network name
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_network_name
-  type: network_name
-  configurable: true
-  default: 'ExampleNetwork'
-```
+![Example Product with SMTP Authentication](img/example-smtp-authentication-tile.png)
 
 #### network\_address
 
@@ -602,11 +1133,52 @@ Accessors:
 Example:
 
 ```
-- name: example_network_address
-  type: network_address
-  configurable: true
-  default: 'localhost'
+property_blueprints:
+  - name: example_network_address
+    type: network_address
+    configurable: true
+    default: 'localhost'
+
+form_types:
+  - name: example_network_address
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_network_address
+        label: Example Network Address
+        description: 'Configure a property of type network_address'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_network_address.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Network Address](img/example-network-address-tile.png)
 
 #### network\_address\_list
 
@@ -626,11 +1198,53 @@ Accessors:
 Example:
 
 ```
-- name: example_network_address_list
-  type: network_address_list
-  configurable: true
-  default: 'localhost,1.1.1.1'
+property_blueprints:
+  - name: example_network_address_list
+    type: network_address_list
+    configurable: true
+    default: 'localhost,1.1.1.1'
+
+form_types:
+  - name: example_network_address_list
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_network_address_list
+        label: Example Network Address List
+        description: 'Configure a property of type network_address_list'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_network_address_list.value ))
+          parsed_network_addresses: (( .properties.example_network_address_list.parsed_network_addresses ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Network Address List](img/example-network-address-list-tile.png)
 
 #### string\_list
 
@@ -653,11 +1267,53 @@ Accessors:
 Example:
 
 ```
-- name: example_string_list
-  type: string_list
-  configurable: true
-  default: 'foo,bar,baz'
+property_blueprints:
+  - name: example_string_list
+    type: string_list
+    configurable: true
+    default: foo,bar,baz
+
+form_types:
+  - name: example_string_list
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_string_list
+        label: Example String List
+        description: 'Configure a property of type string_list'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_string_list.value ))
+          parsed_strings: (( .properties.example_string_list.parsed_strings ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with String List](img/example-string-list-tile.png)
 
 #### ca\_certificate
 
@@ -674,13 +1330,53 @@ Accessors:
 Example:
 
 ```
-- name: example_ca_certificate
-  type: ca-certificate
-  configurable: true
-  default: |
-    -- BEGIN FAKE CERT --
-    -- END FAKE CERT --
+property_blueprints:
+  - name: example_ca_certificate
+    type: ca_certificate
+    configurable: true
+    default: |
+      -- BEGIN FAKE CERT --
+      -- END FAKE CERT --
+form_types:
+  - name: example_ca_certificate
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_ca_certificate
+        label: Example CA Certificate
+        description: 'Configure a property of type ca_certificate'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_ca_certificate.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with CA Certificate](img/example-ca-certificate-tile.png)
 
 #### multi\_select\_options
 
@@ -697,18 +1393,59 @@ Accessors:
 Example:
 
 ```
-- name: example_multi_select_options
-  type: multi_select_options
-  configurable: true
-  default: ['earth', 'mercury']
-         options:
-         - name: mercury
-           label: 'label for mercury'
-         - name: venus
-           label: 'label for venus'
-         - name: earth
-           label: 'label for earth'
+property_blueprints:
+  - name: example_multi_select_options
+    type: multi_select_options
+    configurable: true
+    default: ['earth', 'mercury']
+    options:
+    - name: mercury
+      label: 'label for mercury'
+    - name: venus
+      label: 'label for venus'
+    - name: earth
+      label: 'label for earth'
+
+form_types:
+  - name: example_multi_select_options
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_multi_select_options
+        label: Example Multi-Select Options
+        description: 'Configure a property of type multi_select_options'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_multi_select_options.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Multi-Select Options](img/example-multi-select-options-tile.png)
 
 #### dropdown\_select
 
@@ -725,18 +1462,58 @@ Accessors:
 Example:
 
 ```
-   - name: example_dropdown
-      type: dropdown_select
+property_blueprints:
+ - name: example_dropdown_select
+   type: dropdown_select
+   configurable: true
+   default: kiwi
+   options:
+     - name: kiwi
+       label: 'label for kiwi'
+     - name: lime
+       label: 'label for lime'
+     - name: avocado
+       label: 'label for avocado'
+form_types:
+  - name: example_dropdown
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_dropdown_select
+        label: Example Dropdown Select
+        description: 'Configure a property of type dropdown_select'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_dropdown_select.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
       configurable: true
-      default: kiwi
-      options:
-        - name: kiwi
-          label: 'label for kiwi'
-        - name: lime
-          label: 'label for lime'
-        - name: avocado
-          label: 'label for avocado'
+      default: 1
 ```
+![Example Product with Multi-Select Options](img/example-dropdown-select-tile.png)
 
 #### vm\_type\_dropdown
 
@@ -753,10 +1530,51 @@ Accessors:
 Example:
 
 ```
-- name: example_vm_type_dropdown
-  type: vm_type_dropdown
-  configurable: true
+property_blueprints:
+  - name: example_vm_type_dropdown
+    type: vm_type_dropdown
+    configurable: true
+
+form_types:
+  - name: example_vm_type_dropdown
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_vm_type_dropdown
+        label: Example VM Type Dropdown
+        description: 'Configure a property of type vm_type_dropdown'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_vm_type_dropdown.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with VM Types Dropdown](img/example-vm-type-dropdown-tile.png)
 
 #### disk\_type\_dropdown
 
@@ -773,10 +1591,51 @@ Accessors:
 Example:
 
 ```
-- name: example_disk_type_dropdown
-  type: disk_type_dropdown
-  configurable: true
+property_blueprints:
+  - name: example_disk_type_dropdown
+    type: disk_type_dropdown
+    configurable: true
+
+form_types:
+  - name: example_disk_type_dropdown
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_disk_type_dropdown
+        label: Example Disk Type Dropdown
+        description: 'Configure a property of type disk_type_dropdown'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_disk_type_dropdown.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Disk Types Dropdown](img/example-disk-type-dropdown-tile.png)
 
 #### uuid
 
@@ -793,9 +1652,40 @@ Accessors:
 Example:
 
 ```
-- name: example_uuid
-  type: uuid
-  configurable: true
+property_blueprints:
+  - name: example_uuid
+    type: uuid
+    configurable: true
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_uuid.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
 
 #### service\_network\_az\_multi\_select
@@ -853,10 +1743,68 @@ Accessors:
 Example:
 
 ```
-- name: example_secret
-  type: secret
-  configurable: true
+property_blueprints:
+  - name: example_secret
+    type: secret
+    configurable: true
+
+form_types:
+  - name: example_secret
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_secret
+        label: Example Secret
+        description: 'Configure a property of type secret'
+        display_type: text_area
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.example_secret.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Secret](img/example-secret-tile.png)
+
+Adding an additional key to the property input for a secret will allow you to use a multi-line credential.
+
+```
+form_types:
+  - name: example_secret
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_secret
+        label: Example Secret
+        description: 'Configure a property of type secret'
+        display_type: text_area
+```
+
+![Example Product with Secret](img/example-secret-text-area-tile.png)
 
 
 
