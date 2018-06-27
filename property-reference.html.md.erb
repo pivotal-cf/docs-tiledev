@@ -70,6 +70,7 @@ Outside of properties, you can also retrieve information about various configura
 
 * $ops\_manager: used by any product to obtain information about specific OpsManager
 * $director: used by any product to obtain information about the Director
+* $runtime: used by any product to obtain information about the CF tile (Pivotal Application Service)
 * $self: used by your own product to obtain information about your product's configuration
 
 #### $ops\_manager
@@ -89,6 +90,8 @@ Outside of properties, you can also retrieve information about various configura
   </tr><tr>
   <td>no_proxy</td>
   <td>Provides the comma separated values that should not go through a proxy</td></tr>
+  <td>dns_enabled</td>
+  <td>Provides boolean flag indicating if BOSH DNS is enabled</td>
 </tr>
 </table>
 
@@ -134,6 +137,33 @@ Outside of properties, you can also retrieve information about various configura
 </table>
 
 <p class="note"><strong>Note</strong>: Support for the <code>$director.username</code> and <code>$director.password</code> accessors will be removed in future versions of Ops Manager.</p>
+
+#### $runtime
+
+<table class="nice"><tr>
+  <td>system_domain</td>
+  <td>Provides domain for system-level PCF components, such as the API, UAA, or Apps Manager.</td>
+  </tr><tr>
+  <td>apps_domain</td>
+  <td>Provides the default domain used by applications</td>
+  </tr><tr>
+  <td>system_api_url</td>
+  <td>Provides the url to the PCF API component</td>
+  </tr><tr>
+  <td>login_url</td>
+  <td>Provides the url to authenticate with the PCF components</td>
+  <td>uaa_url</td>
+  <td>Provides the url to the PCF UAA component</td>
+  <td>login_url</td>
+  <td>Provides the stemcell version that is being used by your product</td>
+  <td>console_url</td>
+  <td>Provides the url to the PCF Apps Manager component</td>
+  <td>default_reply_to</td>
+  <td>Provides the default reply-to email address for the system domain</td>
+  <td>default_from</td>
+  <td>Provides the default from email address of the system domain</td>
+  </tr>
+</table>
 
 #### $self
 
