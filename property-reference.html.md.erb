@@ -580,6 +580,158 @@ job_types:
 ```
 ![Example Product with LDAP Information](img/example-ldap-tile.png)
 
+#### http_url
+
+Holds a HTTP URL
+
+Accessors:
+
+<table class="nice"><tr>
+  <td>value</td>
+  <td>Returns a string</td>
+  </tr>
+</table>
+
+Example:
+
+
+```
+property_blueprints:
+  - name: example_http_url
+    type: http_url
+    configurable: true
+    default: 'http://example.com'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_http_url
+        label: Example http_url
+        description: 'Configure a property of type http_url'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_key: (( .properties.example_http_url.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
+```
+![Example Product with Http URL](img/example-http-url-tile.png)
+
+#### rsa\_cert\_credentials
+
+Holds SSL certificate generated from root CA
+
+Accessors:
+
+<table class="nice">
+  <tr>
+    <td>cert_pem</td>
+    <td>Returns a string</td>
+  </tr>
+  <tr>
+      <td>private_key_pem</td>
+      <td>Returns a string</td>
+  </tr>
+  <tr>
+      <td>cert_and_private_key_pems</td>
+      <td>Returns a string</td>
+  </tr>
+  <tr>
+      <td>public_key_pem</td>
+      <td>Returns a string</td>
+  </tr>
+
+</table>
+
+Example:
+
+```
+property_blueprints:
+  # This is configurable by the operator and appears in the form_types section
+  - name: example_rsa_cert_credentials_configurable
+    type: rsa_cert_credentials
+    configurable: true
+  # This is not configurable by the operator and is auto-generated
+  - name: example_non_configurable_rsa_cert_credentials
+    type: rsa_cert_credentials
+    configurable: false
+    default:
+      domains:
+        - cell.service.cf.internal
+        - *cell.service.cf.internal
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_rsa_cert_credentials_configurable
+        label: Example configurable rsa_cert_credentials
+        description: 'Configure a property of type rsa_cert_credentials'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_cert_pem: (( .properties.example_rsa_cert_credentials_configurable.cert_pem ))
+          example_private_key_pem: (( .properties.example_rsa_cert_credentials_configurable.private_key_pem ))
+          example_public_key_pem: (( .properties.example_rsa_cert_credentials_configurable.public_key_pem ))
+          example_non_configurable_cert_pem: (( .properties.example_non_configurable_rsa_cert_credentials_configurable.cert_pem ))
+          example_non_configurable_private_key_pem: (( .properties.example_non_configurable_rsa_cert_credentials_configurable.private_key_pem ))
+          example_non_configurable_public_key_pem: (( .properties.example_non_configurable_rsa_cert_credentials_configurable.public_key_pem ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
+```
+![Example Product with RSA Cert Credentials](img/example-rsa-cert-credentials-tile.png)
+
 #### domain
 
 Ensures the string value is a domain
@@ -1733,10 +1885,52 @@ Accessors:
 Example:
 
 ```
-- name: example_service_network_az_multi_select
-  type: service_network_az_multi_select
-  configurable: true
+property_blueprints:
+  - name: service_instance_azs
+    type: service_network_az_multi_select
+    configurable: true
+    optional: false
+
+form_types:
+  - name: example_service_network_az_multi_select
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.service_instance_azs
+        label: Example Service Network AZ Multi-Select
+        description: 'Configure a property of type service_network_az_multi_select'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.service_instance_azs.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Service Network AZ Multi-Select](img/example-service-network-az-multi-select-tile.png)
 
 #### service\_network\_az\_single\_select
 
@@ -1753,10 +1947,52 @@ Accessors:
 Example:
 
 ```
-- name: example_service_network_az_single_select
-  type: service_network_az_single_select
-  configurable: true
+property_blueprints:
+  - name: example_service_network_az_single_select
+    type: service_network_az_single_select
+    configurable: true
+    optional: false
+
+form_types:
+  - name: example_service_network_az_single_select
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.service_instance_azs
+        label: Example Service Network AZ Single-Select
+        description: 'Configure a property of type service_network_az_single_select'
+
+job_types:
+  - name: example-job
+    max_in_flight: 1
+    resource_label: Example Operation
+    single_az_only: true
+    templates:
+      - name: example-template
+        release: example-release
+        manifest: |
+          example_value: (( .properties.service_network_az_single_select.value ))
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
+      configurable: true
+      default: 1
 ```
+![Example Product with Service Network AZ Single-Select](img/example-service-network-az-single-select-tile.png)
 
 #### secret
 
