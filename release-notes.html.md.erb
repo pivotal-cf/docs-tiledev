@@ -38,6 +38,9 @@ For more information, see the [Custom Forms and Properties](./tile-generator.htm
 
 As of April 2019, Trusty stemcells will no longer receive support, nor will Pivotal have CVE patches for them. Ops Manager v2.2 allows tile authors to upgrade from Trusty stemcells to Xenial stemcells.
 
+## <a id='when-changed'></a> "When Changed" Errand Setting Removed
+
+Ops Manager no longer supports the **When Changed** option for tile errands. The following API endpoint does not accept `when-changed` as valid: `PUT /api/v0/staged/products/:product_guid/errands`. Errands previously set to **When Changed** are set to **On** in Ops Manager v2.2. The default errand setting is now **On**. 
 
 ## <a id='om-release-notes'></a> Other Ops Manager v2.2 Release Notes
 
