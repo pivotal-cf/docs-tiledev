@@ -43,6 +43,7 @@ As of April 2019, Trusty stemcells will no longer receive support, nor will Pivo
 
 For other Ops Manager v2.2 release notes, see [PCF Ops Manager Release v2.2 Release Notes](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/opsmanager-rn.html).
 
+
 ## <a id="pas-properties"></a>Pivotal Application Service Tile Property Changes
 
 Properties in the Pivotal Application Service (PAS) v2.2 tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
@@ -105,6 +106,16 @@ The following tables list the properties that Pivotal removed and added in PAS v
     <td><code>.properties.syslog_drop_debug</code></td>
   </tr>
 </table>
+
+
+## <a id='deterministic-routing'></a> Deterministic Routing for Loggregator
+
+The new deterministic routing feature for Loggregator helps scaled nozzles receive metrics consistently. With deterministic routing, metrics are routed to nozzle instances based on their name. For example, if you scale a nozzle to 2 instances with unique shard GUIDs, a given metric is not routed across both shard IDs. If this feature is not enabled, the metrics are routed evenly across all instances.
+
+Using this feature may affect load balancing across nozzles. When several instances of a nozzle exist, the load is normally round-robined to them, resulting in an even load across the nozzles. With deterministic routing, the nozzles may see an uneven load.
+
+To enable deterministic routing, you must include the property `string deterministic_name = NUMBER-OF-NOZZLES` with the initial egress request made to Loggregator in your nozzle's manifest.
+
 
 ## <a id='breaking-changes'></a> Breaking Changes
 
