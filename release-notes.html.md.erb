@@ -38,16 +38,18 @@ For more information, see the [Custom Forms and Properties](./tile-generator.htm
 
 As of April 2019, Trusty stemcells will no longer receive support, nor will Pivotal have CVE patches for them. Ops Manager v2.2 allows tile authors to upgrade from Trusty stemcells to Xenial stemcells.
 
+
 ## <a id='when-changed'></a> "When Changed" Errand Setting Removed
 
 Ops Manager no longer supports the **When Changed** option for tile errands. The following API endpoint does not accept `when-changed` as valid: `PUT /api/v0/staged/products/:product_guid/errands`. Errands previously set to **When Changed** are set to **On** in Ops Manager v2.2. The default errand setting is now **On**. 
+
 
 ## <a id='om-release-notes'></a> Other Ops Manager v2.2 Release Notes
 
 For other Ops Manager v2.2 release notes, see [PCF Ops Manager Release v2.2 Release Notes](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/opsmanager-rn.html).
 
 
-## <a id="pas-properties"></a>Pivotal Application Service Tile Property Changes
+## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
 Properties in the Pivotal Application Service (PAS) v2.2 tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
 
@@ -113,9 +115,11 @@ The following tables list the properties that Pivotal removed and added in PAS v
 
 ## <a id='deterministic-routing'></a> Deterministic Routing for Loggregator
 
-The new deterministic routing feature for Loggregator helps scaled nozzles receive metrics consistently. With deterministic routing, metrics are routed to nozzle instances based on their name. For example, if you scale a nozzle to 2 instances with unique shard GUIDs, a given metric is not routed across both shard IDs. If this feature is not enabled, the metrics are routed evenly across all instances.
+The new deterministic routing feature for Loggregator helps scaled nozzles receive metrics consistently. When you have two or more nozzle instances, it is helpful to have certain metrics go to the same nozzle instance for ease of tracking, rather than split across different instances.
 
-Using this feature may affect load balancing across nozzles. When several instances of a nozzle exist, the load is normally round-robined to them, resulting in an even load across the nozzles. With deterministic routing, the nozzles may see an uneven load.
+With deterministic routing, metrics are routed to nozzle instances based on their name. For example, if you scale a nozzle to two instances with unique shard GUIDs, a given metric is not routed across both shard IDs once it has already been routed to a specific one. If this feature is not enabled, the metrics are routed evenly across all instances.
+
+Using this feature may affect load balancing across instances. When several instances of a nozzle exist, the load is normally round-robined to them, resulting in an even load across instances. With deterministic routing, the instances may see an uneven load.
 
 To enable deterministic routing, you must include the property `string deterministic_name = NUMBER-OF-NOZZLES` with the initial egress request made to Loggregator in your nozzle's manifest.
 
