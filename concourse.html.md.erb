@@ -52,6 +52,33 @@ To automate the installation of your tile, we need the configuration parameters 
 
 * **UAA Users**: Include a list of UAA users to use for testing your tile. The format is a JSON array, with the specific format described on the configuration page.
 
+#### <a id="params"></a> Tile Dashboard Configure
+
+The Tile Dashboard Config view can be found under your tile release by visiting the tiles page for a specific release and clicking on the Configure link.  Tile Dashboard maintains install configuration for the properties needed by your tile during installation and testing of the tile.  The config page is evolving to assist managing properties as required by the OM tool (Ops Manager's cli).  There are two ways to configure a tile on this view:
+
+* **Properties** tab
+  * The Properties tab is an evolving form that provides assistance with configuring basic types for most simple property types and many complex types.
+  * To assist with configuring properties, the form pulls properties directly from your tile.yml file parsing the properties_blueprints to provide a basic starting point template for all the required properties.  If a property is required and does not yet have valid values, the field will display in red.
+  * All of the fields displayed in red must be filled out before Tile Dashboard will run on our environments to prevent false failures due to missing config properties.
+* **Advanced - Json Properties** tab
+  * The Advanced Properties tab shows the properties in JSON format
+  * If a property has a required true JSON attribute that means the property is required but the value has not been provided.
+  * All of the fields displayed with the required true attribute must be filled out before Tile Dashboard will run on our environments to prevent false failures due to missing config properties.
+  * Once you have provided the value for a property, delete the required attribute to tell Tile Dashboard that this field is now provided.
+
+Be sure to save all your updates with the Save button.  Once all required attributes are cleared, then you may run "Save and Run" which will trigger all tests to be run.
+
+To address collections, the OM tool has a new experimental feature staged-config which can be used to format the collection. This feature was introduced in [OM 0.36.0](https://github.com/pivotal-cf/om/releases/tag/0.36.0). staged-config exports a schema format in either yaml or JSON showing the required structure of the config for OM.  The feature supports either YAML or JSON but Tile Config requires JSON so it is recommended to use your favorite YAML to JSON tool to convert it to JSON for Tile Dashboard.
+
+#### <a id="params"></a> Tile Dashboard Configure Gating
+
+To prevent false failures from missing configurations, the Configure step is Gating
+
+* **Config** column
+  - The Config column is a quick job that runs after Scan to check that a Tile Config is completed meaning that there are no required fields that are missing values.
+
+To see if a Tile has passed Config, click on the Config column.  A status of complete means that the Tile Config has all the required fields provided.  A status of failed will be accompanied by a list of missing required fields.  To address any missing required fields, visit the Config view and fill out all the fields in red in the Properties Tab or with the attributes required in the Advanced JSON tab.
+
 #### <a id="test"></a> Test Configuration
 
 After your tile is installed, Tile Dashboard will run any post-deploy errands your tile has defined, including tests. Ideally your tile will include tests that exercise all of its functionality. We have some ideas for expanding the Tile Dashboard testing capabilities; if you’re interested in other ways of defining tests, please reach out to us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
