@@ -5,25 +5,24 @@ owner: Services
 As a Pivotal Cloud Foundry (PCF) Partner, learn the step-by-step process of creating a tile and publishing on PivNet. 
 
 # What is a Tile?
-<!--- "essentially" is bc .pivotal is just a zip files?, Ops Manger link to Ops docs -->
-A tile is a piece of software that is packaged to be compatible with PCF. 
-Tiles are eventually uploaded to [Ops Manager]().
-To deploy any software on PCF, you need to create of tile. 
-A tile is essentially a .zip file that contains 3 folders: metadata, releases, and migrations. 
+Tiles are packaged software that can be integrated into PCF. To provide a service on PCF you must package your software into a tile using Tile Generator. You can publish tiles on PivNet and install them through Ops Manager. For more information see [Tile Generator](), [PivNet](), [Ops Manager]().
 
+##Tile Structure
+Tiles are zipped directories with a `` .pivotal `` file extension. Tile directories require three subdirectories: metadata, migrations, and releases.
 
 <table class="nice">
 	<tr>
 		<td>Metadata</td>
-		<td>In the metadata.yml file, you can configure settings for your software that receive user input, like a username and password.</td>
-	</tr>
-	<tr>
-		<td>Releases</td>
-		<td>A release is the software you are packaging. </td>
+		<td> Within this directory, configure settings for your software in a .yml file. </td>
 	</tr>
 	<tr>
 		<td>Migrations</td>
-		<td>MIgrations help you map changes across different versions. If you are starting a new tile, you do need to know about this yet. </td>
+		<td> Within this directory, track changes across different releases in a .js file. 
+			If you are starting a new tile, these files are not relevant. </td>	
+	</tr>
+	<tr>
+		<td>Releases</td>
+		<td>Within this directory, deploy your service in a zipped file. </td>
 	</tr>
 </table>       
 
