@@ -115,13 +115,11 @@ The following tables list the properties that Pivotal removed and added in PAS v
 
 ## <a id='deterministic-routing'></a> Deterministic Routing for Loggregator
 
-The new deterministic routing feature for Loggregator helps scaled nozzles receive metrics consistently. When you have two or more nozzle instances, it is helpful to have certain metrics go to the same nozzle instance for ease of tracking, rather than split across different instances.
+If you are running multiple instances of a nozzle, deterministic routing sends all metrics with the same name to the same nozzle instance. This lets the nozzle run calculations on or otherwise process all of the metrics of a given type, but it may also distribute the metrics load unevenly across the nozzle instances.
 
-With deterministic routing, metrics are routed to nozzle instances based on their name. For example, if you scale a nozzle to two instances with unique shard GUIDs, a given metric is not routed across both shard IDs once it has already been routed to a specific one. If this feature is not enabled, the metrics are routed evenly across all instances.
+Without deterministic routing, the Firehose round-robins metrics across all nozzle instances, which distributes the load across the instances more evenly.
 
-Using this feature may affect load balancing across instances. When several instances of a nozzle exist, the load is normally round-robined to them, resulting in an even load across instances. With deterministic routing, the instances may see an uneven load.
-
-To enable deterministic routing, you must include the property `string deterministic_name = NUMBER-OF-NOZZLES` with the initial egress request made to Loggregator in your nozzle's manifest.
+To enable deterministic routing, include the property `string deterministic_name = NUMBER-OF-NOZZLES` with [the initial egress request](https://github.com/cloudfoundry/loggregator-api/blob/master/v2/egress.proto#L25) made to Loggregator in your nozzle's manifest.
 
 
 ## <a id='breaking-changes'></a> Breaking Changes
