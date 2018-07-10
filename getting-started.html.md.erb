@@ -1,16 +1,25 @@
 ---
-title: Getting Started with Partner Tile Development
+title: Getting Started with Tile Development
 owner: Services
 ---
 As a Pivotal Cloud Foundry (PCF) Partner, learn the step-by-step process of creating a tile and publishing on PivNet. 
 
-# What is a Tile?
-Tiles are packaged software that can be integrated into PCF. To provide a service on PCF you must package your software into a tile using Tile Generator. You can publish tiles on PivNet and install them through Ops Manager. For more information see [Tile Generator](), [PivNet](), [Ops Manager]().
+# <a id="tile-def"></a>  What is a Tile?
+Tiles are packaged software that can be integrated into PCF.
+To provide a service on PCF you must package your software into a tile using Tile Generator.
+You can publish tiles on PivNet and install them through Ops Manager.
+For more information see, [Tile Generator](), [PivNet](), and [Ops Manager](). 
 
+<!--- Value Prop here instead (?) -->
 ##Tile Structure
-Tiles are zipped directories with a `` .pivotal `` file extension. Tile directories require three subdirectories: metadata, migrations, and releases.
+Tiles are zipped directories with a `` .pivotal `` file extension.
+Tile directories require three subdirectories: metadata, migrations, and releases.
 
 <table class="nice">
+	<tr>
+		<th>Directory</th>
+		<th>Description</th>
+	</tr>
 	<tr>
 		<td>Metadata</td>
 		<td> Within this directory, configure settings for your software in a .yml file. </td>
@@ -24,14 +33,15 @@ Tiles are zipped directories with a `` .pivotal `` file extension. Tile director
 		<td>Releases</td>
 		<td>Within this directory, deploy your service in a zipped file. </td>
 	</tr>
-</table>       
+</table>        
 
+<!--- More context about other directories / files (?), file structure screen-shot -->
 
-#Why Build a Tile?
+# <a id="tile-value"></a> Why Build a Tile?
 <!--- Link to Partner Days?-->
 _Value propositions for tile development_
 
-#Steps for Tile Development
+# <a id="tile-steps"></a> Steps for Tile Development
 ## 1. Partner Days
 _Description of why partner days are useful_
 
@@ -64,8 +74,21 @@ lorem
 
 ## 5. Iterate on Tile
 
+```
+lorem 
+lorem 
+lorem 
+``` 
+
+```
+lorem 
+lorem 
+lorem 
+``` 
+
 ## 6. Test in Opsman
 
 ## 7. Publish on PivNet
 
-# Resources
+# <a id="tile-resources"></a> Resources
+<!--- Insert relevant links to beginner docs (?)-->
