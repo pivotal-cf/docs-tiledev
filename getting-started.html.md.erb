@@ -2,16 +2,31 @@
 title: Getting Started with Tile Development
 owner: Services
 ---
+
 As a Pivotal Cloud Foundry (PCF) Partner, learn the step-by-step process of creating a tile and publishing on PivNet. 
 
-# <a id="tile-def"></a>  What is a Tile?
+## <a id="tile-value"></a> Why Build a Tile?
+
+You want your amazing microservice to find the audience it deserves. 
+You want to join a growing ecosystem that can easily integrate your service. 
+You want operators and app developers to interact with your service in an accessible and standardized way. 
+
+If you turned your microservice into a tile and made it available on [Pivotal Network](https://network.pivotal.io), then:
+
+* PCF operators could download and install your service as a PCF <em>tile</em>, letting them configure it with a graphical UI and update it with a single click. More about PCF tiles later.
+* PCF developers could:
+  - See your service in their PCF services marketplace
+  - Select service plans to subscribe to
+  - Create instances of your service and call them from their apps
+  - Rejoice at the power of it all
+
+## <a id="tile-def"></a>  What is a Tile?
 Tiles are packaged software that can be integrated into PCF.
 To provide a service on PCF you must package your software into a tile using Tile Generator.
 You can publish tiles on PivNet and install them through Ops Manager.
-For more information see, [Tile Generator](), [PivNet](), and [Ops Manager](). 
+For more information see, [Tile Generator](./tile-generator.html), [Pivotal Network](https://network.pivotal.io), and [Ops Manager](https://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html). 
 
-<!--- Value Prop here instead (?) -->
-##Tile Structure
+###Tile Structure
 Tiles are zipped directories with a `` .pivotal `` file extension.
 Tile directories require three subdirectories: metadata, migrations, and releases.
 
@@ -37,22 +52,18 @@ Tile directories require three subdirectories: metadata, migrations, and release
 
 <!--- More context about other directories / files (?), file structure screen-shot -->
 
-# <a id="tile-value"></a> Why Build a Tile?
-<!--- Link to Partner Days?-->
-_Value propositions for tile development_
-
-# <a id="tile-steps"></a> Steps for Tile Development
-## 1. Partner Days
+## <a id="tile-steps"></a> Steps for Tile Development
+### 1. Partner Days
 _Description of why partner days are useful_
 
 ```
 Sign up form
 ```
 
-## 2. Figure Out Tile Type
+### 2. Figure Out Tile Type
 <!--- Paul feedback on accuracy of this section. Iterative process.-->
 
-## 3. Setup Tile Generator
+### 3. Setup Tile Generator
 <!--- Context to what tile generation is? CLI or UI?.-->
 To get ready to set up tile generator, use the following script: 
 
@@ -62,7 +73,7 @@ lorem
 lorem 
 ```
 
-## 4. Run Tile Generator
+### 4. Run Tile Generator
 <!--- Vague. CLI or UI? Path? Download where?-->
 Download your releases. Type code and point to path:  
 
@@ -72,7 +83,7 @@ lorem
 lorem 
 ``` 
 
-## 5. Iterate on Tile
+### 5. Iterate on Tile
 
 ```
 lorem 
@@ -86,9 +97,9 @@ lorem
 lorem 
 ``` 
 
-## 6. Test in Opsman
+### 6. Test in Opsman
 
-## 7. Publish on PivNet
+### 7. Publish on PivNet
 
-# <a id="tile-resources"></a> Resources
+## <a id="tile-resources"></a> Resources
 <!--- Insert relevant links to beginner docs (?)-->
