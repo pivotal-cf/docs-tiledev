@@ -3,27 +3,12 @@ title: Getting Started with Tile Development
 owner: Services
 ---
 
-As a Pivotal Cloud Foundry (PCF) Partner, learn the step-by-step process of creating a tile and publishing on PivNet. 
-
-## <a id="tile-value"></a> Why Build a Tile?
-
-You want your amazing microservice to find the audience it deserves. 
-You want to join a growing ecosystem that can easily integrate your service. 
-You want operators and app developers to interact with your service in an accessible and standardized way. 
-
-If you turned your microservice into a tile and made it available on [Pivotal Network](https://network.pivotal.io), then:
-
-* PCF operators could download and install your service as a PCF <em>tile</em>, letting them configure it with a graphical UI and update it with a single click. More about PCF tiles later.
-* PCF developers could:
-  - See your service in their PCF services marketplace
-  - Select service plans to subscribe to
-  - Create instances of your service and call them from their apps
-  - Rejoice at the power of it all
+As a Pivotal Cloud Foundry (PCF) Partner, learn the step-by-step process of creating a tile and publishing on Pivotal Network. 
 
 ## <a id="tile-def"></a>  What is a Tile?
 Tiles are packaged software that can be integrated into PCF.
 To provide a service on PCF you must package your software into a tile using Tile Generator.
-You can publish tiles on PivNet and install them through Ops Manager.
+You can publish tiles on Pivotal Network and install them through Ops Manager.
 For more information see, [Tile Generator](./tile-generator.html), [Pivotal Network](https://network.pivotal.io), and [Ops Manager](https://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html). 
 
 ###Tile Structure
@@ -37,20 +22,37 @@ Tile directories require three subdirectories: metadata, migrations, and release
 	</tr>
 	<tr>
 		<td>Metadata</td>
-		<td> Within this directory, configure settings for your software in a .yml file. </td>
+		<td> Within this directory, you configure settings for your software in a .yml file. </td>
 	</tr>
 	<tr>
 		<td>Migrations</td>
-		<td> Within this directory, track changes across different releases in a .js file. 
+		<td> Within this directory, you track changes across different releases in a .js file. 
 			If you are starting a new tile, these files are not relevant. </td>	
 	</tr>
 	<tr>
 		<td>Releases</td>
-		<td>Within this directory, deploy your service in a zipped file. </td>
+		<td>Within this directory, you deploy your service in a zipped file. </td>
 	</tr>
-</table>        
-
+</table>  
 <!--- More context about other directories / files (?), file structure screen-shot -->
+
+## <a id="tile-value"></a> Why Build a Tile?
+
+You want your service to find the audience it deserves. 
+You want to join a growing ecosystem that can easily integrate your service. 
+You want operators and app developers to interact with your service in an accessible and standardized way. 
+
+If you turned your service into a tile and made it available on [Pivotal Network](https://network.pivotal.io), then:
+
+* PCF operators could: 
+  - Download and install your service as a tile
+  - Configure your service using a UI 
+  - Update your service with a single click
+* PCF developers could:
+  - See your service in their PCF services marketplace
+  - Select service plans to subscribe to
+  - Create instances of your service and call them from their apps
+  - Sustain a continuous and fast development cycle       
 
 ## <a id="tile-steps"></a> Steps for Tile Development
 ### 1. Partner Days
@@ -99,7 +101,7 @@ lorem
 
 ### 6. Test in Opsman
 
-### 7. Publish on PivNet
+### 7. Publish on Pivotal Network
 
 ## <a id="tile-resources"></a> Resources
 <!--- Insert relevant links to beginner docs (?)-->
