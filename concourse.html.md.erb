@@ -3,28 +3,73 @@ title: Continuous Integration Testing
 owner: Services
 ---
 
+This topic describes how to do continuous integration (CI) testing on your tile.
+
 <strong><%= modified_date %></strong>
 
-There are two ways to do CI for your tile.
+There are two ways to do CI testing on your tile:
 
-+ to use the Tile Dashboard CI provided as a service by Pivotal.
-+ to set up a Concourse Server and use it to test your tile.
++ Use the Tile Dashboard provided as service by the Pivotal ISV team.<br>
+  See [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
+  This is the method recommended by Pivotal.
++ Set up and use your own Concourse pipeline.<br>
+  See [Set Up a Concourse Pipeline and Test Your Tile](#concourse) below.<br>
+  This method is more time consuming and not recommended for new partners 
+  or partners working on only one tile.
 
-Beginner partners will want to use the Tile Dashboard CI.
+## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
 
-This topic describes how to use the Tile Dashboard CI.
+With your tile in our Tile Dashboard CI testing system, we all win.
+You stay on top of changes to PCF that may require changes in your tile.
+Our field representatives gain a clear understanding of your tile’s compatibility across PCF versions,
+underlying IaaS, and different flavors of environments.
+This also relieves you from maintaining your own CI system, keeping up with latest PCF versions, etc.
 
-If you want to set up your own Concourse Server, then see [Continuous Integration Testing with a Concourse Server](../newfile.html).
+The Tile Dashboard CI is part of our Enterprise Readiness criteria
+which is used to inform the field of the quality and capabilities of your tile,
+so it is important to get your tile performing well.
+For an introduction to our readiness criteria, see 
+[Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0).
 
+### <a id="tile-dashboard-ci"></a> The Tile Dashboard CI Test Process
 
-Use the Tile Dashboard CI
+The Tile Dashboard CI runs your tile through a series of steps, which include:
 
-Prerequisite: I need a Slack account on the PivotalPartners.slack.com organization.
+1. Downloads your tile from PivNet and checks hash integrity.
 
-If you don't have this, then contact the technical program management of the ISV team.
+2. Scans your tile for known issues or potential problems, like:
+  - Use of deprecated properties.
+  - Use of properties whose values/meanings have changed.
+  - Use of features that are no longer supported.
 
-And you need to be added to the channel for your company.
+3. Configures, installs, tests, and uninstalls your tile in several PCF environments:
+  - A patch release of every supported Pivotal Application Service and Elastic Runtime minor version.
+  - Every supported IaaS
+  - Environments with extra configuration, such as multiple availability zones and IPsec
 
+The Tile Dashboard reports the results of each step.
+The results reported for each step include a general pass/fail status, the execution log, and output.
+If a step fails for a reason unrelated to a tile, such as a network glitch,
+you can retry that step from the Tile Dashboard CI.
+For more information, see Step X, below.
+
+### <a id="prereq"></a>Prerequisites
+
++ A Slack account on the PivotalPartners.slack.com organization.
+    If you don't have an account, contact the technical program management of the ISV team.
+
++ You need to belong to your company's channel in the PivotalPartners.slack.com organization.
+
++ You need to have your tile uploaded to the Tile Dashboard.
+
+    | To upload your tile for a &hellip; | Then&hellip; |
+    |---------------------|--------------|
+    | first release     | email your Pivotal contact for help uploading the tile. |
+    | subsequent release| you can upload pre-releases to the [Pivotal Network](https:network.pivotal.io).|
++ 
+### STEPS
+
+1. 
 1. Log in to the Tile Dashboard CI 
 
 1. 
@@ -32,35 +77,6 @@ This topic explains how to use the [Tile Dashboard CI](https://tile-dashboard.cf
 continuous integration (CI) system and its underlying [Concourse](http://concourse.ci) platform
 to help develop and integrate software services for Pivotal Cloud Foundry (PCF).
 
-## <a id="tile-dashboard-ci"></a> The Tile Dashboard CI
-
-With your tile in our Tile Dashboard CI testing system, we all win.
-You stay on top of changes to PCF that may require changes in your tile.
-Our field representatives gain a clear understanding of your tile’s compatibility across PCF versions,
-underlying IaaS, and different flavors of environments.
-This also relieves you from maintaining your own CI system, keeping up with latest PCF versions, etc.
-Further, the Tile Dashboard CI is part of our [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0),
-which is used to inform the field of the quality and capabilities of your tile,
-so it is important to get your tile performing well.
-
-### <a id="td-ci-steps"></a> The Tile Dashboard CI Steps
-
-The Tile Dashboard CI runs your tile through a series of steps, which include:
-
-1. Download your tile from PivNet and check hash integrity.
-1. Scan your tile for known issues or potential problems, like:
-  - Use of deprecated properties.
-  - Use of properties whose values/meanings have changed.
-  - Use of features that are no longer supported.
-1. Configure, install, test, and uninstall your tile in several PCF environments:
-  - A patch release of every supported ERT/PAS minor version.
-  - Every supported IaaS.
-  - Environments with extra configuration (e.g., multiple availability zones, IPsec).
-
-The Tile Dashboard CI reports the results of each step.
-The results reported for each step include a general pass/fail status, the execution log, and output.
-If a step fails for a reason unrelated to a tile, such as a network glitch,
-you can retry that step from the Tile Dashboard CI.
 
 ### <a id="what-we-need"></a> What Pivotal Needs from You
 
@@ -137,6 +153,8 @@ WHAT DO PARTNERS NEED TO DO?
   
 ##### About Collections
  
+http://localhost:4567/tiledev/1-12/product-template-reference.html#simple-vs-complex
+
 To address collections, the OM tool has a new experimental feature staged-config which can be used to format the collection.
 
 This feature was introduced in [OM 0.36.0](https://github.com/pivotal-cf/om/releases/tag/0.36.0). staged-config exports a schema format in either YAML or JSON showing the required structure of the config for OM. 
@@ -171,7 +189,7 @@ If your tile requires a backing service outside of the existing PCF environment
 you are responsible for maintaining the backing service in an environment
 that the Tile Dashboard can reach (i.e., it must be internet-facing).
 
-## <a id="overview"></a> Concourse
+## <a id="concourse"></a> Set Up a Concourse Pipeline and Test Your Tile
 
 The [Tile Dashboard CI](#tile-dashboard-ci) that Pivotal runs for its technical partnership program members
 uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue
