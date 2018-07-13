@@ -12,6 +12,14 @@
 | 2.0         | v2.0 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-0/ and https://docs.pivotal.io/tiledev/2-0 | 
 | 1.12        | v1.12 publishes to https://docs-pcf-staging.cfapps.io/tiledev/1-12/ and https://docs.pivotal.io/tiledev/1-12 | 
 
+## Terminology List
+
+List of terms that we want to use consistently in the doc:
+
++ The Tile Dashboard–for the UI/product as a whole. For example, "Log in to the Tile Dashboard. [MB 2018.07.11]
++ Tile Dashboard CI–for the subsystem of the Tile Dashboard that does the automated testing. For example, "Tile Dashboard CI runs any post-deploy errands that your tile has defined." [MB 2018.07.11]
+
+
 ## PCF Services Documentation Template
 
 This template helps Pivotal development teams prepare documentation for Pivotal Cloud Foundry (PCF) services that appear on [Pivotal Network](https://network.pivotal.io/). 
