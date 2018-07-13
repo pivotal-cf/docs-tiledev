@@ -40,19 +40,19 @@ Most value-add integrations are done by exposing your software to customer appli
 
 ## <a id="buildpacks"></a> Buildpacks
 
-When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code. The meta-buildpack also provides a language-agnostic way to inject your code into the application container image.
+When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code. Supply buildpacks also provide a language-agnostic way to inject your code into the application container image.
 
 - [Application Staging Process](http://docs.pivotal.io/pivotalcf/concepts/how-applications-are-staged.html) explains how PCF packages and deploys apps in containers with buildpacks so that they can run on multiple VMs interchangeably.
 - [Language Buildpacks](http://docs.pivotal.io/pivotalcf/buildpacks/index.html) describes the language-specific buildpacks support PCF apps.
-- [Meta Buildpack](https://github.com/guidowb/meta-buildpack) describes how to use "decorator" buildpacks to lessen the buildpack overhead needed for apps written in multiple languages.
+- [Custom Buildpacks](https://docs.pivotal.io/pivotalcf/buildpacks/custom.html) describes how to use supply buildpacks to add dependencies or code without having to change (multiple) language-sepcific buildpacks.
 
 ## <a id="agents"></a> Embedded Agents
 
 Some integrations depend on the ability to inject code into the application container.
 We refer to these injected components as "container-embedded agents".
-[Buildpacks](#buildpacks) provide a mechanism to inject components into the application container image, and the `.profile.d` directory provides a way to start agents before or alongside the customer application.
+[Buildpacks](./buildpacks.html#other) provide a mechanism to inject components into the application container image, and the `.profile.d` directory provides a way to start agents before or alongside the customer application.
 
-- [Agent Injection with the meta-buildpack](https://github.com/guidowb/meta-buildpack)
+- [Agent Injection with a supply buildpack](https://docs.pivotal.io/pivotalcf/buildpacks/custom.html)
 - [Using .profile.d](http://docs.pivotal.io/pivotalcf/devguide/deploy-apps/deploy-app.html#profile)
 
 
