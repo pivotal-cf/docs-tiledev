@@ -860,27 +860,28 @@ stemcell_criteria:
 
 Tile Generator supplies standard errands to deploy and delete CF type packages. You can
 replace or augment those errands by specifying errand shell commands in your tile.yml
-file. For example:
+file. Here is an example of a custom deploy errand to install a buildpack only is a newer
+version of that same buildpack is not already present:
 
 ```
 packages:
-- name: meta-buildpack
+- name: my-buildpack
   type: buildpack
   buildpack_order: 0 # Go to head of list
-  path: meta_buildpack.zip
+  path: my_buildpack.zip
   deploy: |
-    cp meta_buildpack.zip meta_buildpack-v{{context.version}}.zip
-    existing=`cf buildpacks | grep '^meta_buildpack'`
+    cp my_buildpack.zip my_buildpack-v{{context.version}}.zip
+    existing=`cf buildpacks | grep '^my_buildpack'`
     if [ -z "$existing" ]; then
-      cf create-buildpack meta_buildpack meta_buildpack-v{{context.version}}.zip 0
+      cf create-buildpack my_buildpack my_buildpack-v{{context.version}}.zip 0
     else
-      semver=`echo "$existing" | sed 's/.* meta_buildpack-v\(.*\)\.zip/\1/'`
+      semver=`echo "$existing" | sed 's/.* my_buildpack-v\(.*\)\.zip/\1/'`
       if is_newer "{{context.version}}" "$semver"; then
-        cf update-buildpack meta_buildpack -p meta_buildpack-v{{context.version}}.zip
+        cf update-buildpack my_buildpack -p my_buildpack-v{{context.version}}.zip
       else
-        echo "Newer version ($semver) of meta_buildpack is already present"
+        echo "Newer version ($semver) of my_buildpack is already present"
       fi
-      cf update-buildpack meta_buildpack -i 0
+      cf update-buildpack my_buildpack -i 0
     fi
   delete: |
     # Intentional no-op, as others may have a dependency on this
