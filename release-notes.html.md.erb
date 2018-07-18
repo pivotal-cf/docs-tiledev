@@ -146,6 +146,14 @@ Non-TLS communication to the blobstore will be deprecated in PCF v2.2 and remove
 
 The Pivotal MySQL for PCF v1 (p-mysql) tile will be deprecated in PCF v2.2 and removed in PCF v2.3. Partner tiles that depend on this tile should start migrating to the MySQL for PCF v2 (pivotal-mysql) tile. If you use p-mysql, you should change your tile to use pivotal-mysql, update your tile to declare a dependency on pivotal-mysql, and document a strategy for data migration.
 
+### <a id='selector-based'></a> Selector-Based Subscripton Model and Reference Nozzles
+
+You can request Firehose subscriptions that filter out all unspecified content using the Loggregator v2 API endpoint from the Reverse Log Proxy.
+
+For examples of nozzles that use the Loggregator V2 API and consume only specified whitelisted metrics, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository. 
+
+For more information about this feature, see the _V2 Subscriptions_ page of the [loggregator-release](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) repository. 
+
 
 ## <a id='pcf-2-1'></a> PCF v2.1 Compatibility Reminder
 
