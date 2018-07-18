@@ -1,0 +1,62 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds a single string value',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: false,
+    value_accessor_description: 'Returns the string value, or nil',
+    value_present_accessor_description: 'Returns true only if the value is a non-empty string',
+    additional_property_blueprint_attributes: [
+      {
+        name: 'constraints.must_match_regex',
+        description: <<~DESC
+          A regular expression that the user input must match. Create a validator that runs on the form save event.
+          If the user input does not match the `must_match_regex` constraint, the form displays the specified `error_message`.
+          Multiple `must_match_regex` constraints for a single property blueprint are evaluated in the order listed.
+          See the example below for example on how to use.
+          DESC
+      }
+    ],
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with String Information',
+          path: 'img/example-string-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_string
+              type: string
+              configurable: true
+              default: 'Karl'
+              constraints:
+              - must_match_regex: '\A[^!@#$%^&*()]*\z'
+                error_message: 'This name cannot contain special characters.'
+              - must_match_regex: '\A[^0-9]*\z'
+                error_message: 'This name cannot contain digits.'
+
+          form_types:
+            - name: example_form
+              label: 'Example form'
+              description: 'An example form'
+              property_inputs:
+                - reference: .properties.example_string
+                  label: 'Example string'
+                  description: 'This is an example'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: Hello, (( .properties.example_string.value ))! Welcome.
+        METADATA
+      }
+    ]
+} %>

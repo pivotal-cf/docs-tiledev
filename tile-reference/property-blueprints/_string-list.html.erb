@@ -1,0 +1,56 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds an array of strings',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: true,
+    value_accessor_description: 'Returns a string, or nil',
+    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [
+      {
+        name: 'parsed_strings',
+        description: 'Returns an array of strings for each string entry'
+      },
+      {
+        name: 'parsed_regex',
+        description: 'Returns a string containing a regex of the format <code>^(string1|string2|string3)$</code> where the value of this property is <code>string1,string2,string3</code>'
+      }
+    ],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with String List',
+          path: 'img/example-string-list-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_string_list
+              type: string_list
+              configurable: true
+              default: foo,bar,baz
+
+          form_types:
+            - name: example_string_list
+              label: 'Example form'
+              description: 'An example form'
+              property_inputs:
+                - reference: .properties.example_string_list
+                  label: Example String List
+                  description: 'Configure a property of type string_list'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: Hello. Your array of strings is (( .properties.example_string_list.value ))
+        METADATA
+      }
+    ]
+} %>
