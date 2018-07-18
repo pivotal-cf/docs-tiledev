@@ -39,11 +39,17 @@ For more information, see the [Custom Forms and Properties](./tile-generator.htm
 As of April 2019, Trusty stemcells will no longer receive support, nor will Pivotal have CVE patches for them. Ops Manager v2.2 allows tile authors to upgrade from Trusty stemcells to Xenial stemcells.
 
 
+## <a id='when-changed'></a> "When Changed" Errand Setting Removed
+
+Ops Manager no longer supports the **When Changed** option for tile errands. The following API endpoint does not accept `when-changed` as valid: `PUT /api/v0/staged/products/:product_guid/errands`. Errands previously set to **When Changed** are set to **On** in Ops Manager v2.2. The default errand setting is now **On**. 
+
+
 ## <a id='om-release-notes'></a> Other Ops Manager v2.2 Release Notes
 
 For other Ops Manager v2.2 release notes, see [PCF Ops Manager Release v2.2 Release Notes](https://docs.pivotal.io/pivotalcf/2-2/pcf-release-notes/opsmanager-rn.html).
 
-## <a id="pas-properties"></a>Pivotal Application Service Tile Property Changes
+
+## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
 Properties in the Pivotal Application Service (PAS) v2.2 tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
 
@@ -106,6 +112,16 @@ The following tables list the properties that Pivotal removed and added in PAS v
   </tr>
 </table>
 
+
+## <a id='deterministic-routing'></a> Deterministic Routing for Loggregator
+
+If you are running multiple instances of a nozzle, deterministic routing sends all metrics with the same name to the same nozzle instance. This lets the nozzle run calculations on or otherwise process all of the metrics of a given type, but it may also distribute the metrics load unevenly across the nozzle instances.
+
+Without deterministic routing, the Firehose round-robins metrics across all nozzle instances, which distributes the load across the instances more evenly.
+
+To enable deterministic routing, include the property `string deterministic_name = NUMBER-OF-NOZZLES` with [the initial egress request](https://github.com/cloudfoundry/loggregator-api/blob/master/v2/egress.proto#L25) made to Loggregator in your nozzle's manifest.
+
+
 ## <a id='breaking-changes'></a> Breaking Changes
 
 ### <a id='bosh-dns'></a> BOSH DNS Enabled By Default
@@ -129,6 +145,14 @@ Non-TLS communication to the blobstore will be deprecated in PCF v2.2 and remove
 ### <a id='mysql-v1'></a> MySQL v1 Tile
 
 The Pivotal MySQL for PCF v1 (p-mysql) tile will be deprecated in PCF v2.2 and removed in PCF v2.3. Partner tiles that depend on this tile should start migrating to the MySQL for PCF v2 (pivotal-mysql) tile. If you use p-mysql, you should change your tile to use pivotal-mysql, update your tile to declare a dependency on pivotal-mysql, and document a strategy for data migration.
+
+### <a id='selector-based'></a> Selector-Based Subscripton Model and Reference Nozzles
+
+You can request Firehose subscriptions that filter out all unspecified content using the Loggregator v2 API endpoint from the Reverse Log Proxy.
+
+For examples of nozzles that use the Loggregator V2 API and consume only specified whitelisted metrics, see `rlpreader` and `rlptypereader` in the [loggregator-tools](https://github.com/cloudfoundry-incubator/loggregator-tools) repository. 
+
+For more information about this feature, see the _V2 Subscriptions_ page of the [loggregator-release](https://github.com/cloudfoundry/loggregator-release/blob/master/docs/v2-subscriptions.md) repository. 
 
 
 ## <a id='pcf-2-1'></a> PCF v2.1 Compatibility Reminder
