@@ -211,7 +211,8 @@ At this point, you can test the tile on all the environments, by doing the follo
 
     ![Staged, scan and config jobs followed by environment jobs.](img/kick-off-testing.png)
 
-    The first three jobs are run in series in series. The others are the environment jobs
+    The first three jobs are prerequisite jobs and run in series.
+    The other jobs are the environment tests
     and run in parallel.
     The environment jobs do not run until the config job has completed successfully.
 
