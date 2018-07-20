@@ -66,9 +66,9 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
 + Your tile uploaded to the Pivotal Network.
 
     | To upload your tile for a &hellip; | Then&hellip; |
-    |---------------------|--------------|
+    |------------------------------------|--------------|
     | first release     | contact the technical program management of the ISV team. |
-    | subsequent release| you can upload pre-releases to the <a href="https:network.pivotal.io">Pivotal Network</a>.|
+    | subsequent release| you can upload pre-releases to the Pivotal Network.|
 
  
 ### <a id="intro"></a> About Configuring a Tile on the Tile Dashboard
@@ -86,8 +86,8 @@ There are two ways that you can configure the tile on the Tile Dashboard:
 
 |  Method | Notes and Restrictions | For more information, see&hellip;  |
 | --------| -----------------------| ----------------------------------|
-| Through the **Properties** tab | This is a form view of the installation properties. | Step x below |
-| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | Step y below |
+| Through the **Properties** tab | This is a form view of the installation properties. | [Configure Your Tile Using the Properties Tab](#config-with-property-tab) below.|
+| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab) below.|
 
 
 ### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and Locate the Configuration Page
@@ -142,7 +142,7 @@ In the **Advanced - JSON Properties** tab, you configure install properties, spe
 in the format used by the om tool.
 For more information about this format,
 see [om configure-product]
-(https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---    product-properties).
+(https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
 
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
@@ -181,6 +181,9 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 Include a list of UAA users for testing your tile.
 
 To specify the UAA users, do the following:
+
+1. If you are not already on the configuration page,
+   complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
 
 1. At the bottom of the configuration page, click **+** to expand 
 
