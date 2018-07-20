@@ -99,7 +99,7 @@ To log in to the Tile Dashboard and navigate to the configuration page, do the f
 2. Navigate to the Tile Dashboard URL:
    [tile-dashboard.cfapps.io/static/index.html#/environments](https://tile-dashboard.cfapps.io/static/index.html#/environments).
 
-    ![icons named pie-20, pie-21 and so on in a list](/img/pie-environment.png)
+    ![icons named pie-20, pie-21 and so on in a list](/img/pie-environments.png)
 
 4. Click **Tiles** in the menu bar.<br>
 
@@ -109,7 +109,7 @@ To log in to the Tile Dashboard and navigate to the configuration page, do the f
 
 7. Click **Configure**.
 
-     [Add a screenshot of the configure link]
+     ![The configure link is in the top left corner under the logo](img/configurelink.png)
 
 ### <a id="config-with-property-tab"></a> Configure Your Tile Using the Properties Tab
 
@@ -140,7 +140,6 @@ To configure install properties for your tile using the **Properties** tab, do t
 
 In the **Advanced - JSON Properties** tab, you configure install properties, specifying them in JSON,
 in the format used by the om tool.
-
 For more information about this format,
 see [om configure-product]
 (https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---    product-properties).
@@ -179,7 +178,7 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 
 ###<a id="uaa-users"></a> Specify UAA Users
 
-Include a list of UAA users to use for testing your tile.
+Include a list of UAA users for testing your tile.
 
 To specify the UAA users, do the following:
 
@@ -195,51 +194,25 @@ To specify the UAA users, do the following:
 When the configuration is complete, the config icon shows green. 
 At this point, you can test the tile on all the environments, by doing the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 1. Click **Save and Run**.
 
     This tests the tile on all the environments.
 
-    [Show the kick off screenshot]
+    ![Success Config save succeeded! Tile CI begun! message appears when the run starts.](img/save-and-run-message.png)
 
 3. Click **Tiles** in the toolbar to return to the tiles view. 
 
 4. Follow the progress of the tests in the Tiles view.
 
-   [frankenscreen the shot]
+    ![Scan jobs followed by environment jobs.](img/kick-off-testing.png)
+
+    The first three jobs are the scan jobs, done in series. The others are the environment jobs run in parallel.
+    The environment jobs do not run until the config job has completed successfully.
 
 
-
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-<hr>
-
-To prevent false failures from missing configurations, the Configure step is Gating
-
-* **Config** column
-  - The Config column is a quick job that runs after Scan to check that a Tile Config is completed meaning that there are no required fields that are missing values.
-
-To see if a Tile has passed Config, click on the Config column. 
-A status of complete means that the Tile Config has all the required fields provided. 
-A status of failed will be accompanied by a list of missing required fields. 
-To address any missing required fields, visit the Config view and
-fill out all the fields in red in the Properties Tab or with the attributes required in the Advanced JSON tab.
-
-#### <a id="test"></a> Test Configuration
+### <a id="test"></a> About Test Configuration
 
 After your tile is installed, Tile Dashboard will run any post-deploy errands your tile has defined, including tests.
 Ideally your tile will include tests that exercise all of its functionality.
@@ -247,12 +220,12 @@ We have some ideas for expanding the Tile Dashboard testing capabilities;
 if you’re interested in other ways of defining tests,
 contact us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
 
-#### <a id="backing"></a> About Backing Services
+### <a id="backing"></a> About Backing Services
 
-If your tile requires a backing service outside of the existing PCF environment
-(e.g., your tile is a service broker to a SaaS offering),
-you are responsible for maintaining the backing service in an environment
-that the Tile Dashboard can reach (i.e., it must be internet-facing).
+If your tile requires a backing service outside of the existing PCF environment,
+for example, your tile is a service broker to a SaaS offering.
+You are responsible for maintaining the backing service in an environment
+that the Tile Dashboard can reach, that is, it must be internet-facing.
 
 ## <a id="concourse"></a> Set Up a Concourse Pipeline and Test Your Tile
 
