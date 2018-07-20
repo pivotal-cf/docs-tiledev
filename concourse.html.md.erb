@@ -3,70 +3,246 @@ title: Continuous Integration Testing
 owner: Services
 ---
 
+This topic describes how to do continuous integration (CI) testing on your tile.
+
 <strong><%= modified_date %></strong>
 
-This topic explains how to use the [Tile Dashboard](https://tile-dashboard.cfapps.io/static/index.html#/environments) continuous integration (CI) system and its underlying [Concourse](http://concourse.ci) platform to help develop and integrate software services for Pivotal Cloud Foundry (PCF).
+There are two ways to do CI testing on your tile:
 
-## <a id="tile-dashboard-ci"></a> Tile Dashboard CI
++ Use the Tile Dashboard provided as service by the Pivotal ISV team.<br>
+  See [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
+  This is the method recommended by Pivotal.
++ Set up and use your own Concourse pipeline.<br>
+  See [Set Up a Concourse Pipeline and Test Your Tile](#concourse) below.<br>
+  This method is more time consuming and not recommended for new partners 
+  or partners working on only one tile.
 
-With your tile in our Tile Dashboard continuous integration testing system, we all win. You stay on top of changes to PCF that may require changes in your tile. Our field representatives gain a clear understanding of your tile’s compatibility across PCF versions, underlying IaaS, and different flavors of environments. This also relieves you from maintaining your own CI system, keeping up with latest PCF versions, etc. Further, the Tile Dashboard CI is part of our [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0), which is used to inform the field of the quality and capabilities of your tile, so it is important to get your tile performing well.
+## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
 
-### <a id="td-ci-steps"></a> Tile Dashboard Steps
+With your tile in our Tile Dashboard CI testing system, we all win.
+You stay on top of changes to PCF that may require changes in your tile.
+Our field representatives gain a clear understanding of your tile’s compatibility across PCF versions,
+underlying IaaS, and different flavors of environments.
+This also relieves you from maintaining your own CI system, keeping up with latest PCF versions, etc.
 
-Tile Dashboard runs your tile through a series of steps, which include:
+The Tile Dashboard CI is part of our Enterprise Readiness criteria
+which is used to inform the field of the quality and capabilities of your tile,
+so it is important to get your tile performing well.
+For an introduction to our readiness criteria, see 
+[Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0).
 
-* Download your tile from PivNet and check hash integrity.
-* Scan your tile for known issues or potential problems, like:
+### <a id="tile-dashboard-ci"></a> The Tile Dashboard CI Test Process
+
+The Tile Dashboard CI runs your tile through a series of steps, which include:
+
+1. Downloading your tile from the Pivotal Network and checking hash integrity.
+
+2. Scanning your tile for known issues or potential problems, like:
   - Use of deprecated properties.
   - Use of properties whose values/meanings have changed.
   - Use of features that are no longer supported.
-* Configure, install, test, and uninstall your tile in several PCF environments:
-  - A patch release of every supported ERT/PAS minor version.
-  - Every supported IaaS.
-  - Environments with extra configuration (e.g., multiple availability zones, IPsec).
 
-Tile Dashboard reports the results of each step. The results report for each step includes a general pass/fail status, the execution log, and output. If a test failed for a reason unrelated to a tile (e.g., a network glitch), you can retry the step from Tile Dashboard.
+3. Configuring, installing, testing, and uninstalling your tile in several PCF environments:
+  - A patch release of every supported Pivotal Application Service and Elastic Runtime minor version.
+  - Every supported IaaS
+  - Environments with extra configuration, such as multiple availability zones and IPsec
 
-### <a id="what-we-need"></a> What Pivotal Needs from You
+The Tile Dashboard reports the results of each step.
+The results reported for each step include a general pass/fail status, the execution log, and output.
+If a step fails for a reason unrelated to a tile, such as a network glitch,
+you can retry that step from the Tile Dashboard CI.
 
-To integrate your tile with [Tile Dashboard](https://tile-dashboard.cfapps.io/static/index.html#/environments) CI, Pivotal needs you to upload or send the following:
+### <a id="prereq"></a>Prerequisites
 
-* Your pre-release [tile](#upload)
-* Your tile's [configuration parameters](#params)
-* One or more [test configurations](#test)
-* Any [backing services](#backing) that the tile requires
+Before you use the Tile Dashboard to configure and test your tile, verify the following:
 
-These requirements are discussed below.
++ You have a Slack account on the PivotalPartners.slack.com organization.
+    If you don't have an account, contact the technical program management of the ISV team.
 
-#### <a id="upload"></a> Uploaded Tile
++ You belong to your company's channel in the PivotalPartners.slack.com organization.
 
-If this is your first tile and you have not yet released it, email your Pivotal contact to upload the pre-release tile. Tile Dashboard will then pick up the pre-release and run it through CI.
 
-After the first release of your tile, the admin for your tile can continue to upload new pre-releases for future versions to network.pivotal.io.
 
-#### <a id="params"></a> Tile Configuration Parameters
++ Your tile uploaded to the Pivotal Network.
 
-To automate the installation of your tile, we need the configuration parameters the operator would enter into Ops Manager forms. Tile Dashboard includes an interface for you to enter this configuration directly for properties, in the format used by the [om tool](https://github.com/pivotal-cf/om). Click on your tile’s slug, then click the “Configure” link near the top of the screen, and you can enter the following information:
+    | To upload your tile for a &hellip; | Then&hellip; |
+    |------------------------------------|--------------|
+    | first release     | contact the technical program management of the ISV team. |
+    | subsequent release| you can upload pre-releases to the Pivotal Network.|
 
-* **Properties**: Configure your tile’s properties, if necessary, using the [JSON product properties format used by om](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties). (Note: this is the same format used by the Operations Manager product properties API.)
+ 
+### <a id="intro"></a> About Configuring a Tile on the Tile Dashboard
 
-* **UAA Users**: Include a list of UAA users to use for testing your tile. The format is a JSON array, with the specific format described on the configuration page.
+After your tile has been uploaded to the Pivotal Network, the Tile Dashboard starts to stage and scan it.
+For new tiles, this can take up to an hour.
 
-#### <a id="test"></a> Test Configuration
+After the stage and scan, you need to configure your tile on the Tile Dashboard.
+Configuration specfies how the tile will be installed.
 
-After your tile is installed, Tile Dashboard will run any post-deploy errands your tile has defined, including tests. Ideally your tile will include tests that exercise all of its functionality. We have some ideas for expanding the Tile Dashboard testing capabilities; if you’re interested in other ways of defining tests, please reach out to us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
+Configuring your tile through the Tile Dashboard is equivalent to configuring the tile on Ops Manager
+after downloading it from the Pivotal Network.
 
-#### <a id="backing"></a> Backing Services
+There are two ways that you can configure the tile on the Tile Dashboard:
 
-If your tile requires a backing service outside of the existing PCF environment (e.g., your tile is a service broker to a SaaS offering), you are responsible for maintaining the backing service in an environment that the Tile Dashboard can reach (i.e., it must be internet-facing).
+|  Method | Notes and Restrictions | For more information, see&hellip;  |
+| --------| -----------------------| ----------------------------------|
+| Through the **Properties** tab | This is a form view of the installation properties. | [Configure Your Tile Using the Properties Tab](#config-with-property-tab) below.|
+| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab) below.|
 
-## <a id="overview"></a> Concourse
 
-The [Tile Dashboard CI](#tile-dashboard-ci) that Pivotal runs for its technical partnership program members uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue to work with every new release of the platform.
+### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and Locate the Configuration Page
 
-With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline that integrates and tests your tile on your own deployment of the latest PCF.
+To log in to the Tile Dashboard and navigate to the configuration page, do the following: 
 
-While you are of course also free to use any other CI system you are familiar with, Pivotal's tools and documentation are built to make Concourse CI as easy as possible.
+1.  Log in to your PivotalPartners.slack.com account.
+
+2. Navigate to the Tile Dashboard URL:
+   [tile-dashboard.cfapps.io/static/index.html#/environments](https://tile-dashboard.cfapps.io/static/index.html#/environments).
+
+    ![icons named pie-20, pie-21 and so on in a list](/img/pie-environments.png)
+
+4. Click **Tiles** in the menu bar.<br>
+
+5. Click the row where your tile is listed.
+
+6. If your tile has more than one version, click the one you want to configure.
+
+7. Click **Configure**.
+
+     ![The configure link is in the top left corner under the logo](img/configurelink.png)
+
+### <a id="config-with-property-tab"></a> Configure Your Tile Using the Properties Tab
+
+The **Properties** tab view allows you to configure installation properties through a form.
+The form pulls properties from your `tile.yml` file parsing the `properties_blueprints`.
+For general information about `properties_blueprints`,
+see [Configuration Properties](./reference.html#properties).
+
+In the form, you can configure strings, integers, booleans, dropdowns, selectors,
+network addresses, ports, secrets, and simple credentials.
+To configure other types, such as nested collections, use the **Advanced - JSON Properties** tab.
+See [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).
+For a complete list of property types, see [Product Template Reference](product-template-reference.html).
+
+To configure install properties for your tile using the **Properties** tab, do the following:
+
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
+
+2. Click the **Properties** tab.
+
+3. Review or specify the value for each property.
+
+    If a property is required and is missing valid values, the field displays in red.
+
+3. When no fields are red, click **Save** or **Save and Run**.
+
+### <a id="config-with-advanced-tab"></a> Configure Your Tile Using the Advanced - JSON Properties Tab
+
+In the **Advanced - JSON Properties** tab, you configure install properties, specifying them in JSON,
+in the format used by the om tool.
+For more information about this format,
+see [om configure-product]
+(https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
+
+
+To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
+
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
+
+2. Click the **Advanced - JSON Properties** tab.
+
+3. Enter values for all required properties. 
+
+    If a property is required, this is indicated by `"required": true`.
+
+    For example: 
+
+    ```
+ ".properties.syslog_selector.enabled.address": {
+        "value": "",
+        "type": "network_address",
+        "required": true
+    },
+    ```
+4. After entering values for properties, delete the required attribute.
+   This tells Tile Dashboard that this field is now provided.
+    For example:
+
+    ```
+ ".properties.syslog_selector.enabled.address": {
+        "value": "192.0.2.1", 
+        "type": "network_address",
+    },
+    ```
+3.  Click **Save**.
+
+###<a id="uaa-users"></a> Specify UAA Users
+
+Include a list of UAA users for testing your tile.
+
+To specify the UAA users, do the following:
+
+1. If you are not already on the configuration page,
+   complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
+
+1. At the bottom of the configuration page, click **+** to expand 
+
+    ![bottom of page shows plus button used to expand uaa properties form](img/uaa-properties-collapsed.png)
+
+2.  Enter username, password, and groups for UAA user. 
+
+    
+###<a id="save-and-run"></a> Save and Run
+
+When the configuration is complete, the config icon shows green. 
+At this point, you can test the tile on all the environments, by doing the following:
+
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+
+1. Click **Save and Run**.
+
+    This tests the tile on all the environments.
+
+    ![Success Config save succeeded! Tile CI begun! message appears when the run starts.](img/save-and-run-message.png)
+
+3. Click **Tiles** in the toolbar to return to the tiles view. 
+
+4. Follow the progress of the tests in the Tiles view.
+
+    ![Staged, scan and config jobs followed by environment jobs.](img/kick-off-testing.png)
+
+    The first three jobs are prerequisite jobs and run in series.
+    The other jobs are the environment tests
+    and run in parallel.
+    The environment jobs do not run until the config job has completed successfully.
+
+
+### <a id="test"></a> About Test Configuration
+
+After your tile is installed, Tile Dashboard will run any post-deploy errands your tile has defined, including tests.
+Ideally your tile will include tests that exercise all of its functionality.
+We have some ideas for expanding the Tile Dashboard testing capabilities;
+if you’re interested in other ways of defining tests,
+contact us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
+
+### <a id="backing"></a> About Backing Services
+
+If your tile requires a backing service outside of the existing PCF environment,
+for example, your tile is a service broker to a SaaS offering.
+You are responsible for maintaining the backing service in an environment
+that the Tile Dashboard can reach, that is, it must be internet-facing.
+
+## <a id="concourse"></a> Set Up a Concourse Pipeline and Test Your Tile
+
+The [Tile Dashboard CI](#tile-dashboard-ci) that Pivotal runs for its technical partnership program members
+uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue
+to work with every new release of the platform.
+
+With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline
+that integrates and tests your tile on your own deployment of the latest PCF.
+
+While you are of course also free to use any other CI system you are familiar with,
+Pivotal's tools and documentation are built to make Concourse CI as easy as possible.
 
 ### <a id="server"></a> Set Up a Concourse Server
 
