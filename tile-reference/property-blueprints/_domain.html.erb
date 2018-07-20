@@ -1,0 +1,46 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds a string value which is a valid domain (e.g. <code>example.com</code> or <code>x.example.com:80/a/b</code>)',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: true,
+    value_accessor_description: 'Returns the domain as a string, or nil',
+    value_present_accessor_description: 'Returns true only if the value is a non-empty string',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with Domain',
+          path: 'img/example-domain-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_domain
+              type: domain
+              configurable: true
+
+          form_types:
+            - name: example_form
+              label: 'Example form'
+              description: 'An example form'
+              property_inputs:
+                - reference: .properties.example_domain
+                  label: 'Example domain'
+                  description: 'This is an example'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: Hello, user. I see your favorite domain is (( .properties.example_domain.value )).
+        METADATA
+      }
+    ]
+} %>

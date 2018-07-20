@@ -26,7 +26,7 @@ Evaluating a property can be represented by piecing two segments together:
 
 Together, the double-parentheses expression can be written as:
 
-````
+```
 (( LOCATION_OF_PROPERTY.ACCESSOR ))
 ```
 
@@ -70,6 +70,7 @@ Outside of properties, you can also retrieve information about various configura
 
 * $ops\_manager: used by any product to obtain information about specific OpsManager
 * $director: used by any product to obtain information about the Director
+* $runtime: used by any product to obtain information about the CF tile (Pivotal Application Service)
 * $self: used by your own product to obtain information about your product's configuration
 
 #### $ops\_manager
@@ -89,6 +90,8 @@ Outside of properties, you can also retrieve information about various configura
   </tr><tr>
   <td>no_proxy</td>
   <td>Provides the comma separated values that should not go through a proxy</td></tr>
+  <td>dns_enabled</td>
+  <td>Provides boolean flag indicating if BOSH DNS is enabled</td>
 </tr>
 </table>
 
@@ -135,6 +138,35 @@ Outside of properties, you can also retrieve information about various configura
 
 <p class="note"><strong>Note</strong>: Support for the <code>$director.username</code> and <code>$director.password</code> accessors will be removed in future versions of Ops Manager.</p>
 
+#### $runtime
+
+<table class="nice"><tr>
+  <td>system_domain</td>
+  <td>Provides domain for system-level PCF components, such as the API, UAA, or Apps Manager.</td>
+  </tr><tr>
+  <td>apps_domain</td>
+  <td>Provides the default domain used by applications</td>
+  </tr><tr>
+  <td>system_api_url</td>
+  <td>Provides the url to the PCF API component</td>
+  </tr><tr>
+  <td>login_url</td>
+  <td>Provides the url to authenticate with the PCF components</td>
+  </tr><tr>
+  <td>uaa_url</td>
+  <td>Provides the url to the PCF UAA component</td>
+  </tr><tr>
+  <td>console_url</td>
+  <td>Provides the url to the PCF Apps Manager component</td>
+  </tr><tr>
+  <td>default_reply_to</td>
+  <td>Provides the default reply-to email address for the system domain</td>
+  </tr><tr>
+  <td>default_from</td>
+  <td>Provides the default from email address of the system domain</td>
+  </tr>
+</table>
+
 #### $self
 
 <table class="nice"><tr>
@@ -152,711 +184,279 @@ Outside of properties, you can also retrieve information about various configura
   </tr>
 </table>
 
-### <a id='property-blueprints'></a>Property Blueprint Reference
+## <a id='property-blueprints'></a>Property Reference Guide
 
-#### string
+Below is a reference to every property blueprint type.
 
-Holds a single string value
+### <a id='common-attributes'></a>Common property blueprint attributes
 
-Accessors:
+All property blueprints may have the following attributes:
 
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns the string value</td>
+<table class="nice">
+  <tr>
+    <td>name</td>
+    <td>
+      Required. The name of the property.  The name is used to reference a property in <code>form_types</code> and in <code>(( ))</code> accessors.
+    </td>
   </tr>
+  <tr>
+    <td>
+      type
+    </td>
+    <td>
+      Required. The type of property. Must be one of the property types listed in this documentation.
+    </td>
+  <tr>
+    <td>
+      optional
+    </td>
+    <td>
+      Optional. Default: false. When set to true, OpsManager will not require this property to be set in order to deploy, nor will it validate that this field has a value when saving a form with this property.
+      <br/>
+      <br/>
+      <code>optional</code> cannot be set to true if a <code>default</code> value is set (see documentation below for which types support <code>default</code>).
+      <br/>
+      <br/>
+      <code>optional</code> cannot be set to true if the property also has <code>configurable: false</code>.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      configurable
+    </td>
+    <td>
+      Optional. Default: false.
+      <br/>
+      <br/>
+      When true, for property types which support operator configuration, the operator will be allowed to configure this value.
+      Please do not set <code>configurable: true</code> for property types which do not support operator configuration.
+      <br/>
+      <br/>
+      When set to false, OpsManager will not render this property in any form, even if it's specified in a <code>form_type</code>,
+      nor will it allow the property to be updated via the API.
+      For property types which support auto-generation of values, when <code>configurable</code> is false, 
+      OpsManager will generate and save a value for this property when the product to which this property belongs is deployed for the first time.
+    </td>
+  </tr>
+  <tr>
+    <td>
+      freeze_on_deploy
+    </td>
+    <td>
+      Optional. Default: false.  When set to true, OpsManager will not allow this property to be changed after the product this property belongs to is successfully deployed.
+    </td>
+  </td>
 </table>
 
-Product template example:
+### <a id='configurable-and-auto-generated'></a>Configurable and Auto-Generated Properties
 
-```
-- name: example_string
-  type: string
-  configurable: true
-  default: 'Hello world'
-  constraints:
-  - must_match_regex: '\A[^!@#$%^&*()]*\z'
-    error_message: 'This name cannot contain special characters.'
-  - must_match_regex: '\A[^0-9]*\z'
-    error_message: 'This name cannot contain digits.'
-```
+When a property has `configurable: true` and is added to a `form_type` then the operator will be able to configure
+the value of that property.  Alternatively, a property can have `configurable: false` and will have a value auto-generated
+by OpsManager.  See below for which property types support each of these usages.
 
-#### boolean
+Properties with `configurable` set to `false`:
+  - cannot be edited by the operator
+  - will not show up in forms, even if added under `form_types`
+  - will have auto-generated values filled in by OpsManager if that specific type of property supports auto-generation of values.
 
-Holds a single boolean value
+### <a id='named-manifest'></a> named_manifest for selector and collection type properties
 
-Accessors:
+Specify a property for collection within the `named_manifest` section of the metadata.
 
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns the boolean value</td>
-  </tr>
-</table>
+The following example uses a named manifest called `for_routing` that belongs to the `certificate_collection` job:
 
-Example:
-
-```
-- name: example_boolean
-  type: boolean
-  configurable: true
-  default: false
-```
-
-#### collection
-
-Collections represent the ability to hold multi-property entries. Each "record" will contain values for the configured set of property blueprints.
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>An array of hashes whose key are the property name.<br>
-  Example: <code>[{album: 'my-album', artist: 'some-artist', explicit: true, genre: 'rock'}]</code></td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_collection
+<pre>
+- name: certificate_collection
   type: collection
   configurable: true
   property_blueprints:
-    - name: album
+    - name: some_cert_name
       type: string
-      freeze_on_deploy: true
-    - name: artist
-      type: string
-      freeze_on_deploy: true
-    - name: explicit
-      type: boolean
-    - name: genre
-      type: dropdown_select
+    - name: some_cert
+      type: rsa_cert_credentials
+  named_manifests:
+  - name: for_routing
+    manifest: |
+      name:  (( current_record.some_cert_name.value ))
+      private_key:  (( current_record.some_cert.private_key_pem ))
+      public_key:  (( current_record.some_cert.public_key_pem ))
+      certificate: (( current_record.some_cert.cert_pem ))
+</pre>
+
+Use the `current_record` property within a collection record to refer to other properties in the same record.
+For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
+
+<p class="note"><strong>Note:</strong> The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.</p>
+
+After defining a named manifest, you can reference it using a manifest snippet in the following format:
+
+```
+routing_certificates: (( .properties.certificate_collection.parsed_manifest(for_routing) ))
+```
+
+Ops Manager renders the following manifest from this example:
+
+<pre>
+routing_certificates:
+  - name: foo_cert
+    private_key: PRIVATE-KEY
+    public_key: PUBLIC-KEY
+    certificate: CERTIFICATE
+  - name: bar_cert
+    private_key: PRIVATE-KEY
+    public_key: PUBLIC-KEY
+    certificate: CERTIFICATE
+</pre>
+
+For more information, see the sections below about Selector and Collection types.
+
+### <a id='using-provided-examples'></a>Using the Examples Provided Below
+
+Each example can be copied into the following `metadata.yml` skeleton and packaged together along with the [`os-conf`](https://github.com/cloudfoundry/os-conf-release/releases) release as a `.pivotal` file to make a working tile.
+
+```
+---
+name: p-example
+label: Example Tile
+description: An example tile
+product_version: '1.1'
+minimum_version_for_upgrade: '1.0'
+metadata_version: '2.2'
+rank: 1
+
+stemcell_criteria:
+  os: ubuntu-trusty
+  version: '3586.24'
+
+releases:
+  - name: os-conf
+    file: os-conf
+    version: '15'
+
+# a base 64 encoded PNG with a teal square
+icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGGAPwUz8ygAAAAAElFTkSuQmCC
+
+includes: # This top-level key will be ignored by OpsManager.
+  # This anchor here is only to make the examples below more terse, and is not required.
+  job_type_boilerplate: &job_type_boilerplate
+    max_in_flight: 1
+    single_az_only: true
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        configurable: true
+        default: 1024
+      - name: persistent_disk
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
+        configurable: true
+        default: 1
+    instance_definition:
+      name: instances
       configurable: true
-      optional: true
-      options:
-        - name: rock
-          label: 'Rock'
-        - name: country
-          label: 'Country'
-        - name: edm
-          label: 'Beep Boop PSH'
-  default:
-    - album: Christmas Carols
-      artist: Ops Manatee
-      explicit: true
-      genre: edm
+      default: 1
+
+
+# end of boilerplate
+# paste the property example here
 ```
 
-#### <a id='selector'></a>Selector
+### <a id='all-property-types'></a>All Property Blueprint Types
 
-Provides the ability to switch between groups of properties.
+### <a id='boolean'></a>boolean
+<%= partial 'tile-reference/property-blueprints/boolean' %>
 
-Selectors are unique in the way that property information is accessed. Ops Manager provides accessors available at the top-level selector property, accessors for retrieving a specific property in an option group, and the ability to provide manifest snippets for a selector option group.
+### <a id='ca-certificate'></a>ca\_certificate
+<%= partial 'tile-reference/property-blueprints/ca-certificate' %>
 
-Each selector group may provide manifest snippets. This is because Ops Manager does not support conditionally adding manifest snippets. Therefore, it's difficult to be able to write manifest sections for a selector. A manifest snippet should be present within all option groups, and can
+### <a id='collection'></a>collection
+<%= partial 'tile-reference/property-blueprints/collection' %>
 
-Accessors on Selector Property:
+### <a id='disk-type-dropdown'></a>disk\_type\_dropdown
+<%= partial 'tile-reference/property-blueprints/disk-type-dropdown' %>
 
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string of the currently selected option group. Example: "Filet Mignon"
-  </tr><tr>
-  <td>selected_option</td>
-  <td>Scopes the accessor to the currently selected option group. <br>
-  Does not return meaningful information alone. Must be chained with an accessor available to a Selector Option Group.</td>
-  </tr><tr>
-  <td>SPECIFIC_SELECTOR_OPTION_GROUP</td>
-  <td>Scopes the accessor to a specific selector option group. <br>
-  Does not return meaningful information alone. Must be followed with the name and accessor of a specific property in the option group.</td>
-  </tr>
-</table>
+### <a id='domain'></a>domain
+<%= partial 'tile-reference/property-blueprints/domain' %>
 
-Example, `value`:
+### <a id='dropdown-select'></a>dropdown\_select
+<%= partial 'tile-reference/property-blueprints/dropdown-select' %>
 
-`.properties.example_selector.filet_mignon_option.review.value`
+### <a id='email'></a>email
+<%= partial 'tile-reference/property-blueprints/email' %>
 
-Accessors on Selector Option Group:
+### <a id='http-url'></a>http\_url
+<%= partial 'tile-reference/property-blueprints/http-url' %>
 
-<table class="nice"><tr>
-  <td>parsed_manifest(manifest_snippet_name)</td>
-  <td>Returns a hash of the specific manifest snippet</td>
-  </tr>
-</table>
+### <a id='integer'></a>integer
+<%= partial 'tile-reference/property-blueprints/integer' %>
 
-Example, `selected_option`:
+### <a id='ip-address'></a>ip\_address
+<%= partial 'tile-reference/property-blueprints/ip-address' %>
 
-`.properties.example_selector.selected_option.parsed_manifest(my_snippet)`
+### <a id='ip-ranges'></a>ip\_ranges
+<%= partial 'tile-reference/property-blueprints/ip-ranges' %>
 
-Here, `my_snippet` corresponds to the name of an entry within each option\_template's named\_manifests section.
+### <a id='ldap-url'></a>ldap\_url
+<%= partial 'tile-reference/property-blueprints/ldap-url' %>
 
-Example, option group:
+### <a id='multi-select-options'></a>multi\_select\_options
+<%= partial 'tile-reference/property-blueprints/multi-select-options' %>
 
+### <a id='network-address'></a>network\_address
+<%= partial 'tile-reference/property-blueprints/network-address' %>
 
-```
-- name: example_selector
-  type: selector
-  configurable: true
-  default: Pizza
-  freeze_on_deploy: true
-  option_templates:
-    - name: pizza_option
-      select_value: Pizza
-      named_manifests:
-        - name: my_snippet
-          manifest: |
-            pizza_toppings:
-              pepperoni: (( .properties.example_selector.pizza_option.pepperoni.value ))
-              pineapple: (( .properties.example_selector.pizza_option.pineapple.value ))
-              other: (( .properties.example_selector.pizza_option.other_toppings.value ))
-      property_blueprints:
-        - name: pepperoni
-          type: boolean
-          configurable: true
-          freeze_on_deploy: true
-        - name: other_toppings
-          type: string
-          configurable: true
-          optional: true
-          constraints:
-          - must_match_regex: '\A[^!@#$%^&*()]*\z'
-            error_message: 'This name cannot contain special characters.'
-    - name: filet_mignon_option
-      select_value: Filet Mignon
-      named_manifests:
-        - name: my_snippet
-          manifest: |
-            rarity: (( .properties.example_selector.filet_mignon_option.rarity_dropdown.value ))
-            review: (( .properties.example_selector.filet_mignon_option.review.value ))
-            secret_sauce: (( .properties.example_selector.filet_mignon_option.secret_sauce.value ))
-      property_blueprints:
-        - name: rarity_dropdown
-          type: dropdown_select
-          configurable: true
-          default: rare
-          options:
-            - name: rare
-              label: 'Rare'
-            - name: medium
-              label: 'Medium'
-            - name: well-done
-              label: 'Well done'
-        - name: secret_sauce
-          type: secret
-          configurable: true
-          optional: true
-```
+### <a id='network-address-list'></a>network\_address\_list
+<%= partial 'tile-reference/property-blueprints/network-address-list' %>
 
-#### ldap\_url
+### <a id='port'></a>port
+<%= partial 'tile-reference/property-blueprints/port' %>
 
-Ensures the inputted string matches a URL of the LDAP protocol
+### <a id='rsa-cert-credential'></a>rsa\_cert\_credentials
+<%= partial 'tile-reference/property-blueprints/rsa-cert-credentials' %>
 
-Accessors:
+### <a id='rsa-pkey-credential'></a>rsa\_pkey\_credentials
+<%= partial 'tile-reference/property-blueprints/rsa-pkey-credentials' %>
 
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
+### <a id='salted-credentials'></a>salted\_credentials
+<%= partial 'tile-reference/property-blueprints/salted-credentials' %>
 
-Example:
+### <a id='secret'></a>secret
+<%= partial 'tile-reference/property-blueprints/secret' %>
 
+### <a id='selector'></a>selector
+<%= partial 'tile-reference/property-blueprints/selector' %>
 
-```
-- name: example_ldap_url
-  type: ldap_url
-  configurable: true
-  default: 'ldap://example.com'
-```
+### <a id='service-network-az-multi-select'></a>service\_network\_az\_multi\_select
+<%= partial 'tile-reference/property-blueprints/service-network-az-multi-select' %>
 
-#### domain
+### <a id='service-network-az-single-select'></a>service\_network\_az\_single\_select
+<%= partial 'tile-reference/property-blueprints/service-network-az-single-select' %>
 
-Ensures the string value is a domain
+### <a id='simple-credentials'></a>simple\_credentials
+<%= partial 'tile-reference/property-blueprints/simple-credentials' %>
 
-Accessors:
+### <a id='smtp-authentication'></a>smtp\_authentication
+<%= partial 'tile-reference/property-blueprints/smtp-authentication' %>
 
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
+### <a id='string-list'></a>string\_list
+<%= partial 'tile-reference/property-blueprints/string-list' %>
 
-Example:
+### <a id='string'></a>string
+<%= partial 'tile-reference/property-blueprints/string' %>
 
+### <a id='text'></a>text
+<%= partial 'tile-reference/property-blueprints/text' %>
 
-```
-- name: example_domain
-  type: domain
-  configurable: true
-  default: 'example.com'
-```
+### <a id='uuid'></a>uuid
+<%= partial 'tile-reference/property-blueprints/uuid' %>
 
-#### wildcard\_domain
+### <a id='vm-type-drowdown'></a>vm\_type\_dropdown
+<%= partial 'tile-reference/property-blueprints/vm-type-dropdown' %>
 
-Ensures the string value is a domain prefixed with "*."
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr><tr>
-  <td>to_wildcard</td>
-  <td>Returns a string of the value prefixed with “*.” if not present</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_wildcard_domain
-  type: wildcard_domain
-  configurable: true
-  default: '*.example.com'
-```
-
-#### ip\_ranges
-
-Holds an array of strings and ensure the values are IP ranges
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string containing a comma-separated list of IP ranges</td>
-  </tr><tr>
-  <td>parsed_ip_ranges</td>
-  <td>Returns an array of strings for each IP range</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_ip_ranges
-  type: ip_ranges
-  configurable: true
-  default: '1.1.1.1-1.1.14,2.2.2.1-2.2.2.4'
-```
-
-#### ip\_address
-
-Ensures the string value is an IP address
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_ip_address
-  type: ip_address
-  configurable: true
-  default: '192.168.0.1'
-```
-
-#### email
-
-Ensures the string value is formatted as an email address
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_string
-  type: email
-  configurable: true
-  default: 'john@example.com'
-```
-
-#### port
-
-Holds a single integer value
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns an integer</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_port
-  type: port
-  configurable: true
-  default: 3000
-```
-
-#### integer
-
-Holds a single integer value
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns an integer</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_integer
-  type: integer
-  configurable: true
-  default: 100
-```
-
-#### text
-
-Holds a single string value
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_text
-  type: text
-  configurable: true
-  default: |
-    Example
-    Text
-```
-
-#### smtp\_authentication
-
-Holds string with a possible value of plain, login, or cram_md5
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string with possible value of <code>plain</code>, <code>login</code>, <code>cram_md5</code></td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_smtp_authentication
-  type: smtp_authentication
-  configurable: true
-  default: plain
-```
-
-#### network\_name
-
-Ensure the string is a network name
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_network_name
-  type: network_name
-  configurable: true
-  default: 'ExampleNetwork'
-```
-
-#### network\_address
-
-Ensure the string is a network address
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_network_address
-  type: network_address
-  configurable: true
-  default: 'localhost'
-```
-
-#### network\_address\_list
-
-Holds an array of new addresses
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string containing a comma separated list of network addresses</td>
-  </tr><tr>
-  <td>parsed_network_addresses</td>
-  <td>Returns an array of strings for each network address</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_network_address_list
-  type: network_address_list
-  configurable: true
-  default: 'localhost,1.1.1.1'
-```
-
-#### string\_list
-
-Holds an array of strings
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr><tr>
-  <td>parsed_strings</td>
-  <td>Returns an array of strings for each string entry</td>
-  </tr><tr>
-  <td>parsed_regex</td>
-  <td>Returns a string containing a regex of the format “^(string1|string2|string3)$” where the value of this property is“string1,string2,string3”</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_string_list
-  type: string_list
-  configurable: true
-  default: 'foo,bar,baz'
-```
-
-#### ca\_certificate
-
-Holds a string value
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_ca_certificate
-  type: ca-certificate
-  configurable: true
-  default: |
-    -- BEGIN FAKE CERT --
-    -- END FAKE CERT --
-```
-
-#### multi\_select\_options
-
-Holds an array of selected string values
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns an array of strings for the selected options</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_multi_select_options
-  type: multi_select_options
-  configurable: true
-  default: ['earth', 'mercury']
-         options:
-         - name: mercury
-           label: 'label for mercury'
-         - name: venus
-           label: 'label for venus'
-         - name: earth
-           label: 'label for earth'
-```
-
-#### dropdown\_select
-
-Holds an array of strings selected string values
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-   - name: example_dropdown
-      type: dropdown_select
-      configurable: true
-      default: kiwi
-      options:
-        - name: kiwi
-          label: 'label for kiwi'
-        - name: lime
-          label: 'label for lime'
-        - name: avocado
-          label: 'label for avocado'
-```
-
-#### vm\_type\_dropdown
-
-Holds single string value selected from allowed vm_types
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_vm_type_dropdown
-  type: vm_type_dropdown
-  configurable: true
-```
-
-#### disk\_type\_dropdown
-
-Holds single string value selected from allowed disk_types
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_disk_type_dropdown
-  type: disk_type_dropdown
-  configurable: true
-```
-
-#### uuid
-
-Holds a string uuid value
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_uuid
-  type: uuid
-  configurable: true
-```
-
-#### service\_network\_az\_multi\_select
-
-Holds an arrays of string value selected from allowed azs
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns an array of strings for the selected options</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_service_network_az_multi_select
-  type: service_network_az_multi_select
-  configurable: true
-```
-
-#### service\_network\_az\_single\_select
-
-Holds a single string value selected from allowed azs
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_service_network_az_single_select
-  type: service_network_az_single_select
-  configurable: true
-```
-
-#### secret
-
-Holds a single string value
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns a string</td>
-  </tr>
-</table>
-
-Example:
-
-```
-- name: example_secret
-  type: secret
-  configurable: true
-```
-
-
-
+### <a id='wildcard-domain'></a>wildcard\_domain
+<%= partial 'tile-reference/property-blueprints/wildcard-domain' %>

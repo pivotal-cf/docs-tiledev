@@ -21,7 +21,7 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 The following is an example of the properties that appear at the top of a product template. Following this example are definitions of each property.
 
-<pre class="code">
+```
 ---
 name: example-product
 product_version: &lt;%= version.inspect %>
@@ -49,11 +49,11 @@ post_deploy_errands:
   - name: example-errand
 pre_delete_errands:
   - name: example-errand
-</pre>
+```
 
 ### <a id='top-name'></a> name
 
-String. Required.
+String. Required. Must only use alphanumerics and hyphens.
 The internal name of the product. You must keep the name of your product consistent for migrations to function properly.
 Changing the name indicates the installation of a completely different product.
 
@@ -76,10 +76,19 @@ This example shows a current product version of v1.7 that only upgrades from a v
 
 ### <a id='top-metadata'></a> metadata_version
 
-String. Required.
-The versioned structure of the product template (the file you are editing).
-Changing the version number can unlock new properties, and also break properties that changed from previous versions.
-The metadata version does not always correlate to Ops Manager version number and depends on what, or if, new metadata properties were introduced.
+String. Required. The version of the schema of the product template, the file
+that this documentation describes.
+
+Bumping the version number enables new properties that are not present in an
+older metadata_version but may also require restructuring of the product
+template to conform to the new metadata_version.
+
+The metadata_version corresponds to a major and/or minor release of OpsManager.
+OpsManager can accept a product with a metadata_version that is older than the
+OpsManager version, but OpsManager cannot accept a product with a metadata_version
+that is newer than the OpsManager version.  It is therefore best practice to set
+the metadata_version to be the same as the oldest version of OpsManager that
+the tile version supports.
 
 ### <a id='top-label'></a> label
 
@@ -109,7 +118,7 @@ Set `service_broker` to `true` for on-demand service brokers. Setting `service_b
 - Enables the service network selector property type
 - Requires the operator to select a service network during tile configuration.
   Tile authors can reference the selected service network with `(( $self.service_network ))`.
-- Includes a UAA client for the service to use. 
+- Includes a UAA client for the service to use.
   Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
 
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
@@ -118,12 +127,12 @@ Hash. Required.
 For a list of stemcells, including OS and version, see [the BOSH hub](https://bosh.io/).
 You do not specify which IaaS the Stemcell targets.
 This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
-At the time of this writing, none of the BOSH stemcells require a Cloud Provider Interface (CPI). 
-This is expected to change in a future release of BOSH. 
+At the time of this writing, none of the BOSH stemcells require a Cloud Provider Interface (CPI).
+This is expected to change in a future release of BOSH.
 
 `enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell.
 This is by default set to `true`. For products using static compilations, you can disable this feature.
-If you set the property to `false`, your product does not receive security patches through automatic stemcell updates. 
+If you set the property to `false`, your product does not receive security patches through automatic stemcell updates.
 
 <pre class="code">
 stemcell_criteria
@@ -133,7 +142,7 @@ enable_patch_security_updates: true
 </pre>
 
 This feature increases security by automatically using the latest patched version of a stemcell.
-However, operators may experience longer than expected upgrade times. 
+However, operators may experience longer than expected upgrade times.
 For more information, see [Understanding Floating Stemcells](http://docs.pivotal.io/pivotalcf/customizing/understanding-stemcells.html).
 
 ### <a id='top-release'></a> releases
@@ -156,7 +165,7 @@ Array of Hashes. Optional.
 A list of errands that run before a deployment is deleted.
 
 Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager.
-See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`. 
+See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`.
 
 ## <a id='form-properties'></a> Form Properties
 
@@ -340,7 +349,7 @@ The following is an example of the `property_blueprints` that appear in a produc
 
 The example is referenced by the form properties example above. See [Form Properties](#form-properties).
 
-<pre style="height: 500px; overflow: auto;">
+```
 - name: web_server
   ...
   property_blueprints:
@@ -505,113 +514,9 @@ The example is referenced by the form properties example above. See [Form Proper
       resource_definitions:
       - name: persistent_disk
         default: 2000
-</pre>
+```
 
-### <a id='top-configurable'></a> configurable
-
-No property will be viewable in a form unless `configurable` is set to `true`.
-Rather than giving the user the ability to enter a value, the value is generated by Ops Manager.
-
-### <a id='top-must-match'></a> must\_match\_regex 
-
-Regular Expression. Optional. Create a validator that runs on the form save event.
-If the user input does not match the `must_match_regex` constraint, the form displays the specified `error_message`.
-Multiple `must_match_regex` constraints for a single property blueprint are evaluated in the order listed. 
-
-## <a id='configurable-props'></a> Configurable Properties
-
-Many of these properties are strings, but can be used with validators in order to check that the user typed in the correct format for a URL, IP, address, domain, etc.
-
-### <a id='configurable-string'></a> string
-
-A string.
-
-### <a id='configurable-integer'></a> integer
-
-An integer.
-
-### <a id='configurable-boolean'></a> boolean
-
-A boolean. Viewed as a checkbox.
-
-### <a id='configurable-dropdown'></a> dropdown_select
-
-A list of options. The user chooses one viewed as an HTML select box.
-
-### <a id='configurable-multiselect'></a> multi\_select\_options
-
-A list of options. The user chooses zero or more, viewed as HTML checkboxes.
-
-### <a id='configurable-domain'></a> domain
-
-A second, third, fourth, etc level domain.
-
-### <a id='configurable-wildcard-domain'></a> wildcard_domain
-
-A domain with a wildcard in front of it. Example: `*.domain.com`
-
-### <a id='configurable-text'></a> text
-
-A string. Appears as an HTML textarea.
-
-### <a id='configurable-ldap-url'></a> ldap_url
-
-A URL prefaced by `ldap://`.
-
-### <a id='configurable-email'></a> email
-
-An email address.
-
-### <a id='configurable-ips'></a> ip_ranges
-
-A range of IP addresses, with dashes and commas allowed. Example: `1.1.1.1-1.1.1.4,2.2.2.1-2.2.2.4`
-
-### <a id='configurable-port'></a> port
-
-An integer representing a network port.
-
-### <a id='configurable-address'></a> network_address
-
-A single IP address or domain. Example: `1.1.1.1`
-
-### <a id='configurable-address-list'></a> network\_address\_list
-
-A list of IP addresses or domains. Example: `1.1.1.1,example.com,2.2.2.2`
-
-### <a id='generated'></a> Generated Properties (Also Configurable)
-
-The following properties are configurable, but can also be generated by Ops Manager if configurable is false or the configurable key is omitted.
-The exceptions are the uuid and salted credentials properties, which are never configurable.
-
-### <a id='generated-cert-creds'></a> rsa\_cert\_credentials
-
-An RSA certificate.
-
-### <a id='generated-pkey-creds'></a> rsa\_pkey\_credentials
-
-An RSA private key.
-
-### <a id='generated-salted-creds'></a> salted_credentials
-
-Username and password created using a non-reversible hash algorithm.
-
-### <a id='generated-simple-creds'></a> simple_credentials
-
-Username and password.
-
-### <a id='generated-secret'></a> secret
-
-A random string or password.
-
-### <a id='generated-uuid'></a> uuid
-
-A universal unique identifier.
-
-### <a id='complex'></a> Complex Properties (Selectors and Collections)
-
-The selector and collections inputs are referenced by their selector and collection property blueprints.
-These are more complicated than simple properties in that they contain manifest snippets, which are further referenced in other manifest snippets.
-We will learn about manifest snippets in the next section.
+For more detailed documentation about using properties, see [Property Reference](property-reference.html).
 
 ## <a id='job-types'></a> Job Types
 
@@ -622,11 +527,11 @@ Jobs require many different settings in order to function properly, and that is 
 it asks a user for values to those settings and generates a manifest based on what was entered.
 
 Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically,
-and you can find them in the release manifest. 
+and you can find them in the release manifest.
 
 <p class="note"><strong>Note: </strong> Starting in PCF v2.1, Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys.</p>
 
-<pre style="height: 500px; overflow: auto;">
+```
 job_types:
   - name: web_server
     resource_label: Web Server
@@ -831,7 +736,7 @@ job_types:
         instances: (( instances ))
         availability_zone: (( availability_zone ))
         bosh_job_partition_stats: (( bosh_job_partition_stats ))
-</pre>
+```
 
 ### <a id='job-name'></a> name
 
@@ -875,7 +780,7 @@ The name of the BOSH release contained in your product archive (.pivotal file).
 
 Boolean. Required.
 You can give users control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
-To limit a job to a single AZ, set this to `true`. 
+To limit a job to a single AZ, set this to `true`.
 
 <p class="warning note"><strong>WARNING: </strong> If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.</p>
 
@@ -907,7 +812,7 @@ The number of default instances for a job along with max, min, odd, and the abil
 If your product uses an external service that performs the same job as a service in Elastic Runtime,
 you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime.
-Set `property reference` to `.properties.system.database` and `property value` to `magic value` to change the instance counts of all MySQL jobs to `0`. 
+Set `property reference` to `.properties.system.database` and `property value` to `magic value` to change the instance counts of all MySQL jobs to `0`.
 
 ### <a id='job-manifest'></a> manifest
 
@@ -938,133 +843,5 @@ manifest: |
 Ops Manager strips the outer parentheses from these expressions and
 includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
 
-### <a id='named-manifest'></a> named_manifest
+For more detailed documentation about using double parenthesis and dollar variables, see [Property Reference](property-reference.html).
 
-Specify a property for collection within the `named_manifest` section of the metadata.
-See the [Simple vs. Complex Inputs](#simple-vs-complex) section for more information about collections.
-
-The following example uses a named manifest called `for_routing` that belongs to the `certificate_collection` job:
-
-<pre>
-- name: certificate_collection
-  type: collection
-  configurable: true
-  property_blueprints:
-    - name: some_cert_name
-      type: string
-    - name: some_cert
-      type: rsa_cert_credentials
-  named_manifests:
-  - name: for_routing
-    manifest: |
-      name:  (( current_record.some_cert_name.value ))
-      private_key:  (( current_record.some_cert.private_key_pem ))
-      public_key:  (( current_record.some_cert.public_key_pem ))
-      certificate: (( current_record.some_cert.cert_pem ))
-</pre>
-
-Use the `current_record` property within a collection record to refer to other properties in the same record.
-For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
-
-<p class="note"><strong>Note:</strong> The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.</p>
-
-After defining a named manifest, you can reference it using a manifest snippet in the following format:
-
-```
-routing_certificates: (( .properties.certificate_collection.parsed_manifest(for_routing) ))
-```
-
-Ops Manager renders the following manifest from this example:
-
-<pre>
-routing_certificates:
-  - name: foo_cert
-    private_key: PRIVATE-KEY
-    public_key: PUBLIC-KEY
-    certificate: CERTIFICATE
-  - name: bar_cert
-    private_key: PRIVATE-KEY
-    public_key: PUBLIC-KEY
-    certificate: CERTIFICATE
-</pre>
-
-### <a id='selector-snippets'></a> Selector Manifest Snippets
-
-Selector snippets are evaluated twice. As you saw in the `property_blueprint`,
-the selector has a manifest snippet for both sets of inputs that the user might choose.
-Only one of these sets is evaluated and inserted into the job's manifest.
-
-### <a id='ops-man-snippets'></a> Ops Manager Provided Snippets
-
-The following double-parens accessors retrieve your job properties:
-
-  * name: `(( name ))`
-  * ram: `(( ram ))`
-  * ephemeral\_disk: `(( ephemeral_disk ))`
-  * persistent\_disk: `(( persistent_disk ))`
-  * instances: `(( instances ))`
-  * availability\_zone: `(( availability_zone ))` (deprecated)
-  * bosh\_job\_partition\_stats: `(( bosh_job_partition_stats ))` (deprecated)
-  * first\_network\_deprecated: `(( first_network_deprecated ))` (deprecated)
-  * subnet\_cidrs: `(( subnet_cidrs ))`
-
-<p class="note"><strong>Note: </strong> As of PCF v2.1, IP accessors are no longer supported.</p>
-
-The following is a list of all typed values with the accessor "value":
-
-  * collection
-  * ldap\_url
-  * domain
-  * wildcard\_domain
-  * ip\_ranges
-  * ip\_address
-  * email
-  * port
-  * integer
-  * string
-  * boolean
-  * text
-  * smtp\_authentication
-  * network\_address
-  * network\_address\_list
-  * string\_list
-  * ca\_certificate
-  * multi\_select\_options
-  * dropdown\_select
-  * vm\_type\_dropdown
-  * disk\_type\_dropdown
-  * uuid
-  * service\_network\_az\_multi\_select
-  * service\_network\_az\_single\_select
-  * secret
-
-The following list shows typed values with multiple accessors:
-
-  * simple\_credentials: identity, password
-  * rsa\_cert\_credentials: private\_key\_pem, cert\_pem, public\_key\_pem, cert\_and\_private\_key\_pems  
-  * rsa\_pkey\_credentials: private\_key\_pem, public\_key\_pem, public\_key\_openssh, public\_key\_fingerprint
-  * salted\_credentials: salt, identity, password
-  * selector: value, selected\_option, nested context
-
-  In addition, Ops Manager supports accessors that are global to the entire installation rather than job specific. 
-  
-  * $ops\_manager.ca\_certificate: The internal SSL CA certificate used to sign all SSL certificates generated by this Ops Manager instance, such as when the user clicks a **Generate Self-Signed RSA Certificate** link
-  *  $ops\_manager.trusted\_certificates
-  *  $ops\_manager.http\_proxy
-  *  $ops\_manager.https\_proxy
-  *  $ops\_manager.no\_proxy
-  *  $director.deployment\_ip
-  *  $director.hostname
-  *  $director.username
-  *  $director.password
-  *  $director.ntp\_servers
-  *  $director.ca\_public\_key
-  *  $director.tld
-  *  $director.bosh\_metrics\_forwarder\_client\_name
-  *  $director.bosh\_metrics\_forwarder\_client\_secret
-  *  $self.uaa\_client\_name
-  *  $self.uaa\_client\_secret
-  *  $self.service\_network
-  *  $self.stemcell\_version
-  * ..PRODUCT-NAME.properties
-  * ..PRODUCT-NAME.deployment\_name
