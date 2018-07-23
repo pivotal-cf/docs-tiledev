@@ -9,7 +9,7 @@ This topic describes how to do continuous integration (CI) testing on your tile.
 
 There are two ways to do CI testing on your tile:
 
-+ Use the Tile Dashboard provided as service by the Pivotal ISV team.<br>
++ Use the Tile Dashboard provided as a service by the Pivotal ISV team.<br>
   See [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
   This is the method recommended by Pivotal.
 + Set up and use your own Concourse pipeline.<br>
@@ -63,9 +63,9 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
 
 
 
-+ Your tile uploaded to the Pivotal Network.
++ Your tile is uploaded to the [Pivotal Network](https://network.pivotal.io/).
 
-    | To upload your tile for a &hellip; | Then&hellip; |
+    | If you are uploading a&hellip; | Then&hellip; |
     |------------------------------------|--------------|
     | first release     | contact the technical program management of the ISV team. |
     | subsequent release| you can upload pre-releases to the Pivotal Network.|
@@ -77,7 +77,7 @@ After your tile has been uploaded to the Pivotal Network, the Tile Dashboard sta
 For new tiles, this can take up to an hour.
 
 After the stage and scan, you need to configure your tile on the Tile Dashboard.
-Configuration specfies how the tile will be installed.
+Configuration specfies how the tile is installed on the test environment.
 
 Configuring your tile through the Tile Dashboard is equivalent to configuring the tile on Ops Manager
 after downloading it from the Pivotal Network.
@@ -101,7 +101,7 @@ To log in to the Tile Dashboard and navigate to the configuration page, do the f
 
     ![icons named pie-20, pie-21 and so on in a list](/img/pie-environments.png)
 
-4. Click **Tiles** in the menu bar.<br>
+4. Click **Tiles** in the menu bar.
 
 5. Click the row where your tile is listed.
 
@@ -130,9 +130,8 @@ To configure install properties for your tile using the **Properties** tab, do t
 
 2. Click the **Properties** tab.
 
-3. Review or specify the value for each property.
-
-    If a property is required and is missing valid values, the field displays in red.
+3. Review or specify the value for each property.  
+   If a property is required and is missing valid values, the field displays in red.
 
 3. When no fields are red, click **Save** or **Save and Run**.
 
@@ -151,11 +150,9 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 
 2. Click the **Advanced - JSON Properties** tab.
 
-3. Enter values for all required properties. 
-
-    If a property is required, this is indicated by `"required": true`.
-
-    For example: 
+3. Enter values for all required properties.
+   If a property is required, this is indicated by `"required": true`.
+   For example: 
 
     ```
  ".properties.syslog_selector.enabled.address": {
@@ -185,7 +182,7 @@ To specify the UAA users, do the following:
 1. If you are not already on the configuration page,
    complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
 
-1. At the bottom of the configuration page, click **+** to expand 
+1. At the bottom of the configuration page, click **+** to expand the box and view the fields.
 
     ![bottom of page shows plus button used to expand uaa properties form](img/uaa-properties-collapsed.png)
 
@@ -211,24 +208,26 @@ At this point, you can test the tile on all the environments, by doing the follo
 
     ![Staged, scan and config jobs followed by environment jobs.](img/kick-off-testing.png)
 
-    The first three jobs are prerequisite jobs and run in series.
-    The other jobs are the environment tests
-    and run in parallel.
+    Staged, scan, and config are the prerequisite jobs. 
+    They run in series.
+    The rest are the environment jobs.
+    They run in parallel.
     The environment jobs do not run until the config job has completed successfully.
 
 
 ### <a id="test"></a> About Test Configuration
 
-After your tile is installed, Tile Dashboard will run any post-deploy errands your tile has defined, including tests.
-Ideally your tile will include tests that exercise all of its functionality.
+After your tile is installed, Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
+Ideally your tile includes tests that exercise all of its functionality.
 We have some ideas for expanding the Tile Dashboard testing capabilities;
 if you’re interested in other ways of defining tests,
 contact us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
 
 ### <a id="backing"></a> About Backing Services
 
-If your tile requires a backing service outside of the existing PCF environment,
-for example, your tile is a service broker to a SaaS offering.
+Your tile might require a backing service outside of the existing PCF environment,
+for example, your tile might be a service broker to a SaaS offering.
+
 You are responsible for maintaining the backing service in an environment
 that the Tile Dashboard can reach, that is, it must be internet-facing.
 
@@ -274,7 +273,7 @@ the process of generating a pipeline template for you.
 Pivotal partners who have us host their pipeline have access to a pool of PCF
 instances that are managed by us and are regularly updated with the latest
 (pre-)release versions of PCF. If you set up your own concourse server, you
-will have to target your pipeline at a [PCF instance you have setup](./environments.html).
+have to target your pipeline at a [PCF instance you have setup](./environments.html).
 
 Concourse has a resource type to manage a pool of resources that are shared
 between pipelines, which is what we use to serialize PCF access between the
