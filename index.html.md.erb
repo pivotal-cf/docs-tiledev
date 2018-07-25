@@ -9,11 +9,10 @@ owner: Services
 
 Whether you are an Independent Software Vendor (ISV) or an internal Pivotal service team, integrating your software service with Pivotal Cloud Foundry (PCF) makes the service easily available and usable by the growing PCF ecosystem. Pivotal supports these integrations and is committed to making the process as easy as possible.
 
-Services integrate with PCF through "tiles" that users download from [Pivotal Network](http://network.pivotal.io) and install through the Ops Manager Installation Dashboard. These tiles provide a modular and standardized interface that PCF operators use to configure, publish, manage, and upgrade software services, whether the services are for their own use, or for use by PCF app developers.
+Services integrate with PCF through "tiles" that users download from [Pivotal Network](http://network.pivotal.io) and install through the Ops Manager Installation Dashboard. These tiles provide a standardized modular interface that PCF operators can use to configure, publish, manage, and upgrade software services. These services are available for download in the [Pivotal Network Marketplace](http://network.pivotal.io).
 
-The Tile Developer Guide explains how to create a service tile for PCF through a proven, staged development process. You are welcome to start this process on your own, or [contact us](contacts.html)
-to ask for our support or publish your integration in the
-[Pivotal Network](http://network.pivotal.io) Marketplace.
+The Tile Developer Guide explains how to create a service tile for PCF via a staged development process. You are welcome to start this process on your own or [contact us](contacts.html)
+for support.
 
 If you are new to this site, [**start here**](./workflow.html).
 
@@ -21,27 +20,30 @@ If you are new to this site, [**start here**](./workflow.html).
 
 ## <a id="contents"></a> Development Workflow and Guide Contents
 
-The contents of this guide follow Pivotal's recommended tile development [workflow](./workflow.html), from learning necessary background information to publishing and maintaining a finished product:
+The contents of this guide follow Pivotal's recommended [tile development workflow](./workflow.html). Read the guide to learn necessary background information, publish a tile, and maintain it after publication. Here are the contents of the guide:
 
-* [Tile Basics](./tile-basics.html) describes how PCF, service brokers, and tiles work together, and how tiles are structured.
+* [Tile Basics](./tile-basics.html): Read this topic to learn how PCF, service brokers, and tiles work together, and how tiles are structured.
 
-* [Tile Development Workflow](./workflow.html) recommends how to plan your integration and gives a high-level view of a staged tile development process that iterates through increasing levels of integration:
+* [Tile Development Workflow](./workflow.html): Read this topic to learn how to plan your integration. This topic gives a high-level view of a staged tile development process and iterates through increasing levels of integration:
 	- [User-Provided Service](./roadmap.html#user-provided)
 	- [Brokered Service](./brokered.html)
 	- [Managed Service](./managed.html)
 	- [On-Demand Service](./on-demand.html)
 
-* [Development Environments](./environments.html) describes how to set up development environments for different stages and levels in the tile development process.
+* [Development Environments](./environments.html): Read this topic to learn how to set up development environments for different stages of the tile development process.
 
-* [Development Tools](./tools.html) describes three tools that streamline the tile development process: [Tile Generator](./tile-generator.html), the [pcf Command Line](./pcf-command.html) utility, and [Concourse](./concourse.html) continuous integration (CI).
+* [Development Tools](./tools.html): Read this topic to learn about three tools that streamline the tile development process: 
+     - [Tile Generator](./tile-generator.html) 
+     - [PCF Command Line Integration (CLI)](./pcf-command.html)
+     - [Concourse continuous integration (CI) tool](./concourse.html)
 
-* [Development Roadmap](./roadmap.html) takes you through the staged tile development process, explaining the components and steps required for each level of service integration: user-provided, brokered, managed, and on-demand.
+* [Development Roadmap](./roadmap.html): Read this topic for a walkthrough of the staged tile development process. This topic explains the components and steps required for each level of service integration: user-provided, brokered, managed, and on-demand.
 
-* [Tile Documentation](./tile-documentation.html) explains how to document your tile as part of [PCF documentation](http://docs.pivotal.io).
+* [Tile Documentation](./tile-documentation.html): Read this topic to learn how to publish documentation for your tile as part of PCF's documentation.
 
-* [Publish and Update](./publish.html) explains how to publish your tile on [Pivotal Network](http://network.pivotal.io) (PivNet) and package upgrade information into your new versions.
+* [Publish and Update](./publish.html): Read this topic to learn how to publish your tile on [Pivotal Network](http://network.pivotal.io) and package upgrade information into your new versions.
 
-* [Reference](./reference.html) provides language references for tile elements such as the Service Broker API and the Properties list for tile configuration.
+* [Reference](./reference.html): Read this topic to learn language references for tile elements, including the Service Broker API and the Properties list for tile configuration.
 
-* [Contact Us](./contacts.html) lists contacts to learn more about the Pivotal ISV Partner Program or request our assistance with your integration project, and explains where you can contribute to this documentation.
+* [Contact Us](./contacts.html): Read this topic to learn more about the Pivotal ISV Partner Program or request our assistance with your integration project.
 
