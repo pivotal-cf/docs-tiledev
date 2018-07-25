@@ -87,6 +87,8 @@ Outside of properties, you can also retrieve information about various configura
 
 <!--WE SHOULD HAVE AN EXAMPLE HERE ^^-->
 
+<!--IN ALL CASES OF "PROVIDES" IN THE TABLES BELOW, SHOULD WE BE SAYING "RETURNS?"-->
+
 #### $ops\_manager
 
 <table class="nice"><tr>
@@ -111,16 +113,18 @@ Outside of properties, you can also retrieve information about various configura
 
 <table class="nice"><tr>
   <td>deployment_ip</td>
-  <td>Provides the IP address that the BOSH Director is deployed on</td>
+  <td>Provides the IP address where the BOSH Director is deployed</td>
   </tr><tr>
   <td>username</td>
   <td>Provides the username for the Director VM</td>
   </tr>
   <tr>
-  <td>password</td><td>Provides the password for the Director VM</td>
+  <td>password</td>
+  <td>Provides the password for the Director VM</td>
   </tr>
   <tr>
-  <td>ntp_servers</td><td>Provides a list of ntp servers that are deployed by the Director</td>
+  <td>ntp_servers</td>
+  <td>Provides a list of Network Time Protocol (NTP) servers that the Director deploys</td>
   </tr>
   <tr>
   <td>ca_public_key</td>
@@ -148,22 +152,22 @@ Outside of properties, you can also retrieve information about various configura
 </tr>
 </table>
 
-<p class="note"><strong>Note</strong>: Support for the <code>$director.username</code> and <code>$director.password</code> accessors will be removed in future versions of Ops Manager.</p>
-
 #### $self
+
+<!--INSTEAD OF "PRODUCT," SHOULD WE SAY "TILE?" IT SEEMS LIKE THE USE OF "PRODUCT" VS. "TILE" IS ARBITRARY AND CONFUSING.-->
 
 <table class="nice"><tr>
   <td>uaa_client_name</td>
-  <td>Provides the UAA client name created for your Product to communicate with the BOSH Director</td>
+  <td>Provides the UAA client name created for your product to communicate with the BOSH Director</td>
   </tr><tr>
   <td>uaa_client_secret</td>
-  <td>Provides the UAA client secret created for your Product to communicate with the BOSH Director</td>
+  <td>Provides the UAA client secret created for your product to communicate with the BOSH Director</td>
   </tr><tr>
   <td>service_network</td>
-  <td>Provides the name of the service network that has been assigned to your product</td>
+  <td>Provides the name of the service network assigned to your product</td>
   </tr><tr>
   <td>stemcell_version</td>
-  <td>Provides the stemcell version that is being used by your product</td>
+  <td>Provides the version of the stemcell your product uses</td>
   </tr>
 </table>
 
@@ -171,7 +175,9 @@ Outside of properties, you can also retrieve information about various configura
 
 #### string
 
-Holds a single string value
+Holds a single string value.
+
+<!--THE EXAMPLE BELOW SPECIFIES NO SPECIAL CHARACTERS OR NUMBERS. IS THAT TRUE FOR ALL OF THE STRING ACCESSORS? OR IS IT JUST AN EXAMPLE? IF IT'S TRUE FOR ALL STRING ACCESSORS, WE SHOULD UPDATE THE INTRO TEXT ON LINE 178 TO REFLECT THAT.-->
 
 Accessors:
 
@@ -197,7 +203,7 @@ Product template example:
 
 #### boolean
 
-Holds a single boolean value
+Holds a single boolean value.
 
 Accessors:
 
@@ -218,13 +224,13 @@ Example:
 
 #### collection
 
-Collections represent the ability to hold multi-property entries. Each "record" will contain values for the configured set of property blueprints.
+Collections represent the ability to hold multi-property entries. Each "record" contains values for the configured set of property blueprints.
 
 Accessors:
 
 <table class="nice"><tr>
   <td>value</td>
-  <td>An array of hashes whose key are the property name.<br>
+  <td>An array of hashes whose key is the property name.<br>
   Example: <code>[{album: 'my-album', artist: 'some-artist', explicit: true, genre: 'rock'}]</code></td>
   </tr>
 </table>
@@ -258,19 +264,20 @@ Example:
   default:
     - album: Christmas Carols
       artist: Ops Manatee
+<!--CUTE ^^ -->
       explicit: true
       genre: edm
 ```
 
 #### <a id='selector'></a>Selector
 
-Provides the ability to switch between groups of properties.
+Selectors provide the ability to switch between groups of properties.
 
-Selectors are unique in the way that property information is accessed. Ops Manager provides accessors available at the top-level selector property, accessors for retrieving a specific property in an option group, and the ability to provide manifest snippets for a selector option group.
+Selectors access property information in a unique way. Ops Manager provides accessors available at the top-level selector property, accessors for retrieving a specific property in an option group, and the ability to provide manifest snippets for a selector option group.
 
-Each selector group may provide manifest snippets. This is because Ops Manager does not support conditionally adding manifest snippets. Therefore, it's difficult to be able to write manifest sections for a selector. A manifest snippet should be present within all option groups, and can
+A manifest snippet should be present within all option groups. Each selector group may provide manifest snippets. This is because Ops Manager does not support conditionally adding manifest snippets. Because of this restriction, it is difficult to write manifest sections for a selector. 
 
-Accessors on Selector Property:
+Accessors on the Selector Property:
 
 <table class="nice"><tr>
   <td>value</td>
@@ -278,11 +285,11 @@ Accessors on Selector Property:
   </tr><tr>
   <td>selected_option</td>
   <td>Scopes the accessor to the currently selected option group. <br>
-  Does not return meaningful information alone. Must be chained with an accessor available to a Selector Option Group.</td>
+  By itself, this accessor does not return useful information. Chain it with an accessor available to a Selector Option Group.</td>
   </tr><tr>
   <td>SPECIFIC_SELECTOR_OPTION_GROUP</td>
   <td>Scopes the accessor to a specific selector option group. <br>
-  Does not return meaningful information alone. Must be followed with the name and accessor of a specific property in the option group.</td>
+  By itself, this accessor does not return useful information. Follow it with the name and accessor of a specific property in the option group.</td>
   </tr>
 </table>
 
@@ -290,7 +297,7 @@ Example, `value`:
 
 `.properties.example_selector.filet_mignon_option.review.value`
 
-Accessors on Selector Option Group:
+Accessors on the Selector Option Group:
 
 <table class="nice"><tr>
   <td>parsed_manifest(manifest_snippet_name)</td>
@@ -302,10 +309,9 @@ Example, `selected_option`:
 
 `.properties.example_selector.selected_option.parsed_manifest(my_snippet)`
 
-Here, `my_snippet` corresponds to the name of an entry within each option\_template's named\_manifests section.
+In this example, `my_snippet` corresponds to the name of an entry within each `option_template`'s `named_manifests` section.
 
 Example, option group:
-
 
 ```
 - name: example_selector
@@ -363,7 +369,7 @@ Example, option group:
 
 #### ldap\_url
 
-Ensures the inputted string matches a URL of the LDAP protocol
+Ensures the inputted string matches a URL of the LDAP protocol.
 
 Accessors:
 
@@ -385,7 +391,7 @@ Example:
 
 #### domain
 
-Ensures the string value is a domain
+Ensures the string value is a domain.
 
 Accessors:
 
@@ -407,7 +413,7 @@ Example:
 
 #### wildcard\_domain
 
-Ensures the string value is a domain prefixed with "*."
+Ensures the string value is a domain prefixed with "*.".
 
 Accessors:
 
@@ -431,7 +437,7 @@ Example:
 
 #### ip\_ranges
 
-Holds an array of strings and ensure the values are IP ranges
+Holds an array of strings and ensure the values are IP ranges.
 
 Accessors:
 
@@ -455,7 +461,7 @@ Example:
 
 #### ip\_address
 
-Ensures the string value is an IP address
+Ensures the string value is an IP address.
 
 Accessors:
 
@@ -476,7 +482,7 @@ Example:
 
 #### email
 
-Ensures the string value is formatted as an email address
+Ensures the string value is formatted as an email address.
 
 Accessors:
 
@@ -497,7 +503,7 @@ Example:
 
 #### port
 
-Holds a single integer value
+Holds a single integer value.
 
 Accessors:
 
@@ -518,7 +524,7 @@ Example:
 
 #### integer
 
-Holds a single integer value
+Holds a single integer value.
 
 Accessors:
 
@@ -539,7 +545,7 @@ Example:
 
 #### text
 
-Holds a single string value
+Holds a single string value.
 
 Accessors:
 
@@ -562,7 +568,7 @@ Example:
 
 #### smtp\_authentication
 
-Holds string with a possible value of plain, login, or cram_md5
+Holds string with a possible value of `plain`, `login`, or `cram_md5`.
 
 Accessors:
 
@@ -583,7 +589,7 @@ Example:
 
 #### network\_name
 
-Ensure the string is a network name
+Ensures the string is a network name.
 
 Accessors:
 
@@ -604,7 +610,7 @@ Example:
 
 #### network\_address
 
-Ensure the string is a network address
+Ensures the string is a network address.
 
 Accessors:
 
@@ -625,7 +631,7 @@ Example:
 
 #### network\_address\_list
 
-Holds an array of new addresses
+Holds an array of new addresses.
 
 Accessors:
 
@@ -649,7 +655,7 @@ Example:
 
 #### string\_list
 
-Holds an array of strings
+Holds an array of strings.
 
 Accessors:
 
@@ -676,7 +682,7 @@ Example:
 
 #### ca\_certificate
 
-Holds a string value
+Holds a string value.
 
 Accessors:
 
@@ -693,13 +699,13 @@ Example:
   type: ca-certificate
   configurable: true
   default: |
-    -- BEGIN FAKE CERT --
-    -- END FAKE CERT --
+    -- BEGIN EXAMPLE CERT --
+    -- END EXAMPLE CERT --
 ```
 
 #### multi\_select\_options
 
-Holds an array of selected string values
+Holds an array of selected string values.
 
 Accessors:
 
@@ -727,7 +733,7 @@ Example:
 
 #### dropdown\_select
 
-Holds an array of strings selected string values
+Holds an array of selectable string values.
 
 Accessors:
 
@@ -755,7 +761,7 @@ Example:
 
 #### vm\_type\_dropdown
 
-Holds single string value selected from allowed vm_types
+Holds single string value selected from allowed `vm_types`.
 
 Accessors:
 
@@ -775,7 +781,7 @@ Example:
 
 #### disk\_type\_dropdown
 
-Holds single string value selected from allowed disk_types
+Holds single string value selected from allowed `disk_types`.
 
 Accessors:
 
@@ -795,7 +801,7 @@ Example:
 
 #### uuid
 
-Holds a string uuid value
+Holds a string UUID value.
 
 Accessors:
 
@@ -815,7 +821,7 @@ Example:
 
 #### service\_network\_az\_multi\_select
 
-Holds an arrays of string value selected from allowed azs
+Holds an array of string values selected from allowed Availability Zones (AZs).
 
 Accessors:
 
@@ -835,7 +841,7 @@ Example:
 
 #### service\_network\_az\_single\_select
 
-Holds a single string value selected from allowed azs
+Holds a single string value selected from allowed AZs.
 
 Accessors:
 
@@ -855,7 +861,7 @@ Example:
 
 #### secret
 
-Holds a single string value
+Holds a single string value.
 
 Accessors:
 
@@ -872,8 +878,6 @@ Example:
   type: secret
   configurable: true
 ```
-
-
 
 ---
 title: Product Template Reference
