@@ -5,35 +5,84 @@ owner: Ops Manager
 
 <strong><%= modified_date %></strong>
 
-This topic explains how PCF Tiles describe properties.
 
-<!--THIS IS VAGUE ^^ -->
-
-## <a id='expressions'></a>Double-Parentheses Expressions
+## <a id="overview">Overview
 
 A tile's `metadata` subdirectory contains a product template file in `.yml` format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into its deployment manifest.
 
-The product template contains `manifest` snippets in two sections:
+You can modify your tile's product template in many different ways. Two important concepts to understand are what the product template contains and how to modify it to include different properties. 
 
-* **`form_types`** defines the tile interface
-* **`job_types`** describes the jobs that the manifest deploys. 
+This topic explains these two concepts and gives examples of different configuration options for tiles.
 
-Within these snippets, you can use special expressions to include property values that are otherwise not already known to the tile, such as user provided configurable properties or dynamically generated system properties. These special expressions take two forms:
+## <a id="product-template">Understanding the Product Template
 
-* **Double-parentheses expressions, such as `(( PROPERTY-VALUE ))`** designate property values that Ops Manager fills in when it generates the deployment manifest, after the user clicks **Apply Changes**. These values include configurable properties and properties supplied by Ops Manager.
+The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to the following:
 
-* **Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`** designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials are designated in triple parentheses.
+* **Metadata**: High level information about your tile
+* **Dependencies**: How to specify product dependencies
+* **Property Blueprints**: The building blocks of representing values
+* **Form Types**: Exposing property blueprints into generated forms
+* **Jobs**
+
+For the purpose of explanation, examples that refer to the product template use the [PCF example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
+
+For more information about product template configuration, see [Top Level Properties](#top-level). 
+
+To learn how to configure your tile's forms, see [Form Properties](#form-properties).
+
+## <a id='property-values'></a>Designating Property Values
+
+Within the product template, there are two sections with `manifest` snippets. These sections are:
+
+* **`form_types`**: This defines the tile interface, or how users of your tile view and interact with different tile features.
+* **`job_types`**: This defines the jobs that the manifest deploys, or what the tile does in response to user input, developer input, or at set intervals. 
+
+You can use special expressions in these snippets to include property values that are otherwise not already known to the tile, such as user provided configurable properties or dynamically generated system properties. These special expressions take two forms:
+
+### <a id="double-parens"> Double Parentheses Expressions
+
+Double-parentheses expressions, such as `(( PROPERTY-VALUE ))` designate property values that Ops Manager fills in when it generates the deployment manifest, after the user clicks **Apply Changes**. These values include configurable properties and properties supplied by Ops Manager.
+
+To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses:
+
+```
+    manifest: |
+      pizza_toppings:
+        peppers: (( .properties.example_selector.pizza_option.peppers.value ))
+```
+
+### <a id="triple-parens"> Triple Parentheses Expressions
+
+Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))` designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials are designated in triple parentheses.
+
+When Ops Manager parses a product template and BOSH parses a manifest, they both fill in properties designated by double-parens syntax.
+
+Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by Ops Manager.
+
+To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation:
+
+```
+    manifest: |
+      credhub:
+        concatenated_password: prefix-((( credhub-password )))-suffix
+        password: ((( credhub-password )))
+
+```
+
+Ops Manager strips the outer parentheses from these expressions and
+includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
+
+For more information about product properties, continue reading [Referencing Properties](#property-refs).
 
 ### <a id='property-refs'></a>Referencing Properties
 
-Evaluating a property can be represented by piecing two segments together:
+Each property is represented by two segments:
 
-<!--THIS SENTENCE DOESN'T MAKE ANY SENSE AND THE PARTS THAT DO MAKE SENSE ARE TOO FIGURATIVE ^^-->
-
-* The location of the property. <!-- GIVE AN EXAMPLE --> 
+* The location of the property. 
+<!-- GIVE AN EXAMPLE --> 
 * **Accessors**: The information from the property you want to access.
 
-Using these two segments, you can write the expression as: 
+Using these two segments, you can write an expression as: 
 
 ````
 (( LOCATION_OF_PROPERTY.ACCESSOR ))
@@ -879,28 +928,9 @@ Example:
   configurable: true
 ```
 
----
-title: Product Template Reference
-owner: Ops Manager
----
-
-<strong><%= modified_date %></strong>
-
-This document defines the separate pieces of a product template.
-For the purpose of explanation we use the [PCF example tile](https://github.com/pivotal-cf-experimental/ops-manager-example),
-a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
-
-The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to the following:
-
-* Metadata: high level information about your tile
-* Dependencies: how to specify product dependencies
-* Property Blueprints: the building blocks of representing values
-* Form Types: exposing property blueprints into generated forms
-* Jobs
-
 ## <a id='top-level'></a> Top Level Properties
 
-The following is an example of the properties that appear at the top of a product template. Following this example are definitions of each property.
+The following is an example of the properties that appear at the top of a product template. Definitions of each property follow this example.
 
 <pre class="code">
   ---
@@ -935,20 +965,29 @@ The following is an example of the properties that appear at the top of a produc
 
 ### <a id='top-name'></a> name
 
-String. Required.
+* **Format:** String
+* **Type:** Required
+
 The internal name of the product. You must keep the name of your product consistent for migrations to function properly.
 Changing the name indicates the installation of a completely different product.
 
-### <a id='top-version'></a> product_version
+### <a id='top-version'></a> product\_version
 
-String. Required.
-The version of the product. At present you can only import this version into Ops Manager once.
-If you intend to import the same product / version, you must delete the existing one from the /metadata folder and delete the installation files from Ops Manager's disk.
+* **Format:** String
+* **Type:** Required
+
+The version of the product. 
+
+You can only import this version into Ops Manager once. If you want to import the same product or version, you must delete the existing one from the `/metadata` folder and delete the installation files from Ops Manager's disk.
+
 The version number is important for [migrations](./tile-upgrades.html).
 
 ### <a id='top-min-version'></a> minimum\_version\_for\_upgrade
 
-String. Optional. Pivotal recommends that you set a minimum version for upgrading to your current product version.
+* **Format:** String
+* **Type:** Optional
+
+Pivotal recommends that you set a minimum version for upgrading to your current product version.
 This example shows a current product version of v1.7 that only upgrades from a v1.6.x version of the same product:
 
 ```
@@ -958,54 +997,59 @@ This example shows a current product version of v1.7 that only upgrades from a v
 
 ### <a id='top-metadata'></a> metadata_version
 
-String. Required.
-The versioned structure of the product template (the file you are editing).
-Changing the version number can unlock new properties, and also break properties that changed from previous versions.
-The metadata version does not always correlate to Ops Manager version number and depends on what, or if, new metadata properties were introduced.
+* **Format:** String
+* **Type:** Required
+
+The versioned structure of the product template, which is the file you are editing. The metadata version does not always correlate to Ops Manager version number and depends on what, or if, new metadata properties were introduced.
+
+Changing the version number can unlock new properties and also break properties that changed from previous versions. 
 
 ### <a id='top-label'></a> label
 
-String. Optional.
+* **Format:** String
+* **Type:** Optional
+
 The label that appears in the product tile when it displays in the Ops Manager Dashboard.
 
 ### <a id='top-description'></a> description
 
-String. Optional.
-A description of the product. This is not currently used but may be displayed in a future version of Ops Manager.
+* **Format:** String
+* **Type:** Optional
+
+A description of the product. 
 
 ### <a id='top-rank'></a> rank
 
-Integer. Required.
-The order in which a product tile appears on the dashboard.
-The Ops Manager Director always appears at rank 100.
-For your product to appear to the right of Ops Manager Director (preferable)i, you must set this value to an integer less than 100.
+* **Format:** Integer
+* **Type:** Optional
+
+The order in which a product tile appears on the dashboard. The Ops Manager Director always appears at rank 100.
+
+For your product to appear to the right of Ops Manager Director, you must set this value to an integer less than 100.
+
 Pivotal recommends that you set it to 1.
-Ops Manager sorts tiles alphabetically if all tiles have the same rank.
-This is a known weak point.
+
+If all tiles have the same rank, Ops Manager sorts them alphabetically.
 
 ### <a id='top-service-broker'></a> service_broker
 
-Boolean. Optional, default `false`.
+* **Format:** Boolean
+* **Type:** Optional, default `false`
+
 Set `service_broker` to `true` for on-demand service brokers. Setting `service_broker` to `true` does the following:
 
-- Enables the service network selector property type
-- Requires the operator to select a service network during tile configuration.
-  Tile authors can reference the selected service network with `(( $self.service_network ))`.
-- Includes a UAA client for the service to use. 
-  Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
+* Enables the service network selector property type
+* Requires the operator to select a service network during tile configuration. Tile authors can reference the selected service network with `(( $self.service_network ))`.
+* Includes a UAA client for the service to use. Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
 
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
 
-Hash. Required.
-For a list of stemcells, including OS and version, see [the BOSH hub](https://bosh.io/).
-You do not specify which IaaS the Stemcell targets.
-This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
-At the time of this writing, none of the BOSH stemcells require a Cloud Provider Interface (CPI). 
-This is expected to change in a future release of BOSH. 
+* **Format:** Hash
+* **Type:** Required 
 
-`enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell.
-This is by default set to `true`. For products using static compilations, you can disable this feature.
-If you set the property to `false`, your product does not receive security patches through automatic stemcell updates. 
+`enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell. This is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators may experience longer than expected upgrade times. 
+
+Example:
 
  <pre class="code">
  stemcell\_criteria
@@ -1014,35 +1058,48 @@ If you set the property to `false`, your product does not receive security patch
   enable\_patch\_security\_updates: true
  </pre>
 
-This feature increases security by automatically using the latest patched version of a stemcell.
-However, operators may experience longer than expected upgrade times. 
+Pivotal recommends setting this property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates. 
+
+You do not specify which IaaS the Stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
+
+For a list of stemcells, including OS and version, see [the BOSH hub](https://bosh.io/).
+
 For more information, see [Understanding Floating Stemcells](http://docs.pivotal.io/pivotalcf/customizing/understanding-stemcells.html).
 
 ### <a id='top-release'></a> releases
 
-Array of Hashes. Required.
+* **Format:** Array of hashes
+* **Type:** Required 
+
 The list of releases contained in your product's releases directory.
+
 The version of the release must be exactly the same as the version contained in the release (BOSH releases are versioned and signed by BOSH).
 
 ### <a id='top-post-deploy'></a> post\_deploy\_errands
 
-Array of Hashes. Optional.
+* **Format:** Array of hashes
+* **Type:** Optional 
+
 A list of errands that run after a deploy succeeds.
 
 Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager.
+
 See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`.
 
 ### <a id='top-pre-delete'></a> pre\_delete\_errands
 
-Array of Hashes. Optional.
+* **Format:** Array of hashes
+* **Type:** Optional 
+
 A list of errands that run before a deployment is deleted.
 
-Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager.
-See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`. 
+Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager. If you do not specify this property, the selector defaults to `On`. 
+
+For more information, see [Lifecycle Errands](./tile-errands.html). 
 
 ## <a id='form-properties'></a> Form Properties
 
-Each form type you write is composed of form properties. Form properties represent the outline to the form fields that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
+Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
 
 Form properties reference `property_blueprints`. Property blueprints define each field's data type. For a corresponding example to the `form_types` example below, see [property_blueprints](#property-blueprints).
 
@@ -1137,37 +1194,48 @@ form_types:
 
 ### <a id='form-name'></a> name
 
-String. Required.
+* **Format:** String
+* **Type:** Required
+
 The internal name of the form.
 
 ### <a id='form-label'></a> label
 
-String. Required.
+* **Format:** String
+* **Type:** Required
+
 The label of the form as it appears as a link on the left hand side of each form.
 
 ### <a id='form-description'></a> description
 
-String. Optional.
+* **Format:** String
+* **Type:** Optional 
+
 The description of the form. Appears at the top of the form as a header.
 
 ### <a id='form-markdown'></a> markdown
 
-Markdown. Optional.
-Provide a block of markdown to display at the top of the form. Includes image support.
-You can use this property to document the tile and provide explanations or references.
+* **Format:** Markdown 
+* **Type:** Optional
+
+Provide a block of markdown to display at the top of the form, including image support.
+<!--WHAT KIND OF IMAGES?-->
+Use this property to document the tile and provide explanations or references.
 
 ### <a id='form-property-inputs'></a> property_inputs
 
-Array of Hashes. Required.
+* **Format:** Array of hashes 
+* **Type:** Required
+
 References to properties defined in the [property_blueprints](#property-blueprints) section of the product template.
 
 ### <a id='verifiers'></a> verifiers
 
-Verifiers reach out and find objects in the world. For example, given an IP, a verifier can ping the IP to see that it responds.
+Verifiers are configurable settings that contact things outside the tile. For example, given an IP, a verifier can ping the IP to see that it responds.
 
 Verifiers are separate from validators, which check whether a string is formatted properly. For an example of a validator, see [ must\_match\_regex](#top-must-match).
 
-See the following for a list of available verifiers you can use:
+Here is a list of verifiers you can use:
 
 - `BlobstoreVerifier`
 - `LDAPBindVerifier`
@@ -1177,11 +1245,16 @@ See the following for a list of available verifiers you can use:
 - `StaticIpsVerifier`
 - `WildcardDomainVerifier`
 
+<!-- IS THIS LIST UP TO DATE, OR DO WE HAVE MORE VERIFIERS THAN THIS? -->
+
+<!-- DO WE WANT TO LINK TO THE GRANULAR VERIFIER CONTROL DOCS IN THIS SECTION? -->
+
 ### <a id='form-placeholder'></a> placeholder
 
-String. Optional. Specify placeholder text for a field.
-The text appears in light gray to show an example value for the user.
-The text disappears when the user types in the field and reappears if the user leaves the field empty.  
+* **Format:** String 
+* **Type:** Optional
+
+Specify placeholder text for a field. The text appears in light gray to show an example value for the user. The text disappears when the user types in the field and reappears if the user leaves the field empty.  
 
  The `placeholder` attribute displays for the following form types:
 
@@ -1199,22 +1272,6 @@ The text disappears when the user types in the field and reappears if the user l
   * network\_address\_list
   * network_address
   * port
-
-## <a id='simple-vs-complex'></a> Simple vs. Complex Inputs (Selectors and Collections)
-
-Most properties are simple values such as strings, integers, URL addresses, or IP addresses.
-Others are complex, such as selectors or collections.
-
-Selectors are a means of giving the user a choice of a set of inputs.
-Collections are a means of giving the user the ability to enter an array of values to create a hash.
-
-Selectors appear as follows:
-
-![Selector](img/selector.png)
-
-Collections appear as follows:
-
-![Collection](img/collection.png)
 
 ## <a id='property-blueprints'></a> Property Blueprints
 
@@ -1409,105 +1466,141 @@ Many of these properties are strings, but can be used with validators in order t
 
 ### <a id='configurable-string'></a> string
 
-A string.
+* **Format:** String
 
 ### <a id='configurable-integer'></a> integer
 
-An integer.
+* **Format:** Integer
 
 ### <a id='configurable-boolean'></a> boolean
 
-A boolean. Viewed as a checkbox.
+* **Format:** Boolean 
+
+Displays as a checkbox.
 
 ### <a id='configurable-dropdown'></a> dropdown_select
 
-A list of options. The user chooses one viewed as an HTML select box.
+* **Format:** List of options
+
+The user chooses one viewed as an HTML select box.
 
 ### <a id='configurable-multiselect'></a> multi\_select\_options
 
-A list of options. The user chooses zero or more, viewed as HTML checkboxes.
+* **Format:** List of options
+
+The user chooses zero or more, viewed as HTML checkboxes.
 
 ### <a id='configurable-domain'></a> domain
 
-A second, third, fourth, etc level domain.
+* **Format:** Second, third, fourth, or greater level domain.
 
 ### <a id='configurable-wildcard-domain'></a> wildcard_domain
 
-A domain with a wildcard in front of it. Example: `*.domain.com`
+* **Format:** Domain with a wildcard in front of it. 
+
+Example: `*.domain.com`
 
 ### <a id='configurable-text'></a> text
 
-A string. Appears as an HTML textarea.
+* **Format:** String
+
+Appears as an HTML textarea.
 
 ### <a id='configurable-ldap-url'></a> ldap_url
 
-A URL prefaced by `ldap://`.
+* **Format:** URL prefaced by `ldap://`
 
 ### <a id='configurable-email'></a> email
 
-An email address.
+* **Format:** Email address
 
 ### <a id='configurable-ips'></a> ip_ranges
 
-A range of IP addresses, with dashes and commas allowed. Example: `1.1.1.1-1.1.1.4,2.2.2.1-2.2.2.4`
+* **Format:** Range of IP addresses
+
+Dashes and commas are allowed. 
+
+Example: `1.1.1.1-1.1.1.4,2.2.2.1-2.2.2.4`
 
 ### <a id='configurable-port'></a> port
 
-An integer representing a network port.
+* **Format:** Integer 
+
+This integer represents a network port.
 
 ### <a id='configurable-address'></a> network_address
 
-A single IP address or domain. Example: `1.1.1.1`
+* **Format:** IP address or domain
+
+Example: `1.1.1.1`
 
 ### <a id='configurable-address-list'></a> network\_address\_list
 
-A list of IP addresses or domains. Example: `1.1.1.1,example.com,2.2.2.2`
+* **Format:** List of IP addresses or domains
+
+Example: `1.1.1.1,example.com,2.2.2.2`
 
 ### <a id='generated'></a> Generated Properties (can also be configurable)
 
-The following properties are configurable, but can also be generated by Ops Manager if configurable is false or the configurable key is omitted.
-The exceptions are the uuid and salted credentials properties, which are never configurable.
+The following properties are configurable, but can also be generated by Ops Manager if configurable is set to `false` or the configurable key is omitted.
+
+The exceptions are the UUID and salted credentials properties, which are never configurable.
 
 ### <a id='generated-cert-creds'></a> rsa\_cert\_credentials
 
-An RSA certificate.
+* **Format:** RSA certificate
 
 ### <a id='generated-pkey-creds'></a> rsa\_pkey\_credentials
 
-An RSA private key.
+* **Format:** RSA private key
 
 ### <a id='generated-salted-creds'></a> salted_credentials
 
-Username and password created using a non-reversible hash algorithm.
+* **Format:** Username and password created using a non-reversible hash algorithm
+
+<p class="note"><strong>Note</strong>: This property is not configurable.</p>
 
 ### <a id='generated-simple-creds'></a> simple_credentials
 
-Username and password.
+* **Format:** Username and password
 
 ### <a id='generated-secret'></a> secret
 
-A random string or password.
+* **Format:** Random string or password
 
-### <a id='generated-uuid'></a> uuid
+### <a id='generated-uuid'></a> UUID
 
-A universal unique identifier.
+* **Format:** Universal unique identifier.
 
-### <a id='complex'></a> Complex Properties (Selectors and Collections)
+### <a id='complex'></a> Complex Properties
+
+Most properties are simple values such as strings, integers, URL addresses, or IP addresses.
+Others are complex, such as selectors or collections.
+
+* **Selectors**: Give the user a choice of a set of inputs
+* **Collections**: Give the user the ability to enter an array of values to create a hash
+
+Selectors appear as follows:
+
+![Selector](img/selector.png)
+
+Collections appear as follows:
+
+![Collection](img/collection.png)
 
 The selector and collections inputs are referenced by their selector and collection property blueprints.
-These are more complicated than simple properties in that they contain manifest snippets, which are further referenced in other manifest snippets.
-We will learn about manifest snippets in the next section.
+
+Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets.
 
 ## <a id='job-types'></a> Job Types
 
-The following is an example of the `job_types` section that appears in a product template.
-This section defines the jobs that end up in a BOSH manifest.
-Those jobs are defined in your BOSH release.
-Jobs require many different settings in order to function properly, and that is the crux of what Ops Manager does for you:
-it asks a user for values to those settings and generates a manifest based on what was entered.
+The following is an example of the `job_types` section that appears in a product template. 
 
-Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically,
-and you can find them in the release manifest. 
+This section defines the jobs that end up in a BOSH manifest. Those jobs are defined in your BOSH release.
+
+Jobs require many different settings in order to function properly. That is the core of what Ops Manager does for you: Ops Manager asks a user to designate values for those settings and generates a manifest based on what the user specifies.
+
+Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest. 
 
 <p class="note"><strong>Note: </strong> Starting in PCF v2.1, Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys.</p>
 
@@ -1721,114 +1814,117 @@ and you can find them in the release manifest.
 
 ### <a id='job-name'></a> name
 
-String. Required.
+* **Format:** String
+* **Type:** Required
+
 The name of the job as it will be created in the Ops Manager generated BOSH manifest.
 
 ### <a id='job-label'></a> resource_label
 
-String. Required.
+* **Format:** String
+* **Type:** Required
+
 The label of the job as it will appear in the resources page of the tile.
 
 ### <a id='job-template'></a> templates
 
-Array of Hashes. Required.
+* **Format:** Array of hashes
+* **Type:** Required
+
 Each element has the following fields:
 
 #### <a id='template-name'></a> name
 
-The name of the job template to use. Required.
+* **Format:** Name of the job template to use
+* **Type:** Required
 
 #### <a id='template-release'></a> release
 
-The name of the release the template is from. Required.
+* **Format:** Name of the release the template is from
+* **Type:** Required
 
 #### <a id='template-consumes'></a> consumes
 
-A YAML string defining [BOSH links](https://bosh.io/docs/links.html) this job consumes. Optional.
+* **Format:** YAML string defining [BOSH links](https://bosh.io/docs/links.html) that this job consumes
+* **Type:** Optional
 
 #### <a id='template-provides'></a> provides
 
-A YAML string defining [BOSH links](https://bosh.io/docs/links.html) this job provides. Optional.
+* **Format:** YAML string defining [BOSH links](https://bosh.io/docs/links.html) that this job provides
+* **Type:** Optional
 
 This is a BOSH feature (creating jobs from different releases). See the [BOSH documentation](https://bosh.io/) for more information.
 
 ### <a id='job-release'></a> release
 
-String. Required.
-The name of the BOSH release contained in your product archive (.pivotal file).
+* **Format:** String
+* **Type:** Required
+
+The name of the BOSH release contained in your product archive, which is the `.pivotal` file.
 
 ### <a id='job-single-az'></a> single\_az\_only
 
-Boolean. Required.
-You can give users control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
-To limit a job to a single AZ, set this to `true`. 
+* **Format:** Boolean
+* **Type:** Required
 
-<p class="warning note"><strong>WARNING: </strong> If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.</p>
+You can give users control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
+
+To limit a job to a single AZ, set `single_az_only` to `true`. 
+
+<p class="note warning"><strong>WARNING</strong>: If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.</p>
 
 ### <a id='job-max-in-flight'></a> max\_in\_flight
 
-Integer. Required.
+* **Format:** Integer
+* **Type:** Required
+
 A BOSH setting that controls the number of instances of this job that BOSH will deploy in parallel.
 
 ### <a id='job-resource-def'></a> resource_definition
 
-Array of Hashes. Required.
-A set of resource settings for the job along with max and min constraints, defaults,
-and whether or not the user can configure (change) the setting.
-The resources that can be set are:
+* **Format:** Array of hashes
+* **Type:** Required
+
+A set of resource settings for the job along with maximum and minimum constraints, defaults,
+and enabled or disabled configurability.
+
+The resources you can set are:
 
 - ram
 - ephemeral_disk
 - persistent_disk
 - cpu
 
-<p class="note"><strong>Note: </strong>If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>,
+<p class="note"><strong>Note</strong>: If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>,
 users cannot edit this value and the <strong>Resource Config</strong> page in <strong>Ops Mananger</strong> displays <strong>None</strong> under the persistent disk field.</p>
 
 ### <a id='job-instance-def'></a> instance_definition
 
-Hash. Required.
-The number of default instances for a job along with max, min, odd, and the ability to decrease sizing after deploy constraints.
+* **Format:** Hash
+* **Type:** Required
+
+The number of default instances for a job, including maximum, minimum, odd, and the ability to decrease sizing after deploy.
 
 If your product uses an external service that performs the same job as a service in Elastic Runtime,
 you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
-For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime.
-Set `property reference` to `.properties.system.database` and `property value` to `magic value` to change the instance counts of all MySQL jobs to `0`. 
+
+For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`. 
 
 ### <a id='job-manifest'></a> manifest
 
-Text snippet, prefaced by pipe symbol: `|`. Optional.
-Ops Manager generates a BOSH manifest that defines properties for each job that the manifest deploys.
+* **Format:** Text snippet, prefaced by pipe symbol: `|`
+* **Type:** Optional
+
+Ops Manager generates a BOSH manifest that defines properties for each job the manifest deploys.
 Some of these properties are not set until the user clicks **Apply Changes**, because the user configures them in the tile or because Ops Manager has to generate them.
 
-To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses:
-
-```
-    manifest: |
-      pizza_toppings:
-        peppers: (( .properties.example_selector.pizza_option.peppers.value ))
-```
-
-When Ops Manager parses a product template and BOSH parses a manifest,
-they both fill in properties designated by double-parens syntax.
-Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by Ops Manager.
-To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation:
-
-```
-    manifest: |
-      credhub:
-        concatenated_password: prefix-((( credhub-password )))-suffix
-        password: ((( credhub-password )))
-
-```
-
-Ops Manager strips the outer parentheses from these expressions and
-includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
+For more information about these properties, see [Designating Property Values](#property-values).
 
 ### <a id='named-manifest'></a> named_manifest
 
 Specify a property for collection within the `named_manifest` section of the metadata.
-See the [Simple vs. Complex Inputs](#simple-vs-complex) section for more information about collections.
+
+For more information about collections, see [Complex Properties](#complex).
 
 The following example uses a named manifest called `for_routing` that belongs to the `certificate_collection` job:
 
@@ -1851,6 +1947,7 @@ The following example uses a named manifest called `for_routing` that belongs to
 ```
 
 Use the `current_record` property within a collection record to refer to other properties in the same record.
+
 For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
 
 <p class="note"><strong>Note:</strong> The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.</p>
@@ -1879,6 +1976,7 @@ routing_certificates:
 
 Selector snippets are evaluated twice. As you saw in the `property_blueprint`,
 the selector has a manifest snippet for both sets of inputs that the user might choose.
+
 Only one of these sets is evaluated and inserted into the job's manifest.
 
 ### <a id='ops-man-snippets'></a> Ops Manager Provided Snippets
@@ -1894,6 +1992,8 @@ The following double-parens accessors retrieve your job properties:
   * bosh\_job\_partition\_stats: `(( bosh_job_partition_stats ))` (deprecated)
   * first\_network\_deprecated: `(( first_network_deprecated ))` (deprecated)
   * subnet\_cidrs: `(( subnet_cidrs ))`
+
+For more information about these properties, see [Designating Property Values](#property-values).
 
 <p class="note"><strong>Note: </strong> As of PCF v2.1, IP accessors are no longer supported.</p>
 
