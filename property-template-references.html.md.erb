@@ -6,7 +6,7 @@ owner: Ops Manager
 <strong><%= modified_date %></strong>
 
 
-## <a id="overview">Overview
+## <a id="overview"></a>Overview
 
 A tile's `metadata` subdirectory contains a product template file in `.yml` format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into its deployment manifest.
 
@@ -14,7 +14,7 @@ You can modify your tile's product template in many different ways. Two importan
 
 This topic explains these two concepts and gives examples of different configuration options for tiles.
 
-## <a id="product-template">Understanding the Product Template
+## <a id="product-template"></a>Understanding the Product Template
 
 The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to the following:
 
@@ -39,7 +39,7 @@ Within the product template, there are two sections with `manifest` snippets. Th
 
 You can use special expressions in these snippets to include property values that are otherwise not already known to the tile, such as user provided configurable properties or dynamically generated system properties. These special expressions take two forms:
 
-### <a id="double-parens"> Double Parentheses Expressions
+### <a id="double-parens"></a> Double Parentheses Expressions
 
 Double-parentheses expressions, such as `(( PROPERTY-VALUE ))` designate property values that Ops Manager fills in when it generates the deployment manifest, after the user clicks **Apply Changes**. These values include configurable properties and properties supplied by Ops Manager.
 
@@ -51,7 +51,7 @@ To include these properties in a manifest snippet, use "double-parens" syntax, w
         peppers: (( .properties.example_selector.pizza_option.peppers.value ))
 ```
 
-### <a id="triple-parens"> Triple Parentheses Expressions
+### <a id="triple-parens"></a> Triple Parentheses Expression
 
 Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))` designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials are designated in triple parentheses.
 
