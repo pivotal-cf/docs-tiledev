@@ -1,15 +1,18 @@
 ---
-title: Getting Started with Tile Development
-owner: Services
+title: Getting Started with Tiles
+owner: OpsMan
 ---
 
-As a Pivotal Cloud Foundry (PCF) Partner, learn the step-by-step process of creating a tile and publishing on Pivotal Network. 
+As a Pivotal Cloud Foundry (PCF) Partner, learn the high-level process of building and publishing a tile.on Pivotal Network. 
+
+If you have previous experience building tiles, see [Product Template Reference](./product-template-reference.html).
 
 ## <a id="tile-def"></a>  What is a Tile?
-Tiles are packaged software that can be integrated into PCF.
+Tiles are packaged software that can be integrated into PCF. 
+Similar to how smartphone owners install apps on their phones, PCF operators and developers install tiles on PCF to access third-party services. 
+
 To provide a service on PCF you must package your software into a tile using Tile Generator.
-You can publish tiles on Pivotal Network and install them through Ops Manager.
-For more information see, [Tile Generator](./tile-generator.html), and [Ops Manager](https://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html) documentation. 
+You can then publish your service on Pivotal Network, the PCF marketplace for tiles.
 
 ###Tile Structure
 Tiles are zipped directories with a `` .pivotal `` file extension.
@@ -34,7 +37,6 @@ Tile directories require three subdirectories: metadata, migrations, and release
 		<td>Within this directory, you deploy your service source code either as an app or BOSH release. </td>
 	</tr>
 </table>  
-<!--- More context about other directories / files (?), file structure screen-shot -->
 
 ## <a id="tile-value"></a> Why Build a Tile?
 
