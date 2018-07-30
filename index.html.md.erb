@@ -5,45 +5,136 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-## <a id="why"></a> Why Tiles?
+This guide exists to help Pivotal Cloud Foundry (PCF) Partners learn the high-level process of building and publishing a tile on Pivotal Network. 
 
-Whether you are an Independent Software Vendor (ISV) or an internal Pivotal service team, integrating your software service with Pivotal Cloud Foundry (PCF) makes the service easily available and usable by the growing PCF ecosystem. Pivotal supports these integrations and is committed to making the process as easy as possible.
+For advanced developers with previous experience building tiles, see [Product Template Reference](./product-template-reference.html).
 
-Services integrate with PCF through "tiles" that users download from [Pivotal Network](http://network.pivotal.io) and install through the Ops Manager Installation Dashboard. These tiles provide a modular and standardized interface that PCF operators use to configure, publish, manage, and upgrade software services, whether the services are for their own use, or for use by PCF app developers.
+## <a id="tile-def"></a> What is a Tile?
+Tiles are packaged software that can be integrated into PCF. 
+Similar to how smartphone owners install apps on their phones, PCF operators and developers install tiles on PCF to access third-party services. The [GCP Service Broker for PCF](https://network.pivotal.io/products/gcp-service-broker) tile is an example of a third-party service available on PCF. 
 
-The Tile Developer Guide explains how to create a service tile for PCF through a proven, staged development process. You are welcome to start this process on your own, or [contact us](contacts.html)
-to ask for our support or publish your integration in the
-[Pivotal Network](http://network.pivotal.io) Marketplace.
+To provide a service on PCF you must package your software into a tile. You can use Tile Generator, a PCF tool that helps you develop, package, test, and deploy software, to package your tile. Once you have created a tile, you can publish it on Pivotal Network, the Pivotal tile marketplace.
 
-If you are new to this site, [**start here**](./workflow.html).
+###Tile Structure
+Tiles are zipped directories with a ``.pivotal`` file extension.
+Tile directories require three subdirectories: `metadata`, `migrations`, and `releases`. You can perform different actions within each subdirectory:
 
-![Your Service Tile in Ops Manager](img/your-service-here.png)
+<table class="nice">
+	<tr>
+		<th>Directory</th>
+		<th>Action</th>
+	</tr>
+	<tr>
+		<td>metadata</td>
+		<td>Configure settings for your software in a YAML file. To see an example YAML file, see the <a href= "https://github.com/cf-platform-eng/tile-generator/blob/master/sample/tile.yml"> tile.yml file</a> in the tile-generator repo.</td>
+	</tr>
+	<tr>
+		<td>migrations</td>
+		<td>Track changes across different releases in a .js file. Only tiles with multiple releases use this subdirectory. Do not modify the files in this subdirectory during your first tile release. </td>	
+	</tr>
+	<tr>
+		<td>releases</td>
+		<td>Deploy your service source code and other inputs for your build, such as a BOSH release. </td>
+	</tr>
+</table>  
 
-## <a id="contents"></a> Development Workflow and Guide Contents
+Example tiles are published on [Pivotal Network](https://network.pivotal.io). You can download the example tiles and examine them locally to learn more about their structure. To see the file structure of a tile, do the following:
 
-The contents of this guide follow Pivotal's recommended tile development [workflow](./workflow.html), from learning necessary background information to publishing and maintaining a finished product:
+  1. Download a tile from Pivotal Network.
+  1. Rename the file extension from ``.pivotal`` to ``.zip``.
+  1. Unzip the file.
 
-* [Getting Started with Tile Development](./getting-started.html)
+## <a id="tile-value"></a> Why Build a Tile?
 
-* [Tile Basics](./tile-basics.html) describes how PCF, service brokers, and tiles work together, and how tiles are structured.
+There are multiple reasons to build and publish a tile on Pivotal Network. Tiles can help you:
 
-* [Tile Development Workflow](./workflow.html) recommends how to plan your integration and gives a high-level view of a staged tile development process that iterates through increasing levels of integration:
-	- [User-Provided Service](./roadmap.html#user-provided)
-	- [Brokered Service](./brokered.html)
-	- [Managed Service](./managed.html)
-	- [On-Demand Service](./on-demand.html)
+* Find the widest possible audience for your service.
+* Join a growing ecosystem that can easily integrate your service.
+* Enable operators and app developers to interact with your service in an accessible and standardized way.
 
-* [Development Environments](./environments.html) describes how to set up development environments for different stages and levels in the tile development process.
+## <a id="tile-steps"></a> Building Your First Tile
 
-* [Development Tools](./tools.html) describes three tools that streamline the tile development process: [Tile Generator](./tile-generator.html), the [pcf Command Line](./pcf-command.html) utility, and [Concourse](./concourse.html) continuous integration (CI).
+There are two options for building your first tile. You can either attend partner days or develop independently. However, Pivotal strongly recommends attending Partner Days for hands-on guidance. 
 
-* [Development Roadmap](./roadmap.html) takes you through the staged tile development process, explaining the components and steps required for each level of service integration: user-provided, brokered, managed, and on-demand.
+### <a id="partner-days"></a> Attending Partner Days
 
-* [Tile Documentation](./tile-documentation.html) explains how to document your tile as part of [PCF documentation](http://docs.pivotal.io).
+<iframe width="560" height="315" src="https://www.youtube.com/embed/eX2c8zXF6D4?rel=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
 
-* [Publish and Update](./publish.html) explains how to publish your tile on [Pivotal Network](http://network.pivotal.io) (PivNet) and package upgrade information into your new versions.
+Partner Days are the single best resource to introduce you to PCF and tile development. During these three-day workshops, Pivotal and partner Independent Software Vendor (ISV) engineers collaborate to prototype and build a complete software integration with PCF. These events streamline your development process, getting your tile up and running in no time at all.
 
-* [Reference](./reference.html) provides language references for tile elements such as the Service Broker API and the Properties list for tile configuration.
+The workshop is free for all Pivotal partners. Pivotal recommends any interested partner attend Partner Days. If you are not a Pivotal partner yet, you can sign up for the [partner program](https://pivotal.io/partners/programs/tech). 
 
-* [Contact Us](./contacts.html) lists contacts to learn more about the Pivotal ISV Partner Program or request our assistance with your integration project, and explains where you can contribute to this documentation.
+[Register for a session](https://pivotal.io/event/partner-days/).
 
+### <a id="develop"></a> Developing Independently
+
+If you want to build a tile without attending Partner Days, the following procedure will minimize the learning curve for development. Pivotal engineers are always available through the Pivotal Partners Slack if you have any questions. However, creating a tile is a complex process and can be time consuming to complete on your own. Before performing the following procedure, Pivotal recommends that you set up the tools listed in [Toolkit](#toolkit).
+
+#### 1. Figure out Tile Type
+
+There are several ways to package your software into a tile. The type of tile you choose to develop depends on the service you are providing. If you use Tile Generator to package your software you also need to determine the inputs for your build before development. Before starting development, [learn about the different tile types](https://docs.pivotal.io/tiledev/cf-concepts.html).
+
+#### 2. Generate a Tile
+
+Tile Generator is a tool that simplifies the building process for tiles. You input your software components (service broker, buildpacks, docker image etc.) into Tile Generator and the tool outputs a base tile. You can then configure this base tile based on your needs.
+
+For information on setting up Tile Generator and building a base tile, see [Tile Generator](https://docs.pivotal.io/tiledev/tile-generator.html)
+
+#### 3. Test your Tile
+
+Before you publish your tile, you should manually test it using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services or Google Cloud Platform. You can upload, configure and install your tile in PIE like an operator. 
+
+To gain access to your PIE, reach out to your contact at Pivotal or [register as a partner](https://partners.pivotal.io/). 
+
+If you already have access to your PIE, for information on how to log in, see [Shared PCF Development Environments](https://docs.pivotal.io/tiledev/2-2/environments.html)   
+
+#### 4. Document your Tile
+
+When you are ready to publish your tile, you should write documentation. Documentation is valuable for operators that use your tile. For more information on how to write and publish your documentation for PCF, see [Tile Documentation](https://docs.pivotal.io/tiledev/tile-documentation.html).
+
+#### 5. Publish on Pivotal Network
+
+ You can upload the first iteration of your tile to Pivotal Network, the Pivotal tile marketplace. You should reach out to your contact at Pivotal who can guide you through the process of uploading your tile to Pivotal Network. When you upload your tile on Pivotal Network, it becomes available for operators and developers to:
+
+<table class="nice">
+	<tr>
+		<th>User</th>
+		<th>Actions</th>
+	</tr>
+	<tr>
+		<td>Operators</td>
+		<td>Download and install your service as a tile.<br>
+			Configure your service using a UI.<br>
+			Update your service with a single click.
+		</td>
+	</tr>
+	<tr>
+		<td>Developers</td>
+		<td>See your service in their PCF services marketplace.<br>
+			Select service plans to subscribe to.<br>
+			Create instances of your service and call them from their apps.<br>
+			Support a continuous and fast development cycle.
+		</td>
+	</tr>
+</table>
+
+For information on the release cycle for Partner tiles, see [Partner Software Release Cycle](./releases.html).
+
+
+## <a id="toolkit"></a> Toolkit
+Before you begin developing your tile, you should install the following tools:
+
+- [Git](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) 
+
+- [Tile Generator](https://docs.pivotal.io/tiledev/2-2/tile-generator.html#-how-to-use) 
+
+- [BOSH CLI](https://bosh.io/docs/cli-v2/) 
+
+- [CF CLI](https://github.com/cloudfoundry/cli#downloads) 
+
+- [Kubernetes CLI](https://kubernetes.io/docs/tasks/tools/install-kubectl/) 
+
+- [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) 
+
+## <a id="contact"></a> Contact Us
+If you want to learn more about the Pivotal ISV Partner Program or request assistance with your integration project, see [Contact Us](./contacts.html).
