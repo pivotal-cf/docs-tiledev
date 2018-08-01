@@ -7,7 +7,7 @@ owner: Services
 
 This guide exists to help Pivotal Cloud Foundry (PCF) Partners learn the high-level process of building and publishing a tile on Pivotal Network. 
 
-For advanced developers with previous experience building tiles, see [Product Template Reference](./product-template-reference.html).
+For advanced developers with previous experience building tiles, see [Product Template Reference](./product-template-reference.html) and [Development Workflow Reference](./dev-workflow).
 
 ## <a id="tile-def"></a> What is a Tile?
 Tiles are packaged software that can be integrated into PCF. 
@@ -20,20 +20,16 @@ Tiles are zipped directories with a ``.pivotal`` file extension.
 Tile directories require three subdirectories: `metadata`, `migrations`, and `releases`. You can perform different actions within each subdirectory:
 
 <table class="nice">
-	<tr>
-		<th>Directory</th>
-		<th>Action</th>
-	</tr>
-	<tr>
-		<td>metadata</td>
+		<tr>
+		<th>metadata</th>
 		<td>Configure settings for your software in a YAML file. To see an example YAML file, see the <a href= "https://github.com/cf-platform-eng/tile-generator/blob/master/sample/tile.yml"> tile.yml file</a> in the tile-generator repo.</td>
 	</tr>
 	<tr>
-		<td>migrations</td>
+		<th>migrations</th>
 		<td>Track changes across different releases in a .js file. Only tiles with multiple releases use this subdirectory. Do not modify the files in this subdirectory during your first tile release. </td>	
 	</tr>
 	<tr>
-		<td>releases</td>
+		<th>releases</th>
 		<td>Deploy your service source code and other inputs for your build, such as a BOSH release. </td>
 	</tr>
 </table>  
@@ -98,22 +94,26 @@ When you are ready to publish your tile, you should write documentation. Documen
 
 <table class="nice">
 	<tr>
-		<th>User</th>
-		<th>Actions</th>
-	</tr>
-	<tr>
-		<td>Operators</td>
-		<td>Download and install your service as a tile.<br>
-			Configure your service using a UI.<br>
-			Update your service with a single click.
+		<th>Operators</th>
+		<td>
+			<ul>
+			<br>
+			<li>Download and install your service as a tile.</li>
+			<li>Configure your service using a UI.</li>
+			<li>Update your service with a single click.</li>
+			</ul>
 		</td>
 	</tr>
 	<tr>
-		<td>Developers</td>
-		<td>See your service in their PCF services marketplace.<br>
-			Select service plans to subscribe to.<br>
-			Create instances of your service and call them from their apps.<br>
-			Support a continuous and fast development cycle.
+		<th>Developers</th>
+		<td>
+			<ul>
+			<br>
+			<li>See your service in their PCF services marketplace.</li>
+			<li>Select service plans to subscribe to.</li>
+			<li>Create instances of your service and call them from their apps.</li>
+			<li>Support a continuous and fast development cycle.</li>
+		</ul>
 		</td>
 	</tr>
 </table>
