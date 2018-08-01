@@ -62,35 +62,39 @@ The workshop is free for all Pivotal partners. Pivotal recommends any interested
 
 [Register for a session](https://pivotal.io/event/partner-days/).
 
-### <a id="develop"></a> Developing Independently
+### <a id="develop-independently"></a> Developing Independently
 
-If you want to build a tile without attending Partner Days, the following procedure will minimize the learning curve for development. Pivotal engineers are always available through the Pivotal Partners Slack if you have any questions. However, creating a tile is a complex process and can be time consuming to complete on your own. Before performing the following procedure, Pivotal recommends that you set up the tools listed in [Toolkit](#toolkit).
+If you want to build a tile without attending Partner Days, follow the procedure below to minimize the learning curve for tile development. Pivotal engineers are always available through the Pivotal Partners Slack if you have any questions. 
 
-#### 1. Figure out what to Build
+Creating a tile is a complex process and can be time consuming to complete on your own. Before performing the following procedure, Pivotal recommends that you set up the tools listed in [Toolkit](#toolkit).
 
-There are several ways to package your software into a tile. If you use Tile Generator to package your software you also need to determine the inputs for your build before development. Inputs for you tile also depend on the service you are providing. Before starting development, [learn about the different tile types](https://docs.pivotal.io/tiledev/cf-concepts.html).
+#### 1. Decide What to Build
+
+There are several ways to package your software into a tile. If you use Tile Generator to package your software you also need to determine the inputs for your build before development. Inputs for you tile also depend on the service you are providing. 
+
+Before starting development, [learn about the different tile types](https://docs.pivotal.io/tiledev/cf-concepts.html).
 
 #### 2. Generate a Tile
 
-Tile Generator is a tool that simplifies the building process for tiles. You input your software components (service broker, buildpacks, docker image etc.) into Tile Generator and the tool outputs a base tile. You can then configure this base tile based on your needs.
+Tile Generator is a tool that simplifies the building process for tiles. To use it, input your software components, such as the service broker, buildpack, and Docker image, into Tile Generator and the tool outputs a base tile. You can then configure this base tile based on your needs.
 
-For information on setting up Tile Generator and building a base tile, see [Tile Generator](https://docs.pivotal.io/tiledev/tile-generator.html)
+For information on setting up Tile Generator and building a base tile, see [Tile Generator](https://docs.pivotal.io/tiledev/tile-generator.html).
 
-#### 3. Test your Tile
+#### 3. Test Your Tile
 
-Before you publish your tile, you should manually test it using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services or Google Cloud Platform. You can upload, configure and install your tile in PIE like an operator. 
+Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services or Google Cloud Platform. You can upload, configure, and install your tile in PIE just like an operator would. 
 
 To gain access to your PIE, reach out to your contact at Pivotal or [register as a partner](https://partners.pivotal.io/). 
 
-If you already have access to your PIE, for information on how to log in, see [Shared PCF Development Environments](https://docs.pivotal.io/tiledev/2-2/environments.html)   
+If you already have access to your PIE, for information on how to log in, see [Shared PCF Development Environments](https://docs.pivotal.io/tiledev/2-2/environments.html).
 
-#### 4. Document your Tile
+#### 4. Document Your Tile
 
-When you are ready to publish your tile, you should write documentation. Documentation is valuable for operators that use your tile. For more information on how to write and publish your documentation for PCF, see [Tile Documentation](https://docs.pivotal.io/tiledev/tile-documentation.html).
+When you are ready to publish your tile, you should write documentation. Documentation is valuable for operators who use your tile. For more information on how to write and publish documentation for your tile, see [Tile Documentation](https://docs.pivotal.io/tiledev/tile-documentation.html).
 
-#### 5. Publish on Pivotal Network
+#### 5. Publish Your Tile on Pivotal Network
 
- You can upload the first iteration of your tile to Pivotal Network, the Pivotal tile marketplace. You should reach out to your contact at Pivotal who can guide you through the process of uploading your tile to Pivotal Network. When you upload your tile on Pivotal Network, it becomes available for operators and developers to:
+Upload the first iteration of your completed tile to Pivotal Network, the Pivotal tile marketplace. Contact your Pivotal representative who can guide you through the process of uploading your tile to Pivotal Network. When you upload your tile to Pivotal Network, it becomes available for operators and developers to:
 
 <table class="nice">
 	<tr>
@@ -110,7 +114,7 @@ When you are ready to publish your tile, you should write documentation. Documen
 			<ul>
 			<br>
 			<li>See your service in their PCF services marketplace.</li>
-			<li>Select service plans to subscribe to.</li>
+			<li>Select service plans to which they would like to subscribe.</li>
 			<li>Create instances of your service and call them from their apps.</li>
 			<li>Support a continuous and fast development cycle.</li>
 		</ul>
@@ -124,15 +128,15 @@ For information on the release cycle for Partner tiles, see [Partner Software Re
 ## <a id="toolkit"></a> Toolkit
 Before you begin developing your tile, you should install the following tools:
 
-- [Tile Generator](https://docs.pivotal.io/tiledev/2-2/tile-generator.html#-how-to-use) - Used to package to software into a tile. 
+- [Tile Generator](https://docs.pivotal.io/tiledev/2-2/tile-generator.html#-how-to-use): Used to package the software into a tile. 
 
-- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/) - A command line interface for running BOSH commands. You need BOSH commands to run Tile Generator. 
+- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/): A command line interface for running BOSH commands. You need BOSH commands to run Tile Generator. 
 
-- [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads) - A command line interface for deploying and managing apps on Cloud Foundry. You use cf CLI when developing your tile build. 
+- [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads): A command line interface for deploying and managing apps on Cloud Foundry. You use cf CLI when developing your tile build. 
 
-- [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/) - A command line interface for deploying and managing apps on Kubernetes. You use kubectl when developing your tile build.
+- [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/): A command line interface for deploying and managing apps on Kubernetes. You use kubectl when developing your tile build.
 
-- [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional) - A lightweight PCF installation for deploying and debugging apps locally. You can use CF Dev if you want to run PCF on your local workstation.
+- [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional): A lightweight PCF installation for deploying and debugging apps locally. You can use CF Dev if you want to run PCF on your local workstation.
 
 ## <a id="contact"></a> Contact Us
 If you want to learn more about the Pivotal ISV Partner Program or request assistance with your integration project, see [Contact Us](./contacts.html).
