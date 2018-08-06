@@ -1,0 +1,47 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Ensures the inputted string matches a URL of the LDAP protocol',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: true,
+    value_accessor_description: 'Returns a string, or nil',
+    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with LDAP URL',
+          path: 'img/example-ldap-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_ldap_url
+              type: ldap_url
+              configurable: true
+              default: 'ldap://example.com'
+
+          form_types:
+            - name: example_form
+              label: 'Example form'
+              description: 'An example form'
+              property_inputs:
+                - reference: .properties.example_ldap_url
+                  label: Example ldap_url
+                  description: 'Configure a property of type ldap_url'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+            - name: login_banner
+              release: os-conf
+              manifest: |
+                login_banner:
+                  text: Hello, user. I see your favorite LDAP URL is (( .properties.example_ldap_url.value )).
+        METADATA
+      }
+    ]
+} %>
