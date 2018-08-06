@@ -1,0 +1,45 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds a string value',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    additional_property_blueprint_attributes: [],
+    allows_default_to_be_specified: true,
+    value_accessor_description: 'Returns a string or nil',
+    value_present_accessor_description: 'Returns true only if the value of the property is set',
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with CA Certificate',
+          path: 'img/example-ca-certificate-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+          - name: ca_cert
+            type: ca_certificate
+            configurable: true
+
+          form_types:
+          - name: example_form
+            label: 'Example form'
+            description: 'An example form'
+            property_inputs:
+              - reference: .properties.ca_cert
+                label: 'Trusted CA certs'
+                description: 'These certificates will be trusted by the deployed VM'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: ca_certs
+                release: os-conf
+                manifest: |
+                  certs: (( .properties.ca_cert.value ))
+        METADATA
+      }
+    ]
+} %>

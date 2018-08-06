@@ -1,0 +1,47 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds a string which is a hostname, domain name, or IP addresses',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: true,
+    value_accessor_description: 'Returns a string, or nil',
+    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with Network Address',
+          path: 'img/example-network-address-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_network_address
+              type: network_address
+              configurable: true
+              default: 'localhost'
+
+          form_types:
+            - name: example_network_address
+              label: 'Example form'
+              description: 'An example form'
+              property_inputs:
+                - reference: .properties.example_network_address
+                  label: Example Network Address
+                  description: 'Configure a property of type network_address'
+
+          job_types:
+            - name: example-job
+              resource_label: An Example Job
+              <<: *job_type_boilerplate
+              templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: Hello, user. I see your favorite network address is (( .properties.example_network_address.value )).
+        METADATA
+      }
+    ]
+} %>

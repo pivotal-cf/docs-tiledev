@@ -1,0 +1,34 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds a string uuid value',
+    credential: false,
+    auto_generatable: true,
+    operator_configurable: false,
+    allows_default_to_be_specified: false,
+    value_accessor_description: 'Returns a string, or nil',
+    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: nil, # no screenshot because it is not operator configurable, so there is no UI
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_uuid
+              type: uuid
+              configurable: false
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: Hello. Your UUID is (( .properties.example_uuid.value ))
+        METADATA
+      }
+    ]
+} %>
