@@ -1,12 +1,12 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds a string value',
+    description: 'Holds a string value.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     additional_property_blueprint_attributes: [],
     allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns a string or nil',
-    value_present_accessor_description: 'Returns true only if the value of the property is set',
+    value_accessor_description: 'Returns a string or nil.',
+    value_present_accessor_description: 'Returns true only if the value of the property is set.',
     additional_accessors: [],
     examples: [
       {
@@ -28,7 +28,7 @@
             property_inputs:
               - reference: .properties.ca_cert
                 label: 'Trusted CA certs'
-                description: 'These certificates will be trusted by the deployed VM'
+                description: 'These are the deployed VM's trusted certificates'
 
           job_types:
           - name: example-job

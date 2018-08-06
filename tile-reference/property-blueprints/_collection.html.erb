@@ -5,7 +5,7 @@
     operator_configurable: true,
     allows_default_to_be_specified: true,
     additional_default_description: <<~DESC,
-      If specified, the default value must be an array where each item of the array has the keys and values which are appropriate for the property blueprints provided. For the example below, a default value could be:
+      If specified, the default value must be an array where each item of the array has the appropriate keys and values for the property blueprints provided. For the example below, a default value could be:
       <pre><code>default:
         - name: sam
           public_key: ssh-rsa AAAAB3NzaC1yc2EAAAAD...
@@ -13,8 +13,8 @@
       </code></pre>
       DESC
     value_accessor_description: <<~DESC,
-      An array of objects whose keys are the property names specified under <code>property_blueprints</code>,
-      and whose values are the <code>.value</code> for each property. For example, if a collection \"albums\"
+      An array of objects whose keys are the property names specified under <code>property_blueprints</code>, and whose values are the <code>.value</code> for each property. <br/>
+      If a collection \"albums\"
       had properties: title (string) and explicit (boolean), <code>(( albums.value ))</code> would render:
       <pre><code>[\n&nbsp;&nbsp;{title: 'album-one', explicit: true},\n&nbsp;&nbsp;{title: 'album-two', explicit: false}\n]</code></pre>
       DESC
@@ -23,20 +23,15 @@
       {
         name: 'property_blueprints',
         description: <<~DESC,
-          A group of property blueprints that each record will have. Any type and combination
-          of property types can be used except collections and selectors which cannot be nested
-          inside of collections.
+          A group of property blueprints that each record has. You can use any type and combination of property types, except collections and selectors, which cannot be nested inside of collections.
           DESC
       },
       {
         name: 'named_manifests',
         description: <<~DESC,
           An array of objects each containing a <code>name</code> and a <code>manifest</code>.
-          The manifest specifies the YAML which can be used with <code>parsed_manifest(name)</code>
-          where the manifest will be interpolated for each record in the collection.
-          The manifest has a special property level, <code>current_record</code>, which has
-          all the properties in a record of the collection.  The provided example below shows
-          have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
+          The manifest specifies the YAML which can be used with <code>parsed_manifest(name)</code>, where the manifest is interpolated for each record in the collection.
+          The manifest has a special property level named <code>current_record</code>, which has all the properties in a record of the collection. The example below uses <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
           together to render a collection in a BOSH manifest.
           DESC
       }
@@ -45,9 +40,7 @@
       {
         name: 'parsed_manifest(<em>named</em>)',
         description: <<~DESC,
-          An array of interpolated YAML elements (often objects, but could be strings or numbers).
-          Where each element of the array is an interpolation of the <code>named_manifest</code> for
-          each record.
+          An array of interpolated YAML elements (often objects, but could be strings or numbers) where each element of the array is an interpolation of the <code>named_manifest</code> for each record.
         DESC
       }
     ],

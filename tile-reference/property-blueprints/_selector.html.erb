@@ -1,15 +1,8 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
     description: <<~DESCRIPTION,
-      Provides the ability to switch between groups of properties. Shows in the UI as a radio button group,
-      potentially with additional options nested under each radio button.
-
-      Selectors are unique in the way that property information is accessed. Ops Manager provides accessors
-      available at the top-level selector property, accessors for retrieving a specific property in an
-      option group, and the ability to provide manifest snippets for a selector option group.
-
-      Each selector group may provide manifest snippets. This is because Ops Manager does not support
-      conditionally adding manifest snippets. A manifest snippet should be present within all option groups,
-      and can be used to create a simple kind of branching logic in manifest generation.
+      Provides the ability to switch between groups of properties. Shows in the UI as a radio button group, potentially with additional options nested under each radio button.<br/>Selectors access property information in a unique way. Ops Manager provides accessors
+      available at the top-level selector property, accessors for retrieving a specific property in an option group, and the ability to provide manifest snippets for a selector option group.<br/>
+      Each selector group can provide manifest snippets, because Ops Manager does not support conditionally adding manifest snippets. A manifest snippet should be present within all option groups. You can use it to create a simple kind of branching logic in manifest generation.<br/>
       Only one of these sets is evaluated and inserted into the job's manifest.
     DESCRIPTION
     credential: false,
@@ -25,7 +18,7 @@
       {
         name: 'option_templates',
         description: <<~DESC,
-          An array of objects which defines the options available.  See example below.
+          An array of objects which defines the options available.
         DESC
       },
     ],
@@ -34,7 +27,7 @@
         name: 'value',
         description: <<~DESC,
           Returns the <code>select_value</code> string of the currently selected option group.
-          For example, the selector shown in the example below might return "Filet Mignon"
+          The selector shown in the example below might return "Filet Mignon"
           as its value.
           DESC
       },
@@ -42,15 +35,15 @@
         name: 'selected_option.parsed_manifest(manifest_snippet_name)',
         description: <<~DESC,
           Returns a parsed named manifest snippet for the currently selected option.
-          <br/>Example: <code>.properties.example_selector.selected_option.parsed_manifest(my_snippet)</code>
+          <br/>For example, <code>.properties.example_selector.selected_option.parsed_manifest(my_snippet)</code>
           DESC
       },
       {
         name: 'SPECIFIC_SELECTOR_OPTION_GROUP.OPTION_GROUP_PROPERTY.value',
         description: <<~DESC,
-          Scopes the accessor to a specific selector option group.<br>Does not return meaningful information alone.
-          Must be followed with the name and accessor of a specific property in the option group.
-          <br/>Example: <code>.properties.example_selector.filet_mignon_option.review.value</code>
+          Scopes the accessor to a specific selector option group.<br/>
+          This does not return meaningful information alone. You must follow it with the name and accessor of a specific property in the option group.
+          <br/>For example, <code>.properties.example_selector.filet_mignon_option.review.value</code>
           DESC
       }
     ],

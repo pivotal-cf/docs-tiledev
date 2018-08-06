@@ -222,33 +222,6 @@ Outside of properties, you can also retrieve information about various configura
 
 ### <a id='property-blueprints'></a>Property Blueprint Reference
 
-#### string
-
-Holds a single string value.
-
-<!--THE EXAMPLE BELOW SPECIFIES NO SPECIAL CHARACTERS OR NUMBERS. IS THAT TRUE FOR ALL OF THE STRING ACCESSORS? OR IS IT JUST AN EXAMPLE? IF IT'S TRUE FOR ALL STRING ACCESSORS, WE SHOULD UPDATE THE INTRO TEXT ON LINE 178 TO REFLECT THAT.-->
-
-Accessors:
-
-<table class="nice"><tr>
-  <td>value</td>
-  <td>Returns the string value</td>
-  </tr>
-</table>
-
-Product template example:
-
-```
-- name: example_string
-  type: string
-  configurable: true
-  default: 'Hello world'
-  constraints:
-  - must_match_regex: '\A[^!@#$%^&*()]*\z'
-    error_message: 'This name cannot contain special characters.'
-  - must_match_regex: '\A[^0-9]*\z'
-    error_message: 'This name cannot contain digits.'
-```
 
 #### boolean
 

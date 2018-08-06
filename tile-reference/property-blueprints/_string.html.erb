@@ -1,19 +1,18 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds a single string value',
+    description: 'Holds a single string value.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     allows_default_to_be_specified: false,
-    value_accessor_description: 'Returns the string value, or nil',
-    value_present_accessor_description: 'Returns true only if the value is a non-empty string',
+    value_accessor_description: 'Returns the string value, or nil.',
+    value_present_accessor_description: 'Returns true only if the value is a non-empty string.',
     additional_property_blueprint_attributes: [
       {
         name: 'constraints.must_match_regex',
         description: <<~DESC
-          A regular expression that the user input must match. Create a validator that runs on the form save event.
+          A regular expression that the user input must match. This creates a validator that runs on the form save event.
           If the user input does not match the `must_match_regex` constraint, the form displays the specified `error_message`.
-          Multiple `must_match_regex` constraints for a single property blueprint are evaluated in the order listed.
-          See the example below for example on how to use.
+          If there are multiple `must_match_regex` constraints for a single property blueprint, they are evaluated in the order listed.
           DESC
       }
     ],

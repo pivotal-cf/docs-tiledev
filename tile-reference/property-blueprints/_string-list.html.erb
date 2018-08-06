@@ -1,20 +1,20 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds an array of strings',
+    description: 'Holds an array of strings.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     allows_default_to_be_specified: true,
     value_accessor_description: 'Returns a string, or nil',
-    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    value_present_accessor_description: 'Returns true if value is a non-empty string.',
     additional_property_blueprint_attributes: [],
     additional_accessors: [
       {
         name: 'parsed_strings',
-        description: 'Returns an array of strings for each string entry'
+        description: 'Returns an array of strings for each string entry.'
       },
       {
         name: 'parsed_regex',
-        description: 'Returns a string containing a regex of the format <code>^(string1|string2|string3)$</code> where the value of this property is <code>string1,string2,string3</code>'
+        description: 'Returns a string containing a regex formatted <code>^(string1|string2|string3)$</code> where the value of this property is <code>string1,string2,string3</code>.'
       }
     ],
     examples: [

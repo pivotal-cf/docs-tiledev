@@ -1,15 +1,14 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds single string value selected from allowed disk_types',
+    description: 'Holds single string value selected from allowed disk types.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     allows_default_to_be_specified: false,
     value_accessor_description: <<~DESCRIPTION,
-      Returns a string containing the size of the selected disk in megabytes, e.g. "1024".  If nothing or "Automatic" was specified by the operator,
-      then then this returns the smallest disk that is greater than the <code>default</code> value specified in <code>resource_definitions</code>.
-      If no default was specified, then this returns the smallest disk in the catalog.
+      Returns a string containing the size of the selected disk in megabytes, e.g. "1024".  If the operator specified nothing or "Automatic", this returns the smallest disk that is greater than the <code>default</code> value specified in <code>resource_definitions</code>.
+      If no default value exists, this returns the smallest disk in the catalog.
       DESCRIPTION
-    value_present_accessor_description: 'Returns true only if a disk type is selected.  If the user has selected "Automatic", <code>value_present?</code> will be false.',
+    value_present_accessor_description: 'Returns true only if a disk type is selected. If the user has selected "Automatic", <code>value_present?</code> will be false.',
     additional_property_blueprint_attributes: [
       {
         name: 'resource_definitions',
