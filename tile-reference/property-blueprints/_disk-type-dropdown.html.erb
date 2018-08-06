@@ -5,7 +5,7 @@
     operator_configurable: true,
     allows_default_to_be_specified: false,
     value_accessor_description: <<~DESCRIPTION,
-      Returns a string containing the size of the selected disk in megabytes, e.g. "1024".  If the operator specified nothing or "Automatic", this returns the smallest disk that is greater than the <code>default</code> value specified in <code>resource_definitions</code>.
+      Returns a string containing the size of the selected disk in megabytes, such as "1024".  If the operator specified nothing or "Automatic", this returns the smallest disk that is greater than the <code>default</code> value specified in <code>resource_definitions</code>.
       If no default value exists, this returns the smallest disk in the catalog.
       DESCRIPTION
     value_present_accessor_description: 'Returns true only if a disk type is selected. If the user has selected "Automatic", <code>value_present?</code> will be false.',
@@ -13,11 +13,11 @@
       {
         name: 'resource_definitions',
         description: <<~DESCRIPTION,
-          Optional. An array of objects with the same schema as <code>resource_definitions</code> for <code>job_types</code>.
+          Optional. <br/>
+          An array of objects with the same schema as <code>resource_definitions</code> for <code>job_types</code>.
           For <code>disk_type_dropdown</code>, <code>resource_definitions</code> should only have one element with <code>name</code> "persistent_disk".
-          This element can also specify a <code>default</code> which OpsManager uses as a minimum bound when it selects a default value.
+          This element can also specify a <code>default</code>, which OpsManager uses as a minimum bound when it selects a default value.
           It can also specify <code>constraints</code>, which can be any set of constraints that can be specified for an <a href='#integer'>integer property</a>.
-          See example below.
         DESCRIPTION
       }
     ],
