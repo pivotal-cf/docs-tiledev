@@ -23,7 +23,7 @@ Use these endpoints to view variables for any product in Ops Manager, except the
 This endpoint returns the list of variables associated with a product that are stored in CredHub. Not all variables are stored in CredHub. If you call a variable that is not stored in CredHub, the call returns an empty value.
 
 <pre class="terminal">
-$ curl "http<span>s</span>://example.com/api/v0/deployed/products/product-guid/variables" \ 
+$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables" \ 
     -X GET \ 
     -H "Authorization: Bearer EXAMPLE_UAA_ACCESS_TOKEN"
 </pre>
@@ -56,7 +56,7 @@ This endpoint returns a variable's name. Use the name in the next endpoint to re
 This endpoint returns the value of a variable stored in CredHub. Not all variables are stored in CredHub, so if you call a variable that isn't in CredHub, the call will return an empty value.
 
 <pre class="terminal">
-$ curl "http<span>s</span>://example.com/api/v0/deployed/products/product-guid/variables?name=EXAMPLE-VARIABLE-NAME" \ 
+$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables?name=EXAMPLE-VARIABLE-NAME" \ 
     -X GET \ 
     -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
