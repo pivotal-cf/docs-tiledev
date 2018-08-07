@@ -1,0 +1,47 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: 'Holds string with a possible value of plain, login, or cram_md5',
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: true,
+    value_accessor_description: 'Returns a string with possible value of <code>plain</code>, <code>login</code>, <code>cram_md5</code>',
+    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Product with SMTP Authentication',
+          path: 'img/example-smtp-authentication-tile.png'
+        },
+        metadata: <<~METADATA,
+          property_blueprints:
+            - name: example_smtp_authentication
+              type: smtp_authentication
+              configurable: true
+              default: plain
+
+          form_types:
+            - name: example_text
+              label: 'Example form'
+              description: 'An example form'
+              property_inputs:
+                - reference: .properties.example_smtp_authentication
+                  label: Example SMTP Authentication
+                  description: 'Configure a property of type smtp_authentication'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: Hello. The SMTP auth type is (( .properties.example_smtp_authentication.value ))
+        METADATA
+      }
+    ]
+} %>
