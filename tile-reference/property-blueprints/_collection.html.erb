@@ -1,5 +1,5 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds multiple records of a group of custom defined properties.',
+    description: 'This holds multiple records of a group of custom defined properties.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
@@ -18,7 +18,7 @@
       had properties: title (string) and explicit (boolean), <code>(( albums.value ))</code> would render:
       <pre><code>[\n&nbsp;&nbsp;{title: 'album-one', explicit: true},\n&nbsp;&nbsp;{title: 'album-two', explicit: false}\n]</code></pre>
       DESC
-    value_present_accessor_description: nil, # collections do not support `.value_present?`
+    value_present_accessor_description: null, # collections do not support `.value_present?`
     additional_property_blueprint_attributes: [
       {
         name: 'property_blueprints',

@@ -1,11 +1,11 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds a single string value',
+    description: 'This holds a single string value.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     allows_default_to_be_specified: false,
-    value_accessor_description: 'Returns the string value, or nil',
-    value_present_accessor_description: 'Returns true only if the value is a non-empty string',
+    value_accessor_description: 'Returns the string value or null.',
+    value_present_accessor_description: 'Returns true only if the value is a non-empty string.',
     additional_property_blueprint_attributes: [
       {
         name: 'constraints.must_match_regex',

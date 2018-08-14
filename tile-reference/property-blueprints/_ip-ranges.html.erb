@@ -1,11 +1,11 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'Holds a string which is a comma-separated list of IP addresses and IP address ranges',
+    description: 'This holds a string that is a comma-separated list of IP addresses and IP address ranges.',
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns a string containing a comma-separated list of IP ranges and IP addresses, or nil',
-    value_present_accessor_description: 'Returns true if value is a non-empty string',
+    value_accessor_description: 'Returns a string containing a comma-separated list of IP ranges and IP addresses, or null.',
+    value_present_accessor_description: 'Returns true if value is a non-empty string.',
     additional_property_blueprint_attributes: [],
     additional_accessors: [
       {
