@@ -134,10 +134,6 @@ Outside of properties, you can also retrieve information about various configura
 * **$director**: Any product can use this to obtain information about the Director.
 * **$self**: Your own product uses this to obtain information about its configuration.
 
-<!--WE SHOULD HAVE AN EXAMPLE HERE ^^-->
-
-<!--IN ALL CASES OF "PROVIDES" IN THE TABLES BELOW, SHOULD WE BE SAYING "RETURNS?"-->
-
 #### $ops\_manager
 
 <table class="nice"><tr>
@@ -219,6 +215,26 @@ Outside of properties, you can also retrieve information about various configura
   <td>Provides the version of the stemcell your product uses</td>
   </tr>
 </table>
+
+### <a id='complex'></a> Complex Properties: Selectors and Collections
+
+Most properties are simple values such as strings, integers, URL addresses, or IP addresses.
+Others are complex, such as selectors or collections.
+
+* **Selectors**: Give the user a choice of a set of inputs.
+* **Collections**: Give the user the ability to enter an array of values to create a hash.
+
+Selectors appear as follows:
+
+![Selector](img/selector.png)
+
+Collections appear as follows:
+
+![Collection](img/collection.png)
+
+The selector and collections inputs are referenced by their selector and collection property blueprints.
+
+Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selectors and collections can exist alone, or nest within each other or within different parts of the manifest.
 
 ## <a id='property-blueprints'></a>Property Blueprint Reference
 
@@ -340,177 +356,9 @@ routing_certificates:
     certificate: CERTIFICATE
 </pre>
 
-For more information, see the sections below about Selector and Collection types.
+For more information, see the sections on [Selector and Collection types](#complex).
 
-### <a id='using-provided-examples'></a>Using the Examples Provided
-
-You can copy each example into the `metadata.yml` template below and package it together along with the [`os-conf`](https://github.com/cloudfoundry/os-conf-release/releases) release as a `.pivotal` file to make a working tile.
-
-```
----
-name: p-example
-label: Example Tile
-description: An example tile
-product_version: '1.1'
-minimum_version_for_upgrade: '1.0'
-metadata_version: '2.2'
-rank: 1
- stemcell_criteria:
-  os: ubuntu-trusty
-  version: '3586.24'
- releases:
-  - name: os-conf
-    file: os-conf
-    version: '15'
- # a base 64 encoded PNG with a teal square
-icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGGAPwUz8ygAAAAAElFTkSuQmCC
-
- includes: # This top-level key will be ignored by OpsManager.
-  # This anchor is only to make the examples below more terse, and is not required.
-  job_type_boilerplate: &job_type_boilerplate
-    max_in_flight: 1
-    single_az_only: true
-    resource_definitions:
-      - name: ram
-        configurable: true
-        default: 1024
-       - name: ephemeral_disk
-         configurable: true
-         default: 1024
-       - name: persistent_disk
-         configurable: true
-         default: 1024
-         constraints:
-           min: 1024
-       - name: cpu
-         configurable: true
-         default: 1
-     instance_definition:
-      name: instances
-      configurable: true
-      default: 1
-```
-<h3><a id='ca-certificate'></a>ca\_certificate</h3>
-
-<%= partial 'tile-reference/property-blueprints/ca-certificate' %>
-
-<h3><a id='collection'></a>collection</h3>
-
-<%= partial 'tile-reference/property-blueprints/collection' %>
-
-<h3><a id='disk-type-dropdown'></a>disk\_type\_dropdown</h3>
-
-<%= partial 'tile-reference/property-blueprints/disk-type-dropdown' %>
-
-<h3><a id='domain'></a>domain</h3>
-
-<%= partial 'tile-reference/property-blueprints/domain' %>
-
-<h3><a id='dropdown-select'></a>dropdown\_select</h3>
-
-<%= partial 'tile-reference/property-blueprints/dropdown-select' %>
-
-<h3><a id='email'></a>email</h3>
-
-<%= partial 'tile-reference/property-blueprints/email' %>
-
-<h3><a id='http-url'></a>http\_url</h3>
-
-<%= partial 'tile-reference/property-blueprints/http-url' %>
-
-<h3><a id='integer'></a>integer</h3>
-
-<%= partial 'tile-reference/property-blueprints/integer' %>
-
-<h3><a id='ip-address'></a>ip\_address</h3>
-
-<%= partial 'tile-reference/property-blueprints/ip-address' %>
-
-<h3><a id='ip-ranges'></a>ip\_ranges</h3>
-
-<%= partial 'tile-reference/property-blueprints/ip-ranges' %>
-
-<h3><a id='ldap-url'></a>ldap\_url</h3>
-
-<%= partial 'tile-reference/property-blueprints/ldap-url' %>
-
-<h3><a id='multi-select-options'></a>multi\_select\_options</h3>
-
-<%= partial 'tile-reference/property-blueprints/multi-select-options' %>
-
-<h3><a id='network-address'></a>network\_address</h3>
-
-<%= partial 'tile-reference/property-blueprints/network-address' %>
-
-<h3><a id='network-address-list'></a>network\_address\_list</h3>
-
-<%= partial 'tile-reference/property-blueprints/network-address-list' %>
-
-<h3><a id='port'></a>port</h3>
-
-<%= partial 'tile-reference/property-blueprints/port' %>
-
-<h3><a id='rsa-cert-credential'></a>rsa\_cert\_credentials</h3>
-
-<%= partial 'tile-reference/property-blueprints/rsa-cert-credentials' %>
-
-<h3><a id='rsa-pkey-credential'></a>rsa\_pkey\_credentials</h3>
-
-<%= partial 'tile-reference/property-blueprints/rsa-pkey-credentials' %>
-
-<h3><a id='salted-credentials'></a>salted\_credentials</h3>
-
-<%= partial 'tile-reference/property-blueprints/salted-credentials' %>
-
-<h3><a id='secret'></a>secret</h3>
-
-<%= partial 'tile-reference/property-blueprints/secret' %>
-
-<h3><a id='selector'></a>selector</h3>
-
-<%= partial 'tile-reference/property-blueprints/selector' %>
-
-<h3><a id='service-network-az-multi-select'></a>service\_network\_az\_multi\_select</h3>
-
-<%= partial 'tile-reference/property-blueprints/service-network-az-multi-select' %>
-
-<h3><a id='service-network-az-single-select'></a>service\_network\_az\_single\_select</h3>
-
-<%= partial 'tile-reference/property-blueprints/service-network-az-single-select' %>
-
-<h3><a id='simple-credentials'></a>simple\_credentials</h3>
-
-<%= partial 'tile-reference/property-blueprints/simple-credentials' %>
-
-<h3><a id='smtp-authentication'></a>smtp\_authentication</h3>
-
-<%= partial 'tile-reference/property-blueprints/smtp-authentication' %>
-
-<h3><a id='string-list'></a>string\_list</h3>
-
-<%= partial 'tile-reference/property-blueprints/string-list' %>
-
-<h3><a id='string'></a>string</h3>
-
-<%= partial 'tile-reference/property-blueprints/string' %>
-
-<h3><a id='text'></a>text</h3>
-
-<%= partial 'tile-reference/property-blueprints/text' %>
-
-<h3><a id='uuid'></a>uuid</h3>
-
-<%= partial 'tile-reference/property-blueprints/uuid' %>
-
-<h3><a id='vm-type-drowdown'></a>vm\_type\_dropdown</h3>
-
-<%= partial 'tile-reference/property-blueprints/vm-type-dropdown' %>
-
-<h3><a id='wildcard-domain'></a>wildcard\_domain</h3>
-
-<%= partial 'tile-reference/property-blueprints/wildcard-domain' %>
-
-## <a id='top-level'></a> Top Level Properties
+##<a id='top-level'></a> Top Level Properties
 
 The following is an example of the properties that appear at the top of a product template. Definitions of each property follow this example.
 
@@ -525,7 +373,7 @@ The following is an example of the properties that appear at the top of a produc
   rank: 1
   service_broker: false # Default value
   stemcell_criteria:
-    os: ubuntu-trusty
+    os: ubuntu-xenial
     version: &lt;%= stemcell_version.inspect %&gt;
 
     enable_patch_security_updates: true
@@ -645,7 +493,7 @@ Example:
 
  <pre class="code">
  stemcell\_criteria
-  os: ubuntu-trusty
+  os: ubuntu-xenial
   version: &lt;%= stemcell\_version.inspect %>
   enable\_patch\_security\_updates: true
  </pre>
@@ -877,7 +725,7 @@ The example is referenced by the form properties example above. See [Form Proper
     . . .
 
     property_blueprints:
-      - name: property_with_nil_value
+      - name: property_with_null_value
         type: string
       - name: property_with_false_value
         type: boolean
@@ -1039,26 +887,6 @@ The example is referenced by the form properties example above. See [Form Proper
         - name: persistent_disk
           default: 2000
 </pre>
-
-### <a id='complex'></a> Complex Properties
-
-Most properties are simple values such as strings, integers, URL addresses, or IP addresses.
-Others are complex, such as selectors or collections.
-
-* **Selectors**: Give the user a choice of a set of inputs
-* **Collections**: Give the user the ability to enter an array of values to create a hash
-
-Selectors appear as follows:
-
-![Selector](img/selector.png)
-
-Collections appear as follows:
-
-![Collection](img/collection.png)
-
-The selector and collections inputs are referenced by their selector and collection property blueprints.
-
-Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets.
 
 ## <a id='job-types'></a> Job Types
 
@@ -1387,3 +1215,171 @@ Ops Manager generates a BOSH manifest that defines properties for each job the m
 Some of these properties are not set until the user clicks **Apply Changes**, because the user configures them in the tile or because Ops Manager has to generate them.
 
 For more information about these properties, see [Designating Property Values](#property-values).
+
+### <a id='using-provided-examples'></a>Using the Examples Provided
+
+You can copy each example into the `metadata.yml` template below and package it together along with the [`os-conf`](https://github.com/cloudfoundry/os-conf-release/releases) release as a `.pivotal` file to make a working tile.
+
+```
+---
+name: p-example
+label: Example Tile
+description: An example tile
+product_version: '1.1'
+minimum_version_for_upgrade: '1.0'
+metadata_version: '2.2'
+rank: 1
+ stemcell_criteria:
+  os: ubuntu-xenial
+  version: '97.3'
+ releases:
+  - name: os-conf
+    file: os-conf
+    version: '15'
+ # a base 64 encoded PNG with a teal square
+icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGGAPwUz8ygAAAAAElFTkSuQmCC
+
+ includes: # This top-level key will be ignored by OpsManager.
+  # This anchor is only to make the examples below more terse, and is not required.
+  job_type_boilerplate: &job_type_boilerplate
+    max_in_flight: 1
+    single_az_only: true
+    resource_definitions:
+      - name: ram
+        configurable: true
+        default: 1024
+       - name: ephemeral_disk
+         configurable: true
+         default: 1024
+       - name: persistent_disk
+         configurable: true
+         default: 1024
+         constraints:
+           min: 1024
+       - name: cpu
+         configurable: true
+         default: 1
+     instance_definition:
+      name: instances
+      configurable: true
+      default: 1
+```
+<h3><a id='ca-certificate'></a>ca_certificate</h3>
+
+<%= partial 'tile-reference/property-blueprints/ca-certificate' %>
+
+<h3><a id='collection'></a>collection</h3>
+
+<%= partial 'tile-reference/property-blueprints/collection' %>
+
+<h3><a id='disk-type-dropdown'></a>disk_type_dropdown</h3>
+
+<%= partial 'tile-reference/property-blueprints/disk-type-dropdown' %>
+
+<h3><a id='domain'></a>domain</h3>
+
+<%= partial 'tile-reference/property-blueprints/domain' %>
+
+<h3><a id='dropdown-select'></a>dropdown_select</h3>
+
+<%= partial 'tile-reference/property-blueprints/dropdown-select' %>
+
+<h3><a id='email'></a>email</h3>
+
+<%= partial 'tile-reference/property-blueprints/email' %>
+
+<h3><a id='http-url'></a>http_url</h3>
+
+<%= partial 'tile-reference/property-blueprints/http-url' %>
+
+<h3><a id='integer'></a>integer</h3>
+
+<%= partial 'tile-reference/property-blueprints/integer' %>
+
+<h3><a id='ip-address'></a>ip_address</h3>
+
+<%= partial 'tile-reference/property-blueprints/ip-address' %>
+
+<h3><a id='ip-ranges'></a>ip_ranges</h3>
+
+<%= partial 'tile-reference/property-blueprints/ip-ranges' %>
+
+<h3><a id='ldap-url'></a>ldap_url</h3>
+
+<%= partial 'tile-reference/property-blueprints/ldap-url' %>
+
+<h3><a id='multi-select-options'></a>multi_select_options</h3>
+
+<%= partial 'tile-reference/property-blueprints/multi-select-options' %>
+
+<h3><a id='network-address'></a>network_address</h3>
+
+<%= partial 'tile-reference/property-blueprints/network-address' %>
+
+<h3><a id='network-address-list'></a>network_address_list</h3>
+
+<%= partial 'tile-reference/property-blueprints/network-address-list' %>
+
+<h3><a id='port'></a>port</h3>
+
+<%= partial 'tile-reference/property-blueprints/port' %>
+
+<h3><a id='rsa-cert-credential'></a>rsa_cert_credentials</h3>
+
+<%= partial 'tile-reference/property-blueprints/rsa-cert-credentials' %>
+
+<h3><a id='rsa-pkey-credential'></a>rsa_pkey_credentials</h3>
+
+<%= partial 'tile-reference/property-blueprints/rsa-pkey-credentials' %>
+
+<h3><a id='salted-credentials'></a>salted_credentials</h3>
+
+<%= partial 'tile-reference/property-blueprints/salted-credentials' %>
+
+<h3><a id='secret'></a>secret</h3>
+
+<%= partial 'tile-reference/property-blueprints/secret' %>
+
+<h3><a id='selector'></a>selector</h3>
+
+<%= partial 'tile-reference/property-blueprints/selector' %>
+
+<h3><a id='service-network-az-multi-select'></a>service_network_az_multi_select</h3>
+
+<%= partial 'tile-reference/property-blueprints/service-network-az-multi-select' %>
+
+<h3><a id='service-network-az-single-select'></a>service_network_az_single_select</h3>
+
+<%= partial 'tile-reference/property-blueprints/service-network-az-single-select' %>
+
+<h3><a id='simple-credentials'></a>simple_credentials</h3>
+
+<%= partial 'tile-reference/property-blueprints/simple-credentials' %>
+
+<h3><a id='smtp-authentication'></a>smtp_authentication</h3>
+
+<%= partial 'tile-reference/property-blueprints/smtp-authentication' %>
+
+<h3><a id='string-list'></a>string_list</h3>
+
+<%= partial 'tile-reference/property-blueprints/string-list' %>
+
+<h3><a id='string'></a>string</h3>
+
+<%= partial 'tile-reference/property-blueprints/string' %>
+
+<h3><a id='text'></a>text</h3>
+
+<%= partial 'tile-reference/property-blueprints/text' %>
+
+<h3><a id='uuid'></a>uuid</h3>
+
+<%= partial 'tile-reference/property-blueprints/uuid' %>
+
+<h3><a id='vm-type-drowdown'></a>vm_type_dropdown</h3>
+
+<%= partial 'tile-reference/property-blueprints/vm-type-dropdown' %>
+
+<h3><a id='wildcard-domain'></a>wildcard_domain</h3>
+
+<%= partial 'tile-reference/property-blueprints/wildcard-domain' %>
