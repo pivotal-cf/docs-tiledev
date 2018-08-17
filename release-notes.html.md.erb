@@ -35,3 +35,35 @@ bpm is a layer between BOSH and the jobs running on PAS component VMs. It improv
 * **Resource limiting**: bpm includes resource limiting capability. This prevents any one job from using too many operating system resources and impacting collocated jobs. 
 
 For more information about bpm, see the [bpm-release](https://github.com/cloudfoundry-incubator/bpm-release) repository. 
+
+## <a id='cflinuxfs3'></a>Tile Authors Must Manually Migrate Apps to cflinuxfs3
+
+PAS v2.3.0 includes both the cflinuxfs2 and cflinuxfs3 stacks.
+Pivotal recommends pushing all apps using the cflinuxfs3 stack for better performance and compatibility with future versions of PAS.
+
+See the following table for more information about compatibility:
+
+<table>
+  <tr>
+    <th>PAS Versions</th>
+    <th>Recommended Stack</th>
+  </tr>
+  <tr>
+    <td>PAS v2.3 and later</td>
+    <td>cflinuxfs3</td>
+  </tr>
+  <tr>
+    <td>PAS v2.2 and earlier</td>
+    <td>cflinuxfs2</td>
+  </tr>
+</table>
+
+If your tile contains errands that push apps, such as service brokers, you must manually configure the errands to push apps using the cflinuxfs3 stack.
+To maintain compatibility with PAS v2.2, you must also configure the errands to push apps using cflinuxfs2 if the cflinuxfs3 stack is not available.
+
+Errands cannot detect the PAS version.
+Configure the errands in your tile to run `cf stacks` to see which stacks are available, and then push the app using the appropriate stack.
+
+To push an app using cflinuxfs3, run `cf push -s cflinuxfs3 MY-APP`, replacing `MY-APP` with the name of the app.
+
+To push an app using cflinuxfs2, run `cf push MY-APP`, replacing `MY-APP` with the name of the app.

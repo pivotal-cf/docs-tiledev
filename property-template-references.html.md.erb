@@ -78,8 +78,7 @@ For more information about product properties, continue reading [Referencing Pro
 
 Each property is represented by two segments:
 
-* The location of the property. 
-<!-- GIVE AN EXAMPLE --> 
+* The location of the property.  
 * **Accessors**: The information from the property you want to access.
 
 Using these two segments, you can write an expression as: 
@@ -367,6 +366,7 @@ The following is an example of the properties that appear at the top of a produc
   name: example-product
   product_version: &lt;%= version.inspect %>
   minimum_version_for_upgrade: "1.7.0"
+  pivnet_filename_regex: "product-*.pivotal"
   metadata_version: "1.11"
   label: 'Ops Manager: Example Product'
   description: An example product to demonstrate Ops Manager product-author features
@@ -470,6 +470,11 @@ For your product to appear to the right of Ops Manager Director, you must set th
 Pivotal recommends that you set it to 1.
 
 If all tiles have the same rank, Ops Manager sorts them alphabetically.
+
+### <a id='top-pivnet_filename_regex'></a> pivnet_filename_regex
+
+String. Optional.
+This regular expression allows Ops Manager's Pivotal Network integration to pull a specific product file. You must do this when there are multiple products with the same product slug.  
 
 ### <a id='top-service-broker'></a> service_broker
 
