@@ -607,7 +607,7 @@ patterns for specifying images.
 The purpose of this step is to make those references consistent.
 
 Define your marketplace plans in the same directory as `Chart.yaml`. 
-The example below shows only one default plan:
+The example below shows only one default plan (which does not change any values):
 
 ```bash
 cat > plans.yaml
@@ -616,6 +616,22 @@ cat > plans.yaml
   file: "default.yaml"
 mkdir plans
 touch plans/default.yaml
+```
+
+Plans allow the tile developer to create pre-defined sets of meaningful defaults. For example,
+one set of overrides to the default `values.yaml` might represent a HA deployment while another
+might represent small resource allocations for a dev instance. In our
+[mysql example](https://github.com/cf-platform-eng/kibosh-sample/tree/master/sample-charts/mysql),
+we create a `medium.yaml` file that overrides a few settings:
+
+```yaml
+persistence:
+  size: 16Gi
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 110m
 ```
 
 Create the tile in a directory outside the Helm chart. 
