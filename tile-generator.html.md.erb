@@ -542,8 +542,8 @@ Tile Generator provides a convenient way to package your Helm chart and
 the [Kibosh](https://github.com/cf-platform-eng/kibosh) OSBAPI broker into a PCF tile.
 
 When the tile is deployed, your Helm chart service is available in the Marketplace. 
-Developers can then `cf create-service` causing the chart to be Helm installed on a 
-Kubernetes cluster, and developer can `cf bind` the service to their app. 
+Developers can run `cf create-service` causing the chart to be Helm installed on a 
+Kubernetes cluster. Developers can then run `cf bind` to bind the service to their app. 
 
 Use the following format in your `tile.yml`: 
 
@@ -555,8 +555,8 @@ Use the following format in your `tile.yml`:
 By convention the name should match the name of the Helm chart found in `Chart.yaml`. The
 `helm_chart_dir` is the path to the directory that contains `Chart.yaml`. 
 
-Before running `tile build`, some minor modifications 
-might need to be done to your Helm chart. As described in the Configuration section of the 
+Before running `tile build`, you may need to make some minor modifications 
+to your Helm chart. As described in the _Configuration_ section of the 
 [Kibosh Readme](https://github.com/cf-platform-eng/kibosh/blob/master/README.md), you need to do the following: 
 
   - Create a `plans.yaml` file that defines the naming of your service in the Marketplace. 
@@ -574,9 +574,12 @@ might need to be done to your Helm chart. As described in the Configuration sect
 These additions to the Helm chart allow the Kibosh broker and your tile to 
 manage and deploy your Helm chart in a consistent way across the PCF environment. 
 
-Example of building [Apache Spark Helm Chart](https://github.com/kubernetes/charts/tree/master/stable/spark) into a tile: 
 
-First, fetch the chart and the Docker images. To find the Docker images paths examine `values.yml`. 
+##### Example: Apache Spark
+
+This section provides an example of building [Apache Spark Helm Chart](https://github.com/kubernetes/charts/tree/master/stable/spark) into a tile. 
+
+First, fetch the chart and the Docker images. To find the Docker images paths, examine `values.yml`. 
 
 ```bash
 git clone git@github.com:kubernetes/charts.git
@@ -607,7 +610,7 @@ patterns for specifying images.
 The purpose of this step is to make those references consistent.
 
 Define your marketplace plans in the same directory as `Chart.yaml`. 
-The example below shows only one default plan:
+The example below shows only one default plan (which does not change any values):
 
 ```bash
 cat > plans.yaml
@@ -616,6 +619,22 @@ cat > plans.yaml
   file: "default.yaml"
 mkdir plans
 touch plans/default.yaml
+```
+
+Plans allow the tile developer to create pre-defined sets of meaningful defaults. For example,
+one set of overrides to the default `values.yaml` might represent a HA deployment while another
+might represent small resource allocations for a dev instance. In our
+[mysql example](https://github.com/cf-platform-eng/kibosh-sample/tree/master/sample-charts/mysql),
+we create a `medium.yaml` file that overrides a few settings:
+
+```yaml
+persistence:
+  size: 16Gi
+
+resources:
+  requests:
+    memory: 256Mi
+    cpu: 110m
 ```
 
 Create the tile in a directory outside the Helm chart. 
