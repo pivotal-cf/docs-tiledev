@@ -893,6 +893,12 @@ The example is referenced by the form properties example above. See [Form Proper
           default: 2000
 </pre>
 
+### <a id='top-must-match'></a> must\_match\_regex 
+
+Regular Expression. Optional. Create a validator that runs on the form save event.
+If the user input does not match the `must_match_regex` constraint, the form displays the specified `error_message`.
+Multiple `must_match_regex` constraints for a single property blueprint are evaluated in the order listed. 
+
 ## <a id='job-types'></a> Job Types
 
 The following is an example of the `job_types` section that appears in a product template. 
