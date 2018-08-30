@@ -21,36 +21,36 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 The following is an example of the properties that appear at the top of a product template. Following this example are definitions of each property.
 
-```
+<pre class="code">
 ---
-name: example-product
-product_version: &lt;%= version.inspect %>
-minimum_version_for_upgrade: "1.7.0"
-pivnet_filename_regex: "/product-.*\.pivotal$"
-metadata_version: "1.11"
-label: 'Ops Manager: Example Product'
-description: An example product to demonstrate Ops Manager product-author features
-rank: 1
-service_broker: false # Default value
-stemcell_criteria:
-  os: ubuntu-trusty
-  version: &lt;%= stemcell_version.inspect %&gt;
+  name: example-product
+  product_version: &lt;%= version.inspect %>
+  minimum_version_for_upgrade: "1.7.0"
+  pivnet_filename_regex: "product-*.pivotal"
+  metadata_version: "1.11"
+  label: 'Ops Manager: Example Product'
+  description: An example product to demonstrate Ops Manager product-author features
+  rank: 1
+  service_broker: false # Default value
+  stemcell_criteria:
+    os: ubuntu-trusty
+    version: &lt;%= stemcell_version.inspect %&gt;
 
-  enable_patch_security_updates: true
-releases:
-  - name: example-release
-    file: &lt;%= release_file_name.inspect %&gt;
-    version: &lt;%= release_file_name.match(/^example-release-(.*)\.tgz$/)[1].inspect %&gt;
+    enable_patch_security_updates: true
+  releases:
+    - name: example-release
+      file: &lt;%= release_file_name.inspect %&gt;
+      version: &lt;%= release_file_name.match(/^example-release-(.*)\.tgz$/)[1].inspect %&gt;
 
-variables:
-  - name: credhub-password
-    type: password
+  variables:
+    - name: credhub-password
+      type: password
 
-post_deploy_errands:
-  - name: example-errand
-pre_delete_errands:
-  - name: example-errand
-```
+  post_deploy_errands:
+    - name: example-errand
+  pre_delete_errands:
+    - name: example-errand
+</pre>
 
 ### <a id='top-name'></a> name
 
@@ -62,7 +62,7 @@ Changing the name indicates the installation of a completely different product.
 
 String. Required.
 The version of the product. At present you can only import this version into Ops Manager once.
-If you intend to import the same product / version, you must delete the existing one from the /metadata folder and delete the installation files from Ops Manager's disk.
+If you intend to import the same product / version, you must delete the existing one from the `/metadata` folder and delete the installation files from Ops Manager's disk.
 The version number is important for [migrations](./tile-upgrades.html).
 
 ### <a id='top-min-version'></a> minimum\_version\_for\_upgrade
@@ -81,14 +81,14 @@ String. Required. The version of the schema of the product template, the file
 that this documentation describes.
 
 Bumping the version number enables new properties that are not present in an
-older metadata_version but may also require restructuring of the product
+older metadata\_version but may also require restructuring of the product
 template to conform to the new metadata_version.
 
-The metadata_version corresponds to a major and/or minor release of OpsManager.
-OpsManager can accept a product with a metadata_version that is older than the
+The metadata\_version corresponds to a major and/or minor release of OpsManager.
+OpsManager can accept a product with a metadata\_version that is older than the
 OpsManager version, but OpsManager cannot accept a product with a metadata_version
 that is newer than the OpsManager version.  It is therefore best practice to set
-the metadata_version to be the same as the oldest version of OpsManager that
+the metadata\_version to be the same as the oldest version of OpsManager that
 the tile version supports.
 
 ### <a id='top-label'></a> label
@@ -106,12 +106,12 @@ A description of the product. This is not currently used but may be displayed in
 Integer. Required.
 The order in which a product tile appears on the dashboard.
 The Ops Manager Director always appears at rank 100.
-For your product to appear to the right of Ops Manager Director (preferable)i, you must set this value to an integer less than 100.
+For your product to appear to the right of Ops Manager Director (preferable), you must set this value to an integer less than 100.
 Pivotal recommends that you set it to 1.
 Ops Manager sorts tiles alphabetically if all tiles have the same rank.
 This is a known weak point.
 
-### <a id='top-pivnet_filename_regex'></a> pivnet_filename_regex
+### <a id='top-pivnet_filename_regex'></a> pivnet\_filename\_regex
 
 String. Optional.
 This regular expression allows Ops Manager's Pivotal Network integration to pull a specific product file. You must do this when there are multiple products within the same product slug.  
