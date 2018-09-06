@@ -7,11 +7,13 @@ owner: Services
 
 This topic explains how to document your service tile for Pivotal Cloud Foundry (PCF).
 
+
 ## <a id="overview"></a> Overview
 
 When a PCF service tile launches on [Pivotal Network](https://network.pivotal.io), Pivotal publishes corresponding documentation at [https://docs.pivotal.io](https://docs.pivotal.io) under **Partner Services for Pivotal Cloud Foundry**.
 
 This documentation is formatted in [Markdown](https://daringfireball.net/projects/markdown/), stored in a GitHub repository that Pivotal creates, and is published with the [bookbinder](https://github.com/pivotal-cf/bookbinder) platform.
+
 
 ## <a id="template"></a> Partner Documentation Template
 
@@ -21,12 +23,12 @@ Documentation content resides in the `/docs-content` folder of the repository, a
 
 See the repository [README.md](https://github.com/pivotal-cf/docs-partners-template/blob/master/README.md) for how to use the template with bookbinder to develop your documentation.
 
+
 ## <a id="content"></a> Documentation Content
 
 While the specifics of your documentation will vary depending on the product, we have provided a basic blueprint below. At minimum, documentation should include #1 (Overview) and #2 (Installing/Configuring).
 
-For a good example of a partner service document, see the
-[JFrog Artifactory documentation](https://docs.pivotal.io/jfrog/index.html).
+For a good example of a partner service document, see the [JFrog Artifactory documentation](https://docs.pivotal.io/jfrog/index.html).
 
 If you have questions or want to collaborate on drafting the documentation, feel free to hop on our Slack channel #pcf-docs. We’re always happy to help!
 
@@ -40,7 +42,7 @@ Key Features
 - Feature two
 - Feature three
 
-#### Partner Service Broker
+#### <a id='partner-service-broker'></a> Partner Service Broker
 
 A Service Broker allows Cloud Foundry applications to bind to services and consume the services easily from App Manager UI or command line. The Partner Service Broker will enable you to use one or more Partner accounts and is deployed as a Java Application on Cloud Foundry. The Broker exposes the Partner service on the Cloud Foundry Marketplace and allows users to directly create a service instance and bind it to their applications either from the Pivotal Apps Manager Console or from the command line. 
 
@@ -48,7 +50,7 @@ The Pivotal Cloud Foundry (PCF) Tile for Partner installs the Partner Service Br
 
 If a trial license available, customers interested in using Partner can obtain a 60 day free trial license from edit link here.
 
-#### Product Snapshot
+#### <a id='product snapshot'></a> Product Snapshot
 
 Current Partner Tile for Pivotal Cloud Foundry Details:
 
@@ -58,25 +60,23 @@ Current Partner Tile for Pivotal Cloud Foundry Details:
 - Compatible Ops Manager Version(s): 1.5.x, 1.6.x
 - Compatible Elastic Runtime Version(s): 1.4.x, 1.5.x, 1.6.x
 
-#### Requirements
-
-(or Prerequisites, Packaging Dependencies for Offline Buildpacks, etc.)
+#### <a id='requirements'></a> Requirements (or Prerequisites, Packaging Dependencies for Offline Buildpacks, etc.)
 
 Provide any general or specific requirements here. A general requirement might be something like, "An AppDynamics account." A specific requirement might be something like, "Packaging Dependencies for Offline Buildpacks."
 
-#### Limitations
+#### <a id='limitations'></a> Limitations
 
 Any known limitations.
 
-#### Feedback
+#### <a id='feedback'></a> Feedback
 
 Please provide any bugs, feature requests, or questions to the Pivotal Cloud Foundry Feedback list.
 
-### <a id="install"></a> Installing / Configuring the Tile
+### <a id="install"></a> Installing/Configuring the Tile
 
 This topic provides instructions for how to install and configure the tile. Typically this includes procedures for how to download the tile from Pivotal Network, install it on Ops Manager, configure the tile, and do any required third-party configuration. Screenshots should be provided where necessary. Consult the following format:
 
-#### Install Using the Pivotal Ops Manager
+#### <a id='install-with-om'></a> Install Using the Pivotal Ops Manager
  
 - Download the product file from Pivotal Network.
 - Upload the product file to your Ops Manager installation.
@@ -84,43 +84,40 @@ This topic provides instructions for how to install and configure the tile. Typi
 - Click the newly added tile to review any configurable options.
 - Click **Apply Changes** to install the service.
 
-#### Upgrading to the Latest Version
+#### <a id='upgrading'></a> Upgrading to the Latest Version
 
 If there are any specific instructions for upgrading the tile, you can include those here. If the procedures are complicated, create a new Upgrading topic.
 
-#### Configuring the Partner Tile 
+#### <a id='configuring'></a> Configuring the Partner Tile 
 
-(add snapshots for each step when possible or add details as required)
+Add snapshots for each step when possible or add details as required.
 
-- Login into Pivotal Ops Manager 
-- Click **Import a Product** and import the Partner Tile
-- Select the Partner option
-- Click **Add** on the Partner Tile
-- Select the Partner Tile
-- Configure the Partner Tile
+- Log in to Pivotal Ops Manager.
+- Click **Import a Product** and import the Partner Tile.
+- Select the Partner option.
+- Click **Add** on the Partner Tile.
+- Select the Partner Tile.
+- Configure the Partner Tile.
 - Apply your changes.
 
-On completion of Partner Tile install, check Services Marketplace in Apps Manager
+On completion of Partner Tile install, check Services Marketplace in Apps Manager:
 
-- View Partner Service Plans
-- Bind the Partner Service to an Application
-- Check the service or dashboard for the partner for more data…
+- View Partner Service Plans.
+- Bind the Partner Service to an Application.
+- Check the service or dashboard for the partner for more data.
 
-#### Other Configurations / Third-Party Configurations
+#### <a id='other-configs'></a> Other Configurations/Third-Party Configurations
 
 Provide information for specific configurations like configuring for HTTP proxy, or doing any necessary configurations on a third-party service portal.
 
 ### <a id="using"></a> Using the Tile
 
-This topic provides instructions for how to use the tile. Typically this includes 
-procedures for how to perform the different functions offered by the service. Screenshots should be provided where necessary. You can also include information about Architecture here if necessary.
+This topic provides instructions for how to use the tile. Typically this includes procedures for how to perform the different functions offered by the service. Screenshots should be provided where necessary. You can also include information about Architecture here if necessary.
 
 ### <a id="troubleshooting"></a> Troubleshooting
 
-This topic provides troubleshooting information for known errors, following the Symptom/Explanation format used here:
-[https://docs.pivotal.io/p-identity/okta/troubleshooting.html](https://docs.pivotal.io/p-identity/okta/troubleshooting.html)
+This topic provides troubleshooting information for known errors, following the Symptom/Explanation format used here: [https://docs.pivotal.io/p-identity/okta/troubleshooting.html](https://docs.pivotal.io/p-identity/okta/troubleshooting.html)
 
 ### <a id="release-notes"></a> Release Notes
 
-Include the release notes as the final topic, following the format 
-in the [docs-partners-template](https://github.com/pivotal-cf/docs-partners-template/blob/master/docs-content/release-notes.html.md.erb).
+Include the release notes as the final topic, following the format in the [docs-partners-template](https://github.com/pivotal-cf/docs-partners-template/blob/master/docs-content/release-notes.html.md.erb).
