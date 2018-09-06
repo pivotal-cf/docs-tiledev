@@ -7,11 +7,13 @@ owner: Services
 
 This topic explains how to document your service tile for Pivotal Cloud Foundry (PCF).
 
+
 ## <a id="overview"></a> Overview
 
 When a PCF service tile launches on [Pivotal Network](https://network.pivotal.io), Pivotal publishes corresponding documentation at [https://docs.pivotal.io](https://docs.pivotal.io) under **Partner Services for Pivotal Cloud Foundry**.
 
 This documentation is formatted in [Markdown](https://daringfireball.net/projects/markdown/), stored in a GitHub repository that Pivotal creates, and is published with the [bookbinder](https://github.com/pivotal-cf/bookbinder) platform.
+
 
 ## <a id="template"></a> Partner Documentation Template
 
@@ -20,6 +22,7 @@ The [PCF Partner Documentation Template](https://github.com/pivotal-cf/docs-part
 Documentation content resides in the `/docs-content` folder of the repository, as skeleton pages with embedded prompts for content that you should fill in, approximately following the [content descriptions](#content) below.
 
 See the repository [README.md](https://github.com/pivotal-cf/docs-partners-template/blob/master/README.md) for how to use the template with bookbinder to develop your documentation.
+
 
 ## <a id="content"></a> Documentation Content
 
@@ -82,7 +85,7 @@ This topic provides instructions for how to install and configure the tile. Typi
 - Upload the product file to your Ops Manager installation.
 - Click Add next to the uploaded product description in the Ops Manager Available Products view to add this product to your staging area.
 - Click the newly added tile to review any configurable options.
-- Click **Apply Changes** to install the service.
+- Click **Review Pending Changes**, then **Apply Changes** to install the service.
 
 #### Upgrading to the Latest Version
 
@@ -106,7 +109,7 @@ On completion of Partner Tile install, check Services Marketplace in Apps Manage
 - Bind the Partner Service to an Application
 - Check the service or dashboard for the partner for more data…
 
-#### Other Configurations / Third-Party Configurations
+#### Other Configurations/Third-Party Configurations
 
 Provide information for specific configurations like configuring for HTTP proxy, or doing any necessary configurations on a third-party service portal.
 
