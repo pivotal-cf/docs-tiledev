@@ -1,0 +1,32 @@
+---
+title: User-Provided Service
+owner: Services
+---
+
+<strong><%= modified_date %></strong>
+
+This topic explains how to create a user-provided service for PCF.
+
+## <a id="overview"></a>Overview
+
+A PCF developer can call your service from their app code, even if the service runs outside of PCF and has no service broker. Use cases for this include:
+
+* Your software is available as a SaaS.
+
+* You already have a way to install your software on-premises at a customer site. 
+
+* Your customer already uses your software, is now adopting PCF, and wants to consume your software from applications that they deploy on PCF.
+
+This do-it-yourself solution represents the lowest level of PCF service integration. It works only for services running external to PCF, and does not publish the services to the Services Marketplace or make them available to anyone outside the space of the developer who runs these commands. See the [User-Provided Service Instances](http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html) topic for more information.
+
+Running apps with a user-provided service is a great way to determine what information needs to be passed in the credential structure (useful in higher integration levels), verify that the integration works, and develop a test app that can continue to be used at higher levels. From the app developer perspective, once a user-provided service works, later integrations of the service will not require any further code changes. User-provided service bindings are fully forward-compatible with brokered service bindings.
+
+## <a id="using"></a> Using a User-Provided Service
+
+To use an external service that has no tile, they do the following from the the Cloud Foundry Command-Line Interface (cf CLI).
+
+1. Run `cf create-user-provided-service MY-SERVICE-NAME -p CREDENTIALS` (or `cf cups`) to create a service instance. The `CREDENTIALS` argument should be a valid JSON string that contains the URL and credentials necessary to connect to your externally-deployed service.
+
+1. Run `cf bind-service` to bind the service instance to their app.
+
+By doing this, app developers can bind their apps to your service and write all code necessary to access it through a Cloud Foundry service binding.
