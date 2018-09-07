@@ -5,45 +5,89 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-Tile Test Pyramid
+This topic explains recommended testing practices for tile developers. 
+
+## <a id="testing"></a> Tile Testing
+
+Good testing assures tile developers that their product installs and runs properly on diverse platforms
+and assures PCF platform operators that the tile they install can provide its service successfully on their platform.
+
+Pivotal recommends a pyramid structure for testing, starting with unit tests and stepping up to successively broader and more automated levels of integration.
+Pivotal uses and recommends [Concourse](./concourse.html) for creating build pipelines that follow this test structure.
+Other continuous integration tools should also support a pyramid testing approach.
+
+### <a id="pyramid"></a> Tile Test Pyramid
+
 For PCF tiles, a typical test pyramid progresses as follows:
-1. Unit tests for each tile component (e.g. service components, broker, adapter, and metrics emitter), manual by developer and in automated pipeline. 
-2. System tests of the tile’s BOSH release, including:
-    * Functional tests covering the main features of the service. The main features typically interact with almost all important external integration points, so these tests confirm product functionality.
-    * Smoke tests (lifecycle tests) for service instances that create and bind a service instance, call it from a test app, check the logs it generates, and delete it. For a typical end-to-end test sequence, see Smoke Tests below.
-3. System tests of tile operation within Ops Manager.
-    * These include:
-        * Configuration checks that test every external configurable integration point and connection to remote servers using configured credentials
-        * Default checks that confirm “happy path” functionality.
-    * Use the Ops Manager API to verify that property blueprints in the tile metadata are correct and that they translate correctly to the BOSH manifest that Ops Manager generates.
-    * Use the Om tool to call the Ops Manager API programmatically from Go. Avoid the unsupported opsmgr gem that called the Ops Manager API from Ruby.
-    * Confirm manually that the tile wires property blueprints to the expected pane and form controls in the UI.
-Note: System tests might incur costs from using third party services, IaaS resources, etc.
-Smoke Tests
-Smoke tests are end-to-end lifecycle tests for service instances that you can include as post-deploy errands within a tile and also automate in Concourse or other integration platforms.
+
+1. Unit tests for each tile **component** (e.g. service components, broker, adapter, and metrics emitter), manual by developer and in automated pipeline.
+
+1. System tests of the tile's **BOSH release**, including:
+  - **Functional tests** covering the main features of the service.
+      The main features typically interact with almost all important external integration points, so these tests confirm product functionality.
+  - **Smoke tests** (lifecycle tests) for service instances that create and bind a service instance, call it from a test app,
+      check the logs it generates, and delete it.
+      For a typical end-to-end test sequence, see [Smoke Tests](#smoke) below.
+
+1. System tests of **tile** operation within Ops Manager.
+  - These include:
+      * **Configuration checks** that test every external configurable integration point and connection to remote servers using configured credentials
+      * **Default checks** that confirm "happy path" functionality.
+  - Use the Ops Manager API to verify that property blueprints in the tile metadata are correct
+    and that they translate correctly to the BOSH manifest that Ops Manager generates.
+  - Use the [Om](https://github.com/pivotal-cf/om) tool to call the Ops Manager API programmatically from Go.
+    Avoid the unsupported opsmgr gem that called the Ops Manager API from Ruby.
+  - Confirm manually that the tile wires property blueprints to the expected pane and form controls in the UI.
+  - Test your environment using one of the environments described in [Development Environments](./environments.html)
+
+<p class="note"><strong>Note</strong>: System tests might incur costs from using third party services, IaaS resources, etc.</p>
+
+### <a id="smoke"></a> Smoke Tests
+
+Smoke tests are end-to-end lifecycle tests for service instances that you can include as [post-deploy errands](./tile-errands.html#post-deploy)
+within a tile and also automate in [Concourse](./concourse.html) or other integration platforms.
+
 A typical smoke test runs as follows:
-1. Create an org and space for the test to run in. 
-2. Register the tile’s service broker. 
-3. Enable service access for the created org. 
-4. Iterate through all service plans (or a subset of them) to do the following:
-    * Create a service instance for the plan.
-    * Push a test app.
-    * Bind the service instance to the app.
-    * Use the app in a way that exercises the service instance. For a data service, for example, write and read from the service instance.
-    * Unbind the service instance.
-    * Delete the service instance.
-    * Delete the test app.
-5. Delete the service broker. 
-6. Delete the test org and space. 
-General Recommendations
+
+1. Create an org and space for the test to run in.
+
+1. Register the tile's service broker.
+
+1. Enable service access for the created org.
+
+1. Iterate through all service plans (or a subset of them) to do the following:
+  1. Create a service instance for the plan.
+  1. Push a test app.
+  1. Bind the service instance to the app.
+  1. Use the app in a way that exercises the service instance. For a data service, for example, write and read from the service instance.
+  1. Unbind the service instance.
+  1. Delete the service instance.
+  1. Delete the test app.
+
+1. Delete the service broker.
+
+1. Delete the test org and space.
+
+### <a id="general-recs"></a> General Recommendations
+
 The following are general recommendations for designing and running tests on PCF tiles:
-* Clean up after yourself. Leave the environment exactly as it was before the test was run. 
-* Generate verbose logging with lots of contextual data to make troubleshooting easier. 
+
+* Clean up after yourself. Leave the environment exactly as it was before the test was run.
+
+* Generate verbose logging with lots of contextual data to make troubleshooting easier.
+
 * Design test suites for re-usability by making them highly parameterizable. Important parameters include:
-    * External settings such as domains, creds, and certs
-    * Plans to test against. For example, the Redis for PCF smoke tests use identical code for two different service plans, pre-provisioned and on-demand.
-    * Timeouts, numbers of retries, and other things that you need to adjust for different environments
-    * Switches to include or exclude portions of the tests such as generating metrics or backups
-* Re-use tests that exist already, for example in Concourse. 
-* Use an example CF app that uses your service. This app can serve for testing, demoing your tile capabilities, and as a code code example. See the MySQL Test App an example. 
-* When testing manually, using the UI is better than calling the underlying API directly. Use UIs and APIs the way a customer would 
+  - External settings such as domains, creds, and certs
+  - Plans to test against.
+    For example, the [Redis for PCF](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
+    for two different service plans, pre-provisioned and on-demand.
+  - Timeouts, numbers of retries, and other things that you need to adjust for different environments
+  - Switches to include or exclude portions of the tests such as generating metrics or backups
+
+* Re-use tests that exist already, for example in Concourse.
+
+* Use an example CF app that uses your service. This app can serve for testing, demoing your tile capabilities, and as a code code example.
+  See the [MySQL Test App](https://github.com/cloudfoundry-incubator/cf-mysql-acceptance-tests/tree/master/assets/sinatra_app) an example.
+
+* When testing manually, using the UI is better than calling the underlying API directly.
+  Use UIs and APIs the way a customer would.
