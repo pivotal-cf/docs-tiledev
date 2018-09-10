@@ -1226,7 +1226,8 @@ users cannot edit this value and the <strong>Resource Config</strong> page in <s
 The number of default instances for a job, including maximum, minimum, odd, and the ability to decrease sizing after deploy.
 
 If your product uses an external service that performs the same job as a service in Elastic Runtime,
-you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
+you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property. 
+NOTE: If you are using the `zero_if` property, you should not set the `may_only_increase` constraint to true. 
 
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`. 
 
