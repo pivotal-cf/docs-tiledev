@@ -14,14 +14,14 @@ You can modify your tile's product template in many different ways. Two importan
 
 This topic explains these two concepts and gives examples of different configuration options for tiles.
 
-## <a id="product-template"></a>Understanding the Product Template
+## <a id="product-template"></a>Product Template Contents
 
 The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to the following:
 
 * **Metadata**: High level information about your tile
-* **Dependencies**: How to specify product dependencies
-* **Property Blueprints**: The building blocks of representing values
-* **Form Types**: Exposing property blueprints into generated forms
+* **Dependencies**: Your opportunity to specify product dependencies
+* **Property Blueprints**: The templates to represent values
+* **Form Types**: The way to expose property blueprints to generated forms
 * **Jobs**
 
 For the purpose of explanation, examples that refer to the product template use the [PCF example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
@@ -30,20 +30,26 @@ For more information about product template configuration, see [Top Level Proper
 
 To learn how to configure your tile's forms, see [Form Properties](#form-properties).
 
-## <a id='property-values'></a>Designating Property Values
+## <a id='property-values'></a>Modifying the Product Template
+
+You can modify the product template to designate property values. 
 
 Within the product template, there are two sections with `manifest` snippets. These sections are:
 
-* **`form_types`**: This defines the tile interface, or how users of your tile view and interact with different tile features.
-* **`job_types`**: This defines the jobs that the manifest deploys, or what the tile does in response to user input, developer input, or at set intervals. 
+* <strong><code>form_types</code></strong>: This defines the <strong>tile interface</strong>, or how users of your tile view and interact with different tile features.
+* <strong><code>job_types</code></strong>: This defines the <strong>jobs that the manifest deploys</strong>, or what the tile does in response to user input, developer input, or at set intervals. 
 
-You can use special expressions in these snippets to include property values that are otherwise not already known to the tile, such as user provided configurable properties or dynamically generated system properties. These special expressions take two forms:
+You can use special expressions in these snippets to include property values that the tile would otherwise not know about, such as user provided configurable properties or dynamically generated system properties. 
+
+These special expressions take two forms:
 
 ### <a id="double-parens"></a> Double Parentheses Expressions
 
-Double-parentheses expressions, such as `(( PROPERTY-VALUE ))` designate property values that Ops Manager fills in when it generates the deployment manifest, after the user clicks **Apply Changes**. These values include configurable properties and properties supplied by Ops Manager.
+Double-parentheses expressions, such as `(( PROPERTY-VALUE ))` designate property values that Ops Manager fills in when it generates the deployment manifest. This occurs after the user clicks **Apply Changes**. 
 
-To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses:
+These values include configurable properties and properties supplied by Ops Manager.
+
+To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses, as shown in the following example:
 
 ```
     manifest: |
@@ -55,11 +61,7 @@ To include these properties in a manifest snippet, use "double-parens" syntax, w
 
 Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))` designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials are designated in triple parentheses.
 
-When Ops Manager parses a product template and BOSH parses a manifest, they both fill in properties designated by double-parens syntax.
-
-Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by Ops Manager.
-
-To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation:
+To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation, as shown in the following example:
 
 ```
     manifest: |
@@ -68,6 +70,10 @@ To include these BOSH deploy-time properties in a manifest snippet, use "triple-
         password: ((( credhub-password )))
 
 ```
+
+When Ops Manager parses a product template and BOSH parses a manifest, they both fill in properties designated by double-parens syntax.
+
+Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by Ops Manager.
 
 Ops Manager strips the outer parentheses from these expressions and
 includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
@@ -78,8 +84,8 @@ For more information about product properties, continue reading [Referencing Pro
 
 Each property is represented by two segments:
 
-* The location of the property.  
-* **Accessors**: The information from the property you want to access.
+* The **location** of the property.  
+* The information from the property you want to access, commonly known as **accessors**.
 
 Using these two segments, you can write an expression as: 
 
@@ -89,9 +95,16 @@ Using these two segments, you can write an expression as:
 
 #### <a id="property-location"></a>Referencing a Location
 
-The method of referencing the location of the property varies. The following table describes the different methods of referencing a property and includes explanatory text: 
+The method of referencing the location of the property varies. The following table describes the different methods of referencing a property: 
 
-<table class="nice"><tr>
+<table class="nice">
+<th>
+  Method name
+</th>
+<th>
+  Description
+</th>
+<tr>
    <td>.properties.top_level_property</td>
    <td>Refers to the property blueprint called "top_level_property" and found in the global list of properties of the same product
    </tr><tr>
