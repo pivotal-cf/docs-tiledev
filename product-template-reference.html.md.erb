@@ -911,10 +911,13 @@ The number of default instances for a job along with max, min, odd, and the abil
 
 If your product uses an external service that performs the same job as a service in Elastic Runtime,
 you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
-NOTE: If you are using the `zero_if` property, you should not set the `may_only_increase` constraint to true. 
 
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime.
-Set `property reference` to `.properties.system.database` and `property value` to `magic value` to change the instance counts of all MySQL jobs to `0`. 
+Set `property reference` to `.properties.system.database` and `property value` to `magic value` to change the instance counts of all MySQL jobs to `0`.
+
+<p class="note"><strong>NOTE</strong>: If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to true.
+</p>
+
 
 ### <a id='job-manifest'></a> manifest
 
