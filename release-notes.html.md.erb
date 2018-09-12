@@ -24,6 +24,78 @@ Ops Manager v2.3 supports a text area in its UI that tile authors can mark as `s
 
 For more information, see the [Custom Forms and Properties](./tile-generator.html#custom-forms) section of the _Tile Generator_ topic.
 
+## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
+
+Properties in the Pivotal Application Service (PAS) v2.3 tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
+
+The following tables list the properties that Pivotal removed and added in PAS v2.3:
+
+<table id='removed' border="1" class="nice" >
+  <tr>
+    <th>Removed Properties</th>
+  </tr>
+  <tr>
+    <td><code>.properties.enable_grootfs</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.enable_service_discovery_for_apps</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.garden_persistent_image_list_garden</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.garden_persistent_image_list_grootfs</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.rep_preloaded_rootfses_garden</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.rep_preloaded_rootfses_grootfs</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.rep_proxy_enabled</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.routing_backends_client_cert</code></td>
+  </tr>
+</table>
+
+<table id='added' border="1" class="nice" >
+  <tr>
+    <th>Added Properties</th>
+  </tr>
+  <tr>
+    <td><code>.properties.ccdb_connection_validation_timeout</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.ccdb_read_timeout</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.cf_networking_internal_domain</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.cloud_controller_public_tls_cert</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.push_apps_manager_app_poll_interval</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.push_apps_manager_poll_interval</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.route_integrity</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.routing_backends_client_cert_with_san</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.system_blobstore_ccpackage_max_valid_packages_stored</code></td>
+  </tr>
+  <tr>
+    <td><code>.properties.system_blobstore_ccdroplet_max_staged_droplets_stored</code></td>
+  </tr>
+</table>
+
 ## <a id="bpm"></a> Introducing BOSH Process Manager
 
 Starting in v2.3, most PAS components use BOSH Process Manager (bpm).  
