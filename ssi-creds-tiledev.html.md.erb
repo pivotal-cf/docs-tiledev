@@ -94,11 +94,11 @@ You can also use the address from the BOSH link to verify that the CredHub serve
 ```
 properties:
       aliases:
-        (( dig credhub.service.cf.internal @169.256.0.2 )):
+        (( dig credhub.service.cf.internal @169.254.0.2 )):
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-In the example, the runtime CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.256.0.2`. This command uses the PAS BOSH DNS server to do lookup.
+In the example, the runtime CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.254.0.2`. This command uses the PAS BOSH DNS server to do lookup.
 
 ## <a id="step3"></a> Step 3: Provide Operators with the Choice to Use CredHub
 
