@@ -171,6 +171,16 @@ A list of errands that run after a deploy succeeds.
 Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager.
 See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`.
 
+### <a id='top-pre-delete'></a> pre\_delete\_errands
+
+Array of Hashes. Optional.
+A list of errands that run before a deployment is deleted.
+
+Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the
+default for the errand's run rule selector in Ops Manager.
+See [Lifecycle Errands](./tile-errands.html). If this property is not supplied,
+the selector defaults to `On`.
+
 ### <a id='top-icon-image'></a> icon\_image
 
 Base64 Image. Required.
