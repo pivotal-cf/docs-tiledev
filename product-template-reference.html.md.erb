@@ -67,7 +67,7 @@ The version number is important for [migrations](./tile-upgrades.html).
 
 ### <a id='top-min-version'></a> minimum\_version\_for\_upgrade
 
-String. Required. Pivotal requires that you set a minimum version for upgrading to your current product version.
+String. Required. You must set a minimum version for upgrading to your current product version.
 This example shows a current product version of v1.7 that only upgrades from a v1.6.x version of the same product:
 
 <pre>
@@ -114,7 +114,7 @@ This is a known weak point.
 ### <a id='top-pivnet_filename_regex'></a> pivnet\_filename\_regex
 
 String. Optional.
-This regular expression allows Ops Manager's Pivotal Network integration to pull a specific product file. You must do this when there are multiple products within the same product slug.  
+This regular expression allows Ops Manager's Pivotal Network integration to pull a specific product file. You must do this when there are multiple products within the same product slug.
 
 ### <a id='top-service-broker'></a> service_broker
 
@@ -157,7 +157,11 @@ Array of Hashes. Required.
 The list of releases contained in your product's releases directory.
 The version of the release must be exactly the same as the version contained in the release (BOSH releases are versioned and signed by BOSH).
 
-Each release requires the following keys: name, file, version.
+Each release requires the following keys:
+
++ `name`
++ `file`
++ `version`
 
 ### <a id='top-post-deploy'></a> post\_deploy\_errands
 
@@ -168,9 +172,9 @@ Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the d
 See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`.
 
 ### <a id='top-icon-image'></a> icon\_image
-Base64 Image. Required.
 
-This is the icon that will display on the tile in the the Ops Manager Installation Dashboard.
+Base64 Image. Required.
+This is the icon that displays on the tile in the the Ops Manager Installation Dashboard.
 
 ## <a id='form-properties'></a> Form Properties
 
@@ -313,7 +317,7 @@ See the following for a list of available verifiers you can use:
 
 String. Optional. Specify placeholder text for a field.
 The text appears in light gray to show an example value for the user.
-The text disappears when the user types in the field and reappears if the user leaves the field empty.  
+The text disappears when the user types in the field and reappears if the user leaves the field empty.
 
  The `placeholder` attribute displays for the following form types:
 
