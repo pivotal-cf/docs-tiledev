@@ -6,7 +6,8 @@
 
 | Branch name | Use for… |
 |-------------| ------|
-| master      | https://docs-pcf-staging.cfapps.io/tiledev/2-3/ This is the "edge" build. |
+| master      | This is the "edge" build, for v2.4. It will soon publish to https://docs-pcf-staging.cfapps.io/tiledev/2-4/ or https://docs-pcf-staging.cfapps.io/tiledev/2-n/ |
+| 2.3         | v2.3 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-3/ and https://docs.pivotal.io/tiledev/2-3 | 
 | 2.2         | v2.2 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-2/ and https://docs.pivotal.io/tiledev/2-2 | 
 | 2.1         | v2.1 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-1/ and https://docs.pivotal.io/tiledev/2-1 | 
 | 2.0         | v2.0 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-0/ and https://docs.pivotal.io/tiledev/2-0 | 
