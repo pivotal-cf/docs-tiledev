@@ -1,4 +1,4 @@
----
+f---
 title: Logs, Metrics, and Nozzles
 owner: Services
 ---
@@ -29,9 +29,9 @@ Component VMs running PCF services can publish logs and metrics the same way, by
 
 ### <a id="https"></a> Secure HTTPS Protocol: PCF 1.10+
 
-To enable a service component to supply logs and metrics to the Firehose through encrypted communications, you need to include a Metron agent and a Consul agent in its template definitions.
+To enable a service component to supply logs and metrics to the Firehose through encrypted communications, you need to include a Metron agent in its template definitions.
 
-The Metron definition includes double-paren properties defining a keypair for accessing etcd. The Consul definition includes double-paren properties for securely looking up the internal IP addresses of the etcd nodes at `cf-etcd.service.cf.internal`. This avoids hard-coding any etcd server addresses.
+The Metron definition includes double-paren properties defining a keypair for accessing etcd. This avoids hard-coding any etcd server addresses.
 
 For example:
 
@@ -40,8 +40,6 @@ For example:
 name: service
 label: Service
 templates:
-  - name: consul
-    release: consul
   - name: metron_agent
     release: loggregator
   - name: service
@@ -59,16 +57,6 @@ manifest: |
       require_ssl: true
       machines: ['cf-etcd.service.cf.internal']
       ca_cert: (( $ops_manager.ca_certificate ))
-  consul:
-    encrypt_keys:
-    - (( ..cf.properties.consul_encrypt_key.value ))
-    ca_cert: (( $ops_manager.ca_certificate ))
-    agent_cert: (( ..cf.properties.consul_agent_cert.cert_pem ))
-    agent_key: (( ..cf.properties.consul_agent_cert.private_key_pem ))
-    agent:
-      domain: cf.internal
-      servers:
-        lan: (( ..cf.consul_server.ips ))
 ```
 
 Metron versions v72 and later do not use etcd to communicate with Loggregator, but the configuration above works with any version of Metron. If the Metron agent does not need values for etcd, it safely ignores them.
