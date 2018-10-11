@@ -27,6 +27,7 @@ The following is an example of the properties that appear at the top of a produc
   product_version: &lt;%= version.inspect %>
   minimum_version_for_upgrade: "1.7.0"
   metadata_version: "1.11"
+  opsmanager_syslog: true
   label: 'Ops Manager: Example Product'
   description: An example product to demonstrate Ops Manager product-author features
   rank: 1
@@ -81,6 +82,13 @@ String. Required.
 The versioned structure of the product template (the file you are editing).
 Changing the version number can unlock new properties, and also break properties that changed from previous versions.
 The metadata version does not always correlate to Ops Manager version number and depends on what, or if, new metadata properties were introduced.
+
+### <a id='top-opsmanager-syslog'></a> opsmanager_syslog
+
+Boolean. Optional, default `false`.
+Set `opsmanager_syslog` to `true` to opt-in to the OpsManager provided Syslog feature.
+
+- Allows the operator to configure various syslog configurations.
 
 ### <a id='top-label'></a> label
 
