@@ -428,9 +428,9 @@ The version number is important for [migrations](./tile-upgrades.html).
 ### <a id='top-min-version'></a> minimum\_version\_for\_upgrade
 
 * **Format:** String
-* **Type:** Optional
+* **Type:** Required
 
-Pivotal recommends that you set a minimum version for upgrading to your current product version.
+You must set a minimum version for upgrading to your current product version.
 This example shows a current product version of v1.7 that only upgrades from a v1.6.x version of the same product:
 
 ```
@@ -533,6 +533,12 @@ The list of releases contained in your product's releases directory.
 
 The version of the release must be exactly the same as the version contained in the release (BOSH releases are versioned and signed by BOSH).
 
+Each release requires the following keys:
+
+  + `name`
+  + `file`
+  + `version`
+
 ### <a id='top-post-deploy'></a> post\_deploy\_errands
 
 * **Format:** Array of hashes
@@ -554,6 +560,11 @@ A list of errands that run before a deployment is deleted.
 Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager. If you do not specify this property, the selector defaults to `On`. 
 
 For more information, see [Lifecycle Errands](./tile-errands.html). 
+
+### <a id='top-icon-image'></a> icon\_image
+* **Format:** Base64 Image 
+* **Type:** Required
+This is the icon that displays on the tile in the the Ops Manager Installation Dashboard.
 
 ## <a id='form-properties'></a> Form Properties
 
