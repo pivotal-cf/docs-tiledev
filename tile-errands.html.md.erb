@@ -16,7 +16,7 @@ Colocated errands can run alongside other jobs or errands on existing VMs in an 
 Products can have two kinds of errands. [Post-deploy errands](#post-deploy) run after a product installs but before Ops Manager displays makes it available for use.
 [Pre-delete errands](#pre-delete) run after an operator chooses to delete a product, but before Ops Manager finishes removing it from use.
 
-To save deployment time, operators can set [errand run rules](#run-rules) that dictate whether or not errands run. Tile authors can [set defaults](./product-template-reference.html#top-level) for these run rules.
+To save deployment time, operators can set [errand run rules](#run-rules) that dictate whether or not errands run. Tile authors can [set defaults](./property-template-references.html#top-level) for these run rules.
 
 ## <a id="colocated"></a>Define a Colocated Errand
 
@@ -197,4 +197,3 @@ Some errands do not always need to run. For example, installing a minor patch to
 * **Persistent Rules** in the tile's **Errands** pane. These rules persist through subsequent installations, until changed in the **Errands** pane.
 
 For more information, see [Configure Run Rules in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html#modify).
-

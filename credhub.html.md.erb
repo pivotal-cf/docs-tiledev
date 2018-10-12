@@ -63,7 +63,7 @@ For more information, read <a href="./get-credhub-vars.html" class="subnav">Fetc
 ## <a id="snippets"></a> CredHub in Manifest Snippets
 
 Tile developers can embed CredHub in product template and job template manifest snippets using
-[triple-parenthesis notation](./product-template-reference.html#job-manifest):
+[triple-parenthesis notation](./property-template-references.html#job-manifest):
 
 ```
   manifest: |
@@ -78,7 +78,7 @@ PCF v1.11.0 supports CredHub for credential storage, but it does not support the
 
 * Automatic backup and restore for CredHub, along with other PCF system components.
 
-* Automatic tile [upgrades](./tile-upgrades.html) that migrate all types of credentials defined in [property blueprints](./property-reference.html#property-blueprints) in previous tile versions, to storage in CredHub.
+* Automatic tile [upgrades](./tile-upgrades.html) that migrate all types of credentials defined in [property blueprints](./property-template-references.html#property-blueprints) in previous tile versions, to storage in CredHub.
 
 * Using CredHub to generate new credentials.
 
@@ -91,4 +91,3 @@ The following are some helpful resources:
 * A blog post covering [CredHub basics](https://content.pivotal.io/blog/enterprise-architects-its-time-to-learn-how-the-credhub-service-broker-applies-the-principle-of-least-privilege-to-your-secrets)
 * The [CredHub repository](https://github.com/cloudfoundry-incubator/credhub) 
 * A recent CF Summit talk: [CredHub and Secure Credential Management](https://www.youtube.com/watch?v=6Hqq5avmwig)
-

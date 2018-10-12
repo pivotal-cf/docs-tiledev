@@ -49,7 +49,7 @@ exports.migrate = function(input) {
 
 ```
 
-The properties object passed to your anonymous JavaScript migration functions are composed of properties at the [job-level](./product-template-reference.html#job-types) and [product-level](./product-template-reference.html#property-blueprints). Review the property names in the example metadata file in [Tutorial Tile V3](https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v3) for more information about job-level and product-level properties. The tile author must update migrations to match the corresponding product metadata file.
+The properties object passed to your anonymous JavaScript migration functions are composed of properties at the [job-level](./property-template-references.html#job-types) and [product-level](./property-template-references.html#property-blueprints). Review the property names in the example metadata file in [Tutorial Tile V3](https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v3) for more information about job-level and product-level properties. The tile author must update migrations to match the corresponding product metadata file.
 
 Each property's key in the properties object is its property reference from the metadata file. Property references use one of the following forms:
 
@@ -251,5 +251,3 @@ In this scenario, the customer starts with nothing installed. They perform a cle
 In this scenario, the customer performs a clean install of 1.7.1, with no previous versions of the product installed. Since migrations are only triggered by upgrade events, no migrations run.
 
 <p class="note"><strong>Note</strong>: Do not omit a migration from a later version of your tile.  This breaks the “chaining” nature of migrations.  Using the example above, if you release a 1.7.1 tile without the <code>201606010000_a.js</code> migration, the system could not detect that <code>201606010000_b.js</code> is the same migration that was present in the clean install in Scenario C.</p> 
-
-

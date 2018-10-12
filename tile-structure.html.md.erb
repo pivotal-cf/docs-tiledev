@@ -61,9 +61,9 @@ A left-side menu lists all configuration panes and indicates with check marks wh
 
 ![Form Layout](img/form-layout.png)
 
-Each form, or configuration pane, has `label` for the menu text, a `description` to appear up top, and `property_inputs` that define the configuration fields themselves. Construct your `forms` by following the [Product Template Reference](./product-template-reference.html) topic and the [Property Blueprint Reference](./property-reference.html#property-ref) section of the About PCF Tiles topic.
+Each form, or configuration pane, has `label` for the menu text, a `description` to appear up top, and `property_inputs` that define the configuration fields themselves. Construct your `forms` by following the [Property and Template References(./property-template-references.html) topic.
 
-For each property, you can combine specifications for `name`, `type`, `default`, `configurable`, `options`, and `constraints`, under both the [Form Properties](./product-template-reference.html#form-properties) and [Property Blueprints](./product-template-reference.html#property-blueprints) sections of the topic.
+For each property, you can combine specifications for `name`, `type`, `default`, `configurable`, `options`, and `constraints`, under both the [Form Properties](./property-template-references.html#form-properties) and [Property Blueprints](./property-template-references.html#property-blueprints) sections of the topic.
 
 <p class="note"><strong>Note</strong>: In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding field value types and constraints.</p>
 
@@ -73,7 +73,7 @@ In the Ops Manager Installation Dashboard, your service tile bears an identifyin
 
 ### <a id='fixed'></a> Fixed Properties
 
-A tile also writes fixed, unconfigurable properties into the BOSH manifest that it creates. You specify these properties in your `tile.yml` configuration file using [Double-Paren Expressions](./property-reference.html#expressions) format.
+A tile also writes fixed, unconfigurable properties into the BOSH manifest that it creates. You specify these properties in your `tile.yml` configuration file using [Double-Paren Expressions](./property-template-references.html#expressions) format.
 
 #### <a id='credentials'></a> Credentials
 
@@ -215,4 +215,3 @@ Where packaged processes run depends on their package type, as follows:
 The service tile's **Resource Config** pane lets the operator configure resources individually for each package. This pane also lets operators provision resources for VMs that handle one-time tasks, with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
 
 ![Service Tile Resource Config](img/service-resource-config.png)
-
