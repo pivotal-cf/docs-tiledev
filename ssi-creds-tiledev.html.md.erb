@@ -125,7 +125,7 @@ property_blueprints:
         named_manifests:
           - name: consumes_section_credhub_disabled
             manifest: |
-              credhub: {}
+              credhub: nil
           - name: consumes_section_credhub_enabled
             manifest: |
               credhub: {from: credhub, deployment: "(( ..cf.deployment_name ))"}
@@ -197,5 +197,3 @@ To enable your service broker to store binding credentials in runtime CredHub an
     ```
 
 <p class="note"><strong>Note:</strong> Java Virtual Machine (JVM) apps can use <a href="https://projects.spring.io/spring-credhub">Spring CredHub</a> to access the CredHub API.</p>
-
-
