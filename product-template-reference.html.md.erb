@@ -138,6 +138,11 @@ Each release requires the following keys:
 + `file`
 + `version`
 
+### <a id='top-variables'></a> variables
+Array of Hashes. Optional. A list of variables that are generated after a deploy succeeds, such as credentials. These can be referenced in a manifest snippet using the triple-parentheses expressions.
+
+Each variable requires a `name` and a `type`.
+
 ### <a id='top-post-deploy'></a> post\_deploy\_errands
 
 Array of Hashes. Optional.
