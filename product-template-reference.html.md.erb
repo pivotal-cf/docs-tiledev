@@ -163,6 +163,14 @@ Each release requires the following keys:
 + `file`
 + `version`
 
+### <a id='top-variables'></a> variables
+
+Array of Hashes. Optional.
+A list of variables, that are generated after a deploy succeeds.
+You can reference variables in a manifest snippet using triple-parentheses expressions.
+
+Each variable requires a `name` and a `type`.
+
 ### <a id='top-post-deploy'></a> post\_deploy\_errands
 
 Array of Hashes. Optional.
@@ -365,7 +373,6 @@ Collections appear as follows:
 ## <a id='property-blueprints'></a> Property Blueprints
 
 The following is an example of the `property_blueprints` that appear in a product template.
-
 The example is referenced by the form properties example above. See [Form Properties](#form-properties).
 
 ```
@@ -865,4 +872,3 @@ Ops Manager strips the outer parentheses from these expressions and
 includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
 
 For more detailed documentation about using double parenthesis and dollar variables, see [Property Reference](property-reference.html).
-
