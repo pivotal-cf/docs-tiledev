@@ -10,7 +10,7 @@ owner: Ops Manager
 
 A tile's `metadata` subdirectory contains a product template file in `.yml` format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into its deployment manifest.
 
-You can modify your tile's product template in many different ways. Two important concepts to understand are what the product template contains and how to modify it to include different properties. 
+You can modify your tile's product template in many different ways. Two important concepts to understand are what the product template contains and how to modify it to include different properties.
 
 This topic explains these two concepts and gives examples of different configuration options for tiles.
 
@@ -26,26 +26,26 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 For the purpose of explanation, examples that refer to the product template use the [PCF example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
 
-For more information about product template configuration, see [Top Level Properties](#top-level). 
+For more information about product template configuration, see [Top Level Properties](#top-level).
 
 To learn how to configure your tile's forms, see [Form Properties](#form-properties).
 
 ## <a id='property-values'></a>Modifying the Product Template
 
-You can modify the product template to designate property values. 
+You can modify the product template to designate property values.
 
 Within the product template, there are two sections with `manifest` snippets. These sections are:
 
 * <strong><code>form_types</code></strong>: This defines the <strong>tile interface</strong>, or how users of your tile view and interact with different tile features.
-* <strong><code>job_types</code></strong>: This defines the <strong>jobs that the manifest deploys</strong>, or what the tile does in response to user input, developer input, or at set intervals. 
+* <strong><code>job_types</code></strong>: This defines the <strong>jobs that the manifest deploys</strong>, or what the tile does in response to user input, developer input, or at set intervals.
 
-You can use special expressions in these snippets to include property values that the tile would otherwise not know about, such as user provided configurable properties or dynamically generated system properties. 
+You can use special expressions in these snippets to include property values that the tile would otherwise not know about, such as user provided configurable properties or dynamically generated system properties.
 
 These special expressions take two forms:
 
 ### <a id="double-parens"></a> Double Parentheses Expressions
 
-Double-parentheses expressions, such as `(( PROPERTY-VALUE ))` designate property values that Ops Manager fills in when it generates the deployment manifest. This occurs after the user clicks **Apply Changes**. 
+Double-parentheses expressions, such as `(( PROPERTY-VALUE ))` designate property values that Ops Manager fills in when it generates the deployment manifest. This occurs after the user clicks **Apply Changes**.
 
 These values include configurable properties and properties supplied by Ops Manager.
 
@@ -84,10 +84,10 @@ For more information about product properties, continue reading [Referencing Pro
 
 Each property is represented by two segments:
 
-* The **location** of the property.  
+* The **location** of the property.
 * The information from the property you want to access, commonly known as **accessors**.
 
-Using these two segments, you can write an expression as: 
+Using these two segments, you can write an expression as:
 
 ````
 (( LOCATION_OF_PROPERTY.ACCESSOR ))
@@ -95,7 +95,7 @@ Using these two segments, you can write an expression as:
 
 #### <a id="property-location"></a>Referencing a Location
 
-The method of referencing the location of the property varies. The following table describes the different methods of referencing a property: 
+The method of referencing the location of the property varies. The following table describes the different methods of referencing a property:
 
 <table class="nice">
 <th>
@@ -269,7 +269,7 @@ All property blueprints can have the following attributes:
       type
     </td>
     <td>
-      Required.<br/> 
+      Required.<br/>
       The type of property. Must be one of the property types listed in this documentation.
     </td>
   </tr>
@@ -277,7 +277,7 @@ All property blueprints can have the following attributes:
     <td>
       optional
     </td>
-    <td>Optional.<br/> 
+    <td>Optional.<br/>
     Default: False <br/>
     When set to true, Ops Manager will not require this property to be set in order to deploy, nor will it validate that this field has a value when saving a form with this property.<br/>
     <code>optional</code> cannot be set to true if a <code>default</code> value is set (see documentation below for which types support <code>default</code>).<br/>
@@ -289,7 +289,7 @@ All property blueprints can have the following attributes:
       configurable
     </td>
     <td>
-      Optional.<br/> 
+      Optional.<br/>
       Default: false.<br/>
       When set to true for property types which support operator configuration, the operator will be allowed to configure this value.<br/>
       Do not set <code>configurable: true</code> for property types which do not support operator configuration.<br/>
@@ -302,8 +302,8 @@ All property blueprints can have the following attributes:
       freeze_on_deploy
     </td>
     <td>
-      Optional.<br/> 
-      Default: false.<br/>  
+      Optional.<br/>
+      Default: false.<br/>
       When set to true, Ops Manager will not allow this property to be changed after the product this property belongs to is successfully deployed.
     </td>
   </td>
@@ -311,7 +311,7 @@ All property blueprints can have the following attributes:
 
 ### <a id='configurable-and-auto-generated'></a>Configurable and Auto-Generated Properties
 
-When a property has `configurable: true` and is added to a `form_type`, the operator can configure the value of that property. 
+When a property has `configurable: true` and is added to a `form_type`, the operator can configure the value of that property.
 
 Alternatively, a property with `configurable: false` will have a value auto-generated by Ops Manager. See below for which property types support each of these usages.
 
@@ -420,7 +420,7 @@ Changing the name indicates the installation of a completely different product.
 * **Format:** String
 * **Type:** Required
 
-The version of the product. 
+The version of the product.
 
 You can only import this version into Ops Manager once. If you want to import the same product or version, you must delete the existing one from the `/metadata` folder and delete the installation files from Ops Manager's disk.
 
@@ -470,7 +470,7 @@ The label that appears in the product tile when it displays in the Ops Manager D
 * **Format:** String
 * **Type:** Optional
 
-A description of the product. 
+A description of the product.
 
 ### <a id='top-rank'></a> rank
 
@@ -487,10 +487,10 @@ If all tiles have the same rank, Ops Manager sorts them alphabetically.
 
 ### <a id='top-pivnet_filename_regex'></a> pivnet_filename_regex
 
-* **Format:** String 
-* **Type:** Optional 
+* **Format:** String
+* **Type:** Optional
 
-This regular expression allows Ops Manager's Pivotal Network integration to pull a specific product file. You must do this when there are multiple products with the same product slug.  
+This regular expression allows Ops Manager's Pivotal Network integration to pull a specific product file. You must do this when there are multiple products with the same product slug.
 
 ### <a id='top-service-broker'></a> service_broker
 
@@ -506,9 +506,9 @@ Set `service_broker` to `true` for on-demand service brokers. Setting `service_b
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
 
 * **Format:** Hash
-* **Type:** Required 
+* **Type:** Required
 
-`enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell. This is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators may experience longer than expected upgrade times. 
+`enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell. This is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators may experience longer than expected upgrade times.
 
 Example:
 
@@ -519,7 +519,7 @@ Example:
   enable\_patch\_security\_updates: true
  </pre>
 
-Pivotal recommends setting this property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates. 
+Pivotal recommends setting this property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates.
 
 You do not specify which IaaS the Stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
 
@@ -530,7 +530,7 @@ For more information, see [Understanding Floating Stemcells](http://docs.pivotal
 ### <a id='top-release'></a> releases
 
 * **Format:** Array of hashes
-* **Type:** Required 
+* **Type:** Required
 
 The list of releases contained in your product's releases directory.
 
@@ -542,10 +542,24 @@ Each release requires the following keys:
   + `file`
   + `version`
 
+### <a id='top-variables'></a> variables
+
+* **Format:** Array of hashes
+* **Type:** Optional
+
+A list of variables, that are generated after a deploy succeeds.
+
+You can reference variables in a manifest snippet using triple-parentheses expressions.
+
+Each release requires the following keys:
+
+  + `name`
+  + `type`
+
 ### <a id='top-post-deploy'></a> post\_deploy\_errands
 
 * **Format:** Array of hashes
-* **Type:** Optional 
+* **Type:** Optional
 
 A list of errands that run after a deploy succeeds.
 
@@ -556,17 +570,17 @@ See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, 
 ### <a id='top-pre-delete'></a> pre\_delete\_errands
 
 * **Format:** Array of hashes
-* **Type:** Optional 
+* **Type:** Optional
 
 A list of errands that run before a deployment is deleted.
 
-Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager. If you do not specify this property, the selector defaults to `On`. 
+Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Ops Manager. If you do not specify this property, the selector defaults to `On`.
 
-For more information, see [Lifecycle Errands](./tile-errands.html). 
+For more information, see [Lifecycle Errands](./tile-errands.html).
 
 ### <a id='top-icon-image'></a> icon\_image
-* **Format:** Base64 Image 
-* **Type:** Required 
+* **Format:** Base64 Image
+* **Type:** Required
 
 This is the icon that displays on the tile in the Ops Manager Installation Dashboard.
 
@@ -682,13 +696,13 @@ The label of the form as it appears as a link on the left hand side of each form
 ### <a id='form-description'></a> description
 
 * **Format:** String
-* **Type:** Optional 
+* **Type:** Optional
 
 The description of the form. Appears at the top of the form as a header.
 
 ### <a id='form-markdown'></a> markdown
 
-* **Format:** Markdown 
+* **Format:** Markdown
 * **Type:** Optional
 
 Provide a block of markdown to display at the top of the form, including image support.
@@ -696,7 +710,7 @@ Use this property to document the tile and provide explanations or references.
 
 ### <a id='form-property-inputs'></a> property_inputs
 
-* **Format:** Array of hashes 
+* **Format:** Array of hashes
 * **Type:** Required
 
 References to properties defined in the [property_blueprints](#property-blueprints) section of the product template.
@@ -723,10 +737,10 @@ Here is a list of verifiers you can use:
 
 ### <a id='form-placeholder'></a> placeholder
 
-* **Format:** String 
+* **Format:** String
 * **Type:** Optional
 
-Specify placeholder text for a field. The text appears in light gray to show an example value for the user. The text disappears when the user types in the field and reappears if the user leaves the field empty.  
+Specify placeholder text for a field. The text appears in light gray to show an example value for the user. The text disappears when the user types in the field and reappears if the user leaves the field empty.
 
  The `placeholder` attribute displays for the following form types:
 
@@ -920,21 +934,21 @@ The example is referenced by the form properties example above. See [Form Proper
           default: 2000
 </pre>
 
-### <a id='top-must-match'></a> must\_match\_regex 
+### <a id='top-must-match'></a> must\_match\_regex
 
 Regular Expression. Optional. Create a validator that runs on the form save event.
 If the user input does not match the `must_match_regex` constraint, the form displays the specified `error_message`.
-Multiple `must_match_regex` constraints for a single property blueprint are evaluated in the order listed. 
+Multiple `must_match_regex` constraints for a single property blueprint are evaluated in the order listed.
 
 ## <a id='job-types'></a> Job Types
 
-The following is an example of the `job_types` section that appears in a product template. 
+The following is an example of the `job_types` section that appears in a product template.
 
 This section defines the jobs that end up in a BOSH manifest. Those jobs are defined in your BOSH release.
 
 Jobs require many different settings in order to function properly. That is the core of what Ops Manager does for you: Ops Manager asks a user to designate values for those settings and generates a manifest based on what the user specifies.
 
-Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest. 
+Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
 <p class="note"><strong>Note: </strong> Starting in PCF v2.1, Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys.</p>
 
@@ -1203,7 +1217,7 @@ The name of the BOSH release contained in your product archive, which is the `.p
 
 You can give users control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
 
-To limit a job to a single AZ, set `single_az_only` to `true`. 
+To limit a job to a single AZ, set `single_az_only` to `true`.
 
 <p class="note warning"><strong>WARNING</strong>: If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.</p>
 
@@ -1239,7 +1253,7 @@ The resources you can set are:
 The number of default instances for a job, including maximum, minimum, odd, and the ability to decrease sizing after deploy.
 
 If your product uses an external service that performs the same job as a service in Elastic Runtime,
-you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property. 
+you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
 
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
 
