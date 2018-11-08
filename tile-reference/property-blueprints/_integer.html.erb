@@ -8,7 +8,38 @@
     value_present_accessor_description: 'Returns true if value is an integer.',
     additional_property_blueprint_attributes: [
         name: 'constraints',
-        description: 'Constrains which integer values are considered valid. See example below for all supported constraint types.'
+        description: 'Constrains which integer values are considered valid. See the below table for all supported constraint types.'
+    ],
+    constraints: [
+      {
+        name: 'max',
+        description: 'Sets the maximum value of the integer.'
+      },
+      {
+        name: 'may_only_be_odd_or_zero',
+        description: 'Sets the integer to only allow odd or zero values.'
+      },
+      {
+        name: 'may_only_increase',
+        description: 'Sets the integer to only increase in value.'
+      },
+      {
+        name: 'min',
+        description: 'Sets the minimum value of the integer.'
+      },
+  
+      {
+        name: 'modulo',
+        description: 'Sets the integer to only be divisable by the given value.'
+      },
+      {
+        name: 'power_of_two',
+        description: 'Sets the integer to only be a power of two.'
+      },
+      {
+        name: 'zero_or_min',
+        description: 'Sets the minimum value of the integer but allows zero.'
+      }
     ],
     additional_accessors: [],
     examples: [
