@@ -42,6 +42,19 @@
   <% end %>
 </table>
 
+<% if constraints.present? %>
+#### Supported Constraints
+
+<table class="nice">
+  <% constraints.each do |constraint| %>
+    <tr>
+      <td> <%= constraint[:name] %> </td>
+      <td> <%= constraint[:description] %> </td>
+    </tr>
+  <% end %>
+</table>
+<% end %>
+
 <% end %>
 
 #### Accessors
