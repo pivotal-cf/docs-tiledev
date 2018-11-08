@@ -1259,6 +1259,8 @@ you can reduce resource usage by setting the instance count of a job to `0` with
 
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
 
+For examples of supported constraint types, see [integer](#integer) below.
+
 <p class="note"><strong>Note</strong>: If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to true.
 </p>
 
