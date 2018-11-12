@@ -382,6 +382,7 @@ The following is an example of the properties that appear at the top of a produc
   minimum_version_for_upgrade: "1.7.0"
   pivnet_filename_regex: "product-*.pivotal"
   metadata_version: "1.11"
+  opsmanager_syslog: true
   label: 'Ops Manager: Example Product'
   description: An example product to demonstrate Ops Manager product-author features
   rank: 1
@@ -457,6 +458,16 @@ Ops Manager version, but Ops Manager cannot accept a product with a `metadata_ve
 that is newer than the Ops Manager version.  It is therefore best practice to set
 the `metadata_version` to be the same as the oldest version of Ops Manager that
 the tile version supports.
+
+### <a id='top-opsmanager-syslog'></a> opsmanager_syslog
+
+* **Format:** Boolean
+* **Type:** Optional, default `false`
+
+Set `opsmanager_syslog` to `true` to opt-in to the Ops Manager-provided syslog feature.
+If you opt-in, you do not need provide the syslog release for your tile.
+For general information about syslog release,
+see [Syslog BOSH Release](https://github.com/cloudfoundry/syslog-release ) in GitHub.
 
 ### <a id='top-label'></a> label
 
