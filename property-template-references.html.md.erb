@@ -375,7 +375,7 @@ For more information, see the sections on [Selector and Collection types](#compl
 
 The following is an example of the properties that appear at the top of a product template. Definitions of each property follow this example.
 
-<pre class="code">
+<pre>
   ---
   name: example-product
   product_version: &lt;%= version.inspect %>
@@ -453,7 +453,7 @@ older `metadata_version` but may also require restructuring of the product
 template to conform to the new `metadata_version`.
 
 The `metadata_version` corresponds to a major and/or minor release of Ops Manager.
-Ops Manager can accept a product with a metadata_version that is older than the
+Ops Manager can accept a product with a `metadata_version` that is older than the
 Ops Manager version, but Ops Manager cannot accept a product with a `metadata_version`
 that is newer than the Ops Manager version.  It is therefore best practice to set
 the `metadata_version` to be the same as the oldest version of Ops Manager that
@@ -464,10 +464,11 @@ the tile version supports.
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `opsmanager_syslog` to `true` to opt-in to the Ops Manager-provided syslog feature.
-If you opt-in, you do not need provide the syslog release for your tile.
-For general information about syslog release,
-see [Syslog BOSH Release](https://github.com/cloudfoundry/syslog-release ) in GitHub.
+Set `opsmanager_syslog` to `true` to opt in to the Ops Manager provided syslog feature.
+If you opt in, you do not need provide the syslog BOSH release for your tile.
+For more information about the syslog BOSH release,
+see the [syslog release](https://github.com/cloudfoundry/syslog-release) GitHub
+repository.
 
 ### <a id='top-label'></a> label
 
@@ -523,7 +524,7 @@ Set `service_broker` to `true` for on-demand service brokers. Setting `service_b
 
 Example:
 
- <pre class="code">
+ <pre>
  stemcell\_criteria
   os: ubuntu-xenial
   version: &lt;%= stemcell\_version.inspect %>
@@ -604,7 +605,7 @@ Form properties reference `property_blueprints`. Property blueprints define each
 
 The following is an example of the properties that appear in the `form_types` section of a product template:
 
-  ```
+```
 form_types:
   - name: example-form
     label: Configurable Properties
@@ -688,7 +689,7 @@ form_types:
       - name: Verifiers::StaticIpsVerifier
         properties:
           domain: .web_server.example_ip_address
-  ```
+```
 
 ### <a id='form-name'></a> name
 
@@ -1306,7 +1307,7 @@ rank: 1
     file: os-conf
     version: '15'
  # a base 64 encoded PNG with a teal square
-icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGGAPwUz8ygAAAAAElFTkSuQmCC
+ icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGGAPwUz8ygAAAAAElFTkSuQmCC
 
  includes: # This top-level key will be ignored by OpsManager.
   # This anchor is only to make the examples below more terse, and is not required.
@@ -1334,9 +1335,9 @@ icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGG
       default: 1
 ```
 
-<!-- _property-blueprint.html.md.erb creates the template tables, code snippets, and images for each 
-of the following property blueprints and adds the specfic content for each partial. Changes to the overall structure for  all property blueprints require editing _property-blueprint.html.md.erb. 
-If you need to edit specific content edit the corresponding partial following the 
+<!-- _property-blueprint.html.md.erb creates the template tables, code snippets, and images for each
+of the following property blueprints and adds the specfic content for each partial. Changes to the overall structure for  all property blueprints require editing _property-blueprint.html.md.erb.
+If you need to edit specific content edit the corresponding partial following the
 format in the file. -->
 
 <h3><a id='ca-certificate'></a>ca_certificate</h3>
