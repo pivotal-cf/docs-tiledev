@@ -9,13 +9,16 @@ This document defines the separate pieces of a product template.
 For the purpose of explanation we use the [PCF example tile](https://github.com/pivotal-cf-experimental/ops-manager-example),
 a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
 
-The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to the following:
+The product template, a `.yml` file in the tile's `metadata` subdirectory,
+includes or points to the following:
 
 * Metadata: high level information about your tile
 * Dependencies: how to specify product dependencies
 * Property Blueprints: the building blocks of representing values
 * Form Types: exposing property blueprints into generated forms
-* Jobs
+* Job Types: configuration properties for jobs defined in the BOSH release
+* Runtime Configs: specifes the manifest for any number of global deployment
+configurations
 
 ## <a id='top-level'></a> Top Level Properties
 
@@ -37,6 +40,11 @@ The following is an example of the properties that appear at the top of a produc
     version: &lt;%= stemcell_version.inspect %&gt;
 
     enable_patch_security_updates: true
+
+  requires_product_versions:
+    - name: p-mysql
+      version: '~> 2.4'
+
   releases:
     - name: example-release
       file: &lt;%= release_file_name.inspect %&gt;
@@ -50,6 +58,22 @@ The following is an example of the properties that appear at the top of a produc
     - name: example-errand
   pre_delete_errands:
     - name: example-errand
+
+  runtime_configs:
+    - name: example-runtime-config
+    runtime_config: |
+      releases:
+      - name: os-conf
+        version: 15
+      addons:
+      - name: login
+        jobs:
+        - name: login-banner
+          release: os-conf
+        properties:
+          login_banner:
+            text: |
+              (( .properties.example_string.value )).
 </pre>
 
 ### <a id='top-name'></a> name
@@ -151,6 +175,12 @@ This feature increases security by automatically using the latest patched versio
 However, operators may experience longer than expected upgrade times.
 For more information, see [Understanding Floating Stemcells](http://docs.pivotal.io/pivotalcf/customizing/understanding-stemcells.html).
 
+### <a id='top-requires'></a> requires\_product\_versions
+
+Array of Hashes. Required. A list of product dependencies. If the required product
+is not present in the PCF installation, Ops Manager lists the needed dependencies
+and does not install your tile until the dependencies are satisfied.
+
 ### <a id='top-release'></a> releases
 
 Array of Hashes. Required.
@@ -183,18 +213,29 @@ See [Lifecycle Errands](./tile-errands.html). If this property is not supplied, 
 
 Array of Hashes. Optional.
 A list of errands that run before a deployment is deleted.
-
 Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the
 default for the errand's run rule selector in Ops Manager.
 See [Lifecycle Errands](./tile-errands.html). If this property is not supplied,
 the selector defaults to `On`.
+
+### <a id='top-runtime-configs'></a> runtime\_configs
+
+Array of Hashes. Optional. Keys that defines global deployment configurations.
+For more information, see [Managing Runtime Configs](./runtime-config.html).
 
 ### <a id='top-icon-image'></a> icon\_image
 
 Base64 Image. Required.
 This is the icon that displays on the tile in the Ops Manager Installation Dashboard.
 
-## <a id='form-properties'></a> Form Properties
+### <a id="top-bas-url"></a> base\_releases\_url
+
+String. Optional. A publicly available URL that is passed to BOSH in order to
+download your releases during installation. If you use this field, BOSH Director
+must have internet connectivity. This allows you to package your tile without
+releases, decreasing the tile size.
+
+## <a id='form-properties'></a> Form Types
 
 Each form type you write is composed of form properties. Form properties represent the outline to the form fields that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
 
