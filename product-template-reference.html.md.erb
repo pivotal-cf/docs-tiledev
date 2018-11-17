@@ -228,6 +228,37 @@ For more information, see [Managing Runtime Configs](./runtime-config.html).
 Base64 Image. Required.
 This is the icon that displays on the tile in the Ops Manager Installation Dashboard.
 
+### <a id='top-verifier'></a> install\_time\_verifiers
+
+* **Format:** Array of hashes
+* **Type:** Optional
+
+Verifiers are configurable settings that contact things outside the tile.
+For example, given an IP, a verifier can ping the IP to see that it responds.
+
+Verifiers are separate from validators, which check whether a string is
+formatted properly.
+
+Each verifier requires the following keys:
+
++ `name`
++ `properties`
++ `ignorable` - set to `false` by default
+
+<!-- For an example of a validator, see [ must\_match\_regex](#top-must-match). -->
+
+<!-- add properties to the verfiers below -->
+
+Here is a list of verifiers you can use:
+
+- `BlobstoreVerifier`
+- `LDAPBindVerifier`
+- `MysqlDatabaseVerifier`
+- `SmtpAuthenticationVerifier`
+- `SsoUrlVerifier`
+- `StaticIpsVerifier`
+- `WildcardDomainVerifier`
+
 ### <a id="top-bas-url"></a> base\_releases\_url
 
 String. Optional. A publicly available URL that is passed to BOSH in order to
