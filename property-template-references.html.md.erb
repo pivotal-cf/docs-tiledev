@@ -294,6 +294,7 @@ The following is an example of the properties that appear at the top of a produc
   minimum_version_for_upgrade: "1.7.0"
   pivnet_filename_regex: "product-*.pivotal"
   metadata_version: "1.11"
+  opsmanager_syslog: true
   label: 'Ops Manager: Example Product'
   description: An example product to demonstrate Ops Manager product-author features
   rank: 1
@@ -580,10 +581,12 @@ releases, decreasing the tile size.
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `opsmanager_syslog` to true to inject a template Syslog form in Ops Manager and BOSH Director. For more information on the Syslog form, see [Settings Page](https://docs-pcf-staging.cfapps.io/pivotalcf/2-4/customizing/pcf-interface.html#settings) in the Pivotal Cloud Foundry documentation.
-
-<!-- Is it also in BOSH Director? Is this an okay link? Do they need more information? Is the default
-to false correct --> 
+Set `opsmanager_syslog` to `true` to opt in to the Ops Manager provided syslog form.
+If you opt in, you do not need provide the Syslog BOSH release for your tile.
+For more information about the Syslog BOSH release,
+see the [syslog release](https://github.com/cloudfoundry/syslog-release) GitHub
+repository. For more information about the Ops Manager provided syslog form, see 
+[Syslog Form Template Available for Tile Authors](https://docs.pivotal.io/pivotalcf/2-4/pcf-release-notes/opsmanager-rn.html#syslog).
 
 ## <a id='form-properties'></a> Form Properties
 
