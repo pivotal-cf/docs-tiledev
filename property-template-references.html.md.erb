@@ -580,7 +580,7 @@ releases, decreasing the tile size.
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `opsmanager_syslog` to true to inject a template Syslog form in Ops Manager and BOSH Director. For more information on the Syslog form, see [Settings Page](./pcf-interface.html#settings).
+Set `opsmanager_syslog` to true to inject a template Syslog form in Ops Manager and BOSH Director. For more information on the Syslog form, see [Settings Page](https://docs-pcf-staging.cfapps.io/pivotalcf/2-4/customizing/pcf-interface.html#settings).
 
 <!-- Is it also in BOSH Director? Is this an okay link? Do they need more information? Is the default
 correct -->
@@ -709,7 +709,7 @@ The description of the form. Appears at the top of the form as a header.
 Provide a block of markdown to display at the top of the form, including image support.
 Use this property to document the tile and provide explanations or references.
 
-### <a id='form-property-inputs'></a> property_inputs
+### <a id='form-property-inputs'></a> property\_inputs
 
 * **Format:** Array of hashes
 * **Type:** Required
@@ -1050,7 +1050,7 @@ To limit a job to a single AZ, set `single_az_only` to `true`.
 
 A BOSH setting that controls the number of instances of this job that BOSH will deploy in parallel.
 
-### <a id='job-resource-def'></a> resource_definitions
+### <a id='job-resource-def'></a> resource\_definitions
 
 * **Format:** Array of hashes
 * **Type:** Required
@@ -1069,7 +1069,7 @@ For examples of supported constraint types, see [integer](#integer) below.
 
 <p class="note"><strong>Note</strong>: If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> page in <strong>Ops Manager</strong> displays <strong>None</strong> under the persistent disk field.</p>
 
-### <a id='job-instance-def'></a> instance_definition
+### <a id='job-instance-def'></a> instance\_definition
 
 * **Format:** Hash
 * **Type:** Required
