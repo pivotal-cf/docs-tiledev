@@ -1,62 +1,30 @@
 ---
-title: PCF v2.3 Partners Release Notice
+title: PCF v2.4 Partners Release Notice
 owner: Technical Program Management
 ---
 
 <strong><%= modified_date %></strong>
 
-This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.3 introduces which may be relevant to partner service tiles.
+This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.4 introduces
+which might be relevant to partner service tiles.
 
-## <a id="om-credhub"></a> Ops Manager Credentials Stored in CredHub
+## <a id="topic1"></a> New Feature 1
 
-Ops Manager sends credentials entered by the operator to BOSH CredHub. This change keeps Ops Manager credentials out of the tile manifest. In previous versions of Ops Manager, tile manifests may have indicated credentials with the asterisk character. For example, `****`. Now Ops Manager credentials are indicated in the manifest by a double-parens CredHub link beginning with `/opsmgr/`.
-
-Ops Manager sends new credentials to BOSH CredHub each time the operator clicks **Apply Changes**. When the operator deletes a tile, Ops Manager also removes its credentials from CredHub.
-
-This feature offers greater security for credentials. For more information about where your credentials are stored, see [BOSH CredHub](https://docs.pivotal.io/pivotalcf/credhub/index.html#bosh).
-
-<p class="note"><strong>Note:</strong> Only operators can make changes to Ops Manager credentials through the Ops Manager UI or API. Any change you attempt to the tile manifest or CredHub is overriden by Ops Manager on the next deploy.</p>
-
-
-## <a id='secret-text-field'></a> Secret Text Areas
-
-Ops Manager v2.3 supports a text area in its UI that tile authors can mark as `secret`. When a text area is marked as `secret`, the UI shows an `*` when the page is saved, and the API does not return the value entered in this field.
-
-For more information, see the [Custom Forms and Properties](./tile-generator.html#custom-forms) section of the _Tile Generator_ topic.
+Some text and a link to more info.
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
-Properties in the Pivotal Application Service (PAS) v2.3 tile have changed. Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
+Properties in the Pivotal Application Service (PAS) v2.3 tile have changed.
+Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access PAS property values.
 
-The following tables list the properties that Pivotal removed and added in PAS v2.3:
+The following tables list the properties that Pivotal removed and added in PAS v2.4:
 
 <table id='removed' border="1" class="nice" >
   <tr>
     <th>Removed Properties</th>
   </tr>
   <tr>
-    <td><code>.properties.enable_grootfs</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.enable_service_discovery_for_apps</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.garden_persistent_image_list_garden</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.garden_persistent_image_list_grootfs</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.rep_preloaded_rootfses_garden</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.rep_preloaded_rootfses_grootfs</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.rep_proxy_enabled</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.routing_backends_client_cert</code></td>
+    <td><code>.properties.xxxxxxxxxx</code></td>
   </tr>
 </table>
 
@@ -65,111 +33,7 @@ The following tables list the properties that Pivotal removed and added in PAS v
     <th>Added Properties</th>
   </tr>
   <tr>
-    <td><code>.properties.ccdb_connection_validation_timeout</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.ccdb_read_timeout</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.cf_networking_internal_domain</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.cloud_controller_public_tls_cert</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.push_apps_manager_app_poll_interval</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.push_apps_manager_poll_interval</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.route_integrity</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.routing_backends_client_cert_with_san</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.system_blobstore_ccpackage_max_valid_packages_stored</code></td>
-  </tr>
-  <tr>
-    <td><code>.properties.system_blobstore_ccdroplet_max_staged_droplets_stored</code></td>
+    <td><code>.properties.xxxxxxxx</code></td>
   </tr>
 </table>
 
-## <a id="bpm"></a> Introducing BOSH Process Manager
-
-Starting in v2.3, most PAS components use BOSH Process Manager (bpm).
-
-bpm is a layer between BOSH and the jobs running on PAS component VMs. It improves the way processes run on VMs by providing the following:
-
-* **A well-defined lifecycle**: The introduction of bpm removes a dependency on `monit`. `monit` cannot guarantee job and process start order, and has hidden timeouts that can put a system in an unexpected state. In contrast, bpm clearly defines how it communicates with a process, as well as job length and behavior.
-* **Isolation**: bpm isolates collocated jobs from each other. With the exception of networking, bpm namespaces system resources so a job cannot view or interact with the processes of another job. This provides a security barrier such that if a job on a VM is compromised, the incident is limited to just that job rather than all jobs on the same machine.
-* **Resource limiting**: bpm includes resource limiting capability. This prevents any one job from using too many operating system resources and impacting collocated jobs.
-
-For more information about bpm, see the [bpm-release](https://github.com/cloudfoundry-incubator/bpm-release) repository.
-
-## <a id='cflinuxfs3'></a>Tile Authors Must Manually Migrate Apps to cflinuxfs3
-
-PAS v2.3.0 includes both the cflinuxfs2 and cflinuxfs3 stacks.
-Pivotal recommends pushing all apps using the cflinuxfs3 stack for better performance and compatibility with future versions of PAS.
-
-See the following table for more information about compatibility:
-
-<table>
-  <tr>
-    <th>PAS Versions</th>
-    <th>Recommended Stack</th>
-  </tr>
-  <tr>
-    <td>PAS v2.3 and later</td>
-    <td>cflinuxfs3</td>
-  </tr>
-  <tr>
-    <td>PAS v2.2 and earlier</td>
-    <td>cflinuxfs2</td>
-  </tr>
-</table>
-
-If your tile contains errands that push apps, such as service brokers, you must manually configure the errands to push apps using the cflinuxfs3 stack.
-To maintain compatibility with PAS v2.2, you must also configure the errands to push apps using cflinuxfs2 if the cflinuxfs3 stack is not available.
-
-Errands cannot detect the PAS version.
-Configure the errands in your tile to run `cf stacks` to see which stacks are available, and then push the app using the appropriate stack.
-
-To push an app using cflinuxfs3, run `cf push -s cflinuxfs3 MY-APP`, replacing `MY-APP` with the name of the app.
-
-To push an app using cflinuxfs2, run `cf push MY-APP`, replacing `MY-APP` with the name of the app.
-
-## <a id='remove-consul-agent'></a>Tile Authors Must Remove consul_agent
-
-
-Tile developers can remove consul agents from their tiles in preparation
-for customer upgrades to PCF v2.5. 
-
-When your customers upgrade to PCF v2.5, if you have not removed consul agents
-from your tile, their deployments fail. This is because the consul
-client expects the consul server to be present until their links are updated.
-This can cause extra error logging and unhealthy instances.
-
-Take the following actions according to which PCF versions your tile supports:
-
-+ If your tile only supports PCF v2.2 and earlier, do not remove consul agents. 
-
-+ If your tile only supports PCF v2.3 or later, you must remove consul agents
-completely from your tile. 
-
-+ If your tile supports multiple versions, including PCF v2.2 (where consul
-agents cannot be removed) and PCF v2.3 (where consul agents must be removed)
-make the following changes to any `job_type` that is colocated with
-`consul_agent`:
-
-    ```
-    - name: consul_agent
-        release: consul
-        ...
-        manifest: |
-          ...
-          consul:
-            client:
-              enabled: "(( $ops_manager.dns_enabled ? false : true ))"
-    ```
