@@ -8,9 +8,90 @@ owner: Technical Program Management
 This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.4 introduces
 which might be relevant to partner service tiles.
 
-## <a id="topic1"></a> New Feature 1
+## <a id='credhub-2.0'></a> Ops Manager Uses CredHub v2.0
 
-Some text and a link to more info.
+BOSH CredHub, the instance that manages credentials on the Ops Manager VM, now
+uses CredHub v2.0. For more information about where your credentials are
+stored, see [BOSH CredHub](http://docs.pivotal.io/pivotalcf/credhub/index.html#bosh).
+
+CredHub v2.0 includes bug fixes, improved security, and new options for
+managing credential permissions. These updates are not directly visible to PCF
+operators, but CredHub v2.0 introduces breaking changes for tile and service
+authors. For more information, see [Credhub 2.0 Backwards­ Incompatible API and Manifest Changes](#breaking-credhub) below.
+
+## <a id="syslog"></a> Syslog Form Template Available for Tile Authors
+
+Tile authors can insert a templatized Syslog form into their tiles by editing `metadata.yml`. The pane that the form creates is identical to the Syslog pane in Ops Manager and the BOSH Director tile. The form template is an opportunity to make tile users' experience more consistent and secure. 
+
+For more information about modifying `metadata.yml`, see [Property Template References](https://docs.pivotal.io/tiledev/2-4/property-template-references.html).
+
+## <a id="cflinuxfs3"></a> PAS Uses cflinuxfs3 by Default
+
+PAS v2.4 uses the `cflinuxfs3` stack and related buildpacks by default on new installs. Buildpacks have the same name but use a different stack.
+
+You can switch between `cflinuxfs2` and `cflinuxfs3` using the cf CLI (Cloud Foundry Command Line Interface). For more information, see [Changing Stacks](https://docs.pivotal.io/pivotalcf/2-4/devguide/deploy-apps/stacks.html).
+
+You can also set your default stack in the **Cloud Controller** pane of the PAS tile. For more information, see [Cloud Controller](https://docs.pivotal.io/pivotalcf/2-4/customizing/pas-config.html#config-cc).
+
+The `cflinuxfs3` stack was introduced in PAS v2.3. For more information, see [cflinuxfs3 Stack and Compatible Buildpacks](https://docs.pivotal.io/pivotalcf/2-3/pcf-release-notes/runtime-rn.html#cflinuxfs3) in the PAS v2.3 release notes.
+
+For information about breaking changes caused by cflinuxfs3, see [Tile Authors Must Manually Migrate Apps to cflinuxfs3](#breaking-cflinuxfs3) below. 
+
+
+## <a id="consul-server-removed"></a> Consul Server VMs Are Removed from PAS
+
+Consul Server VMs are now removed from PAS, saving VM resources and reducing maintenance around managing a clustered component. For more information about breaking changes caused by consul server removal, see 
+[Tile Authors Must Remove consul_agent](#breaking-consul)
+
+## <a id="metrics-prefix"></a> Uniquely Identify Metrics by Tile
+
+As the value for `deployment`, metrics use `cf-GUID`, which corresponds to the BOSH deployment name of your PAS tile. With a GUID, you can uniquely identify your metrics by tile. In PAS v2.3 and earlier, metrics have a `deployment` value of `cf`.
+
+This feature is enabled by default in new deployments of PAS v2.4, but disabled by default for PAS deployments upgrading to PAS v2.4.
+
+<p class="breaking note"><strong>Breaking Change:</strong> If you have scripts that rely on <code>cf</code> as the value for <code>deployment</code>, your scripts may break. For more information, see <a href="https://docs.pivotal.io/pivotalcf/2-4/pcf-release-notes/breaking-changes.html#metrics-prefix">Changed Deployment Value for PAS Metrics</a>.</p>
+
+## <a id="human-friendly-metric-tags"></a> See Human-Friendly Metadata for Metrics
+
+PAS now tags metrics with additional metadata to help operators better parse the metrics coming from their different deployments. These metadata tags also enable downstream monitoring products, such as PCF Healthwatch, to easily display human-readable names.
+
+The tags are as follows:
+
+* `product`: The value of this tag is always `Pivotal Application Service` for the PAS tile. The tags for other products are `PCF Isolation Segment`, `PCF Small Footprint`, `Pivotal Application Service for Windows 2012R2`, and `Pivotal Application Service for Windows`.
+
+* `system_domain`: The value of this tag corresponds to what you set in the **System Domain** field in the **Domains** tab of the PAS tile.
+
+* `placement_tag`: The value of this tag is always `null` for PAS. However, for PAS for Windows and PCF Isolation Segment tiles, you can configure this value using the **Segment Name** field in the **Application Containers** pane.
+
+Previously, you could not easily know the deployment that a metric from an Isolation Segment was emitted from. Now, an operator can display capacity and other relevant metrics using the `placement_tag` name. This makes it easier to reason the importance of a given segment when issues arise.
+
+These tags are properties of the [metron](https://docs.pivotal.io/pivotalcf/2-4/loggregator/architecture.html#metron) agent running on each VM in a deployment.
+
+## <a id="log-api"></a> Loggregator v2 API Is Readable through RLP Gateway
+
+As a nozzle developer, you can access the Loggregator v2 API through a Reverse Log Proxy (RLP) gateway. The RLP gateway provides an HTTP API to access the RLP. With the RLP gateway, you do not need to manage mutual TLS to access the Loggregator v2 API.
+
+By default, the  RLP communicates with clients using gRPC over mutual TLS. To enable HTTP access instead, use the RLP Gateway. For more information about the RLP Gateway, see [Reverse Log Proxy (RLP) Gateway](https://github.com/cloudfoundry/loggregator/blob/master/docs/rlp_gateway.md) in the Loggregator GitHub repository.
+
+For more information about the Loggregator API, see [loggregator-api](https://github.com/cloudfoundry/loggregator-api) in GitHub.
+
+## <a id="metric-registrar"></a> Emit Custom App Metrics to the Metric Registrar
+
+PAS v2.4 includes a new component: the Metric Registrar. The Metric Registrar allows app developers to export custom app metrics and events in a format that Loggregator can consume. App developers can then use the custom metrics to monitor apps with PCF Metrics and configure autoscaling rules with PCF Autoscaler.
+
+For more information, see the following topics:
+
+* [Configuring the Metric Registrar](http://docs.pivotal.io/pivotalcf/2-4/metric-registrar/index.html)
+* [Registering Custom App Metrics](http://docs.pivotal.io/pivotalcf/2-4/metric-registrar/using.html)
+
+## <a id="dynamic-egress"></a> Create Dynamic Egress Policies (Beta)
+
+PAS v2.4 includes a beta feature that allows you to create dynamic egress policies so your apps can communicate with external services. These policies are similar to Application Security Groups (ASGs) but include the following advantages:
+
+* You do not have to restart your apps when applying these policies, so there is no downtime.
+* The policies include an additional level of granularity: you can apply them to specific apps.
+
+For more information, see [Administering Dynamic Egress Policies (Beta)](https://docs.pivotal.io/pivotalcf/2-4/devguide/egress-policies.html).
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
@@ -76,3 +157,114 @@ The following tables list the properties that Pivotal removed and added in PAS v
   </tr>
 </table>
 
+## <a id="breaking-changes"></a> Breaking Changes
+
+### <a id="breaking-credhub"></a> Credhub 2.0 Backwards­ Incompatible API and Manifest Changes
+
+Credhub 2.0 has the following backwards­ incompatible API and manifest changes:
+
++ Authorization model changes: Identities will no longer be able to write to CredHub solely by virtue
+of authenticating. Instead, an explicit access control entry will need to be created, granting an identity
+read, write, delete, read_acl, and/or write_acl permissions to an identity, for a given namespace.
++ `set` and `generate` changes: CredHub is simplifying the rules that determine when `set` or
+`generate` requests will do nothing or overwrite existing values.
++ Minor manifest changes: The structure of our properties hash is changing slightly.
++ Authorization on by default: The default value of `credhub.authorization.acls.enabled` is changing
+from false to true
+
+For tiles that are already consuming CredHub 1.9.x, there will not be any breaking changes. If you use
+CredHub, please perform regression testing with PAS for Credhub 2.0. We can give you access to an
+environment with an alpha PAS release with the new credhub verison.
+
+Customers who do a fresh install of PAS will be impacted, and will need to apply new permissions when
+bootstrapping. The Credhub 2.0 upgrade does not affect customers who upgrade PAS.
+
+### <a id='breaking-cflinuxfs3'></a>Tile Authors Must Manually Migrate Apps to cflinuxfs3
+
+In PAS v2.4, cflinuxfs3 will be the default stack. 
+The stack property on an app is sticky. 
+Stack properties do not change automatically unless apps are explicitly repushed with cflinuxfs3.
+
+In PAS v2.5, the cflinuxfs2 stack will no longer be included
+
+<p class="note"><strong>Note:</strong> Canonical will end general support for cflinuxfs2 stack (derived from Ubuntu Trusty 14.04 LTS) on April 18th,
+2019.</p>
+
+If your tile contains errands that push apps, such as service brokers, you must manually configure the errands to push apps using the cflinuxfs3 stack.
+
+To maintain compatibility with PAS v2.2, you must also configure the errands to push apps using cflinuxfs2 if the cflinuxfs3 stack is not available. There are no plans to make cflinuxfs3 available as a patch release to PAS 2.2
+
+Errands cannot detect the PAS version.
+Configure the errands in your tile to run `cf stacks` to see which stacks are available, and then push the app using the appropriate stack.
+
+To push an app using cflinuxfs3, run `cf push -s cflinuxfs3 MY-APP`, replacing `MY-APP` with the name of the app.
+
+To push an app using cflinuxfs2, run `cf push MY-APP`, replacing `MY-APP` with the name of the app.
+
+###<a id='breaking-stemcells'></a> Tile Authors Must Use Xenial Stemcells
+
+Canonical will end support for Ubuntu Trusty Tahr on April 30th, 2019 and security fixes will no longer be
+backported. PCF is transitioning to use stemcells based on Xenial Xerus and will no longer support Trusty
+stemcells in PCF 2.5. Tile authors should start testing with the Xenial stemcells and fix any compatibility
+issues.
+
+Starting in PCF v2.3, Ops Manager uses a Xenial stemcell. Before you upgrade to PCF v2.4, you must do the following:
+
+1. If you are using any of the BOSH add-ons for PCF, you must update the add-on and its configuration to include the Ubuntu Xenial 16.04 stemcell. The following add-on versions support the Xenial stemcell:
+  + ClamAV Add-on for PCF v1.4.28 and later. For information on how to update this add-on, see [Updating ClamAV Add-on for PCF to Run with Xenial Stemcells](https://docs.pivotal.io/addon-antivirus/updating-for-xenial.html).
+  + File Integrity Monitoring (FIM) Add-on for PCF v1.2.22 and later. For information on how to update this add-on, see [Updating FIM Add-on for PCF to Run with Xenial Stemcells](https://docs.pivotal.io/addon-fim/updating-for-xenial.html).
+  + IPSec Add-on for PCF v1.9.9 and later. For information on how to update this add-on, see [Updating IPsec Add-on for PCF to Run with Xenial Stemcells](https://docs.pivotal.io/addon-ipsec/updating-for-xenial.html).<br/><br/>
+You must apply these updates before you deploy any tiles that use the Xenial stemcell and before you upgrade to PCF v2.4.
+
+1. Verify that any tiles that you have installed in your current foundation, either from Pivotal or a partner, are compatible with PCF v2.4. For more information on checking PCF and stemcell compatibility, see [Tile Compatibility](https://docs.pivotal.io/pivotalcf/2-3/upgrading/checklist.html#compatibility) in the Upgrade Checklist.<br/><br/>
+  In some cases, you may need to download and import a new Xenial stemcell into Ops Manager v2.2 to upgrade your tiles. To download a Xenial stemcell from Pivotal Network, visit [Stemcells for PCF (Ubuntu Xenial)](https://network.pivotal.io/products/stemcells-ubuntu-xenial).
+
+For information on which PCF tile releases now use Xenial, see [Tiles Using Xenial Stemcells in PCF](https://docs.pivotal.io/pivotalcf/2-3/stemcells/xenial-tiles.html).
+
+
+###<a id='breaking-consul'></a>Tile Authors Must Remove consul_agent
+
+If your tile includes consul clients, you must remove consul clients from your product.
+
+This is because the consul server no longer exists and your deployments will fail to deploy.
+The consul client expects the consul server to be present until their links are updated.
+This can cause extra error logging and unhealthy instances.
+
+Take the following actions according to which PCF versions your tile supports:
+
++ If your tile only supports PCF v2.2 and earlier, do not remove consul agents. 
+
++ If your tile only supports PCF v2.3 or later, you must remove consul agents
+completely from your tile. 
+
++ If your tile supports multiple versions, including PCF v2.2 (where consul
+agents cannot be removed) and PCF v2.3 (where consul agents must be removed)
+make the following changes to any `job_type` that is colocated with
+`consul_agent`:
+
+    ```
+    - name: consul_agent
+        release: consul
+        ...
+        manifest: |
+          ...
+          consul:
+            client:
+              enabled: "(( $ops_manager.dns_enabled ? false : true ))"
+    ```
+
+###<a id='admin-client-creds'></a> Administrative Tasks Must Use Client Credentials
+
+Components today have errands and other tasks such as smoke tests and deploy scripts that use an
+internal user to perform administrative operations. These applications should move away from internal users
+and instead leverage client credentials.
+
+This allows for disabling of internal users to meet customer compliance where they must not have service
+accounts and must use enterprise users (SAML or LDAP). It also facilitates credential rotation and MFA
+enablement.
+Service tile authors will need to complete this change by PCF 2.4. 
+
+<!-- ### <a id='breaking-mysql'></a> PCF 2.4 does not support cf­mysql or MySQL for PCF v1
+
+PCF v2.4 does not support `cf­mysql` and `MySQL for PCF v1`. For existing v1 users,
+v1 will be supported through October 2018. -->
