@@ -23,7 +23,7 @@ authors. For more information, see [Credhub 2.0 Backwards­ Incompatible API and
 
 Tile authors can insert a templatized Syslog form into their tiles by editing `metadata.yml`. The pane that the form creates is identical to the Syslog pane in Ops Manager and the BOSH Director tile. The form template is an opportunity to make tile users' experience more consistent and secure. 
 
-For more information about modifying `metadata.yml`, see [Property Template References](https://docs.pivotal.io/tiledev/2-4/property-template-references.html).
+For more information about modifying `metadata.yml`, see [Property Template References](https://docs.pivotal.io/tiledev/property-template-references.html).
 
 ## <a id="cflinuxfs3"></a> PAS Uses cflinuxfs3 by Default
 
@@ -41,7 +41,7 @@ For information about breaking changes caused by cflinuxfs3, see [Tile Authors M
 ## <a id="consul-server-removed"></a> Consul Server VMs Are Removed from PAS
 
 Consul Server VMs are now removed from PAS, saving VM resources and reducing maintenance around managing a clustered component. For more information about breaking changes caused by consul server removal, see 
-[Tile Authors Must Remove consul_agent](#breaking-consul)
+[Tile Authors Must Remove consul_agent](#breaking-consul).
 
 ## <a id="metrics-prefix"></a> Uniquely Identify Metrics by Tile
 
@@ -163,14 +163,14 @@ The following tables list the properties that Pivotal removed and added in PAS v
 
 Credhub 2.0 has the following backwards­ incompatible API and manifest changes:
 
-+ Authorization model changes: Identities will no longer be able to write to CredHub solely by virtue
++ **Authorization model changes:** Identities will no longer be able to write to CredHub solely by virtue
 of authenticating. Instead, an explicit access control entry will need to be created, granting an identity
-read, write, delete, read_acl, and/or write_acl permissions to an identity, for a given namespace.
-+ `set` and `generate` changes: CredHub is simplifying the rules that determine when `set` or
+read, write, delete, read\_acl, or write\_acl permissions to an identity, for a given namespace.
++ `set` **and** `generate` **changes:** CredHub is simplifying the rules that determine when `set` or
 `generate` requests will do nothing or overwrite existing values.
-+ Minor manifest changes: The structure of our properties hash is changing slightly.
-+ Authorization on by default: The default value of `credhub.authorization.acls.enabled` is changing
-from false to true
++ **Minor manifest changes:** The structure of our properties hash is changing slightly.
++ **Authorization on by default:** The default value of `credhub.authorization.acls.enabled` is changing
+from false to true.
 
 For tiles that are already consuming CredHub 1.9.x, there will not be any breaking changes. If you use
 CredHub, please perform regression testing with PAS for Credhub 2.0. We can give you access to an
@@ -255,16 +255,19 @@ make the following changes to any `job_type` that is colocated with
 
 ###<a id='admin-client-creds'></a> Administrative Tasks Must Use Client Credentials
 
-Components today have errands and other tasks such as smoke tests and deploy scripts that use an
-internal user to perform administrative operations. These applications should move away from internal users
-and instead leverage client credentials.
+Components have errands and other tasks such as smoke tests and deploy scripts that use an
+internal user to perform administrative operations. These apps must migrate from internal users
+and instead use client credentials.
 
-This allows for disabling of internal users to meet customer compliance where they must not have service
-accounts and must use enterprise users (SAML or LDAP). It also facilitates credential rotation and MFA
-enablement.
-Service tile authors will need to complete this change by PCF 2.4. 
+This allows you to disable internal users to meet customer compliance. To conform to customer compliance you must use enterprise users, such as SAML or LDAP, and must not have service
+accounts. Disabling internal users also facilitates rotating credentials and enabling multi-factor authentication.
 
-<!-- ### <a id='breaking-mysql'></a> PCF 2.4 does not support cf­mysql or MySQL for PCF v1
+### <a id='breaking-mysql'></a> Tile Authors Must Migrate to MySQL for PCF v2 
 
-PCF v2.4 does not support `cf­mysql` and `MySQL for PCF v1`. For existing v1 users,
-v1 will be supported through October 2018. -->
+PCF v2.4 does not support MySQL for PCF v1. Tiles that
+depend on MySQL for PCF v1 must migrate to MySQL for PCF v2 tile. If your tile uses
+MySQL for PCF v1, you should do the following:
+
+1. Change your tile to use MySQL for PCF v2.
+1. Update your tile to declare a dependency on MySQL for PCF v2.
+1. Document a strategy for data migration. For more information, see [Migrating Data in MySQL for PCF] [](https://docs.pivotal.io/p-mysql/migrate-data.html)
