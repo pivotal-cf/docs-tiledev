@@ -17,7 +17,7 @@ stored, see [BOSH CredHub](http://docs.pivotal.io/pivotalcf/credhub/index.html#b
 CredHub v2.0 includes bug fixes, improved security, and new options for
 managing credential permissions. These updates are not directly visible to PCF
 operators, but CredHub v2.0 introduces breaking changes for tile and service
-authors. For more information, see [Credhub 2.0 Backwards­ Incompatible API and Manifest Changes](#breaking-credhub) below.
+authors. For more information, see [CredHub 2.0 Backwards­ Incompatible API and Manifest Changes](#breaking-credhub) below.
 
 ## <a id="syslog"></a> Syslog Form Template Available for Tile Authors
 
@@ -159,9 +159,9 @@ The following tables list the properties that Pivotal removed and added in PAS v
 
 ## <a id="breaking-changes"></a> Breaking Changes
 
-### <a id="breaking-credhub"></a> Credhub 2.0 Backwards­ Incompatible API and Manifest Changes
+### <a id="breaking-credhub"></a> CredHub 2.0 Backwards Incompatible API and Manifest Changes
 
-Credhub 2.0 has the following backwards­ incompatible API and manifest changes:
+CredHub 2.0 has the following backwards­ incompatible API and manifest changes:
 
 + **Authorization model changes:** Identities will no longer be able to write to CredHub solely by virtue
 of authenticating. Instead, an explicit access control entry will need to be created, granting an identity
@@ -173,11 +173,11 @@ read, write, delete, read\_acl, or write\_acl permissions to an identity, for a 
 from false to true.
 
 For tiles that are already consuming CredHub 1.9.x, there will not be any breaking changes. If you use
-CredHub, please perform regression testing with PAS for Credhub 2.0. We can give you access to an
-environment with an alpha PAS release with the new credhub verison.
+CredHub, please perform regression testing with PAS for CredHub 2.0. We can give you access to an
+environment with an alpha PAS release with the new CredHub verison.
 
 Customers who do a fresh install of PAS will be impacted, and will need to apply new permissions when
-bootstrapping. The Credhub 2.0 upgrade does not affect customers who upgrade PAS.
+bootstrapping. The CredHub 2.0 upgrade does not affect customers who upgrade PAS.
 
 ### <a id='breaking-cflinuxfs3'></a>Tile Authors Must Manually Migrate Apps to cflinuxfs3
 
