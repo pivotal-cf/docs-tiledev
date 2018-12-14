@@ -171,10 +171,12 @@ read, write, delete, read\_acl, or write\_acl permissions to an identity, for a 
 + **Minor manifest changes:** The structure of the CredHub job properties in the BOSH manifest has some minor changes:
   + The keys `encryption_password` and `encryption_key_name` are now nested under the `key_properties` key.
   + Properties for configuring encryption providers are now nested under a key called `connection_properties`. These include `endpoint`, `partition`, `partition_password`, `client_certificate`, `client_key`, and `servers`.
-  + There is a new property called `credhub.authorization.permissions` that takes an array of permissions objects. Each permissions object has the following key value pairs:
-    + `path` - a string that represents the credential path
-    + `actors` - an array of authorized users and/or services that can perform operations on the given credential path
-    + `operations` - a list of operations that can be performed by the given actors on a given credential path. These operations include `read`, `write`, `delete`, `read_acl`, and `write_acl`.
+  + There is a new property called `credhub.authorization.permissions` that takes an array of permissions objects.
+    Each permissions object has the following key value pairs:
+        + `path`---a string that represents the credential path
+        + `actors`---an array of authorized users and/or services that can perform operations on the given credential path
+        + `operations`---a list of operations that can be performed by the given actors on a given credential path.
+           These operations include `read`, `write`, `delete`, `read_acl`, and `write_acl`.
 + **Authorization on by default:** The default value of `credhub.authorization.acls.enabled` is changing
 from false to true.
 
