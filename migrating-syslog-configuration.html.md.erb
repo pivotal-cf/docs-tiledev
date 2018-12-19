@@ -1,0 +1,109 @@
+---
+title: Migrating Existing Syslog Configuration to OpsManager
+owner: Ops Manager
+---
+
+<strong><%= modified_date %></strong>
+
+This topic explains how to migrate existing syslog properties that are defined by a tile into the syslog form provided by OpsManager.
+
+## <a id="syslog-data-model"></a>Syslog Data Model
+
+<table>
+  <tr>
+    <th>Syslog parameter</th>
+    <th>Data Type</th>
+    <th>Required</th>
+    <th>Notes</th>
+  </tr>
+  <tr>
+    <td>enabled</td>
+    <td>boolean</td>
+    <td>No</td>
+    <td>Defaults to false</td>
+  </tr>
+  <tr>
+    <td>address</td>
+    <td>string</td>
+    <td>Yes</td>
+    <td>Must be a valid network address</td>
+  </tr>
+  <tr>
+    <td>port</td>
+    <td>integer</td>
+    <td>Yes</td>
+    <td></td>
+  </tr>
+  <tr>
+    <td>transport_protocol</td>
+    <td>string</td>
+    <td>No</td>
+    <td>Valid values include tcp and udp. Defaults to tcp.</td>
+  </tr>
+  <tr>
+    <td>tls_enabled</td>
+    <td>boolean</td>
+    <td>No</td>
+    <td>Defaults to false.</td>
+  </tr>
+  <tr>
+    <td>ssl_ca_certificate</td>
+    <td>string</td>
+    <td>No, unless tls_enabled is true</td>
+    <td>Defaults to false.</td>
+  </tr>
+  <tr>
+    <td>permitted_peer</td>
+    <td>boolean</td>
+    <td>No, unless tls_enabled is true</td>
+    <td>Defaults to false.</td>
+  </tr>
+  <tr>
+    <td>queue_size</td>
+    <td>integer</td>
+    <td>No</td>
+    <td>Defaults to 100,000.</td>
+  </tr>
+  <tr>
+    <td>forward_debug_logs</td>
+    <td>boolean</td>
+    <td>No</td>
+    <td>Defaults to false.</td>
+  </tr>
+</table>
+
+## <a id="javascript"></a> Use the JavaScript Migration Process
+
+Tile authors can write a JavaScript migration to move their existing syslog properties into the syslog form provided by OpsManager. After a successful migration, Ops Manager will present the migrated syslog properties in the Syslog form of the tile.
+
+1. Use the following example to write the JavaScript migration.
+Save the JavaScript file to the `PRODUCT/migrations/v1` directory of your .pivotal tile.
+
+    ```js
+    exports.migrate = function(input) {
+      input.syslog_configuration = {
+        enabled: true,
+        address: input.properties['.PROPERTY-REFERENCE.EXAMPLE-ADDRESS'],
+        port: input.properties['.PROPERTY-REFERENCE.EXAMPLE-PORT'],
+        transport_protocol: input.properties['.PROPERTY-REFERENCE.EXAMPLE-PROTOCOL']
+      };
+      return input;
+    };
+    ```
+    In the code block above, replace the example text as follows:
+      * `PROPERTY-REFERENCE`: Replace with the property reference that corresponds to the metadata file, such as `properties`. See [Tile Upgrades](./tile-upgrades.html#import) for more information about migrating properties.
+      * `EXAMPLE-ADDRESS`: Replace with the property name of the address.
+      * `EXAMPLE-PORT`: Replace with the property name of the port.
+      * `EXAMPLE-PROTOCOL`: Replace with the property name of the transport protocol.
+
+1. Remove any form types that allowed operators to configure tile-specific syslog configuration. Enabling the Ops Manager syslog feature will provide your tile with its own form.
+
+1. Remove the syslog BOSH release from your tile. Ops Manager will ensure that this release is automatically injected into the instance groups of your product.
+
+1. Remove any syslog configuration properties from your deployment manifest. Ops Manager will include those properties when it injects the syslog release into the product.
+
+1. Mark all existing syslog configuration properties in your product as non-configurable. This will ensure that operators do not try to update them when they will have no outward functionality. You may want to update the description for these properties to state that they are deprecated and are no longer used to configure syslog.
+
+1. Run a [test deploy](./testing.html) of your tile. Ensure that the syslog properties that were originally managed by your product are successfully migrated into the Ops Manager syslog configuration. You can see the configuration on the "Syslog" form or by visiting the `/api/v0/staged/products/PRODUCT-GUID/syslog_configuration` API endpoint.
+
+1. At a later point, in a subsequent version of your product, you will want to remove all of the deprecated syslog configuration properties.
