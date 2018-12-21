@@ -23,20 +23,20 @@ By enabling the Ops Manager syslog feature, Ops Manager:
   <tr>
     <th width="175">Syslog parameter</th>
     <th>Data Type</th>
-    <th>Required</th>
+    <th width="150">Required</th>
     <th>Notes</th>
   </tr>
   <tr>
     <td><code>enabled</code></td>
     <td>boolean</td>
     <td>No</td>
-    <td> Defaults to false</td>
+    <td> Defaults to <code>false</code></td>
   </tr>
   <tr>
     <td><code>address</code></td>
     <td>string</td>
     <td>Yes</td>
-    <td>The address or host for the syslog server. Must be a valid network address</td>
+    <td>The address or host for the syslog server. <br>Must be a valid network address</td>
   </tr>
   <tr>
     <td><code>port</code></td>
@@ -48,40 +48,41 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td><code>transport_protocol</code></td>
     <td>string</td>
     <td>No</td>
-    <td>The transport protocol used to send syslog messages to the server. Valid values are <code>tcp</code> and <code>udp</code>. Defaults to <code>tcp</code>.</td>
+    <td>The transport protocol used to send syslog messages to the server. 
+      <br>Valid values are <code>tcp</code> and <code>udp</code>. Defaults to <code>tcp</code>.</td>
   </tr>
   <tr>
     <td><code>tls_enabled</code></td>
     <td>boolean</td>
     <td>No</td>
-    <td>Send logs encrypted to syslog server via TLS. Defaults to false.</td>
+    <td>Send logs encrypted to syslog server via TLS. Defaults to <code>false</code>.</td>
   </tr>
   <tr>
     <td><code>permitted_peer</code></td>
     <td>boolean</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
-    <td>Either the accepted fingerprint (SHA1) or name of remote peer, e.g. *.example.com. Defaults 
-      to false.</td>
+    <td>Either the accepted fingerprint (SHA1) or name of remote peer. Defaults 
+      to <code>false</code>.</td>
   </tr>
   <tr>
     <td><code>ssl_ca_certificate</code></td>
     <td>string</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
     <td>This certificate will ensure that logs get securely transported to the syslog destination. 
-      Defaults to false? to null?</td>
+      Defaults to <code>null</code>.</td>
   </tr>
   <tr>
     <td><code>queue_size</code></td>
     <td>integer</td>
     <td>No</td>
     <td>The number of log messages the buffer holds before dropping messages. A larger buffer size 
-      might overload the system. Defaults to 100,000.</td>
+      might overload the system. Defaults to <code>100000</code>.</td>
   </tr>
   <tr>
     <td><code>forward_debug_logs</code></td>
     <td>boolean</td>
     <td>No</td>
-    <td>Defaults to false.</td>
+    <td>Defaults to <code>false</code>.</td>
   </tr>
 </table>
 
@@ -119,11 +120,11 @@ migrated syslog properties in the Syslog form of the tile.
   * From your tile, the syslog BOSH release. 
   * From your deployment manifest, syslog configuration properties.
 
+1. To ensure that operators do not try to update syslog configuration properties with no outward 
+functionality, mark all existing syslog configuration properties in your product as non-configurable. 
 
-1. Mark all existing syslog configuration properties in your product as non-configurable. This  
-ensures that operators do not try to update them when they have no outward functionality. You may 
-want to update the description for these properties to state that they are deprecated and are no 
-longer used to configure syslog.
+1. Update the description for the deprecated properties to state that they are deprecated and are no 
+longer used to configure the syslog.
 
 1. Run a test deploy of your tile by doing the procedures in [Testing Tiles](./testing.html). 
 
