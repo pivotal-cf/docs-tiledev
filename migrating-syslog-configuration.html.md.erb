@@ -1,5 +1,5 @@
 ---
-title: Migrating Existing Syslog Configuration to OpsManager
+title: Migrating Existing Syslog Configuration to Ops Manager
 owner: Ops Manager
 ---
 
@@ -10,13 +10,13 @@ syslog form provided by Ops Manager in Pivotal Cloud Foundry (PCF) v2.5 and late
 
 By enabling the Ops Manager syslog feature, Ops Manager: 
 
-* Provides your tile with its own syslog form.
-* Ensures that the syslog BOSH release is automatically injected into the instance groups of your product.
+* Provides your tile with its own syslog form
+* Ensures that the syslog BOSH release is automatically injected into the instance groups of your product
 * Includes syslog configuration properties when Ops Manager injects the syslog release into your product
 
 ## <a id="syslog-data-model"></a>Syslog Data Model
 
- The following table lists the Ops Manager syslog parameters that you can mirgrate your existing 
+ The following table lists the Ops Manager syslog parameters that you can migrate your existing 
  configurations to.
 
 <table class="nice">
@@ -42,54 +42,54 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td><code>port</code></td>
     <td>integer</td>
     <td>Yes</td>
-    <td>The port on which the syslog server listens.</td>
+    <td>The port on which the syslog server listens</td>
   </tr>
   <tr>
     <td><code>transport_protocol</code></td>
     <td>string</td>
     <td>No</td>
     <td>The transport protocol used to send syslog messages to the server. 
-      <br>Valid values are <code>tcp</code> and <code>udp</code>. Defaults to <code>tcp</code>.</td>
+      <br>Valid values are <code>tcp</code> and <code>udp</code>. Defaults to <code>tcp</code></td>
   </tr>
   <tr>
     <td><code>tls_enabled</code></td>
     <td>boolean</td>
     <td>No</td>
-    <td>Send logs encrypted to syslog server via TLS. Defaults to <code>false</code>.</td>
+    <td>Send logs encrypted to syslog server via TLS. Defaults to <code>false</code></td>
   </tr>
   <tr>
     <td><code>permitted_peer</code></td>
     <td>boolean</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
     <td>Either the accepted fingerprint (SHA1) or name of remote peer. Defaults 
-      to <code>false</code>.</td>
+      to <code>false</code></td>
   </tr>
   <tr>
     <td><code>ssl_ca_certificate</code></td>
     <td>string</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
-    <td>This certificate will ensure that logs get securely transported to the syslog destination. 
-      Defaults to <code>null</code>.</td>
+    <td>This certificate ensures that logs get securely transported to the syslog destination. 
+      Defaults to <code>null</code></td>
   </tr>
   <tr>
     <td><code>queue_size</code></td>
     <td>integer</td>
     <td>No</td>
     <td>The number of log messages the buffer holds before dropping messages. A larger buffer size 
-      might overload the system. Defaults to <code>100000</code>.</td>
+      might overload the system. Defaults to <code>100000</code></td>
   </tr>
   <tr>
     <td><code>forward_debug_logs</code></td>
     <td>boolean</td>
     <td>No</td>
-    <td>Defaults to <code>false</code>.</td>
+    <td>Defaults to <code>false</code></td>
   </tr>
 </table>
 
 ## <a id="javascript"></a> Use the JavaScript Migration Process
 
 Tile authors can write a JavaScript migration to move their existing syslog properties into the 
-syslog form provided by OpsManager. After a successful migration, Ops Manager will present the 
+syslog form provided by Ops Manager. After a successful migration, Ops Manager presents the 
 migrated syslog properties in the Syslog form of the tile.
 
 1. To write your JavaScript migration, use the following example as a template: 
@@ -108,8 +108,8 @@ migrated syslog properties in the Syslog form of the tile.
     ```
     In the code block above, replace the example text as follows:
       * `PROPERTY-REFERENCE`: Replace with the property reference that corresponds to the metadata 
-      file, such as `properties`. See [Tile Upgrades](./tile-upgrades.html#import) for more 
-      information about migrating properties.
+      file, such as `properties`.
+      For more information about migrating properties, see [Tile Upgrades](./tile-upgrades.html#import).
       * `EXAMPLE-ADDRESS`: Replace with the property name of the address.
       * `EXAMPLE-PORT`: Replace with the property name of the port.
       * `EXAMPLE-PROTOCOL`: Replace with the property name of the transport protocol.
@@ -135,5 +135,5 @@ configuration, do one of the following:
     For more information about the `syslog_configuration` API endpoint, see 
     [Retrieving syslog configuration for a product](https://docs.pivotal.io/pivotalcf/opsman-api/#retrieving-syslog-configuration-for-a-product).
 
-<p class="note"><strong>Note:</strong> In subsequent version of your product, you should remove all 
-  of the deprecated syslog configuration properties.</p>
+<p class="note"><strong>Note:</strong> In the next version of your product, remove 
+  the deprecated syslog configuration properties.</p>
