@@ -84,6 +84,12 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td>No</td>
     <td>Defaults to <code>false</code></td>
   </tr>
+  <tr>
+    <td><code>custom_rsyslog_configuration</code></td>
+    <td>text</td>
+    <td>No</td>
+    <td>Additional configuration for rsyslog written in the rainerscript syntax. For example, 'if ($app-name startswith "exampleComponent") then stop' can be used to drop all traffic from a particular component. Entered configuration will be applied prior to the forwarding rule.</td>
+  </tr>
 </table>
 
 ## <a id="javascript"></a> Use the JavaScript Migration Process
