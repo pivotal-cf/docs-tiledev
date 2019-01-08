@@ -88,7 +88,10 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td><code>custom_rsyslog_configuration</code></td>
     <td>text</td>
     <td>No</td>
-    <td>Additional configuration for rsyslog written in the rainerscript syntax. For example, 'if ($app-name startswith "exampleComponent") then stop' can be used to drop all traffic from a particular component. Entered configuration will be applied prior to the forwarding rule.</td>
+    <td>Additional configuration for rsyslog written in the rainerscript syntax.
+        For example, <code>if ($app-name startswith "exampleComponent") then stop</code>
+        can be used to drop all traffic from a particular component.
+        The entered configuration is applied before the forwarding rule.</td>
   </tr>
 </table>
 
