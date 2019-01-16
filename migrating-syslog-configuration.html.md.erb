@@ -61,15 +61,14 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td><code>permitted_peer</code></td>
     <td>boolean</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
-    <td>Either the accepted fingerprint (SHA1) or name of remote peer. Defaults 
-      to <code>false</code></td>
+    <td> Defaults to <code>false</code>.</td>
   </tr>
   <tr>
     <td><code>ssl_ca_certificate</code></td>
     <td>string</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
-    <td>This certificate ensures that logs get securely transported to the syslog destination. 
-      Defaults to <code>null</code></td>
+    <td>Must be a valid certificate<br> 
+      Defaults to <code>null</code>.</td>
   </tr>
   <tr>
     <td><code>queue_size</code></td>
