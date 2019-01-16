@@ -55,6 +55,9 @@ To configure a colocated errand, define the following properties in the `pre_del
   </tr><tr>
     <td><code>description: TEXT</code></td>
     <td>(Optional) Provide a description for the errand that appears in the tile's <strong>Errand Config</strong> page.</td>
+  </tr><tr>
+    <td><code>impact_warning: TEXT</code></td>
+    <td>(Optional) Provide an impact warning for the operator that appears on OpsManager prior to running the errand on the Review Pending Changes page.</td>
   </tr>
 </table>
 
@@ -68,6 +71,7 @@ The following example shows colocated `post_deploy_errands` and `pre_delete_erra
 post_deploy_errands:
   - name: example-errand
     colocated: false
+    impact_warning: "This is an impact warning for your Post Deploy errand"
   - name: example_colocated_errand
     colocated: true
     run_default: on
@@ -78,6 +82,7 @@ post_deploy_errands:
 
 pre_delete_errands:
   - name: example-errand
+    impact_warning: "This is an impact warning for your Pre Delete errand"
   ```
 
 The following example shows the colocated errands referenced within the `job_type`:
