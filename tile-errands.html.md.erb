@@ -5,22 +5,22 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-Lifecycle errands are BOSH errands (scripts) that run at the beginning and end of an installed 
+Lifecycle errands are BOSH errands (scripts) that run at the beginning and end of an installed
 product's availability time. Product teams create errands as part of a product package, and a product can only run errands it includes.
 
-For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands), 
+For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands),
 and for more information about errands in Pivotal Cloud Foundry (PCF), see [Managing Errands in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html).
 
 In Ops Manager 2.0 and later, tile authors can choose to [colocate errands](#colocated) on existing VMs.
 When errands are not colocated, BOSH deploys a new VM for each errand defined in the tile metadata.
 Colocated errands can run alongside other jobs or errands on existing VMs in an operator's deployment.
 
-Products can have two kinds of errands. [Post-deploy errands](#post-deploy) run after a product 
+Products can have two kinds of errands. [Post-deploy errands](#post-deploy) run after a product
 installs but before Ops Manager displays makes it available for use.
-[Pre-delete errands](#pre-delete) run after an operator chooses to delete a product, but before 
+[Pre-delete errands](#pre-delete) run after an operator chooses to delete a product, but before
 Ops Manager finishes removing it from use.
 
-To save deployment time, operators can set [errand run rules](#run-rules) that dictate whether or 
+To save deployment time, operators can set [errand run rules](#run-rules) that dictate whether or
 not errands run. Tile authors can [set defaults](./property-template-references.html#top-level) for these run rules.
 
 ## <a id="colocated"></a>Define a Colocated Errand
@@ -31,7 +31,7 @@ Instead of deploying a new VM for each errand, colocated errands run on an exist
 Errands can run alongside other jobs on a VM, and multiple errands can be colocated on the same VM.
 Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
 
-To configure a colocated errand, define the following properties in the `pre_delete_errands` and 
+To configure a colocated errand, define the following properties in the `pre_delete_errands` and
 `post_deploy_errands` sections of the tile metadata:
 
 <table>
@@ -40,48 +40,48 @@ To configure a colocated errand, define the following properties in the `pre_del
     <th>Description</th>
   </tr><tr>
     <td width="28%"><code>name: MY-ERRAND</code></td>
-    <td>Provide the name of the errand job. The example manifest in the following section uses 
+    <td>Provide the name of the errand job. The example manifest in the following section uses
       <code>example_colocated_errand</code>.</td>
   </tr><tr>
     <td><code>colocated: true</code></td>
-    <td>Set this value to <code>true</code> to enable colocated errands. If you do not set this value, 
+    <td>Set this value to <code>true</code> to enable colocated errands. If you do not set this value,
       Ops Manager ignores all other errand attributes in this section.</td>
   </tr><tr>
     <td><code>run_default: on</code></td>
-    <td>(Optional) You can set the run rules to <code>on</code> or <code>off</code>. 
+    <td>(Optional) You can set the run rules to <code>on</code> or <code>off</code>.
       See <a href="#run-rules">Errand Run Rules</a> for more information.<br><br>
     If you do not define this property, Ops Manager sets the run default to <code>on</code>.
-    The operator can override this setting using the Ops Manager API or the tile's 
+    The operator can override this setting using the Ops Manager API or the tile's
     <strong>Errand Config</strong> tab.</td>
   </tr><tr>
     <td><code>instances: []</code></td>
     <td>(Optional) Provide an array that tells BOSH where to run the errand.
-    Use the name of an instance group, such as <code>web_server</code>, or a single instance, such as 
+    Use the name of an instance group, such as <code>web_server</code>, or a single instance, such as
     <code>web_server/first</code>.<br><br>
-    If you do not define this property or you provide an empty array, the errand runs on every 
+    If you do not define this property or you provide an empty array, the errand runs on every
     instance of the job in the operator's deployment.</td>
   </tr><tr>
     <td><code>label: ERRAND-LABEL</code></td>
-    <td>Define the errand name to be shown in the tile's <strong>Errand Config</strong> tab and 
+    <td>Define the errand name to be shown in the tile's <strong>Errand Config</strong> tab and
       above <strong>Apply Changes</strong>.
     The example manifest in the following section uses <code>colocated errand on web_server</code>.</td>
   </tr><tr>
     <td><code>description: TEXT</code></td>
-    <td>(Optional) Provide a description for the errand that appears in the tile's 
+    <td>(Optional) Provide a description for the errand that appears in the tile's
       <strong>Errand Config</strong> tab.</td>
   </tr><tr>
     <td width="30%"><code>impact_warning: TEXT</code></td>
-    <td>(Optional) Provide an impact warning that appears in the 
+    <td>(Optional) Provide an impact warning that appears in the
       <b>Review Pending Changes</b> tab before running the errand.</td>
   </tr>
 </table>
 
-After defining the errand in the sections above, add the errand to the job properties in the 
+After defining the errand in the sections above, add the errand to the job properties in the
 `job_types` section.
 
 ### <a id="colocated-example"></a>Colocated Errand Example Manifest
 
-The following example shows colocated `post_deploy_errands` and `pre_delete_errands` sections 
+The following example shows colocated `post_deploy_errands` and `pre_delete_errands` sections
 in the tile metadata:
 
 ```yaml
@@ -125,93 +125,28 @@ job_types:
     max_in_flight: 1
 ```
 
-### <a id='compatibility'></a>Backward Compatibility for Colocated Errands
-
-Colocated errand support is available in Ops Manager 2.0 and later.
-If your tile uses colocated errands, use the instructions in this section to ensure your tile is also 
-compatible with Ops Manager 1.12 and earlier.
-
-When your tile no longer requires Ops Manager 1.12 support, configure your errands as either 
-colocated or non-colocated. 
-Future versions of Ops Manager will not support the workaround described in this section.
-
-The following example manifest shows an `example_colocated_errand` configured as a colocated errand 
-in Ops Manager 2.0 and as an instance group errand in Ops Manager 1.12:
-
-```yaml
-post_deploy_errands:
-  - name: example_colocated_errand
-    colocated: true
-    run_default: on
-    instances:
-      - web_server/first
-    label: colocated errand on web_server
-    description: This errand does little more than print a message in order to prove colocated errands work.
-...
-job_types:
-  - name: example_colocated_errand
-    description: The very best illustrative errand that prints all the properties, including secrets.
-    templates:
-      - name: dummy
-        release: dummy
-    errand: true
-...
-  - name: web_server
-    resource_label: Web Server
-    templates:
-      - name: example_colocated_errand
-        release: example-release
-```
-
-To make your tile compatible with both colocated and non-colocated errands, perform the following steps:
-
-1. Configure your colocated errand for Ops Manager 2.0, as shown in the 
-[Colocated Errand Example Manifest](#colocated-example).
-Ops Manager versions 1.12 and earlier ignore this property in the manifest.
-
-1. In the `job_types` section, define the same errand in the `web_server` instance group, as shown 
-in the example above.
-Ops Manager 1.12 and earlier runs the errand on every VM in the `web_server` instance group.
-If you want the errand to run only once, configure the errand to run on an instance group with only 
-one instance.
-
-1. Configure the instance group that corresponds to your errand:
-    * Set `instance_definition.configurable: false`
-    * Set `instance_definition.default: 0`
-    * Configure at least one non-errand job in the instance group. Ops Manager requires each instance 
-    group to contain at least one job.
-    <p class="note"><strong>Note</strong>: The example manifest above uses the <code>dummy</code> job 
-      from the 
-      <a href="https://github.com/pivotal-cf-experimental/dummy-boshrelease/tree/master/jobs">Dummy BOSH release</a>. 
-      You can use any no-op job.</p>
-
-1. Ops Manager 1.12 and earlier displays the following warning, but runs the errand on the specified 
-instance group:
-  <pre class="terminal">Warning: Ambiguous request: the requested errand name 'example\_colocated\_errand' 
-    matches both a job name and an errand instance group</pre>
-
 ##<a id='post-deploy'></a>Post-Deploy Errands
 
 Post-deploy errands run after a product installs, but before Ops Manager makes it available for use.
 
-Typical post-install errands include smoke or acceptance tests, database initialization or database 
+Typical post-install errands include smoke or acceptance tests, database initialization or database
 migration, and service broker registration.
 
-Post-deploy errands run by default. An operator can prevent a post-deploy errand from running by 
-setting its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation 
+Post-deploy errands run by default. An operator can prevent a post-deploy errand from running by
+setting its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
 Dashboard or on the product tile's **Settings** tab **Errands** pane, before installing the product.
 
 ![Example Errand](img/example-errand.png)
 
-For example, Redis has a **Broker Registrar** post-deploy errand that the Elastic Runtime tile uses 
+For example, Redis has a **Broker Registrar** post-deploy errand that the Elastic Runtime tile uses
 to register its service broker with the Cloud Controller and publish its service plans.
 
-If an operator chooses **Off** in the drop-down menu for Elastic Runtime's **Broker Registrar** errand 
+If an operator chooses **Off** in the drop-down menu for Elastic Runtime's **Broker Registrar** errand
 before installation, Elastic Runtime's service broker is not registered with the Cloud Controller and its service plans are not made public.
 
 ##<a id='pre-delete'></a>Pre-Delete Errands
 
-Pre-delete errands run after an operator chooses to delete a product, but before Ops Manager actually 
+Pre-delete errands run after an operator chooses to delete a product, but before Ops Manager actually
 finishes deleting it.
 
 Typical pre-delete errands include clean up of application artifacts and service
@@ -225,22 +160,22 @@ broker de-registration. For example, Pivotal MySQL has a **Broker Deregistrar** 
 When an operator chooses to delete the Pivotal MySQL product, Ops Manager first
 runs the **Broker Deregistrar** pre-delete errand, then deletes the product.
 
-Pre-delete errands run by default. An operator can prevent a pre-delete errand from running by setting 
-its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation 
+Pre-delete errands run by default. An operator can prevent a pre-delete errand from running by setting
+its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
 Dashboard or on the product tile's **Settings** tab **Errands** pane, before installing the product.
 
 ##<a id='run-rules'></a>Errand Run Rules
 
-Some errands do not always need to run. For example, installing a minor patch to a existing service 
-might not require re-registering its broker. Ops Manager lets operators save installation time by 
+Some errands do not always need to run. For example, installing a minor patch to a existing service
+might not require re-registering its broker. Ops Manager lets operators save installation time by
 turning errands off or on. They set these errand run rules in two places:
 
-* **One-Time Rules** under **Pending Changes** in the Ops Manager Installation Dashboard. These rules 
-only apply to the next time you run **Apply Changes** and do not persist after the next successful installation.  
+* **One-Time Rules** under **Pending Changes** in the Ops Manager Installation Dashboard. These rules
+only apply to the next time you run **Apply Changes** and do not persist after the next successful installation.
 ![Pending Changes](img/pending_changes.png)
 
-* **Persistent Rules** in the tile's **Errands** pane. These rules persist through subsequent 
+* **Persistent Rules** in the tile's **Errands** pane. These rules persist through subsequent
 installations, until changed in the **Errands** pane.
 
-For more information, 
+For more information,
 see [Configure Run Rules in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html#modify).
