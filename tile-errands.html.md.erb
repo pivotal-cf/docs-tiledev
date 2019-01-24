@@ -95,7 +95,7 @@ post_deploy_errands:
     instances:
       - web_server/first
     label: colocated errand on web_server
-    description: This errand does little more than print a message in order to prove colocated errands work.
+    description: This errand does little more than print a message to prove colocated errands work.
 
 pre_delete_errands:
   - name: example-errand
@@ -134,14 +134,14 @@ migration, and service broker registration.
 
 Post-deploy errands run by default. An operator can prevent a post-deploy errand from running by
 setting its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
-Dashboard or on the product tile's **Settings** tab **Errands** pane, before installing the product.
+Dashboard or on the service's **Settings** tab **Errands** pane, before installing the product.
 
 ![Example Errand](img/example-errand.png)
 
 For example, Redis has a **Broker Registrar** post-deploy errand that the Elastic Runtime tile uses
 to register its service broker with the Cloud Controller and publish its service plans.
 
-If an operator chooses **Off** in the drop-down menu for Elastic Runtime's **Broker Registrar** errand
+If an operator selects **Off** in the dropdown menu for Elastic Runtime's **Broker Registrar** errand
 before installation, Elastic Runtime's service broker is not registered with the Cloud Controller and its service plans are not made public.
 
 ##<a id='pre-delete'></a>Pre-Delete Errands
@@ -149,7 +149,7 @@ before installation, Elastic Runtime's service broker is not registered with the
 Pre-delete errands run after an operator chooses to delete a product, but before Ops Manager actually
 finishes deleting it.
 
-Typical pre-delete errands include clean up of application artifacts and service
+Typical pre-delete errands include cleanup of application artifacts and service
 broker de-registration. For example, Pivotal MySQL has a **Broker Deregistrar** pre-delete errand that:
 
 * Purges the service offering
