@@ -5,37 +5,38 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This topic explains how to define and manage named runtime configs with your service tile for Pivotal Cloud Foundry (PCF).
+This topic explains how to define and manage named runtime configs with your service tile for Pivotal 
+Cloud Foundry (PCF).
 
-Tile authors can manage runtime configs in following ways:
+Tile authors can manage runtime configs in the following ways:
 
-+ To create a new runtime config in an existing product tile, see [Create a Runtime Config](#create).
-+ To delete a runtime config from a tile, see [Delete a Runtime Config](#delete).
-+ To create a tile that only contains a runtime config, see [Create a Runtime Config-Only Tile](#config-only).
++ Add a new runtime config in an existing product tile. See [Add a Runtime Config](#create).
++ Delete a runtime config from a tile. See [Delete a Runtime Config](#delete).
++ Create a tile that only contains a runtime config. See [Create a Runtime Config-Only Tile](#config-only).
 
-For more information about runtime configs, see [Director Runtime Config](https://bosh.io/docs/runtime-config.html) in Cloud Foundry BOSH documentation.
+For more information about runtime configs, see 
+[Director Runtime Config](https://bosh.io/docs/runtime-config.html) in Cloud Foundry BOSH documentation.
 
 ## <a id="overview"></a>Overview
 
-A runtime config is a section of the tile metadata that defines global deployment configurations. When a tile author includes a runtime config as a top level property in the tile metadata, BOSH applies the runtime config to every VM in the deployment.
+A runtime config is a section of the tile metadata that defines global deployment configurations. 
+Tile authors can create tiles that only contain a runtime config or add a runtime config to an existing product tile. When a tile author includes a runtime config as a top level property in the tile metadata, BOSH applies the runtime config to every VM in the deployment. 
 
 For more information about top level properties, see [Top Level Properties](./property-template-references.html#top-level).
 
-In Ops Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config tiles contain no stemcell, network, availability zone (AZ), or resource config information.
+When operators apply changes to deployments, Ops Manager combines the runtime config information from every tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the identifier using the tile name, a generated GUID, and the runtime config name defined in the metadata. 
 
-<!-- DIFFERNAITE BETWEEN RUNTIME CONFIG IN A TILE AND A SEPERATE RUNTIME CONFLIG TILE FOR ALL VMS IN A DEPLOYMENT(?) DOES IT ALWAYS APPEAR AS A TILE OR ONLY WHEN IT IS A "RUNTIME CONFIG-ONLY TILE"? -->
-
-![Runtime Config Tile on the Ops Manager Installation Dashboard](img/runtime-config-dashboard.png)
-
-When you click **Apply Changes**, Ops Manager combines the runtime config information from every tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the identifier using the tile name, a generated GUID, and the runtime config name defined in the metadata. The identifier follows the following format:
+The identifier follows the following format:
 
 ```
 TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 ```
 
-## <a id="create"></a>Create a Runtime Config
+![Runtime Config Unique ID](img/runtime-config-id.png)
 
-Tile authors can add `runtime_configs` as a top level property in tile metadata. In this section, the tile author defines configuration properties that Ops Manager applies to all deployments. A tile can support any number of runtime configs.
+## <a id="create"></a>Add a Runtime Config 
+
+Tile authors can add `runtime_configs` as a top level property in tile metadata. In the runtime config section, the tile author defines configuration properties that Ops Manager applies to all deployments. A tile can support any number of runtime configs.
 
 A named runtime config, can contain any number of addons. Each addon can contain any number of jobs.
 
@@ -46,45 +47,71 @@ runtime_configs:
   - name: YOUR-RUNTIME-CONFIG
     runtime_config: |
       releases:
-      - name: os-conf
-        version: 15
+      - name: RELEASE
+        version: RELEASE-VERSION
       addons:
       - name: YOUR-ADDON-NAME
         jobs:
         - name:YOUR-RUNTIME-CONFIG-JOB
-          release: os-conf
+          release: RELEASE
         properties:
           YOUR-PROPERTY:
         ...
 ```
 Where:
 
-* `MY-RUNTIME-CONFIG` is the name of the runtime config.
-* `MY-ADDON-NAME` is the name of the addon that contains the runtime config job.
-* `MY-RUNTIME-CONFIG-JOB` is the name of the job the runtime config describes.
-* `YOUR-PROPERTY` is 
+* `YOUR-RUNTIME-CONFIG` is the name of the runtime config.
+* `RELEASE` is the release used for the runtime config.
+* `RELEASE-VERSION` is the version of the release.
+* `YOUR-ADDON-NAME` is the name of the addon that contains the runtime config job.
+* `YOUR-RUNTIME-CONFIG-JOB` is the name of the job the runtime config describes.
+* `YOUR-PROPERTY` are the properties used in the job.
 
-<!-- WE NEED TO EXPLAIN WHAT EACH OF THESE THINGS ARE. MAYBE INCLUDE INFO FROM BOSH DOCS -->
+For more information about runtime config keys, see 
+[Director Runtime Config](https://bosh.io/docs/runtime-config.html) in Cloud Foundry BOSH documentation.
+
+For more information about top level properties in the tile manifest, see [Top Level Properties](./property-template-references.html#top-level).
 
 <p class="note"><strong>Note:</strong> The names you choose must be unique across a deployment. Pivotal recommends appending your product name or another unique identifier to each of the named items in the <code>runtime_configs</code> section.</p>
 
-<!-- Define the runtime config job properties in the `properties` section. -->
 
 ## <a id="delete"></a>Delete a Runtime Config
 
 Tile authors can remove an existing runtime config from a tile. 
 When the operator upgrades the tile, Ops Manager detects the missing reference and deletes the runtime config.
 
-To delete a runtime config to a tile, remove the `runtime_configs` section from the tile metadata.
+To delete a runtime config from a tile, remove the `runtime_configs` section from the tile metadata. 
 
+For example, to delete a runtime config to a tile you remove the following section:
+
+```
+runtime_configs:
+  - name: YOUR-RUNTIME-CONFIG
+    runtime_config: |
+      releases:
+      - name: RELEASE
+        version: RELEASE-VERSION
+      addons:
+      - name: YOUR-ADDON-NAME
+        jobs:
+        - name:YOUR-RUNTIME-CONFIG-JOB
+          release: RELEASE
+        properties:
+          YOUR-PROPERTY:
+        ...
+```
 
 ## <a id="config-only"></a>Create a Runtime Config Tile
 
-Tile authors can create a tile that only contains a runtime config. The only release that a tile author must include in a runtime config tile is `os-conf`. When creating a runtime config tile, a tile author is not required to define the following top level properties:
+In Ops Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config tiles contain no stemcell, network, availability zone (AZ), or resource config information. You might create a runtime config tile if you want global deployment configurations to be applied to all VMs in deployment and do not any other functionality.
+
+For a runtime config tile, tile authors are not required to define the following top level properties:
 
 * `post_deploy_errands`
 * `pre_delete_errands`
 * `job_types`
+
+![Runtime Config Tile on the Ops Manager Installation Dashboard](img/runtime-config-dashboard.png)
 
 ### <a id="example"></a>Example Runtime Config-Only Tile
 
@@ -101,7 +128,7 @@ description: An example product to demonstrate runtime config features
 rank: 1
 service_broker: false # Default value
 stemcell_criteria:
-  os: ubuntu-trusty
+  os: xenial 97
   version: STEMCELL-VERSION
 
 releases:
@@ -146,8 +173,6 @@ runtime_configs:
               (( .properties.example_string.value )).
 ```
 
-In the example runtime config above, the `login-banner` job prints a banner when a user logs into any VM in the deployment. The operator can use the default value defined in the `form_types` section of the metadata or configure the banner by editing the **Example string** value in Ops Manager.
-
-<!-- WHAT DOES THE ABOVE REALLY MEAN? -->
+In the runtime config example above, the `login-banner` job prints a banner when a user logs into any VM in the deployment. The operator can use the default value defined in the `form_types` section of the metadata or configure the banner by editing the **Example string** value in Ops Manager.
 
 ![Runtime Config Tile Information](img/runtime-config-tile.png)
