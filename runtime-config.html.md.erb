@@ -20,9 +20,9 @@ For more information about runtime configs, see
 ## <a id="overview"></a>Overview
 
 A runtime config is a section of the tile metadata that defines global deployment configurations. 
-Tile authors can create tiles that only contain a runtime config or add a runtime config to an existing product tile. When a tile author includes a runtime config as a top level property in the tile metadata, BOSH applies the runtime config to every VM in the deployment. 
+Tile authors can create tiles that only contain a runtime config or add a runtime config to an existing product tile. When a tile author includes a runtime config as a top-level property in the tile metadata, BOSH applies the runtime config to every VM in the deployment. 
 
-For more information about top level properties, see [Top Level Properties](./property-template-references.html#top-level).
+For more information about top-level properties, see [Top-Level Properties](./property-template-references.html#top-level).
 
 When operators apply changes to deployments, Ops Manager combines the runtime config information from every tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the identifier using the tile name, a generated GUID, and the runtime config name defined in the metadata. 
 
@@ -36,7 +36,7 @@ TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 
 ## <a id="create"></a>Add a Runtime Config 
 
-Tile authors can add `runtime_configs` as a top level property in tile metadata. In the runtime config section, the tile author defines configuration properties that Ops Manager applies to all deployments. A tile can support any number of runtime configs.
+Tile authors can add `runtime_configs` as a top-level property in tile metadata. In the runtime config section, the tile author defines configuration properties that Ops Manager applies to all deployments. A tile can support any number of runtime configs.
 
 A named runtime config, can contain any number of addons. Each addon can contain any number of jobs.
 
@@ -70,7 +70,7 @@ Where:
 For more information about runtime config keys, see 
 [Director Runtime Config](https://bosh.io/docs/runtime-config.html) in Cloud Foundry BOSH documentation.
 
-For more information about top level properties in the tile manifest, see [Top Level Properties](./property-template-references.html#top-level).
+For more information about top-level properties in the tile manifest, see [Top-Level Properties](./property-template-references.html#top-level).
 
 <p class="note"><strong>Note:</strong> The names you choose must be unique across a deployment. Pivotal recommends appending your product name or another unique identifier to each of the named items in the <code>runtime_configs</code> section.</p>
 
@@ -105,7 +105,7 @@ runtime_configs:
 
 In Ops Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config tiles contain no stemcell, network, availability zone (AZ), or resource config information. You might create a runtime config tile if you want global deployment configurations to be applied to all VMs in deployment and do not any other functionality.
 
-For a runtime config tile, tile authors are not required to define the following top level properties:
+For a runtime config tile, tile authors are not required to define the following top-level properties:
 
 * `post_deploy_errands`
 * `pre_delete_errands`
