@@ -166,11 +166,16 @@ Outside of properties, you can also retrieve information about various configura
   <td>Provides the CSVs that are entered when Ops Manager traffic is directed to an HTTPS Proxy</td>
   </tr><tr>
   <td>no_proxy</td>
-  <td>Provides the CSVs that should not go through a proxy</td></tr>
-  <tr>
+  <td>Provides the CSVs that should not go through a proxy</td>
+  </tr><tr>
   <td>instance_types_catalog</td>
-  <td>Provides a list of all available VM types. Includes custom VM types.</td></tr>
-</tr>
+  <td>Provides a list of all available VM types. Includes custom VM types.</td>
+  </tr><tr>
+  <td>restricted_view_api_access_credentials</td>
+  <td>Provides a payload for a UAA client to make read-only non-credential requests against Ops Manager.
+      The payload includes <code>uaa_client_name</code>, <code>uaa_client_secret</code>, <code>hostname</code>,
+      and <code>port</code></td>
+  </tr>
 </table>
 
 #### $director
