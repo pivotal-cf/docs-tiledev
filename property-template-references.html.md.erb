@@ -984,12 +984,13 @@ Ops Manager does not require product authors to provide `vm_credentials` in the 
           selector: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
         ops_manager_provided_accessors:
           name: (( name ))
+          cpu: (( cpu ))
           ram: (( ram ))
           ephemeral_disk: (( ephemeral_disk ))
           persistent_disk: (( persistent_disk ))
           instances: (( instances ))
-          availability_zone: (( availability_zone ))
-          bosh_job_partition_stats: (( bosh_job_partition_stats ))
+          any_instances: (( any_instances ))
+          subnet_cidrs: (( subnet_cidrs ))
 </pre>
 
 ### <a id='job-name'></a> name
@@ -1105,6 +1106,78 @@ Ops Manager generates a BOSH manifest that defines properties for each job the m
 Some of these properties are not set until the user clicks **Apply Changes**, because the user configures them in the tile or because Ops Manager has to generate them.
 
 For more information about these properties, see [Designating Property Values](#property-values).
+
+#### <a id='job-accessors'></a> Job Accessors
+
+Ops Manager provides several double-parentheses expressions to access different information about the job to be used in the manifest.
+
+<table class="nice">
+  <tr>
+    <td>
+      <code>(( name ))</code>
+    </td>
+    <td>
+      Name of the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( cpu ))</code>
+    </td>
+    <td>
+        CPU of the VM type chosen for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( ram ))</code>
+    </td>
+    <td>
+      RAM of the VM type chosen for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( ephemeral_disk ))</code>
+    </td>
+    <td>
+      Ephemeral disk of the VM type chosen for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( persistent_disk ))</code>
+    </td>
+    <td>
+      Persistent disk of the VM type chosen for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( instances ))</code>
+    </td>
+    <td>
+      Number of instances chosen for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( any_instances ))</code>
+    </td>
+    <td>
+      Returns true if there is a non-zero number of instances for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( subnet_cidrs ))</code>
+    </td>
+    <td>
+      List of CIDRs associated with the job
+    </td>
+  </tr>
+</table>
+
 
 ## <a id='property-blueprints'></a>Property Blueprint Reference
 
