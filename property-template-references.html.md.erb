@@ -990,8 +990,8 @@ Ops Manager does not require product authors to provide `vm_credentials` in the 
           ephemeral_disk: (( ephemeral_disk ))
           persistent_disk: (( persistent_disk ))
           instances: (( instances ))
-          availability_zone: (( availability_zone ))
-          bosh_job_partition_stats: (( bosh_job_partition_stats ))
+          any_instances: (( any_instances ))
+          subnet_cidrs: (( subnet_cidrs ))
 </pre>
 
 ### <a id='job-name'></a> name
@@ -1106,7 +1106,71 @@ For examples of supported constraint types, see [integer](#integer) below.
 Ops Manager generates a BOSH manifest that defines properties for each job the manifest deploys.
 Some of these properties are not set until the user clicks **Apply Changes**, because the user configures them in the tile or because Ops Manager has to generate them.
 
-For more information about these properties, see [Designating Property Values](#property-values).
+For more information about referencing these properties, see [Referencing Properties](#property-refs).
+
+#### <a id='job-accessors'></a> Job Accessors
+
+Ops Manager provides double parentheses expressions to access information about the jobs that the manifest deploys.
+
+<table class="nice">
+  <tr>
+    <td>
+      <code>(( name ))</code>
+    </td>
+    <td>
+      Name of the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( ram ))</code>
+    </td>
+    <td>
+      RAM of the VM type configured for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( ephemeral_disk ))</code>
+    </td>
+    <td>
+      Ephemeral disk of the VM type configured for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( persistent_disk ))</code>
+    </td>
+    <td>
+      Persistent disk of the VM type configured for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( instances ))</code>
+    </td>
+    <td>
+      Number of instances configured for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( any_instances ))</code>
+    </td>
+    <td>
+      Returns true if there is a non-zero number of instances for the job
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>(( subnet_cidrs ))</code>
+    </td>
+    <td>
+      List of CIDRs associated with the job
+    </td>
+  </tr>
+</table>
+
 
 ## <a id='property-blueprints'></a>Property Blueprint Reference
 
@@ -1245,7 +1309,7 @@ Below is a reference to every property blueprint type.
 
 <%= partial 'tile-reference/property-blueprints/collection' %>
 
-###<a id='disk-type-dropdown'></a>disk_type_dropdown
+###<a id='disk-type-dropdown'></a>disk\_type\_dropdown
 
 <%= partial 'tile-reference/property-blueprints/disk-type-dropdown' %>
 
