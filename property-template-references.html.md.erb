@@ -1105,7 +1105,7 @@ For examples of supported constraint types, see [integer](#integer) below.
 Ops Manager generates a BOSH manifest that defines properties for each job the manifest deploys.
 Some of these properties are not set until the user clicks **Apply Changes**, because the user configures them in the tile or because Ops Manager has to generate them.
 
-For more information about these properties, see [Designating Property Values](#property-values).
+For more information about referencing these properties, see [Referencing Properties](#property-refs).
 
 #### <a id='job-accessors'></a> Job Accessors
 
@@ -1125,7 +1125,7 @@ Ops Manager provides double parentheses expressions to access information about 
       <code>(( cpu ))</code>
     </td>
     <td>
-        CPU of the VM type chosen for the job
+        CPU of the VM type configured for the job
     </td>
   </tr>
   <tr>
@@ -1133,7 +1133,7 @@ Ops Manager provides double parentheses expressions to access information about 
       <code>(( ram ))</code>
     </td>
     <td>
-      RAM of the VM type chosen for the job
+      RAM of the VM type configured for the job
     </td>
   </tr>
   <tr>
@@ -1141,7 +1141,7 @@ Ops Manager provides double parentheses expressions to access information about 
       <code>(( ephemeral_disk ))</code>
     </td>
     <td>
-      Ephemeral disk of the VM type chosen for the job
+      Ephemeral disk of the VM type configured for the job
     </td>
   </tr>
   <tr>
@@ -1149,7 +1149,7 @@ Ops Manager provides double parentheses expressions to access information about 
       <code>(( persistent_disk ))</code>
     </td>
     <td>
-      Persistent disk of the VM type chosen for the job
+      Persistent disk of the VM type configured for the job
     </td>
   </tr>
   <tr>
@@ -1157,7 +1157,7 @@ Ops Manager provides double parentheses expressions to access information about 
       <code>(( instances ))</code>
     </td>
     <td>
-      Number of instances chosen for the job
+      Number of instances configured for the job
     </td>
   </tr>
   <tr>
@@ -1316,7 +1316,7 @@ Below is a reference to every property blueprint type.
 
 <%= partial 'tile-reference/property-blueprints/collection' %>
 
-###<a id='disk-type-dropdown'></a>disk_type_dropdown
+###<a id='disk-type-dropdown'></a>disk\_type\_dropdown
 
 <%= partial 'tile-reference/property-blueprints/disk-type-dropdown' %>
 
