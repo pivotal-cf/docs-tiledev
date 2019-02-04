@@ -7,11 +7,14 @@ owner: Services
 
 ## <a id="levels"></a> Integration Levels
 
-A service can integrate with PCF at four levels, shown here in order of increasing integration. In general, user-experience and production-readiness improves as the integration level increases. But none of the higher levels is required. You can stop service integration and declare it complete (enough) after any of these:
+A service can integrate with PCF at four levels, shown here in order of increasing
+integration. In general, user-experience and production-readiness improves as the
+integration level increases. But none of the higher levels is required. You can
+stop service integration and declare it complete (enough) after any of these:
 
 When integrating third-party software with Cloud Foundry, the effort
-typically progresses through increasing levels of integration. We recommend this
-staged approach because it enables early feedback on the value and the
+typically progresses through increasing levels of integration. Pivotal recommends
+this staged approach because it enables early feedback on the value and the
 design of the integration, which helps make better decisions about future
 stages.
 
@@ -19,40 +22,63 @@ For non-service integrations (such as applications or buildpacks), a similar
 staged integration approach is often possible and desirable.
 
 ![Service Integration Stages](img/integration-stages.png)
- 
+
 ## <a id="ups"></a> Level 1. User-Provided Service
 
-The service runs external to PCF and has no service broker or tile. To use a service with an app, the developer creates a service broker by running `cf create-user-provided-service` from the Cloud Foundry Command-Line Interface (cf CLI).
+The service runs external to PCF and has no service broker or tile. To use a service
+with an app, the developer creates a service broker by running
+`cf create-user-provided-service` from the Cloud Foundry Command-Line Interface
+(cf CLI).
 
-Configuring, running, upgrading, and paying for a user-provided service are all up to the developer.
+Configuring, running, upgrading, and paying for a user-provided service are all
+up to the developer.
 
 ## <a id="broker"></a> Level 2. Brokered Service
 
-A brokered service runs external to PCF, but has a tile on [Pivotal Network](http://network.pivotal.io) (PivNet).
+A brokered service runs external to PCF, but has a tile on [Pivotal Network](http://network.pivotal.io).
 
-PivNet designates brokered services by including "Service Broker for PCF" in the name.
+Pivotal Network designates brokered services by including "Service Broker for PCF"
+in the name.
 
-Operators install, configure, and upgrade the tile through the Ops Manager Installation Dashboard. Developers can then see your service plans and create service instances in Apps Manager, or by running `cf marketplace` and `cf create-service` from the command-line.
+Operators install, configure, and upgrade the tile through the Ops Manager
+Installation Dashboard. Developers can then see your service plans and create
+service instances in Apps Manager, or by running `cf marketplace` and
+`cf create-service` from the command-line.
 
-The [Brokered Service](./brokered.html) topic has more information about brokered service tiles and how to create them.
+The [Brokered Service](./brokered.html) topic has more information about brokered
+service tiles and how to create them.
 
 ## <a id="managed"></a> Level 3. Managed Service
 
-With a managed service, both the service broker and the service itself run within PCF. This enables PCF to manage, monitor, and increase service performance.
+With a managed service, both the service broker and the service itself run within
+PCF. This enables PCF to manage, monitor, and increase service performance.
 
-As with the brokered service, the service has a service broker and a tile listed on PivNet. PivNet lists managed services as "for PCF," without "Service Broker" in the name.
+As with the brokered service, the service has a service broker and a tile listed
+on Pivotal Network. Pivotal Network lists managed services as "for PCF," without
+"Service Broker" in the name.
 
-When the operator installs the tile, they allocate a block of VMs to run service instances and provisions their CPU and memory resources uniformly.  
+When the operator installs the tile, they allocate a block of VMs to run service
+instances and provisions their CPU and memory resources uniformly.
 
-The [Managed Service](./managed.html) topic has more information about managed service tiles and how to create them.
+The [Managed Service](./managed.html) topic has more information about managed
+service tiles and how to create them.
 
 ## <a id="dynamic"></a>  Level 4. On-Demand (Dynamic) Service
 
 As with a managed service, an on-demand service and broker both run within PCF,
-and PivNet lists the service tile without "Service Broker" in the name.
-But unlike a managed service, an on-demand service does not limit the number of service instance VMs.
-The operator does not have to pre-allocate and provision VM resources for the service.
+and Pivotal Network lists the service tile without "Service Broker" in the name.
+But unlike a managed service, an on-demand service does not limit the number of
+service instance VMs.
+The operator does not have to pre-allocate and provision VM resources for the
+service.
 
-When a developer creates an instance of an on-demand service, they provision its resources (within an allowed range) and BOSH dynamically creates a new, dedicated VM for the instance.
+When a developer creates an instance of an on-demand service, they provision its
+resources (within an allowed range) and BOSH dynamically creates a new, dedicated
+VM for the instance.
 
-The [On-Demand Service](./on-demand.html) topic has more information about On-Demand service tiles and how to create them.
+The [On-Demand Service](./on-demand.html) topic has more information about
+On-Demand service tiles and how to create them.
+
+The [Supporting Multiple Cloud Foundry Instances](https://docs.pivotal.io/pivotalcf/2-3/services/supporting-multiple-cf-instances.html)
+topic has information about registering a service broker with multiple Cloud Foundry
+instances.
