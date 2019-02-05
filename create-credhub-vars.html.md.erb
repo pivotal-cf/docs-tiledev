@@ -44,17 +44,17 @@ Ops Manager evaluates the above example to generate the following section in the
 
 ## How CredHub Works Within a Deployment
 
-CredHub is distributed as a BOSH release. As part of this installation, Ops Manager co-locates the CredHub release on the Ops Manager Director, including the CredHub job configurations, and the Director is configured to point to the CredHub API.
+CredHub is distributed as a BOSH release. As part of this installation, Ops Manager co-locates the CredHub release on the BOSH Director, including the CredHub job configurations, and the Director is configured to point to the CredHub API.
 
 Once CredHub has been deployed and configured on the Director, any Director deployment can use CredHub variables in place of credential values. Using variables, rather than values, provides an extra layer of security when transmitting credentials within your deployment.
 
 ## Changing Your Deployment Manifest to Include CredHub Variables
 
-The Ops Manager Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
+The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
 
 The manifest excerpt below includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>. 
 
-When this manifest is deployed, the Ops Manager Director retrieves the stored variables and replaces them with the credential values associated with each variable. The <code>EXAMPLE-TLS</code> variables include property accessors, so only the `certificate` and `private_key` components are interpolated.
+When this manifest is deployed, the BOSH Director retrieves the stored variables and replaces them with the credential values associated with each variable. The <code>EXAMPLE-TLS</code> variables include property accessors, so only the `certificate` and `private_key` components are interpolated.
 
 ```
 name: demo-deploy
@@ -105,7 +105,7 @@ instance_groups:
 
 ## Variable Namespacing
 
-Deployment manifests often use common variable names; for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the Ops Manager Director automatically stores variables with the Ops Manager Director name and deployment name. For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as /Ops-Manager-Director-name/deployment-name/example-password.
+Deployment manifests often use common variable names; for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name. For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as /BOSH-Director-name/deployment-name/example-password.
 
 ### Other Namespacing Options
 
