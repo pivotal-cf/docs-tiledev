@@ -17,7 +17,7 @@ Both BOSH CredHub and runtime CredHub are instances of the CredHub credential ma
 Many <%= vars.product_name %> components use credentials to authenticate connections, and <%= vars.product_name %>  installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
 
 In Pivotal Cloud Foundry (PCF) v1.11.0, CredHub runs on the BOSH VM, alongside the BOSH Director and UAA. Ops Manager v1.11 stores its credentials in CredHub,
-and users can retrieve them using the CredHub API or the **Credentials** tab of the Ops Manager Director tile.
+and users can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
 Tile developers can embed CredHub calls in [manifest snippets](#snippets) and PCF apps can retrieve credentials using the CredHub API.
 
 See [Fetching Variable Names and Values](./get-credhub-vars.html) for how to fetch variable names and values using the CredHub API.
@@ -56,7 +56,7 @@ For more information, read [Migrating Existing Credentials to CredHub](./migrati
 
 ## <a id="api-variables"></a>Fetching Variable Names and Values
 
-API endpoints are available to help you find variable names and values for products known to the Ops Manager Director.
+API endpoints are available to help you find variable names and values for products known to the BOSH Director.
 
 For more information, read <a href="./get-credhub-vars.html" class="subnav">Fetching Variable Names and Values</a>.
 
