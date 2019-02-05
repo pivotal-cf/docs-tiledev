@@ -5,15 +5,21 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This topic provides resources for creating a BOSH release that integrates a software service with Pivotal Cloud Foundry (PCF) at the managed service level.
+This topic provides resources for creating a BOSH release that integrates a
+software service with Pivotal Cloud Foundry (PCF) at the managed service level.
 
 ## <a id="overview"></a> Overview
 
-A BOSH release is a directory that contains the source code for your service along with everything else that BOSH needs to deploy it reproducibly to cloud VMs running a specified operating system (stemcell). These contents include but are not limited to buildpacks, start up scripts, binary artifacts, and a BOSH manifest containing configuration and deployment properties.
+A BOSH release is a directory that contains the source code for your service
+along with everything else that BOSH needs to deploy it reproducibly to cloud VMs
+running a specified operating system (stemcell). These contents include but are
+not limited to buildpacks, start up scripts, binary artifacts, and a BOSH
+manifest containing configuration and deployment properties.
 
 The BOSH manifest specifies the following major components:
 
-- **Packages** that can be installed on PCF stemcells to create virtual machine images
+- **Packages** that can be installed on PCF stemcells to create VM
+images
 
 - **Jobs** that describe how to install, run, and remove your software
 
@@ -24,11 +30,14 @@ service components and stop or restart them
 
 These topics give more details on BOSH and BOSH releases:
 
-- [BOSH Documentation](http://bosh.io/docs) is the top-level contents page for BOSH documentation.
+- [BOSH Documentation](http://bosh.io/docs) is the top-level contents page for
+BOSH documentation.
 
-- [BOSH Problem Statement](http://bosh.io/docs/problems.html) explains what BOSH does.
+- [BOSH Problem Statement](http://bosh.io/docs/problems.html) explains what BOSH
+does.
 
-- [BOSH Basic Workflow](http://bosh.io/docs/basic-workflow.html) lists the high-level steps for creating a BOSH deployment.
+- [BOSH Basic Workflow](http://bosh.io/docs/basic-workflow.html) lists the
+high-level steps for creating a BOSH deployment.
 
 ## <a id="create"></a>Creating a BOSH Release
 
@@ -49,30 +58,37 @@ These topics explain how to create a BOSH release:
 If you have already packaged your service as Docker images, you can emulate
 a managed service deployment using the [Tile Generator](tile-generator.html)'s
 support for `docker-bosh` packages. This feature lets you deploy pre-existing
-Docker images into BOSH managed virtual machines on the PCF infrastructure.
+Docker images into BOSH-managed VMs on the PCF infrastructure.
 
-While this is a great, easy way to deploy your service on PCF, we don't
+While this is a great, easy way to deploy your service on PCF, we do not
 recommend this as a long-term, production-ready solution. There is really no
 benefit of running your service in containers on the VMs, and it does have
 a number of operational ("day 2") drawbacks:
 
 - You introduce more software (Docker) which needs to be kept up-to-date, and
-has the potential for bugs, downtime, and security vulnerabilities.
+has the potential for issues, downtime, and security vulnerabilities.
 
 - You can no longer take advantage of the patching capabilities of PCF for
-stemcells and application dependencies, like frameworks and libraries. Instead,
+stemcells and application dependencies, such as frameworks and libraries. Instead,
 you become directly responsible for managing all software that is in the Docker
 images you deploy.
 
 ## <a id="enhancing"></a>Enhancing the BOSH Release
 
 After the basic BOSH release is in place, additional features for logging
-help operators run the service. For logging information, see 
+help operators run the service. For logging information, see
 [syslog-release](https://github.com/cloudfoundry/syslog-release).
-You should expose the property `syslog.migration.disabled` using the tile's forms
-because not all customers configure syslog draining.
+Pivotal recommends you expose the property `syslog.migration.disabled` using the
+tile's forms because not all customers configure syslog draining.
 
-Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded to the configured syslog server by the release.
-Integrating syslog forwarding into a tile should not require code changes; 
+Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded
+to the configured syslog server by the release.
+Integrating syslog forwarding into a tile should not require code changes;
 it only requires including the release and configuration forms in the `tile.yml`.
 For an example, see [pcf-examples/tile-for-bosh-with-syslog](https://github.com/cf-platform-eng/pcf-examples/tree/master/tile-for-bosh-with-syslog).
+
+## <a id="backup"></a>BOSH Backup and Restore
+
+The [BOSH Backup and Restore Developer's Guide](https://docs.cloudfoundry.org/bbr/bbr-devguide.html)
+describes the framework for release authors to add backup and restore functionality
+to their release by using BOSH Backup and Restore (BBR).
