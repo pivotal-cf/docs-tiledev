@@ -5,12 +5,12 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This guide exists to help Pivotal Cloud Foundry (PCF) Partners learn the high-level process of building and publishing a tile on [Pivotal Network](https://network.pivotal.io/). 
+This topic exists to help Pivotal Cloud Foundry (PCF) Partners learn the high-level process of building and publishing a tile on [Pivotal Network](https://network.pivotal.io/). 
 
 For advanced developers with previous experience building tiles, see [Property and Template References](./property-template-references.html) and [Development Workflow Reference](./dev-workflow.html).
 
 ## <a id="tile-def"></a> What is a Tile?
-Tiles are packaged software that can be integrated into PCF. PCF operators can install tiles on PCF. PCF developers can use these services once they are installed.
+Tiles are packaged software that can be integrated into PCF. PCF operators can install tiles on PCF. PCF developers can use these services after they are installed.
 
 Tile developers can publish tiles on Pivotal Network, where services and tiles are available for download.
 
@@ -44,7 +44,7 @@ When you package your software with Tile Generator, it generates these subdirect
 There are multiple reasons to build and publish a tile on Pivotal Network. Tiles can help you:
 
 * Find the widest possible audience for your service.
-* Join a growing ecosystem that can easily integrate your service.
+* Join a growing ecosystem that can integrate your service.
 * Enable operators and app developers to interact with your service in an accessible and standardized way.
 
 ## <a id="tile-steps"></a> Building Your First Tile
@@ -73,15 +73,15 @@ If you use Tile Generator to package your software you also need to determine th
 
 Before starting tile development, see [How PCF and PCF Services Work](./cf-concepts.html). 
 
-Depending on what you build, you may need to install the following tools: 
+Depending on what you build, you might need to install the following tools: 
 
 - [Tile Generator](./tile-generator.html#-how-to-use): Used to package your software into a tile. 
 
-- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/): A command line interface for running BOSH commands. You need BOSH commands to run Tile Generator. 
+- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/): A CLI for running BOSH commands. You need BOSH commands to run Tile Generator. 
 
-- [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads): A command line interface for deploying and managing apps on Cloud Foundry. If you are developing on Cloud Foundry, you use cf CLI when building your tile. 
+- [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads): A CLI for deploying and managing apps on Cloud Foundry. If you are developing on Cloud Foundry, you use cf CLI when building your tile. 
 
-- [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/): A command line interface for deploying and managing apps on Kubernetes. If you are developing on Kubernetes, you use kubectl when building your tile.
+- [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/): A CLI for deploying and managing apps on Kubernetes. If you are developing on Kubernetes, you use kubectl when building your tile.
 
 - [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional): A lightweight PCF installation for deploying and debugging apps locally. You can use CF Dev if you want to run PCF on your local workstation.
 
@@ -89,21 +89,21 @@ Depending on what you build, you may need to install the following tools:
 
 Tile Generator is a tool that simplifies the building process for tiles. To use Tile Generator, upload your software components, such as the service broker, buildpack, and Docker image, and the tool generates a base tile.
 
-For information on setting up Tile Generator and building a base tile, see [Tile Generator](./tile-generator.html).
+For information about setting up Tile Generator and building a base tile, see [Tile Generator](./tile-generator.html).
 
 #### <a id="test"></a> 3. Test Your Tile
 
-Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services or Google Cloud Platform. You can upload, configure, and install your tile in PIE just like an operator would.  
+Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and install your tile in PIE just like an operator would.  
 
 To gain access to your PIE, reach out to your contact at Pivotal or [register as a partner](https://partners.pivotal.io/). 
 
-If you already have access to your PIE, for information on how to log in, see [Shared PCF Development Environments](./environments.html).
+If you already have access to your PIE, for information information about how to log in, see [Shared PCF Development Environments](./environments.html).
 
 #### <a id="document"></a> 4. Document Your Tile
 
-When you are ready to publish your tile, you should write documentation. Documentation is valuable for operators who use your tile. 
+When you are ready to publish your tile, write documentation. Documentation is valuable for operators who use your tile. 
 
-For more information on how to write and publish documentation for your tile, see [Tile Documentation](./tile-documentation.html).
+For more information about how to write and publish documentation for your tile, see [Tile Documentation](./tile-documentation.html).
 
 #### <a id="publish"></a> 5. Publish Your Tile on Pivotal Network
 
@@ -139,7 +139,7 @@ Contact your Pivotal representative who can guide you through the process of upl
 	</tr>
 </table>
 
-For information on the release cycle for Partner tiles, see [Partner Software Release Cycle](./releases.html).
+For information about the release cycle for Partner tiles, see [Partner Software Release Cycle](./releases.html).
 
 ## <a id="contact"></a> Contact Us
-If you want to learn more about the Pivotal ISV Partner Program or request assistance with your integration project, see [Contact Us](./contacts.html).
+If you want to learn more about the Pivotal ISV Partner Program or request help with your integration project, see [Contact Us](./contacts.html).
