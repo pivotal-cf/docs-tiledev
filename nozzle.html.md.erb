@@ -5,31 +5,34 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This topic explains how to integrate PCF services with Cloud Foundry's logging system, the _Loggregator_, by writing to and reading from its _Firehose_ endpoint.
+This topic explains how to integrate PCF services with Cloud Foundry's logging system, _Loggregator_, by writing to and reading from its _Firehose_ endpoint.
 
 ## <a id="overview"></a> Overview
 
-Cloud Foundry's _Loggregator_ logging system collects logs and metrics from PCF apps and platform components and streams them to a single endpoint, the _Firehose_. Your tile can integrate its service with the Loggregator system in two ways:
+Cloud Foundry's Loggregator logging system collects logs and metrics from PCF apps and platform components and streams them to a single endpoint, Firehose. Your tile can integrate its service with Loggregator in two ways:
 
-* By sending your service component logs and metrics to the Firehose, to be streamed along with PCF core platform component logs and metrics.
+* By sending your service component logs and metrics to Firehose, to be streamed along with PCF core platform component logs and metrics
 
-* By installing a _nozzle_ on the Firehose that directs Firehose data to be consumed by external services or apps. A built-in nozzle can enable a service to:
-  - Drain metrics to an external dashboard product, for system operators
+* By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or apps -- a built-in nozzle can enable a service to:
+  - Drain metrics to an external dashboard product for system operators
   - Send HTTP request details to search or analysis tools
-  - Drain app logs to an external system 
-  - [Auto-scale itself](https://youtu.be/skJKvQfpKD4?t=1021) based on Firehose metrics
-  
-[Firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog) is a real world, production example of a nozzle.
+  - Drain app logs to an external system
+  - Auto-scale itself based on Firehose metrics, as detailed in this [YouTube video](https://youtu.be/skJKvQfpKD4?t=1021)
+
+For a real world production example of a nozzle see [Firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog) in GitHub.
 
 ## <a id="firehose"></a> Firehose Communication
 
-PCF components publish logs and metrics to the Firehose through Metron agent processes that run locally on the component VMs. Metron agents input the data to the Loggregator system by writing it to Loggregator's [etcd](https://coreos.com/etcd/) key-value store via a [gRPC](https://coreos.com/etcd/docs/latest/op-guide/grpc_proxy.html) proxy. The topic [Overview of the Loggregator System](https://docs.cloudfoundry.org/loggregator/architecture.html) shows how logs and metrics travel from PCF system components to the Firehose.
+PCF components publish logs and metrics to Firehose through Metron agent processes that run locally on the component VMs.
+Metron agents input the data to the Loggregator system by writing it to Loggregator's [etcd](https://coreos.com/etcd/) key-value store through a [gRPC](https://coreos.com/etcd/docs/latest/op-guide/grpc_proxy.html) proxy.
+The topic [Overview of the Loggregator System](https://docs.cloudfoundry.org/loggregator/architecture.html) shows how logs and metrics travel from PCF system components to Firehose.
 
-Component VMs running PCF services can publish logs and metrics the same way, by including a Metron agent that writes to etcd. In PCF v1.10 and later, components only communicate with `etcd` via secure, encrypted `https` protocol. Earlier versions of PCF allow both encrypted `https` and unencrypted `http` communications with etcd.
+Component VMs running PCF services can publish logs and metrics the same way, by including a Metron agent that writes to etcd. In PCF v1.10 and later, components only communicate with `etcd` through the secure, encrypted `https` protocol.
+Earlier versions of PCF permit both `https` and unencrypted `http` communications with etcd.
 
 ### <a id="https"></a> Secure HTTPS Protocol: PCF 1.10+
 
-To enable a service component to supply logs and metrics to the Firehose through encrypted communications, you need to include a Metron agent in its template definitions.
+To enable a service component to supply logs and metrics to Firehose through encrypted communications, you need to include a Metron agent in its template definitions.
 
 For example:
 
@@ -57,11 +60,12 @@ manifest: |
       ca_cert: (( $ops_manager.ca_certificate ))
 ```
 
-Metron versions v72 and later do not use etcd to communicate with Loggregator, but the configuration above works with any version of Metron. If the Metron agent does not need values for etcd, it safely ignores them.
+Metron versions v72 and later do not use etcd to communicate with Loggregator, but the configuration above works with any version of Metron.
+If the Metron agent does not need values for etcd, it safely ignores them.
 
 ### <a id="http"></a> HTTP Protocol: PCF 1.9 and Earlier
 
-In PCF v1.9, service components can send logs and metrics to the Firehose encrypted or unencrypted. In v1.8 and earlier releases, components only communicate their log and metrics data unencrypted.
+In PCF v1.9, service components can send logs and metrics to Firehose encrypted or unencrypted. In v1.8 and earlier releases, components only communicate their log and metrics data unencrypted.
 
 To enable unencrypted communications with etcd, define a Metron agent and list the addresses of the etcd servers in the template definitions as follows:
 
@@ -85,11 +89,12 @@ manifest: |
 
 ## <a id="nozzle"></a> Nozzles
 
-A nozzle is a component dedicated to reading and processing data that streams from the Firehose. A service tile can install a nozzle as either a managed service, with package type `bosh-release`; or as an app pushed to Elastic Runtime, with the package type `app`.
+A nozzle is a component dedicated to reading and processing data that streams from Firehose.
+A service tile can install a nozzle as either a managed service, with package type `bosh-release`, or as an app pushed to Pivotal Application Service (PAS), with the package type `app`.
 
 ### <a id="develop"></a> Develop a Nozzle
 
-Pivotal recommends developing a nozzle in Go, to leverage the
+Pivotal recommends developing a nozzle in Go to leverage the
 [NOAA library](https://github.com/cloudfoundry/noaa).
 NOAA does the heavy lifting of establishing
 an authenticated websocket connection to the logging system
@@ -119,10 +124,10 @@ config := &cfclient.Config{
 client, err := cfclient.NewClient(config)
 ```
 
-Using the client's token, create a consumer and connect to the Firehose with a subscription id.
-The id is important, since the Firehose looks for connections having the same id and only
-sends an event to one of those connections. This is how a nozzle developer can prevent
-message loss during upgrades an other deployments: run at least two instances.
+Using the client's token, create a consumer and connect to Firehose with a subscription ID.
+The ID is important because Firehose looks for connections with the same ID and only
+sends an event to one of those connections. A nozzle developer can run two or more
+instances to prevent message loss during upgrades an other deployments.
 
 ```go
 token, err := client.GetToken()
@@ -133,91 +138,75 @@ consumer := consumer.New(config.TrafficControllerURL, &tls.Config{
 events, errors := consumer.Firehose(firehoseSubscriptionID, token)
 ```
 
-`Firehose` will give back two channels: one for events and a second for errors.
+`Firehose` gives back two channels, one for events and one for errors.
 
-The events channel receives six different types of events.
+The events channel receives the following six types of events.
 
-* ValueMetric: Some platform metric at a point in time, emitted by platform components. For example, how many `2xx` responses the router has sent out.
-* CounterEvent: An incrementing counter, emitted by platform components. For example, a Diego cell's remaining memory capacity.
-* Error: An error.
-* HttpStartStop: HTTP request details, including both app and platform requests.
-* LogMessage: A log message for an individual app.
-* ContainerMetric: Application container information. For example, memory used.
+* _ValueMetric_ represents some platform metric at a point in time, emitted by platform components. For example, how many `2xx` responses the router has sent out.
+* _CounterEvent_ represents an incrementing counter, emitted by platform components. For example, a Diego cell's remaining memory capacity.
+* _Error_ represents an error in the originating process.
+* _HttpStartStop_ represents HTTP request details, including both app and platform requests.
+* _LogMessage_ represents a log message for an individual app.
+* _ContainerMetric_ represents application container information. For example, memory used.
 
-For the full details on events, see the
-[dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol/tree/master/events).
+For the full details on events, see
+[dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol/tree/master/events)
+in GitHub.
 
 The above events show how this data targets two different personae:
 platform operators and app developers. Keep this in mind when designing an integration.
 
-Having `doppler.firehose` scope gets a nozzle data for *every* app as well as the platform. 
+The `doppler.firehose` scope gets nozzle data for *every* app as well as the platform.
 Any filtering based on the event payload is the nozzle implementor's responsibility.
-An advanced integration could do something like combine a
+An advanced integration could combine a
 [service broker](service-brokers.html) with a nozzle to:
 
-* Let app developers opt-in to logging (implementing filtering in the nozzle)
-* Establish [SSO](https://docs.cloudfoundry.org/services/dashboard-sso.html) exchange for authentication such that developers only can access logs for their space's apps
+* Let app developers opt in to logging (implementing filtering in the nozzle)
+* Establish [SSO](https://docs.cloudfoundry.org/services/dashboard-sso.html) exchange for authentication so that developers only can access logs for their space's apps
 
 For a full working example (suitable as an integration starting point),
 see [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle).
 
 ### <a id="deploy"></a> Deploy a Nozzle
 
-Once you've build a nozzle, you can deploy it as either a managed service or as an app.
+Once you have built a nozzle, you can deploy it as a managed service or as an app.
 
-#### <a id="nozzle-service"></a> As a Managed Service
+Visit [managed service](managed.html) for more details on what it means to be a
+managed service. See also this [example nozzle BOSH release](https://github.com/cloudfoundry-incubator/example-nozzle-release).
 
-Visit [managed service](managed.html)
-for more details on what it means to be a managed service.
-
-See also this
-[example nozzle BOSH release](https://github.com/cloudfoundry-incubator/example-nozzle-release).
-
-#### <a id="nozzle-app"></a> As an App
-
-You can also deploy the nozzle as an app on Elastic Runtime.
-Visit the Tile Generator's
+You can also deploy the nozzle as an app on PAS. Visit the Tile Generator's
 [section on pushed apps](tile-generator.html#pushed-applications)
 for more details.
 
 ### <a id="examples"></a> Example Nozzles
 
 There are several open source examples you could use
-as a reference for building your nozzle
+as a reference for building your nozzle.
 
-[firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle)
+* [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle)
+simply writes to standard out. It is a useful starting point as scaffolding, tests,
+and more are already in place.
 
-  * Example that simply writes to standard out
-  * Useful starting point: scaffolding, tests, etc are in place
+* [example-nozzle](https://github.com/cloudfoundry-incubator/example-nozzle) in a
+single file implementation with no tests.
 
-[example-nozzle](https://github.com/cloudfoundry-incubator/example-nozzle)
+* [gcp-tools-release](https://github.com/cloudfoundry-community/gcp-tools-release)
+drains component syslogs and health data in addition to nozzle data. It shows how
+to work with a BOSH add-on for additional data outside a nozzle. The nozzle is
+managed through BOSH. Raw logs and metrics data take different paths in the source.
 
-  * A single file implementation with no tests: as minimal as things can get
+* [firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog)
+includes implementation code that adds additional metadata, which might be needed
+for the access control list (ACL) app name, space UUID and name, and org UUID and name.
 
-[gcp-tools-release](https://github.com/cloudfoundry-community/gcp-tools-release)
+* [logsearch-for-cloudfoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry)
+ packages this nozzle as a BOSH release.
 
-  * In addition to Nozzle data, it drains component syslogs and health data
-  * Shows how to do a BOSH add-on (for additional data outside a nozzle)
-  * Nozzle is managed through BOSH
-  * Raw logs and metrics data take different paths in the source
+* [splunk-firehose-nozzle](https://github.com/cf-platform-eng/splunk-firehose-nozzle)
+has source code based on `firehose-to-syslog` and is packaged to run an app on PCF.
 
-[firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog)
-
-  * Includes implementation code that adds additional metadata,
-    which might be needed for an access control list (ACL)
-      - App name
-      - Space UUID and name
-      - Org UUID and name
-  * [logsearch-for-cloudfoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry) packages this nozzle as a BOSH release
-
-[splunk-firehose-nozzle](https://github.com/cf-platform-eng/splunk-firehose-nozzle)
-
-  * Source code based on `firehose-to-syslog`
-  * Packaged to run an app on PCF
-
-[datadog-firehose-nozzle](https://github.com/DataDog/datadog-firehose-nozzle)
-
-  * Another real world implementation
+* [datadog-firehose-nozzle](https://github.com/DataDog/datadog-firehose-nozzle) is
+another real world implementation.
 
 ## <a id="syslog-format-pcf"></a> Log Format for PCF Components
 
@@ -244,7 +233,6 @@ This table describes each element of a standard PCF syslog message.
   </tr><tr>
     <td><code>${VERSION}</code></td>
     <td><a href="https://tools.ietf.org/html/rfc5424#section-9.1"><code>1</code></a></td>
-  </tr>
   </tr><tr>
     <td><code>${TIMESTAMP}</code></td>
     <td><p>The <a href="https://tools.ietf.org/html/rfc5424#section-9.1">timestamp</a> of when the log message is forwarded; typically slightly after it was generated. Example: <code>2017-07-24T05:14:15.000003Z</code></p></td>
@@ -258,11 +246,10 @@ This table describes each element of a standard PCF syslog message.
     <li><code>vcap.garden</code></li>
     <li><code>vcap.cloud_controller_ng</code></li></ul>
     <p>
-    You can derive this process name from either the program name configured for the local Metron agent or the <code>:progname</code>that blackbox derives from the folder that syslog-release forwards logs into.</p></td>
+    You can derive this process name from either the program name configured for the local Metron agent or the <code>:progname</code>that blackbox derives from the directory that syslog-release forwards logs into.</p></td>
   </tr><tr>
     <td><code>${PROD_ID}</code></td>
     <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.6">Process ID</a> of the syslog process doing the forwarding. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
-</td>
   </tr><tr>
     <td><code>${MSG_ID}</code></td>
     <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log message. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
@@ -335,7 +322,7 @@ The RFC-5424 syslog protocol includes a [structured data element](https://tools.
     <td>BOSH <code>spec.az</code> value</td>
   </tr><tr>
     <td><code>${ID}</code></td>
-    <td>BOSH <code>spec.id</code> value. This is a GUID, not an index. Necessary because BOSH Availability Zone index values are not always unique or sequential.</td>
+    <td>BOSH <code>spec.id</code> value. This is a UUID, not an index. It is necessary because BOSH Availability Zone index values are not always unique or sequential.</td>
  </tr>
 </table>
 
@@ -353,4 +340,3 @@ various metrics and how to make them useful.
 * [Overview of the Loggregator System](https://docs.cloudfoundry.org/loggregator/architecture.html)
 
 * [Loggregator's Slack Channel](https://cloudfoundry.slack.com/messages/loggregator/)
-
