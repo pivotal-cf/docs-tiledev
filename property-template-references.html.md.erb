@@ -141,6 +141,32 @@ Ops Manager allows empty arrays in double-parentheses expressions. For example:
 
 For more information about the available properties and their accessors, see the [Property Blueprint Reference](#property-blueprints).
 
+### <a id='product'></a>Product Context
+
+Product context is useful for accessing information about a product. It can be
+used in a manifest using this syntax:
+
+```
+  (( ..PRODUCT-NAME.accessor ))
+```
+
+These are the allowed accessors:
+
+<table class="nice">
+  <tr>
+    <th>Accessor</th>
+    <th>Description</th>
+  </tr>
+  <tr>
+    <td>deployment_name</td>
+    <td>Provides the deployment name passed to BOSH for the product</td>
+  </tr>
+  <tr>
+    <td>network_name</td>
+    <td>Provides the name of the network assigned for the product</td>
+  </tr>
+</table>
+
 ### <a id='dollar'></a>Dollar Contexts
 
 Outside of properties, you can also retrieve information about various configuration details of your product and Ops Manager.
