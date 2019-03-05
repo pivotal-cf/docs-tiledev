@@ -5,10 +5,10 @@ owner: Ops Manager
 
 <strong><%= modified_date %></strong>
 
-This topic explains how to migrate existing syslog properties that are defined by a tile into the 
+This topic explains how to migrate existing syslog properties that are defined by a tile into the
 syslog form provided by Ops Manager in Pivotal Cloud Foundry (PCF) v2.5 and later.
 
-By enabling the Ops Manager syslog feature, Ops Manager: 
+By enabling the Ops Manager syslog feature, Ops Manager:
 
 * Provides your tile with its own syslog form
 * Ensures that the syslog BOSH release is automatically injected into the instance groups of your product
@@ -16,7 +16,7 @@ By enabling the Ops Manager syslog feature, Ops Manager:
 
 ## <a id="syslog-data-model"></a>Syslog Data Model
 
- The following table lists the Ops Manager syslog parameters that you can migrate your existing 
+ The following table lists the Ops Manager syslog parameters that you can migrate your existing
  configurations to.
 
 <table class="nice">
@@ -48,7 +48,7 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td><code>transport_protocol</code></td>
     <td>string</td>
     <td>No</td>
-    <td>The transport protocol used to send syslog messages to the server. 
+    <td>The transport protocol used to send syslog messages to the server.
       <br>Valid values are <code>tcp</code> and <code>udp</code>. Defaults to <code>tcp</code></td>
   </tr>
   <tr>
@@ -67,14 +67,14 @@ By enabling the Ops Manager syslog feature, Ops Manager:
     <td><code>ssl_ca_certificate</code></td>
     <td>string</td>
     <td>No, unless <code>tls_enabled</code> is <code>true</code></td>
-    <td>Must be a valid certificate<br> 
+    <td>Must be a valid certificate<br>
       Defaults to <code>null</code>.</td>
   </tr>
   <tr>
     <td><code>queue_size</code></td>
     <td>integer</td>
     <td>No</td>
-    <td>The number of log messages the buffer holds before dropping messages. A larger buffer size 
+    <td>The number of log messages the buffer holds before dropping messages. A larger buffer size
       might overload the system. Defaults to <code>100000</code></td>
   </tr>
   <tr>
@@ -96,11 +96,14 @@ By enabling the Ops Manager syslog feature, Ops Manager:
 
 ## <a id="javascript"></a> Use the JavaScript Migration Process
 
-Tile authors can write a JavaScript migration to move their existing syslog properties into the 
-syslog form provided by Ops Manager. After a successful migration, Ops Manager presents the 
+Tile authors can write a JavaScript migration to move their existing syslog properties into the
+syslog form provided by Ops Manager. After a successful migration, Ops Manager presents the
 migrated syslog properties in the Syslog form of the tile.
 
-1. To write your JavaScript migration, use the following example as a template: 
+1. Set the `opsmanager_syslog` property to `true` in your `metadata.yml`.
+For more information, see [opsmanager_syslog](./property-template-references.html#syslog-flag).
+
+1. To write your JavaScript migration, use the following example as a template:
 
 
     ```js
@@ -115,33 +118,33 @@ migrated syslog properties in the Syslog form of the tile.
     };
     ```
     In the code block above, replace the example text as follows:
-      * `PROPERTY-REFERENCE`: Replace with the property reference that corresponds to the metadata 
+      * `PROPERTY-REFERENCE`: Replace with the property reference that corresponds to the metadata
       file, such as `properties`.
       For more information about migrating properties, see [Tile Upgrades](./tile-upgrades.html#import).
       * `EXAMPLE-ADDRESS`: Replace with the property name of the address.
       * `EXAMPLE-PORT`: Replace with the property name of the port.
       * `EXAMPLE-PROTOCOL`: Replace with the property name of the transport protocol.
-      
+
 1. Save the JavaScript file to the `PRODUCT/migrations/v1` directory of your `.pivotal` file.
 1. Remove the following:
-  * From your product template, `form_types` that allow operators to configure tile-specific syslog configuration 
-  * From your tile, the syslog BOSH release. 
+  * From your product template, `form_types` that allow operators to configure tile-specific syslog configuration
+  * From your tile, the syslog BOSH release.
   * From your deployment manifest, syslog configuration properties.
 
-1. To ensure that operators do not try to update syslog configuration properties with no outward 
-functionality, mark all existing syslog configuration properties in your product as non-configurable. 
+1. To ensure that operators do not try to update syslog configuration properties with no outward
+functionality, mark all existing syslog configuration properties in your product as non-configurable.
 
-1. Update the description for the deprecated properties to state that they are deprecated and are no 
+1. Update the description for the deprecated properties to state that they are deprecated and are no
 longer used to configure the syslog.
 
-1. Run a test deploy of your tile by doing the procedures in [Testing Tiles](./testing.html). 
+1. Run a test deploy of your tile by doing the procedures in [Testing Tiles](./testing.html).
 
-1. To ensure that your syslog properties were successfully migrated into the Ops Manager syslog 
+1. To ensure that your syslog properties were successfully migrated into the Ops Manager syslog
 configuration, do one of the following:
     * View the configurations in the **Syslog** pane in Ops Manager **Settings** page.
-    * View your syslog properties using the `syslog_configuration` Ops Manager API endpoint. 
-    For more information about the `syslog_configuration` API endpoint, see 
+    * View your syslog properties using the `syslog_configuration` Ops Manager API endpoint.
+    For more information about the `syslog_configuration` API endpoint, see
     [Retrieving syslog configuration for a product](https://docs.pivotal.io/pivotalcf/opsman-api/#retrieving-syslog-configuration-for-a-product).
 
-<p class="note"><strong>Note:</strong> In the next version of your product, remove 
+<p class="note"><strong>Note:</strong> In the next version of your product, remove
   the deprecated syslog configuration properties.</p>
