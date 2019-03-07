@@ -29,10 +29,7 @@ Component VMs running PCF services can publish logs and metrics the same way, by
 
 ### <a id="https"></a> HTTPS Protocol
 
-To enable a service component to supply logs and metrics to the Firehose through encrypted communications, you need to include a Metron agent in its template definitions.
-=======
 To enable a service component to supply logs and metrics to the Firehose through encrypted communications, you need to include a Loggregator agent in its template definitions.
->>>>>>> daced7a... Edited code snippet and annotative remarks [#159468444]
 
 For example:
 
@@ -76,6 +73,55 @@ Pivotal recommends that this certificate is generated and signed by the Ops Mana
     - agent.(( ..cf.cloud_controller.system_domain.value ))
   description: mTLS Certificate for Agent
 ```
+=======
+To enable a service component to supply logs and metrics to the Firehose through encrypted communications,
+do the following:
+
+1. Include a Loggregator agent in the service component's template definitions.
+<br><br>
+    For example:
+
+    ```
+    name: service
+    label: Service
+    templates:
+      - name: service
+        release: service
+    manifest: |
+      - name: bpm
+        release: bpm
+        properties: {}
+      - name: loggregator_agent
+        release: loggregator-agent
+        consumes:
+          doppler:
+            deployment: cf-e8e79eaed2a50130f206
+        properties:
+          deployment: generator
+          loggregator:
+            tls:
+              ca_cert: (( $ops_manager.ca_certificate ))
+              agent:
+                cert: ((CERTIFICATE))
+                key: ((KEY))
+    ```
+
+    Where `CERTIFICATE` and `KEY` are the values used for mutual TLS communication. For example, `.properties.agent_certificate.cert_pem` and `.properties.agent_certificate.private_key_pem`.
+
+1. Make the Ops Manager CA certificate generate and sign the certificate needed for mutual TLS communication.
+Do so with the following properties:
+
+    ```
+    - name: agent_certificate
+      type: rsa_cert_credentials
+      label: Agent Security Certificate
+      configurable: false
+      default:
+        domains:
+        - agent.(( ..cf.cloud_controller.system_domain.value ))
+      description: mTLS Certificate for Agent
+    ```
+>>>>>>> 462b034... Procedurise HTTPS Protocol section [#159468444]
 
 ### <a id="http"></a> HTTP Protocol: PCF 1.9 and Earlier
 
