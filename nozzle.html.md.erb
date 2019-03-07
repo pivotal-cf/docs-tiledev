@@ -11,7 +11,7 @@ This topic explains how to integrate PCF services with Cloud Foundry's logging s
 
 Cloud Foundry's Loggregator logging system collects logs and metrics from PCF apps and platform components and streams them to a single endpoint, Firehose. Your tile can integrate its service with Loggregator in two ways:
 
-* By sending your service component logs and metrics to Firehose, to be streamed along with PCF core platform component logs and metrics
+* By sending your service component logs and metrics to the Firehose, to be streamed along with PCF core platform component logs and metrics
 
 * By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or apps -- a built-in nozzle can enable a service to:
   - Drain metrics to an external dashboard product for system operators
@@ -23,20 +23,17 @@ For a real world production example of a nozzle see [Firehose-to-syslog](https:/
 
 ## <a id="firehose"></a> Firehose Communication
 
-PCF components publish logs and metrics to Firehose through Metron agent processes that run locally on the component VMs.
-Metron agents input the data to the Loggregator system by writing it to Loggregator's [etcd](https://coreos.com/etcd/) key-value store through a [gRPC](https://coreos.com/etcd/docs/latest/op-guide/grpc_proxy.html) proxy.
-The topic [Overview of the Loggregator System](https://docs.cloudfoundry.org/loggregator/architecture.html) shows how logs and metrics travel from PCF system components to Firehose.
+PCF components publish logs and metrics to the Firehose through Loggregator agent processes that run locally on the component VMs. Loggregator agents input the data to the Loggregator system through a co-located Loggregator agent. To see how logs and metrics travel from PCF system components to the Firehose, see the [Cloud Foundry documentation](https://docs.cloudfoundry.org/loggregator/architecture.html).
 
-<<<<<<< HEAD
-Component VMs running PCF services can publish logs and metrics the same way, by including a Metron agent that writes to etcd. In PCF v1.10 and higher, components only communicate with `etcd` via secure, encrypted `https` protocol. Earlier versions of PCF allow both encrypted `https` and unencrypted `http` communications with etcd.
-=======
 Component VMs running PCF services can publish logs and metrics the same way, by including a Metron agent that writes to etcd. In PCF v1.10 and later, components only communicate with `etcd` through the secure, encrypted `https` protocol.
 Earlier versions of PCF permit both `https` and unencrypted `http` communications with etcd.
->>>>>>> fd209a6... Style edits [#159468444]
+=======
+Component VMs running PCF services can publish logs and metrics the same way, by including the same component, Loggregator Agent. Historically, components used Metron for this communication.
+>>>>>>> daced7a... Edited code snippet and annotative remarks [#159468444]
 
-### <a id="https"></a> Secure HTTPS Protocol: PCF 1.10+
+### <a id="https"></a> HTTPS Protocol
 
-To enable a service component to supply logs and metrics to Firehose through encrypted communications, you need to include a Metron agent in its template definitions.
+To enable a service component to supply logs and metrics to the Firehose through encrypted communications, you need to include a Loggregator agent in its template definitions.
 
 The Metron definition includes double-paren properties defining a keypair for accessing etcd. This avoids hard-coding any etcd server addresses.
 
@@ -47,27 +44,41 @@ For example:
 name: service
 label: Service
 templates:
-  - name: metron_agent
-    release: loggregator
   - name: service
     release: service
 manifest: |
-  metron_agent:
-    deployment: cf-my-service
-    etcd:
-      client_cert: (( ..cf.properties.cf_etcd_client_cert.cert_pem ))
-      client_key: (( ..cf.properties.cf_etcd_client_cert.private_key_pem ))
-  metron_endpoint:
-    shared_secret: (( ..cf.doppler.shared_secret_credentials.password ))
-  loggregator:
-    etcd:
-      require_ssl: true
-      machines: ['cf-etcd.service.cf.internal']
-      ca_cert: (( $ops_manager.ca_certificate ))
+  - name: bpm
+    release: bpm
+    properties: {}
+  - name: loggregator_agent
+    release: loggregator-agent
+    consumes:
+      doppler:
+        deployment: cf-e8e79eaed2a50130f206
+    properties:
+      deployment: generator
+      loggregator:
+        tls:
+          ca_cert: (( $ops_manager.ca_certificate ))
+          agent:
+            cert: ((CERTIFICATE))
+            key: ((KEY))
 ```
 
-Metron versions v72 and later do not use etcd to communicate with Loggregator, but the configuration above works with any version of Metron.
-If the Metron agent does not need values for etcd, it safely ignores them.
+Where `CERTIFICATE` and `KEY` are the values used for mutual TLS communication. For example, `.properties.agent_certificate.cert_pem` and `.properties.agent_certificate.private_key_pem`.
+
+Pivotal recommends that this certificate is generated and signed by the Ops Manager CA certificate. Do so with the following properties:
+
+```
+- name: agent_certificate
+  type: rsa_cert_credentials
+  label: Agent Security Certificate
+  configurable: false
+  default:
+    domains:
+    - agent.(( ..cf.cloud_controller.system_domain.value ))
+  description: mTLS Certificate for Agent
+```
 
 ### <a id="http"></a> HTTP Protocol: PCF 1.9 and Earlier
 
