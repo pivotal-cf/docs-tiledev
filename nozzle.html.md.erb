@@ -81,30 +81,6 @@ Do so with the following properties:
       description: mTLS Certificate for Agent
     ```
 
-### <a id="http"></a> HTTP Protocol: PCF 1.9 and Earlier
-
-In PCF v1.9, service components can send logs and metrics to Firehose encrypted or unencrypted. In v1.8 and earlier releases, components only communicate their log and metrics data unencrypted.
-
-To enable unencrypted communications with etcd, define a Metron agent and list the addresses of the etcd servers in the template definitions as follows:
-
-```
-name: service
-label: Service
-templates:
-  - name: metron_agent
-    release: loggregator
-  - name: service
-    release: service
-manifest: |
-  metron_agent:
-    deployment: cf-my-service
-  metron_endpoint:
-    shared_secret: (( ..cf.doppler.shared_secret_credentials.password ))
-  loggregator:
-    etcd:
-      machines: (( ..cf.etcd_server.ips ))
-```
-
 ## <a id="nozzle"></a> Nozzles
 
 A nozzle is a component dedicated to reading and processing data that streams from Firehose.
