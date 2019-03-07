@@ -808,7 +808,7 @@ Jobs require many different settings in order to function properly. That is the 
 
 Ops Manager does not require product authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
-<p class="note"><strong>Note: </strong> Starting in PCF v2.1, Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys.</p>
+<p class="note"><strong>Note:</strong> In PCF v2.1 and later, Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. If product authors want to configure the static IPs of a <code>job_type</code> they can create a property blueprint with <code>name: static_ips</code> and <code> type: ip_ranges</code>. <code>static_ips</code> is a special keyword that Ops Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.</p>
 
 <pre style="height: 500px; overflow: auto;">
 
