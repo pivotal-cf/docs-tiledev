@@ -1,5 +1,5 @@
 ---
-title: PCF v2.4 Partners Release Notice
+title: PCF v2.5 Partners Release Notice
 owner: Technical Program Management
 ---
 
@@ -13,18 +13,9 @@ which might be relevant to partner service tiles.
 Add text here.
 
 
-## <a id="syslog-form"></a> Syslog Form Template Available for Tile Authors
-Tile authors can insert a templatized Syslog form into their tiles by using the
-`opsmanager_syslog` key in their tile’s `metadata.yml`.
-The pane that the form creates is identical to the Syslog pane in Ops Manager
-and the BOSH Director tile.
-This form includes properties for `forward_debug_logs` and `custom_rsyslog_configuration`.
+## <a id="syslog-form"></a> Tile Authors Can Migrate Syslog Forms
 
-The form template is an opportunity to make tile users’ experience more consistent and secure.
-For more information about modifying `metadata.yml`,
-see [Property Template References](https://docs.pivotal.io/tiledev/2-4/property-template-references.html#syslog-flag).
-
-Tile authors with an existing form can migrate their syslog parameters to the templatized Syslog form.
+Tile authors with an existing syslog form can migrate their syslog parameters to a templatized Syslog form.
 For more information about migrating an existing form to the Ops Manager provided syslog form, see
 [Migrating Existing Syslog Configuration to Ops Manager](./migrating-syslog-configuration.html).
 
