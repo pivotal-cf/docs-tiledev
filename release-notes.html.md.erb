@@ -16,8 +16,10 @@ Add text here.
 ## <a id="syslog-form"></a> Tile Authors Can Migrate Syslog Forms
 
 Tile authors with an existing syslog form can migrate their syslog parameters to a templatized Syslog form.
-For more information about migrating an existing form to the Ops Manager provided syslog form, see
+For more about migrating an existing form to the Ops Manager provided syslog form, see
 [Migrating Existing Syslog Configuration to Ops Manager](./migrating-syslog-configuration.html).
+
+For information about the [Syslog Form Template Available for Tile Authors](https://docs.pivotal.io/tiledev/2-4/release-notes.html#syslog).
 
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
@@ -48,6 +50,17 @@ The following tables list the properties that Pivotal removed and added in PAS v
 
 ## <a id="breaking-changes"></a> Breaking Changes
 
-### <a id="breaking-change-1"></a> Breaking Change 1
+### <a id="xenial"></a> Tile Authors Must Use Xenial Stemcells
+Canonical will end support for Ubuntu Trusty Tahr on April 30th, 2019 and security fixes will no longer be backported. 
+In PCF 2.5, Trusty stemcells are not supported. 
+Tile authors should immediately start testing with the Xenial stemcells and fix any compatibility issues. 
 
-Information about breaking change and cross-reference to where to find more information.
+For more information, see [Tile Authors Must Use Xenial Stemcells](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-stemcells).
+
+### <a id="cflinux"></a> cflinuxfs3 Is the Only Available Stack
+
+In PAS 2.5, cflinuxfs3 is the only available stack.
+The cflinuxfs2 stack is no longer included. 
+If you are using the cflinuxfs2 stack, you must migrate your app to use cflinuxfs3 .
+
+For more information, see [Tile Authors Must Manually Migrate Apps to cflinuxfs3](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-cflinuxfs3).
