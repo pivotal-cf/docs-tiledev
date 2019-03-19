@@ -8,11 +8,6 @@ owner: Technical Program Management
 This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.5 introduces
 which might be relevant to partner service tiles.
 
-## <a id='1'></a> Item 1
-
-Add text here.
-
-
 ## <a id="syslog-form"></a> Tile Authors Can Migrate Syslog Forms
 
 Tile authors with an existing syslog form can migrate their syslog parameters to a templatized Syslog form.
@@ -34,7 +29,23 @@ The following tables list the properties that Pivotal removed and added in PAS v
     <th>Removed Properties</th>
   </tr>
   <tr>
-    <td><code>.properties.xxx</code></td>
+    <td><code>.properties.bosh_dns_servers</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.cloud_controller_default_stack</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.enable_cf_metric_name</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.enable_log_cache</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.router_headers_remove_if_specified</code></td>
   </tr>
 </table>
 
@@ -43,7 +54,39 @@ The following tables list the properties that Pivotal removed and added in PAS v
     <th>Added Properties</th>
   </tr>
   <tr>
-    <td><code>.properties.xxx</code></td>
+    <td><code>.properties.cloud_controller_logcache_tls_cert</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.copilot_client_cert</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.copilot_server_cert</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.istio</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.istio_frontend_tls_keypairs</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.log_cache_expvar_forwarder_client_tls_cert</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.pilot_server_cert</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.stack_migration_acknowledgement</code></td>
+  </tr>
+  
+  <tr>
+    <td><code>.properties.router_headers_remove_if_specified</code></td>
   </tr>
 </table>
 
