@@ -149,6 +149,37 @@ to PAS v2.5.
 
 For more information, see [Tile Authors Must Manually Migrate Apps to cflinuxfs3](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-cflinuxfs3).
 
+###<a id='breaking-consul'></a>Tile Authors Must Remove consul_agent
+
+If your tile includes consul clients, you must remove consul clients from your product.
+
+This is because the consul server no longer exists. If you tile includes consul clients, your deployments fail to deploy.
+The consul client expects the consul server to be present until their links are updated.
+This can cause extra error logging and unhealthy instances.
+
+Take the following actions according to which PCF versions your tile supports:
+
++ If your tile only supports PCF v2.2 and earlier, do not remove consul agents. 
+
++ If your tile only supports PCF v2.3 or later, you must remove consul agents
+completely from your tile. 
+
++ If your tile supports multiple versions, including PCF v2.2 (where consul
+agents cannot be removed) and PCF v2.3 (where consul agents must be removed)
+make the following changes to any `job_type` that is colocated with
+`consul_agent`:
+
+    ```
+    - name: consul_agent
+        release: consul
+        ...
+        manifest: |
+          ...
+          consul:
+            client:
+              enabled: "(( $ops_manager.dns_enabled ? false : true ))"
+    ```
+
 ### <a id="log-sys"></a> Removed Logging System Property
 PAS v2.5 removes the **Syslog Drain Buffer Size** checkbox from the **Logging System** pane of the PAS tile. This field corresponds to a deprecated property that does not have any affect on the logging system when configured.
 
