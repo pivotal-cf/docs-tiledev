@@ -234,9 +234,7 @@ For information on which PCF tile releases now use Xenial, see [Tiles Using Xeni
 
 If your tile includes consul clients, you must remove consul clients from your product.
 
-This is because the consul server no longer exists and your deployments will fail to deploy.
-The consul client expects the consul server to be present until their links are updated.
-This can cause extra error logging and unhealthy instances.
+This is because the consul server no longer exists. The consul client expects the consul server to be present until their links are updated. If your tile includes consul clients, deployments fail to deploy. This can cause extra error logging and unhealthy instances.
 
 Take the following actions according to which PCF versions your tile supports:
 
