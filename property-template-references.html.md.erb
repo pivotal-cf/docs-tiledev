@@ -418,7 +418,7 @@ older `metadata_version` but may also require restructuring of the product
 template to conform to the new `metadata_version`.
 
 The `metadata_version` corresponds to a major and/or minor release of Ops Manager.
-Ops Manager can accept a product with a metadata_version that is older than the
+Ops Manager can accept a product with a metadata\_version that is older than the
 Ops Manager version, but Ops Manager cannot accept a product with a `metadata_version`
 that is newer than the Ops Manager version.  It is therefore best practice to set
 the `metadata_version` to be the same as the oldest version of Ops Manager that
@@ -566,23 +566,127 @@ For more information, see [Managing Runtime Configs](./runtime-config.html).
 * **Format:** Array of hashes
 * **Type:** Optional
 
-Verifiers are configurable settings that contact things outside the tile.
-For example, given an IP, a verifier can ping the IP to see that it responds.
+Install-time verifiers confirm that properties for external services are set correctly.
+For example, the `MysqlDatabaseVerifier` checks that MySQL database properties are vaild by using 
+the properties to connect to the MySQL database.
 
-Verifiers are separate from validators, which check whether a string is
-formatted properly.
+Install-time verifiers run in Ops Manager before changes are applied. Install-time verifiers can be 
+configured to display a warning that can be ignored or errors that cannot be ignored. 
 
-Each verifier requires the following keys:
+Each install-time verifier requires the following keys:
 
-+ `name`
-+ `properties`
-+ `ignorable` - set to `false` by default
++ `name`: The type of verifier. The value must be one of the verifiers listed below.
++ `properties`: The properties to verify. The required properties for each verifier are listed below. 
++ `ignorable`: If this key is set to true, an operator cannot **Apply Changes** until the 
+  verification errors are resolved. This key is set to `false` by default.
 
-<!-- For an example of a validator, see [ must\_match\_regex](#top-must-match). -->
+You can use the following install-time verifiers:
+
+<table class="nice">
+  <tr>
+    <th width="240px">
+      Name
+    </th>
+    <th>
+      Description
+    </th>
+    <th width="200px">
+      Required Properties
+    </th>
+  </tr>
+  <tr>
+    <td>
+        <code>BlobstoreVerifier</code>
+    </td>
+    <td>
+      Verifies that the specified AWS s3 bucket exists and is accessible
+    <td>
+        <code>access_key_id</code><br/>
+        <code>bucket_name</code><br/>
+        <code>secret_access_key</code><br/>
+        <code>signature_version</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+        <code>LDAPBindVerifier</code>
+    </td>
+    <td>
+      Verifies that the specified LDAP server exists and that the provided credentials are valid
+    <td>
+        <code>url</code><br/>
+        <code>credentials</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>MysqlDatabaseVerifier</code>
+    </td>
+    <td>
+      Verifies that the specified MySQL server exists and that the provided credentials and database are valid
+    </td>
+    <td>
+      <code>database</code>>br/>
+      <code>host</code><br/>
+      <code>password</code><br/>
+      <code>port</code><br/>
+      <code>username</code>      
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>SmtpAuthenticationVerifier</code>
+    </td>
+    <td>
+      Verifies that the specified SMTP server exists and that the provided credentials are valid
+    </td>
+    <td>
+      <code>credentials</code><br/>
+      <code>address</code><br/>
+      <code>port</code><br/>
+      <code>helo_domain</code><br/>
+      <code>authentication</code><br/>
+      <code>enable_starttls_auto</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>SsoUrlVerifier</code>
+    </td>
+    <td>
+      Verifies that the specified SMTP server exists
+    </td>
+    <td>
+      <code>url</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>StaticIpsVerifier</code>
+    </td>
+    <td>
+      Verifies that all requested static IPs fall within the subnet assigned to the job. See <code>static_ips</code> in <a href="#job-types">Job Types</a> below.
+    </td>
+    <td>
+      <em>(none)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>WildcardDomainVerifier</code>
+    </td>
+    <td>
+      Verifies that the specified domain resolves using DNS
+    </td>
+    <td>
+      <code>domain</code>
+    </td>
+  </tr>
+</table>
 
 <!-- add properties to the verfiers below. also add to 2.2 -->
 
-Here is a list of verifiers you can use:
+The following is an example of a `install_time_verifiers` section:
 
 - `BlobstoreVerifier`
 - `LDAPBindVerifier`
@@ -754,23 +858,37 @@ References to properties defined in the [property_blueprints](#property-blueprin
 
 ### <a id='verifiers'></a> verifiers
 
-Verifiers are configurable settings that contact things outside the tile.
-For example, given an IP, a verifier can ping the IP to see that it responds.
+Verifiers confirm that properties are set correctly in forms.  
+If a verifier displays an error, an operator can still ignore it.
 
-Verifiers are separate from validators, which check whether a string is
-formatted properly. .
+Verifiers are similar to install-time verifiers except that they run after a form is 
+saved and not before **Apply Changes**.
 
-Here is a list of verifiers you can use:
+If you want to have a verifier run when a form is saved and before Apply Changes, add the verifier 
+to both the `verifiers` and `install_time_verifiers` sections.
 
-- `BlobstoreVerifier`
-- `LDAPBindVerifier`
-- `MysqlDatabaseVerifier`
-- `SmtpAuthenticationVerifier`
-- `SsoUrlVerifier`
-- `StaticIpsVerifier`
-- `WildcardDomainVerifier`
+For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
 
-<!-- Info to add : When you submit the form it will run the verfiers  -->
+The following is an example of a `verifiers` section:
+
+```
+form_types:
+  - name: example-form
+    label: Configurable Properties
+    description: All the properties that you can configure!
+    property_inputs:
+      - reference: .web_server.example_wildcard_domain
+        label: Example wildcard_domain
+        description: 'Configure a property of type wildcard_domain'
+      - reference: .web_server.static_ips
+        label: Example ip_address
+        description: 'Configure a property of type ip_address'
+    verifiers:
+      - name: Verifiers::WildcardDomainVerifier
+        properties:
+          domain: .web_server.example_wildcard_domain
+      - name: Verifiers::StaticIpsVerifier
+```
 
 ### <a id='form-placeholder'></a> placeholder
 
