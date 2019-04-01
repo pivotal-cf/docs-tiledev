@@ -153,8 +153,9 @@ For more information, see [Tile Authors Must Manually Migrate Apps to cflinuxfs3
 
 If your tile includes consul clients, you must remove consul clients from your product.
 
-This is because the consul server no longer exists. If you tile includes consul clients, your deployments fail to deploy.
-The consul client expects the consul server to be present until their links are updated.
+This is because the consul server no longer exists. The consul client expects the consul server 
+to be present until their links are updated. 
+If your tile includes consul clients, deployments fail to deploy. 
 This can cause extra error logging and unhealthy instances.
 
 Take the following actions according to which PCF versions your tile supports:
