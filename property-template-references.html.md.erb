@@ -574,16 +574,12 @@ For example, given an IP, a verifier can ping the IP to see that it responds.
 Verifiers are separate from validators, which check whether a string is
 formatted properly.
 
-<<<<<<< HEAD
-Each verifier requires the following keys:
-=======
 + `name`: The type of verifier. The value must be one of the verifiers listed below.
 + `properties`: The properties to verify. The required properties for each verifier are listed below. 
 + `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the 
   verification errors are resolved and an error is displayed. 
   If this key is set to `true`, an operator can **Apply Changes** if they choose to ignore the displayed warning. 
   This key is set to `false` by default.
->>>>>>> ea1cc03... small edits [#165039686]
 
 + `name`
 + `properties`
@@ -593,17 +589,6 @@ Each verifier requires the following keys:
 
 <!-- add properties to the verfiers below. also add to 2.2 -->
 
-<<<<<<< HEAD
-Here is a list of verifiers you can use:
-
-- `BlobstoreVerifier`
-- `LDAPBindVerifier`
-- `MysqlDatabaseVerifier`
-- `SmtpAuthenticationVerifier`
-- `SsoUrlVerifier`
-- `StaticIpsVerifier`
-- `WildcardDomainVerifier`
-=======
 ```
 install_time_verifiers:
 - ignorable: true
@@ -631,7 +616,6 @@ install_time_verifiers:
     port: .properties.system_database.external.port
     username: .properties.system_database.external.account_username
 ```
->>>>>>> ea1cc03... small edits [#165039686]
 
 ### <a id='top-icon-image'></a> icon\_image
 * **Format:** Base64 Image

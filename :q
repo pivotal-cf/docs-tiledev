@@ -1,0 +1,24 @@
+small edits [#165039686]
+
+# Conflicts:
+#	property-template-references.html.md.erb
+#
+# It looks like you may be committing a cherry-pick.
+# If this is not correct, please remove the file
+#	.git/CHERRY_PICK_HEAD
+# and try again.
+
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# Date:      Tue Apr 2 12:15:29 2019 -0700
+#
+# On branch 2.4
+# Your branch is up to date with 'origin/2.4'.
+#
+# You are currently cherry-picking commit ea1cc03.
+#
+# Changes to be committed:
+#	modified:   property-template-references.html.md.erb
+#
