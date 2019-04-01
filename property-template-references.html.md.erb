@@ -92,7 +92,7 @@ Each property is represented by two segments:
 
 Using these two segments, you can write an expression as:
 
-````
+```
 (( LOCATION_OF_PROPERTY.ACCESSOR ))
 ```
 
@@ -566,31 +566,150 @@ For more information, see [Managing Runtime Configs](./runtime-config.html).
 * **Format:** Array of hashes
 * **Type:** Optional
 
-Verifiers are configurable settings that contact things outside the tile.
-For example, given an IP, a verifier can ping the IP to see that it responds.
-
-Verifiers are separate from validators, which check whether a string is
-formatted properly.
+Install time verifiers confirm that properties are set correctly by checking with the external service that they are related to.
+For instance, the `MysqlDatabaseVerifier` checks that properties related to a mySQL database are correct by attempting to use them to connect to the mySQL database.
+Install time verifiers run before Apply Changes. They either show up as ignorable warning or unignorable errors depending on how they are configured.
 
 Each verifier requires the following keys:
 
-+ `name`
-+ `properties`
-+ `ignorable` - set to `false` by default
-
-<!-- For an example of a validator, see [ must\_match\_regex](#top-must-match). -->
-
-<!-- add properties to the verfiers below. also add to 2.2 -->
++ `name` - type of verifier; must be one of the verifiers listed below
++ `properties` - pertinent properties to verify; see table below for properties each verifier requires
++ `ignorable` - if true, will no allow an operator to proceed with Apply Changes until the verification errors are fixed; optional: set to `false` by default
 
 Here is a list of verifiers you can use:
 
-- `BlobstoreVerifier`
-- `LDAPBindVerifier`
-- `MysqlDatabaseVerifier`
-- `SmtpAuthenticationVerifier`
-- `SsoUrlVerifier`
-- `StaticIpsVerifier`
-- `WildcardDomainVerifier`
+<table class="nice">
+  <tr>
+    <th>
+      Name
+    </th>
+    <th>
+      Description
+    </th>
+    <th>
+      Required properties
+    </th>
+  </tr>
+  <tr>
+    <td>
+        BlobstoreVerifier
+    </td>
+    <td>
+      Verifies that the specified AWS s3 bucket exsists and is accessible
+    <td>
+        access_key_id<br/>
+        secret_access_key<br/>
+        bucket_name<br/>
+        signature_version
+    </td>
+  </tr>
+  <tr>
+    <td>
+        LDAPBindVerifier
+    </td>
+    <td>
+      Verifies that the specified LDAP server exists and that the provided credentials are valid
+    <td>
+        url<br/>
+        credentials
+    </td>
+  </tr>
+  <tr>
+    <td>
+      MysqlDatabaseVerifier
+    </td>
+    <td>
+      Verifies that the specified mySQL server exists and that the provided credentials and database are valid
+    </td>
+    <td>
+      host<br/>
+      port<br/>
+      username<br/>
+      password<br/>
+      database
+    </td>
+  </tr>
+  <tr>
+    <td>
+      SmtpAuthenticationVerifier
+    </td>
+    <td>
+      Verifies that the specified SMTP server exists and that the provided credentials are valid
+    </td>
+    <td>
+      credentials<br/>
+      address<br/>
+      port<br/>
+      helo_domain<br/>
+      authentication<br/>
+      enable_starttls_auto
+    </td>
+  </tr>
+  <tr>
+    <td>
+      SsoUrlVerifier
+    </td>
+    <td>
+      Verifies that the specified SMTP server exists
+    </td>
+    <td>
+      url
+    </td>
+  </tr>
+  <tr>
+    <td>
+      StaticIpsVerifier
+    </td>
+    <td>
+      Verifies that all requested static IPs fall within the subnet(s) to which the job is assigned (see static_ips).
+    </td>
+    <td>
+      <em>(none)</em>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      WildcardDomainVerifier
+    </td>
+    <td>
+      Verifies that the specified domain resolves via DNS
+    </td>
+    <td>
+      domain
+    </td>
+  </tr>
+</table>
+
+
+The following is an example of `install_time_verifiers` block:
+
+```
+install_time_verifiers:
+- ignorable: true
+  name: Verifiers::WildcardDomainVerifier
+  properties:
+    domain: .cloud_controller.system_domain
+- name: Verifiers::SsoUrlVerifier
+  properties:
+    url: .properties.uaa.saml.sso_url
+- ignorable: true
+  name: Verifiers::BlobstoreVerifier
+  properties:
+    access_key_id: .properties.system_blobstore.external.access_key
+    bucket_name: .properties.system_blobstore.external.buildpacks_bucket
+    endpoint: .properties.system_blobstore.external.endpoint
+    region: .properties.system_blobstore.external.region
+    secret_access_key: .properties.system_blobstore.external.secret_key
+    signature_version: .properties.system_blobstore.external.signature_version
+- ignorable: true
+  name: Verifiers::MysqlDatabaseVerifier
+  properties:
+    database: .properties.account_database_name
+    host: .properties.system_database.external.host
+    password: .properties.system_database.external.account_password
+    port: .properties.system_database.external.port
+    username: .properties.system_database.external.account_username
+```
 
 ### <a id='top-icon-image'></a> icon\_image
 * **Format:** Base64 Image
@@ -754,23 +873,35 @@ References to properties defined in the [property_blueprints](#property-blueprin
 
 ### <a id='verifiers'></a> verifiers
 
-Verifiers are configurable settings that contact things outside the tile.
-For example, given an IP, a verifier can ping the IP to see that it responds.
+Verifiers under `form_types` are similar to [install\_time\_verifiers](#top-verifier) except:
 
-Verifiers are separate from validators, which check whether a string is
-formatted properly. .
+- they run when the form they are specified in is saved
+- their errors are always ignorable
 
-Here is a list of verifiers you can use:
+If you want to have a verifier run when a form is saved and before Apply Changes, add it to both `verifiers` and `install_time_verifiers`.
 
-- `BlobstoreVerifier`
-- `LDAPBindVerifier`
-- `MysqlDatabaseVerifier`
-- `SmtpAuthenticationVerifier`
-- `SsoUrlVerifier`
-- `StaticIpsVerifier`
-- `WildcardDomainVerifier`
+See [install\_time\_verifiers](#top-verifier) for how verifiers are configured.
 
-<!-- Info to add : When you submit the form it will run the verfiers  -->
+Example:
+
+```
+form_types:
+  - name: example-form
+    label: Configurable Properties
+    description: All the properties that you can configure!
+    property_inputs:
+      - reference: .web_server.example_wildcard_domain
+        label: Example wildcard_domain
+        description: 'Configure a property of type wildcard_domain'
+      - reference: .web_server.static_ips
+        label: Example ip_address
+        description: 'Configure a property of type ip_address'
+    verifiers:
+      - name: Verifiers::WildcardDomainVerifier
+        properties:
+          domain: .web_server.example_wildcard_domain
+      - name: Verifiers::StaticIpsVerifier
+```
 
 ### <a id='form-placeholder'></a> placeholder
 
@@ -1503,3 +1634,4 @@ icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGG
       configurable: true
       default: 1
 ```
+
