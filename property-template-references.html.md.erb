@@ -624,7 +624,7 @@ You can use the following install-time verifiers:
       Verifies that the specified MySQL server exists and that the provided credentials and database are valid
     </td>
     <td>
-      <code>database</code>>br/>
+      <code>database</code><br/>
       <code>host</code><br/>
       <code>password</code><br/>
       <code>port</code><br/>
@@ -874,14 +874,12 @@ References to properties defined in the [property_blueprints](#property-blueprin
 
 ### <a id='verifiers'></a> verifiers
 
-Verifiers confirm that properties are set correctly in forms.  
-If a verifier displays a warning, the form can still be saved and the warning can be ignored.
+Verifiers confirm that properties are set correctly in forms. If a verifier displays a warning, 
+the form can still be saved and the warning can be ignored.
 
 Verifiers are similar to install-time verifiers except that they run after a form is 
-saved and not before **Apply Changes**.
-
-If you want to have a verifier run when a form is saved and before **Apply Changes**, add the verifier 
-to both the `verifiers` and `install_time_verifiers` sections.
+saved and not before **Apply Changes**. If you want to have a verifier run when a form is saved 
+and before **Apply Changes**, add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
 For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
 
