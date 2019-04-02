@@ -474,7 +474,9 @@ Set `service_broker` to `true` for on-demand service brokers. Setting `service_b
 * **Format:** Hash
 * **Type:** Required
 
-`enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell. This is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators may experience longer than expected upgrade times.
+`enable_patch_security_updates` enables you to automatically use the latest patched version of a stemcell. 
+This key is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. 
+However, operators might experience longer than expected upgrade times.
 
 Example:
 
@@ -485,20 +487,24 @@ Example:
   enable\_patch\_security\_updates: true
  </pre>
 
-Pivotal recommends setting this property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates.
+Pivotal recommends setting the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates.
 
-You do not specify which IaaS the Stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
+You do not specify which IaaS the stemcell targets. This keeps your product template 
+IaaS agnostic so that one product template can be deployed on any IaaS.
 
 For a list of stemcells, including OS and version, see [the BOSH hub](https://bosh.io/).
 
 For more information, see [Floating Stemcells](http://docs.pivotal.io/pivotalcf/customizing/understanding-stemcells.html).
 
-### <a id='top-additional-stemcells-criteria'></a> additional_stemcells_criteria
+### <a id='top-additional-stemcells-criteria'></a> additional\_stemcells\_criteria
 
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of additional stemcell criteria that can be selected via the `stemcell_selector` property type. These stemcells are only required once they have been selected.
+A list of stemcell criteria that can be selected using the `stemcell_selector` property type. These stemcells are listed in additional to the stemcell configure with `stemcell_criteria`. After an operator has selected a stemcell, it becomes required. 
+
+For more information about the `stemcell_selector` property type, 
+see [stemcell_selector](#stemcell-selector) below.
 
 Example:
 
@@ -1581,6 +1587,10 @@ Below is a reference to every property blueprint type.
 ###<a id='smtp-authentication'></a>smtp_authentication
 
 <%= partial 'tile-reference/property-blueprints/smtp-authentication' %>
+
+###<a id='stemcell-selector'></a>stemcell\_selector
+
+<%= partial 'tile-reference/property-blueprints/stemcell-selector' %>
 
 ###<a id='string-list'></a>string_list
 

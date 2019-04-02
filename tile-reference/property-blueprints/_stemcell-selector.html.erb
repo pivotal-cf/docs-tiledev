@@ -1,41 +1,47 @@
 <%= partial 'tile-reference/property-blueprint', locals: {
     description: <<~DESCRIPTION,
-      Provides the ability to select between all available stemcell criteria. The stemcell selector will automatically
-      be populated with a list of all stemcell OS's that are listed in the <code>stemcell_criteria</code> and in the
-      <code>additional_stemcells_criteria</code>.
+      Provides the ability to select between all available stemcell criteria. The stemcell selector is automatically
+      populated with a list of all stemcell operating systems that are listed in the <code>stemcell&#95;criteria</code> and
+      <code>additional&#95;stemcells&#95;criteria</code> top-level properties.
 
-      Once an operator has selected a stemcell in a <code>stemcell_selector</code>, that stemcell will be required in
-      order to deploy the product.
+      After an operator has selected a stemcell listed in <code>stemcell_selector</code>, that stemcell is required to deploy the product.
+      
+      For more information about the <code>stemcell&#95;criteria</code> top-level 
+      property, see <a href= "#top-stemcell-criteria">stemcell&#95;criteria</a> above.
+        
+      For more information about the <code>additional&#95;stemcells&#95;criteria</code> top-level 
+      property, see <a href= "#top-additional-stemcells-criteria">additional&#95;stemcells&#95;criteria</a> above.
+      
     DESCRIPTION
     credential: false,
     auto_generatable: false,
     operator_configurable: true,
     allows_default_to_be_specified: true,
     additional_default_description: <<~DESC,
-      If specified, the default value should be the OS of a stemcell criteria.
+      If specified, the default value should be the operating system of a stemcell criteria.
       DESC
-    value_accessor_description: 'Returns the selected OS',
-    value_present_accessor_description: 'Returns true if operator has selected an OS',
+    value_accessor_description: 'Returns the selected operating system.',
+    value_present_accessor_description: 'Returns true if the operator has selected an operating system.',
     additional_property_blueprint_attributes: [],
     additional_accessors: [
       {
         name: 'os',
         description: <<~DESC,
-          The OS of the stemcell that is assigned to the product. Note: This is not necessarily the same as <code>value</code>.
-          If a stemcell is selected but not assigned, this will be nil.
+          The operating system of the stemcell that is assigned to the product. This is not always the same as <code>value</code>.
+          If a stemcell is selected but not assigned, this is set to <code>nil</code>.
           DESC
       },
       {
         name: 'version',
         description: <<~DESC,
           The version of the stemcell that is assigned to the product.
-          If a stemcell is selected but not assigned, this will be nil.
+          If a stemcell is selected but not assigned, this is set to <code>nil</code>.
         DESC
       },
       {
         name: 'assigned?',
         description: <<~DESC,
-          Boolean. True if there is an assigned stemcell that matches the selected stemcell.
+          Boolean. Returns true if there is an assigned stemcell that matches the selected stemcell.
         DESC
       }
     ],
@@ -44,7 +50,7 @@
         name: 'Example',
         image: {
           name: 'Example Stemcell Selector',
-          path: 'img/example-selector-tile.png'
+          path: 'img/example-stemcell-selector-tile.png'
         },
         metadata: <<~METADATA,
           stemcell_criteria:
