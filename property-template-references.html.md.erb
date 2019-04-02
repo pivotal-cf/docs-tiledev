@@ -574,9 +574,10 @@ Each install-time verifier requires the following keys:
 
 + `name`: The type of verifier. The value must be one of the verifiers listed below.
 + `properties`: The properties to verify. The required properties for each verifier are listed below. 
-+ `ignorable`: If this key is set to `true`, an operator cannot **Apply Changes** until the 
-  verification errors are resolved and an error is displayed. If this key is set to `false`, 
-  an operator can **Apply Changes** and a warning is displayed. This key is set to `false` by default.
++ `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the 
+  verification errors are resolved and an error is displayed. 
+  If this key is set to `true`, an operator can **Apply Changes** if they choose to ignore the displayed warning. 
+  This key is set to `false` by default.
 
 You can use the following install-time verifiers:
 
@@ -699,8 +700,8 @@ install_time_verifiers:
   properties:
     access_key_id: .properties.system_blobstore.external.access_key
     bucket_name: .properties.system_blobstore.external.buildpacks_bucket
-    endpoint: .properties.system_blobstore.external.endpoint # optional.  defaults to AWS
-    region: .properties.system_blobstore.external.region # optional. defaults to default IaaS setting.
+    endpoint: .properties.system_blobstore.external.endpoint # Optional. Defaults to AWS
+    region: .properties.system_blobstore.external.region # Optional. Defaults to default IaaS setting
     secret_access_key: .properties.system_blobstore.external.secret_key 
     signature_version: .properties.system_blobstore.external.signature_version
 - ignorable: true
