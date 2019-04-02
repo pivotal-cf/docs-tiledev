@@ -19,7 +19,7 @@
     additional_default_description: <<~DESC,
       If specified, the default value should be one of the values of <code>select_value</code>.
       DESC
-    value_accessor_description: 'Returns the <code>select_value</code> of the selected option.',
+    value_accessor_description: 'Returns the <code>select_value</code> of the selected option. For example, the selector shown in the example below might return "Filet Mignon" as its value.',
     value_present_accessor_description: false,
     additional_property_blueprint_attributes: [
       {
@@ -30,14 +30,6 @@
       },
     ],
     additional_accessors: [
-      {
-        name: 'value',
-        description: <<~DESC,
-          Returns the <code>select_value</code> string of the currently selected option group.
-          For example, the selector shown in the example below might return "Filet Mignon"
-          as its value.
-          DESC
-      },
       {
         name: 'selected_option.parsed_manifest(manifest_snippet_name)',
         description: <<~DESC,
