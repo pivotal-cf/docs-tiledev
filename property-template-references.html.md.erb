@@ -493,6 +493,24 @@ For a list of stemcells, including OS and version, see [the BOSH hub](https://bo
 
 For more information, see [Floating Stemcells](http://docs.pivotal.io/pivotalcf/customizing/understanding-stemcells.html).
 
+### <a id='top-additional-stemcells-criteria'></a> additional_stemcells_criteria
+
+* **Format:** Array of hashes
+* **Type:** Optional
+
+A list of additional stemcell criteria that can be selected via the `stemcell_selector` property type. These stemcells are only required once they have been selected.
+
+Example:
+
+ <pre class="code">
+ additional\_stemcells\_criteria:
+  - os: ubuntu-xenial
+    version: &lt;%= stemcell\_version.inspect %>
+    enable\_patch\_security\_updates: true
+  - os: windows2016
+    version: &lt;%= stemcell\_version.inspect %>
+ </pre>
+
 ### <a id='top-requires'></a> requires\_product\_versions
 
 * **Format:** Array of hashes
