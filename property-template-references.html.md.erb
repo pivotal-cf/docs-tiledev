@@ -887,17 +887,26 @@ Verifiers are similar to install-time verifiers except that they run after a for
 saved and not before **Apply Changes**. If you want to have a verifier run when a form is saved 
 and before **Apply Changes**, add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
-Here is a list of verifiers you can use:
+The following is an example of a `verifiers` section:
 
-- `BlobstoreVerifier`
-- `LDAPBindVerifier`
-- `MysqlDatabaseVerifier`
-- `SmtpAuthenticationVerifier`
-- `SsoUrlVerifier`
-- `StaticIpsVerifier`
-- `WildcardDomainVerifier`
-
-<!-- Info to add : When you submit the form it will run the verfiers  -->
+```
+form_types:
+  - name: example-form
+    label: Configurable Properties
+    description: All the properties that you can configure!
+    property_inputs:
+      - reference: .web_server.example_wildcard_domain
+        label: Example wildcard_domain
+        description: 'Configure a property of type wildcard_domain'
+      - reference: .web_server.static_ips
+        label: Example ip_address
+        description: 'Configure a property of type ip_address'
+    verifiers:
+      - name: Verifiers::WildcardDomainVerifier
+        properties:
+          domain: .web_server.example_wildcard_domain
+      - name: Verifiers::StaticIpsVerifier
+```
 
 ### <a id='form-placeholder'></a> placeholder
 
