@@ -567,18 +567,16 @@ For more information, see [Managing Runtime Configs](./runtime-config.html).
 * **Type:** Optional
 
 Install-time verifiers confirm that properties for external services are set correctly.
-For example, the `MysqlDatabaseVerifier` checks that MySQL database properties are vaild by using 
-the properties to connect to the MySQL database.
-
-Install-time verifiers run in Ops Manager before changes are applied. Install-time verifiers can be 
-configured to display a warning that can be ignored or errors that cannot be ignored. 
+For example, the `MysqlDatabaseVerifier` checks that MySQL database properties are valid by using 
+the properties to connect to the MySQL database. Install-time verifiers run in Ops Manager before changes are applied. 
 
 Each install-time verifier requires the following keys:
 
 + `name`: The type of verifier. The value must be one of the verifiers listed below.
 + `properties`: The properties to verify. The required properties for each verifier are listed below. 
-+ `ignorable`: If this key is set to true, an operator cannot **Apply Changes** until the 
-  verification errors are resolved. This key is set to `false` by default.
++ `ignorable`: If this key is set to `true`, an operator cannot **Apply Changes** until the 
+  verification errors are resolved and an error is displayed. If this key is set to `false`, 
+  an operator can **Apply Changes** and a warning is displayed. This key is set to `false` by default.
 
 You can use the following install-time verifiers:
 
@@ -654,7 +652,7 @@ You can use the following install-time verifiers:
       <code>SsoUrlVerifier</code>
     </td>
     <td>
-      Verifies that the specified SMTP server exists
+      Verifies that the specified SSO server exists
     </td>
     <td>
       <code>url</code>
@@ -684,17 +682,35 @@ You can use the following install-time verifiers:
   </tr>
 </table>
 
-<!-- add properties to the verfiers below. also add to 2.2 -->
-
 The following is an example of a `install_time_verifiers` section:
 
-- `BlobstoreVerifier`
-- `LDAPBindVerifier`
-- `MysqlDatabaseVerifier`
-- `SmtpAuthenticationVerifier`
-- `SsoUrlVerifier`
-- `StaticIpsVerifier`
-- `WildcardDomainVerifier`
+```
+install_time_verifiers:
+- ignorable: true
+  name: Verifiers::WildcardDomainVerifier
+  properties:
+    domain: .cloud_controller.system_domain
+- name: Verifiers::SsoUrlVerifier
+  properties:
+    url: .properties.uaa.saml.sso_url
+- ignorable: true
+  name: Verifiers::BlobstoreVerifier
+  properties:
+    access_key_id: .properties.system_blobstore.external.access_key
+    bucket_name: .properties.system_blobstore.external.buildpacks_bucket
+    endpoint: .properties.system_blobstore.external.endpoint # optional.  defaults to AWS
+    region: .properties.system_blobstore.external.region # optional. defaults to default IaaS setting.
+    secret_access_key: .properties.system_blobstore.external.secret_key 
+    signature_version: .properties.system_blobstore.external.signature_version
+- ignorable: true
+  name: Verifiers::MysqlDatabaseVerifier
+  properties:
+    database: .properties.account_database_name
+    host: .properties.system_database.external.host
+    password: .properties.system_database.external.account_password
+    port: .properties.system_database.external.port
+    username: .properties.system_database.external.account_username
+```
 
 ### <a id='top-icon-image'></a> icon\_image
 * **Format:** Base64 Image
@@ -859,12 +875,12 @@ References to properties defined in the [property_blueprints](#property-blueprin
 ### <a id='verifiers'></a> verifiers
 
 Verifiers confirm that properties are set correctly in forms.  
-If a verifier displays an error, an operator can still ignore it.
+If a verifier displays a warning, the form can still be saved and the warning can be ignored.
 
 Verifiers are similar to install-time verifiers except that they run after a form is 
 saved and not before **Apply Changes**.
 
-If you want to have a verifier run when a form is saved and before Apply Changes, add the verifier 
+If you want to have a verifier run when a form is saved and before **Apply Changes**, add the verifier 
 to both the `verifiers` and `install_time_verifiers` sections.
 
 For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
