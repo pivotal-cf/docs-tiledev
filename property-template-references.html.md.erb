@@ -868,6 +868,24 @@ For information about how verifiers are configured, see [install\_time\_verifier
 
 The following is an example of a `verifiers` section:
 
+```
+form_types:
+  - name: example-form
+    label: Configurable Properties
+    description: All the properties that you can configure!
+    property_inputs:
+      - reference: .web_server.example_wildcard_domain
+        label: Example wildcard_domain
+        description: 'Configure a property of type wildcard_domain'
+      - reference: .web_server.static_ips
+        label: Example ip_address
+        description: 'Configure a property of type ip_address'
+    verifiers:
+      - name: Verifiers::WildcardDomainVerifier
+        properties:
+          domain: .web_server.example_wildcard_domain
+      - name: Verifiers::StaticIpsVerifier
+```
 
 
 ### <a id='form-placeholder'></a> placeholder
