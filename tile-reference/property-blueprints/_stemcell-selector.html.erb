@@ -1,0 +1,89 @@
+<%= partial 'tile-reference/property-blueprint', locals: {
+    description: <<~DESCRIPTION,
+      Provides the ability to select between all available stemcell criteria. The stemcell selector will automatically
+      be populated with a list of all stemcell OS's that are listed in the <code>stemcell_criteria</code> and in the
+      <code>additional_stemcells_criteria</code>.
+
+      Once an operator has selected a stemcell in a <code>stemcell_selector</code>, that stemcell will be required in
+      order to deploy the product.
+    DESCRIPTION
+    credential: false,
+    auto_generatable: false,
+    operator_configurable: true,
+    allows_default_to_be_specified: true,
+    additional_default_description: <<~DESC,
+      If specified, the default value should be the OS of a stemcell criteria.
+      DESC
+    value_accessor_description: 'Returns the selected OS',
+    value_present_accessor_description: 'Returns true if operator has selected an OS',
+    additional_property_blueprint_attributes: [],
+    additional_accessors: [
+      {
+        name: 'os',
+        description: <<~DESC,
+          The OS of the stemcell that is assigned to the product. Note: This is not necessarily the same as <code>value</code>.
+          If a stemcell is selected but not assigned, this will be nil.
+          DESC
+      },
+      {
+        name: 'version',
+        description: <<~DESC,
+          The version of the stemcell that is assigned to the product.
+          If a stemcell is selected but not assigned, this will be nil.
+        DESC
+      },
+      {
+        name: 'assigned?',
+        description: <<~DESC,
+          Boolean. True if there is an assigned stemcell that matches the selected stemcell.
+        DESC
+      }
+    ],
+    examples: [
+      {
+        name: 'Example',
+        image: {
+          name: 'Example Stemcell Selector',
+          path: 'img/example-selector-tile.png'
+        },
+        metadata: <<~METADATA,
+          stemcell_criteria:
+            os: ubuntu-xenial
+            version: 1.0.0
+          additional_stemcells_criteria:
+            os: windows2016
+            version: 1.0.0
+
+          property_blueprints:
+            - name: example_stemcell_selector
+              type: stemcell_selector
+              configurable: true
+              optional: true
+          form_types:
+            - name: example_stemcell_selector_form
+              label: 'Stemcell Selector Example'
+              description: 'A stemcell selector example form'
+              property_inputs:
+                - reference: .properties.example_stemcell_selector
+                  label: 'Example stemcell selector'
+                  description: 'Select which stemcell you want to use'
+
+          job_types:
+          - name: example-job
+            resource_label: An Example Job
+            <<: *job_type_boilerplate
+            templates:
+              - name: login_banner
+                release: os-conf
+                manifest: |
+                  login_banner:
+                    text: |
+                      Stemcell Assigned?: (( .properties.example_stemcell_selector.assigned? ))
+                      Assigned stemcell OS: (( .properties.example_stemcell_selector.os ))
+                      Assigned stemcell version: (( .properties.example_stemcell_selector.version ))
+                      Selected stemcell?: (( .properties.example_stemcell_selector.value_present? ))
+                      Selected stemcell OS: (( .properties.example_stemcell_selector.value ))
+        METADATA
+      }
+    ]
+} %>
