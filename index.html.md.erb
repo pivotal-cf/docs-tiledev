@@ -3,9 +3,12 @@ title: PCF Tile Developer Guide
 owner: Services
 ---
 
+<p class="note"><strong>Note:
+PCF Tile Developer Guide v1.12 is not designed for use with the current versions of Ops Manager. For your tiles to stay up to date with the latest software, features, and security updates, use the latest version of the PCF Tile Developer Guide.</p>
+
 <strong><%= modified_date %></strong>
 
-This topic exists to help Pivotal Cloud Foundry (PCF) Partners learn the high-level process of building and publishing a tile on [Pivotal Network](https://network.pivotal.io/). 
+This topic exists to help Pivotal Cloud Foundry (PCF) Partners learn the high-level process of building and publishing a tile on [Pivotal Network](https://network.pivotal.io/).
 
 For advanced developers with previous experience building tiles, see [Property and Template References](./property-template-references.html) and [Development Workflow Reference](./dev-workflow.html).
 
@@ -16,7 +19,7 @@ Tile developers can publish tiles on Pivotal Network, where services and tiles a
 
 ###Tile Structure
 Tiles are packaged as compressed files with a `.pivotal` file extension.
-These compressed files require three subdirectories: `metadata`, `migrations`, and `releases`.    
+These compressed files require three subdirectories: `metadata`, `migrations`, and `releases`.
 
 When you package your software with Tile Generator, it generates these subdirectories for you. You can perform different actions within each subdirectory:
 
@@ -31,13 +34,13 @@ When you package your software with Tile Generator, it generates these subdirect
 	</tr>
 	<tr>
 		<td><code>migrations</code></td>
-		<td>Track changes across different releases in a <code>.js</code> file. Only tiles with multiple releases use this subdirectory. Do not modify the files in this subdirectory during your first tile release. </td>	
+		<td>Track changes across different releases in a <code>.js</code> file. Only tiles with multiple releases use this subdirectory. Do not modify the files in this subdirectory during your first tile release. </td>
 	</tr>
 	<tr>
 		<td><code>releases</code></td>
 		<td>Deploy your service source code and other inputs for your build, such as a BOSH release. </td>
 	</tr>
-</table>  
+</table>
 
 ## <a id="tile-value"></a> Why Build a Tile?
 
@@ -49,37 +52,37 @@ There are multiple reasons to build and publish a tile on Pivotal Network. Tiles
 
 ## <a id="tile-steps"></a> Building Your First Tile
 
-There are two options for building your first tile. You can either attend partner days or develop independently. However, Pivotal strongly recommends attending Partner Days for hands-on guidance. 
+There are two options for building your first tile. You can either attend partner days or develop independently. However, Pivotal strongly recommends attending Partner Days for hands-on guidance.
 
 ### <a id="partner-days"></a> Attending Partner Days
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/eX2c8zXF6D4?rel=0" frameborder="0" allow="encrypted-media" allowfullscreen></iframe>
 
-Partner Days are the single best resource to introduce you to PCF and tile development. During these three-day workshops, Pivotal and partner Independent Software Vendor (ISV) engineers collaborate to prototype and build a software integration with PCF. 
+Partner Days are the single best resource to introduce you to PCF and tile development. During these three-day workshops, Pivotal and partner Independent Software Vendor (ISV) engineers collaborate to prototype and build a software integration with PCF.
 
-These events streamline your development process by providing hands-on guidance, giving you a head start for publishing a tile on Pivotal Network. The workshop is free for all Pivotal partners. 
+These events streamline your development process by providing hands-on guidance, giving you a head start for publishing a tile on Pivotal Network. The workshop is free for all Pivotal partners.
 
-Pivotal recommends any interested partner to [register for Partner Days](https://pivotal.io/event/partner-days/). If you are not a Pivotal partner yet, you can [sign up for the partner program](https://pivotal.io/partners/programs/tech). 
+Pivotal recommends any interested partner to [register for Partner Days](https://pivotal.io/event/partner-days/). If you are not a Pivotal partner yet, you can [sign up for the partner program](https://pivotal.io/partners/programs/tech).
 
 ### <a id="develop-independently"></a> Developing Independently
 
-If you want to build a tile without attending Partner Days, follow the procedure below to minimize the learning curve for tile development.  
+If you want to build a tile without attending Partner Days, follow the procedure below to minimize the learning curve for tile development.
 
 Creating a tile is a complex process and can be time consuming to complete on your own. You can message the Pivotal Partners Slack channel with questions if you [register for the Pivotal Partner program](https://pivotal.io/partners/programs/tech).
 
 #### <a id="tools"></a> 1. Decide What to Build
 
-If you use Tile Generator to package your software you also need to determine the inputs you need to build before development. Inputs for your tile also depend on the service you are providing. 
+If you use Tile Generator to package your software you also need to determine the inputs you need to build before development. Inputs for your tile also depend on the service you are providing.
 
-Before starting tile development, see [How PCF and PCF Services Work](./cf-concepts.html). 
+Before starting tile development, see [How PCF and PCF Services Work](./cf-concepts.html).
 
-Depending on what you build, you might need to install the following tools: 
+Depending on what you build, you might need to install the following tools:
 
-- [Tile Generator](./tile-generator.html#-how-to-use): Used to package your software into a tile. 
+- [Tile Generator](./tile-generator.html#-how-to-use): Used to package your software into a tile.
 
-- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/): A CLI for running BOSH commands. You need BOSH commands to run Tile Generator. 
+- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/): A CLI for running BOSH commands. You need BOSH commands to run Tile Generator.
 
-- [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads): A CLI for deploying and managing apps on Cloud Foundry. If you are developing on Cloud Foundry, you use cf CLI when building your tile. 
+- [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads): A CLI for deploying and managing apps on Cloud Foundry. If you are developing on Cloud Foundry, you use cf CLI when building your tile.
 
 - [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/): A CLI for deploying and managing apps on Kubernetes. If you are developing on Kubernetes, you use kubectl when building your tile.
 
@@ -93,15 +96,15 @@ For information about setting up Tile Generator and building a base tile, see [T
 
 #### <a id="test"></a> 3. Test Your Tile
 
-Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and install your tile in PIE just like an operator would.  
+Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and install your tile in PIE just like an operator would.
 
-To gain access to your PIE, reach out to your contact at Pivotal or [register as a partner](https://partners.pivotal.io/). 
+To gain access to your PIE, reach out to your contact at Pivotal or [register as a partner](https://partners.pivotal.io/).
 
 If you already have access to your PIE, for information information about how to log in, see [Shared PCF Development Environments](./environments.html).
 
 #### <a id="document"></a> 4. Document Your Tile
 
-When you are ready to publish your tile, write documentation. Documentation is valuable for operators who use your tile. 
+When you are ready to publish your tile, write documentation. Documentation is valuable for operators who use your tile.
 
 For more information about how to write and publish documentation for your tile, see [Tile Documentation](./tile-documentation.html).
 
