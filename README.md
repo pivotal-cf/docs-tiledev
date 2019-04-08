@@ -2,18 +2,18 @@
 
 ## Which branch to use?
 
-**Note**: Provide instructions in your PRs to indicate which branches you want Docs to apply your commits to. 
+**Note**: Provide instructions in your PRs to indicate which branches you want Docs to apply your commits to.
 
 | Branch name | Use for… |
 |-------------| ------|
 | master      | This is the "edge" build, for PCF v2.5. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-n/ |
 | 2.5       | v2.5 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-5/ and https://docs.pivotal.io/tiledev/2-5 |
-| 2.4         | v2.4 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-4/ and https://docs.pivotal.io/tiledev/2-4 | 
-| 2.3         | v2.3 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-3/ and https://docs.pivotal.io/tiledev/2-3 | 
-| 2.2         | v2.2 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-2/ and https://docs.pivotal.io/tiledev/2-2 | 
-| 2.1         | v2.1 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-1/ and https://docs.pivotal.io/tiledev/2-1 | 
-| 2.0         | v2.0 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-0/ and https://docs.pivotal.io/tiledev/2-0 | 
-| 1.12        | v1.12 publishes to https://docs-pcf-staging.cfapps.io/tiledev/1-12/ and https://docs.pivotal.io/tiledev/1-12 | 
+| 2.4         | v2.4 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-4/ and https://docs.pivotal.io/tiledev/2-4 |
+| 2.3         | v2.3 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-3/ and https://docs.pivotal.io/tiledev/2-3 |
+| 2.2         | v2.2 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-2/ and https://docs.pivotal.io/tiledev/2-2 |
+| 2.1         | v2.1 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-1/ and https://docs.pivotal.io/tiledev/2-1 |
+| 2.0         | NOT IN USE (PDF available at https://docs.pivotal.io/archives/tiledev-guide-2.0.pdf) |
+| 1.12        | NOT IN USE (PDF available at https://docs.pivotal.io/archives/tiledev-guide-1.12.pdf) |
 
 ## Terminology List
 
@@ -25,7 +25,7 @@ List of terms that we want to use consistently in the doc:
 
 ## PCF Services Documentation Template
 
-This template helps Pivotal development teams prepare documentation for Pivotal Cloud Foundry (PCF) services that appear on [Pivotal Network](https://network.pivotal.io/). 
+This template helps Pivotal development teams prepare documentation for Pivotal Cloud Foundry (PCF) services that appear on [Pivotal Network](https://network.pivotal.io/).
 
 ## <a id='overview'></a>Overview
 
@@ -38,7 +38,7 @@ You can use this template to develop documentation for a new PCF service. It inc
 To begin using this repo to develop your documentation, perform the following steps:
 
 1. Clone this repo onto your local machine.
-1. Work your way through each topic, replacing the placeholders in ALL-CAPS and following the instructions in **bold**. 
+1. Work your way through each topic, replacing the placeholders in ALL-CAPS and following the instructions in **bold**.
 1. Complete the subnav by replacing the placeholders in ALL-CAPS in the subnav file at `book/master_middleman/source/subnavs/service_subnav.erb` in this repo.
 1. View your documentation as a live local site in a browser, by following the steps below in the [How To Use Bookbinder To View Your Docs](#bookbinder) section.
 1. When you've finished your documentation, push your docs up to the remote and email the PCF Docs Team at cf-docs@pivotal.io.
@@ -95,7 +95,7 @@ In Terminal window:
     ```
     $ ssh-keygen
     Generating public/private rsa key pair.
-    Enter file in which to save the key (/Users/YOUR-USERID/.ssh/id_rsa): 
+    Enter file in which to save the key (/Users/YOUR-USERID/.ssh/id_rsa):
     ```
 
 1. Get a [Github](http://github.com) account.
@@ -149,11 +149,9 @@ In Terminal window:
 1. Run `bookbinder watch` to build the book on your machine. If it doesn't succeed, try prepending the command with `bundle exec` so that bookbinder uses local gems instead of global gems.
 
    `$ bundle exec bookbinder watch`
-   
+
 1. Browse to `localhost:4567` to view the book locally and "watch" any changes that you make to source `html.md.erb` files. As you make and save changes to the local source files for your site, you will see them in your browser after a slight delay.
 
 After each session of writing or revising your docs source files, commit and push them to your github repo.
 
 Happy documenting!
-
-
