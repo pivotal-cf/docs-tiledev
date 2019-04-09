@@ -6,11 +6,11 @@ owner: Technical Program Management
 <strong><%= modified_date %></strong>
 
 This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.5 introduces
-which might be relevant to partner service tiles. 
+which might be relevant to partner service tiles.
 
-For information about changes introduced in Ops Manager v2.5, 
+For information about changes introduced in Ops Manager v2.5,
 see [PCF Ops Manager v2.5 Release Notes](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/opsmanager-rn.html).
-For information about breaking changes introduced in Pivotal Application Services v2.5, 
+For information about breaking changes introduced in Pivotal Application Services v2.5,
 see [PCF v2.5 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-5/pcf-release-notes/breaking-changes.html).
 
 ## <a id="features"></a> Features
@@ -23,26 +23,32 @@ Tile authors with an existing syslog form can migrate their syslog parameters to
 For more about migrating an existing form to the Ops Manager provided syslog form, see
 [Migrating Existing Syslog Configuration to Ops Manager](./migrating-syslog-configuration.html).
 
-For information about the syslog form template, see [Syslog Form Template Available for Tile Authors](https://docs.pivotal.io/tiledev/2-4/release-notes.html#syslog).
+For information about the syslog form template,
+see [Syslog Form Template Available for Tile Authors](https://docs.pivotal.io/tiledev/2-4/release-notes.html#syslog).
 
 
 ### <a id="product-temp"></a> Product Template Property Improvements
 
 The product template has the following improvements:
 
-+ **`restricted_view_api_access_credentials`:**  Tile authors can use `(($ops_manager.restricted_view_api_access_credentials))` as a double-parentheses accessor to make read-only
-and non-credential requests to Ops Manager. 
++ **`restricted_view_api_access_credentials`:**
+Tile authors can use `(($ops_manager.restricted_view_api_access_credentials))`
+as a double-parentheses accessor to make read-only
+and non-credential requests to Ops Manager.
 See [Dollar Contexts](./property-template-references.html#dollar).
 
-+ **`instance_types_catalog`:** Tile authors can use `(($ops_manager.instance_types_catalog))` 
-as a double-parentheses accessor to access a catalog of available VM types with the accessor. 
++ **`instance_types_catalog`:** Tile authors can use `(($ops_manager.instance_types_catalog))`
+as a double-parentheses accessor to access a catalog of available VM types with the accessor.
 See [Dollar Contexts](./property-template-references.html#dollar).
 
-+ **`((cpu))`:** Tile authors can use `((cpu))` as a double-parentheses job accessor to add the 
++ **`((cpu))`:** Tile authors can use `((cpu))` as a double-parentheses job accessor to add the
 CPU value in a manifest. See [manifest](property-template-references.html#job-manifest).
 
-+ **`impact_warning`:** Tile authors can add user-facing warnings that display before a pre-delete or 
-post-deploy errand runs. To specify a warning, use the `impact_warning` key in the tile metadata for a `pre_delete_errands` or `post_deploy_errands`. 
++ **`impact_warning`:** Tile authors can add user-facing warnings that display
+before a pre-delete or post-deploy errand runs.
+To specify a warning, add the `impact_warning` key to the
+`pre_delete_errands` or `post_deploy_errands` sections
+of the tile metadata.
 See [Define a Colocated Errand](./tile-errands.html#colocated).
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
@@ -60,19 +66,19 @@ The following tables list the properties that Pivotal removed and added in PAS v
   <tr>
     <td><code>.properties.bosh_dns_servers</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.cloud_controller_default_stack</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.enable_cf_metric_name</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.enable_log_cache</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.router_headers_remove_if_specified</code></td>
   </tr>
@@ -85,35 +91,35 @@ The following tables list the properties that Pivotal removed and added in PAS v
   <tr>
     <td><code>.properties.cloud_controller_logcache_tls_cert</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.copilot_client_cert</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.copilot_server_cert</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.istio</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.istio_frontend_tls_keypairs</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.log_cache_expvar_forwarder_client_tls_cert</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.pilot_server_cert</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.stack_migration_acknowledgement</code></td>
   </tr>
-  
+
   <tr>
     <td><code>.properties.router_headers_remove_if_specified</code></td>
   </tr>
@@ -124,9 +130,11 @@ The following tables list the properties that Pivotal removed and added in PAS v
 This release has the following issues:
 
 ### <a id="service-broker"></a> Ops Manager Syslog Template Is Not Supported for Service Broker Tiles
-Ops Manager syslog template does not propagate to service broker tiles. Tile developers with service broker tiles should continue to use their own syslog configurations. Service broker tiles with the syslog template configured do not display the syslog template.
+Ops Manager syslog template does not propagate to service broker tiles.
+Tile developers with service broker tiles should continue to use their own syslog configurations.
+Service broker tiles with the syslog template configured do not display the syslog template.
 
-For more information about the Syslog template, see 
+For more information about the Syslog template, see
 [Syslog Form Template Available for Tile Authors](https://docs.pivotal.io/tiledev/2-4/release-notes.html#syslog).
 
 ## <a id="breaking-changes"></a> Breaking Changes
@@ -134,36 +142,38 @@ For more information about the Syslog template, see
 This release has the following breaking changes:
 
 ### <a id="xenial"></a> Tile Authors Must Use Xenial Stemcells
-Canonical will end support for Ubuntu Trusty Tahr on April 30th, 2019 and security fixes will no longer be backported. 
-In PCF v2.5, Trusty stemcells are not supported. 
-Tile authors should immediately start testing with the Xenial stemcells and fix any compatibility issues. 
+Canonical will end support for Ubuntu Trusty Tahr on April 30th, 2019
+and security fixes will no longer be backported.
+In PCF v2.5, Trusty stemcells are not supported.
+Tile authors should immediately start testing with the Xenial stemcells and fix any compatibility issues.
 
 For more information, see [Tile Authors Must Use Xenial Stemcells](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-stemcells).
 
 ### <a id="cflinux"></a> PAS Only Supports cflinuxfs3
 
 In PAS v2.5, `cflinuxfs3` is the only supported stack
-and the `cflinuxfs2` stack is not included. 
-If you are using the `cflinuxfs2` stack, you must migrate your app to `cflinuxfs3` before upgrading 
+and the `cflinuxfs2` stack is not included.
+If you are using the `cflinuxfs2` stack, you must migrate your app to `cflinuxfs3` before upgrading
 to PAS v2.5.
 
-For more information, see [Tile Authors Must Manually Migrate Apps to cflinuxfs3](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-cflinuxfs3).
+For more information,
+see [Tile Authors Must Manually Migrate Apps to cflinuxfs3](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-cflinuxfs3).
 
 ###<a id='breaking-consul'></a>Tile Authors Must Remove consul_agent
 
 If your tile includes consul clients, you must remove consul clients from your product.
 
-This is because the consul server no longer exists. The consul client expects the consul server 
-to be present until their links are updated. 
-If your tile includes consul clients, deployments fail to deploy. 
+This is because the consul server no longer exists. The consul client expects the consul server
+to be present until their links are updated.
+If your tile includes consul clients, deployments fail to deploy.
 This can cause extra error logging and unhealthy instances.
 
 Take the following actions according to which PCF versions your tile supports:
 
-+ If your tile only supports PCF v2.2 and earlier, do not remove consul agents. 
++ If your tile only supports PCF v2.2 and earlier, do not remove consul agents.
 
 + If your tile only supports PCF v2.3 or later, you must remove consul agents
-completely from your tile. 
+completely from your tile.
 
 + If your tile supports multiple versions, including PCF v2.2 (where consul
 agents cannot be removed) and PCF v2.3 (where consul agents must be removed)
@@ -182,48 +192,62 @@ make the following changes to any `job_type` that is colocated with
     ```
 
 ### <a id="log-sys"></a> Removed Logging System Property
-PAS v2.5 removes the **Syslog Drain Buffer Size** checkbox from the **Logging System** pane of the PAS tile. This field corresponds to a deprecated property that does not have any affect on the logging system when configured.
+PAS v2.5 removes the **Syslog Drain Buffer Size** checkbox from
+the **Logging System** pane of the PAS tile.
+This field corresponds to a deprecated property that does not have any affect on the logging system when configured.
 
-It also removes the corresponding property, `doppler.message_drain_buffer_size`. 
+It also removes the corresponding property, `doppler.message_drain_buffer_size`.
 If you have scripts that reference this property, they might break.
 
 ### <a id="log-cache"></a> Removed Log Cache Property
 
 PAS v2.4 removed the **Enable log-cache** checkbox from the **Advanced Features** section of the PAS tile.
 
-PAS v2.5 removes the corresponding property, `enable_log_cache`. 
+PAS v2.5 removes the corresponding property, `enable_log_cache`.
 If you have scripts that reference this property, they might break.
 
 ### <a id="override-deploy"></a> Removed Option to Override Deployment Name to CF
 
-PAS v2.4 introduced the use of `cf-GUID` as the value for the `deployment` in metrics. 
-For more information, see [Uniquely Identify Metrics by Tile](https://docs.pivotal.io/tiledev/2-4/release-notes.html).
+PAS v2.4 introduced the use of `cf-GUID` as the value for the `deployment` in metrics.
+For more information,
+see [Uniquely Identify Metrics by Tile](https://docs.pivotal.io/tiledev/2-4/release-notes.html).
 
-PAS v2.4 also included the option to override this value back to cf, which was used in previous versions. However, PAS v2.5 removes this override option.
+PAS v2.4 also included the option to override this value back to cf,
+which was used in previous versions. However, PAS v2.5 removes this override option.
 
-To upgrade successfully, **Use “cf” as deployment name in emitted metrics instead of unique name** in the **Advanced Features** pane of the PAS tile must be deselected.
+To upgrade successfully, **Use “cf” as deployment name in emitted metrics
+instead of unique name** in the **Advanced Features** pane of the PAS tile must be deselected.
 
-If you have scripts that use metrics with `cf` as the value for `deployment`, they might break when upgrading to PAS v2.5.
+If you have scripts that use metrics with `cf` as the value for `deployment`,
+they might break when upgrading to PAS v2.5.
 
-If you have PCF Healthwatch installed and you changed the value of **Use “cf” as deployment name in emitted metrics instead of unique name** in PAS, you must run the **Push Monitoring Components** errand for PCF Healthwatch to detect the change.
+If you have PCF Healthwatch installed and you changed the value of
+**Use “cf” as deployment name in emitted metrics instead of unique name** in PAS,
+you must run the **Push Monitoring Components** errand for PCF Healthwatch to detect the change.
 
 ### <a id="unused-uaa"></a> Removed Unused Apps Manager UAA Client and Property
 
-PAS v2.5 removes an unused Apps Manager UAA client identified as `portal` and an unused refresh token property `uaa.apps_manager_refresh_token_lifetime`.
+PAS v2.5 removes an unused Apps Manager UAA client identified as `portal`
+and an unused refresh token property `uaa.apps_manager_refresh_token_lifetime`.
 
 If you have platform automation scripts that reference these properties, they might break.
 
 ### <a id="traffic"></a> Removed Traffic Controller Container Metrics Endpoint
 
-PAS v2.5 removes the Traffic Controller `containermetrics/app-guid` endpoint. 
+PAS v2.5 removes the Traffic Controller `containermetrics/app-guid` endpoint.
 If you have scripts that reference this endpoint, they might break.
 
-The `containermetrics/app-guid` endpoint provided access to container metrics from Traffic Controller for a specific app. In PAS v2.5, you can access container metrics through Log Cache. Log Cache includes API endpoints and a CLI plugin to query and filter logs and metrics.
+The `containermetrics/app-guid` endpoint provided access to container metrics
+from Traffic Controller for a specific app. In PAS v2.5,
+you can access container metrics through Log Cache.
+Log Cache includes API endpoints and a CLI plugin to query and filter logs and metrics.
 
-To download the Log Cache Cloud Foundry Command Line Interface (cf CLI) plugin, see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in the cf CLI Plugins documentation. 
-For information about using the Log Cache API, see [log-cache](https://github.com/cloudfoundry/log-cache#restful-api-via-gateway) on GitHub.
+To download the Log Cache Cloud Foundry Command Line Interface (cf CLI) plugin,
+see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in the cf CLI Plugins documentation.
+For information about using the Log Cache API,
+see [log-cache](https://github.com/cloudfoundry/log-cache#restful-api-via-gateway) on GitHub.
 
-### <a id="dns-servers"></a> Removed dns_servers Property Breaks 
-PAS v2.4 removed **DNS Servers** from the PAS UI. 
-PAS v2.5 removes the corresponding `dns_servers property`. 
+### <a id="dns-servers"></a> Removed dns_servers Property Breaks
+PAS v2.4 removed **DNS Servers** from the PAS UI.
+PAS v2.5 removes the corresponding `dns_servers property`.
 If this parameter is configured in your tiles, platform automation scripts might break.
