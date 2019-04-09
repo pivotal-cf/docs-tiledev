@@ -135,7 +135,7 @@ This release has the following breaking changes:
 
 ### <a id="xenial"></a> Tile Authors Must Use Xenial Stemcells
 Canonical will end support for Ubuntu Trusty Tahr on April 30th, 2019 and security fixes will no longer be backported. 
-In PCF 2.5, Trusty stemcells are not supported. 
+In PCF v2.5, Trusty stemcells are not supported. 
 Tile authors should immediately start testing with the Xenial stemcells and fix any compatibility issues. 
 
 For more information, see [Tile Authors Must Use Xenial Stemcells](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-stemcells).
@@ -220,9 +220,10 @@ If you have scripts that reference this endpoint, they might break.
 
 The `containermetrics/app-guid` endpoint provided access to container metrics from Traffic Controller for a specific app. In PAS v2.5, you can access container metrics through Log Cache. Log Cache includes API endpoints and a CLI plugin to query and filter logs and metrics.
 
-To download the Log Cache Cloud Foundry Command Line Interface (cf CLI) plugin, see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in the cf CLI Plugins documentation. For information about using the Log Cache API, see [Log Cache](https://github.com/cloudfoundry/log-cache#restful-api-via-gateway) on GitHub.
+To download the Log Cache Cloud Foundry Command Line Interface (cf CLI) plugin, see [log-cache](https://plugins.cloudfoundry.org/#log-cache) in the cf CLI Plugins documentation. 
+For information about using the Log Cache API, see [log-cache](https://github.com/cloudfoundry/log-cache#restful-api-via-gateway) on GitHub.
 
 ### <a id="dns-servers"></a> Removed dns_servers Property Breaks 
 PAS v2.4 removed **DNS Servers** from the PAS UI. 
 PAS v2.5 removes the corresponding `dns_servers property`. 
-If this parameter is configured in your tiles, platform automation scripts might breaks.
+If this parameter is configured in your tiles, platform automation scripts might break.
