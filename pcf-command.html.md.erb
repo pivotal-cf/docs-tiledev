@@ -135,7 +135,7 @@ $ pcf install test-tile 0.0.2
 
 Where you would normally configure the tile settings in the GUI, the `configure`
 command lets you pass in any user-specified properties as a .yml file. This command
-also sets the stemcell for the tile to the same one used by your Elastic Runtime,
+also sets the stemcell for the tile to the same one used by Pivotal Application Service,
 to avoid the need to upload a tile-specific stemcell.
 
 ```bash
@@ -167,7 +167,7 @@ jobs:
 ```
 
 You must define any `secret` type property value as a hash, in curly brackets. Specifying a simple
-string value for a field of this type results in a `500 System Error` being returned from `pcf configure`. 
+string value for a field of this type results in a `500 System Error` being returned from `pcf configure`.
 The `secret` type property values can contain special characters.
 
 To see what changes are ready to be applied:
@@ -175,7 +175,7 @@ To see what changes are ready to be applied:
 ```bash
 $ pcf changes
 install: test-tile-207b165fcb7dc8b2597b
-delete:  
+delete:
 ```
 
 To apply these changes:
@@ -238,8 +238,8 @@ $ pcf target
 Setting api endpoint to api.example.com...
 OK
 
-API endpoint:   https://api.example.com (API version: 2.52.0)   
-User:           admin   
+API endpoint:   https://api.example.com (API version: 2.52.0)
+User:           admin
 Org:            my-org
 Space:          my-space
 API endpoint: https://api.example.com
