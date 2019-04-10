@@ -14,7 +14,7 @@ There are two ways to do CI testing on your tile:
   This is the method recommended by Pivotal.
 + Set up and use your own Concourse pipeline.<br>
   See [Set Up a Concourse Pipeline and Test Your Tile](#concourse) below.<br>
-  This method is more time consuming and not recommended for new partners 
+  This method is more time consuming and not recommended for new partners
   or partners working on only one tile.
 
 ## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
@@ -28,7 +28,7 @@ This also relieves you from maintaining your own CI system, keeping up with late
 The Tile Dashboard CI is part of our Enterprise Readiness criteria
 which is used to inform the field of the quality and capabilities of your tile,
 so it is important to get your tile performing well.
-For an introduction to our readiness criteria, see 
+For an introduction to our readiness criteria, see
 [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0).
 
 ### <a id="tile-dashboard-ci"></a> The Tile Dashboard CI Test Process
@@ -43,7 +43,7 @@ The Tile Dashboard CI runs your tile through a series of steps, which include:
   - Use of features that are no longer supported.
 
 3. Configuring, installing, testing, and uninstalling your tile in several PCF environments:
-  - A patch release of every supported Pivotal Application Service and Elastic Runtime minor version.
+  - A patch release of every supported Pivotal Application Service minor version.
   - Every supported IaaS
   - Environments with extra configuration, such as multiple availability zones and IPsec
 
@@ -70,7 +70,7 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
     | first release     | contact the technical program management of the ISV team. |
     | subsequent release| you can upload pre-releases to the Pivotal Network.|
 
- 
+
 ### <a id="intro"></a> About Configuring a Tile on the Tile Dashboard
 
 After your tile has been uploaded to the Pivotal Network, the Tile Dashboard starts to stage and scan it.
@@ -92,7 +92,7 @@ There are two ways that you can configure the tile on the Tile Dashboard:
 
 ### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and Locate the Configuration Page
 
-To log in to the Tile Dashboard and navigate to the configuration page, do the following: 
+To log in to the Tile Dashboard and navigate to the configuration page, do the following:
 
 1.  Log in to your PivotalPartners.slack.com account.
 
@@ -126,11 +126,11 @@ For a complete list of property types, see [Product Template Reference](product-
 
 To configure install properties for your tile using the **Properties** tab, do the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 2. Click the **Properties** tab.
 
-3. Review or specify the value for each property.  
+3. Review or specify the value for each property.
    If a property is required and is missing valid values, the field displays in red.
 
 3. When no fields are red, click **Save** or **Save and Run**.
@@ -146,13 +146,13 @@ see [om configure-product]
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 2. Click the **Advanced - JSON Properties** tab.
 
 3. Enter values for all required properties.
    If a property is required, this is indicated by `"required": true`.
-   For example: 
+   For example:
 
     ```
  ".properties.syslog_selector.enabled.address": {
@@ -167,7 +167,7 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 
     ```
  ".properties.syslog_selector.enabled.address": {
-        "value": "192.0.2.1", 
+        "value": "192.0.2.1",
         "type": "network_address",
     },
     ```
@@ -175,9 +175,9 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 
 ### <a id="environment-sensitive-values"></a> Environment-Sensitive Values
 
-Some property values may need to vary between test environments. An example is availability zone names. 
-For these environment-sensitive properties, we provide placeholder values that are replaced 
-with an appropriate value for each test environment when the test is run. 
+Some property values may need to vary between test environments. An example is availability zone names.
+For these environment-sensitive properties, we provide placeholder values that are replaced
+with an appropriate value for each test environment when the test is run.
 A description of these placeholder values appears on the **Tile Configuration** tabs for easy reference.
 
 ###<a id="uaa-users"></a> Specify UAA Users
@@ -187,18 +187,18 @@ Include a list of UAA users for testing your tile.
 To specify the UAA users, do the following:
 
 1. If you are not already on the configuration page,
-   complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above. 
+   complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 1. At the bottom of the configuration page, click **+** to expand the box and view the fields.
 
     ![bottom of page shows plus button used to expand uaa properties form](img/uaa-properties-collapsed.png)
 
-2.  Enter username, password, and groups for UAA user. 
+2.  Enter username, password, and groups for UAA user.
 
-    
+
 ###<a id="save-and-run"></a> Save and Run
 
-When the configuration is complete, the config icon shows green. 
+When the configuration is complete, the config icon shows green.
 At this point, you can test the tile on all the environments, by doing the following:
 
 1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
@@ -209,13 +209,13 @@ At this point, you can test the tile on all the environments, by doing the follo
 
     ![Success Config save succeeded! Tile CI begun! message appears when the run starts.](img/save-and-run-message.png)
 
-3. Click **Tiles** in the toolbar to return to the tiles view. 
+3. Click **Tiles** in the toolbar to return to the tiles view.
 
 4. Follow the progress of the tests in the Tiles view.
 
     ![Staged, scan and config jobs followed by environment jobs.](img/kick-off-testing.png)
 
-    Staged, scan, and config are the prerequisite jobs. 
+    Staged, scan, and config are the prerequisite jobs.
     They run in series.
     The rest are the environment jobs.
     They run in parallel.
@@ -260,7 +260,7 @@ and provide S3 storage to exchange artifacts with your own servers.
 
 If you choose to set up your own Concourse server,
 see the instructions [Concourse: Setup & Operations](https://concourse-ci.org/setup-and-operations.html).
- 
+
 ### <a id="pipeline"></a> Create a Concourse Pipeline for Your Tile
 
 A typical CI pipeline for a tile consists of the following jobs:
@@ -274,7 +274,7 @@ You describe this pipeline in a `pipeline.yml` file that is then uploaded to the
 Concourse server. [Tile Generator](tile-generator.html) contains a sample
 pipeline that you can clone for your own tile. We are working on automating
 the process of generating a pipeline template for you.
- 
+
 ### <a id="pool"></a> Set Up PCF for Your CI Pipeline
 
 Pivotal partners who have us host their pipeline have access to a pool of PCF
