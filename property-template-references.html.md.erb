@@ -567,16 +567,16 @@ For more information, see [Managing Runtime Configs](./runtime-config.html).
 * **Type:** Optional
 
 Install-time verifiers confirm that properties for external services are set correctly.
-For example, the `MysqlDatabaseVerifier` checks that MySQL database properties are valid by using 
-the properties to connect to the MySQL database. Install-time verifiers run in Ops Manager before changes are applied. 
+For example, the `MysqlDatabaseVerifier` checks that MySQL database properties are valid by using
+the properties to connect to the MySQL database. Install-time verifiers run in Ops Manager before changes are applied.
 
 Each install-time verifier requires the following keys:
 
 + `name`: The type of verifier. The value must be one of the verifiers listed below.
-+ `properties`: The properties to verify. The required properties for each verifier are listed below. 
-+ `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the 
-  verification errors are resolved and an error is displayed. 
-  If this key is set to `true`, an operator can **Apply Changes** if they choose to ignore the displayed warning. 
++ `properties`: The properties to verify. The required properties for each verifier are listed below.
++ `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the
+  verification errors are resolved and an error is displayed.
+  If this key is set to `true`, an operator can **Apply Changes** if they choose to ignore the displayed warning.
   This key is set to `false` by default.
 
 You can use the following install-time verifiers:
@@ -629,7 +629,7 @@ You can use the following install-time verifiers:
       <code>host</code><br/>
       <code>password</code><br/>
       <code>port</code><br/>
-      <code>username</code>      
+      <code>username</code>
     </td>
   </tr>
   <tr>
@@ -701,7 +701,7 @@ install_time_verifiers:
     bucket_name: .properties.system_blobstore.external.buildpacks_bucket
     endpoint: .properties.system_blobstore.external.endpoint # Optional. Defaults to AWS
     region: .properties.system_blobstore.external.region # Optional. Defaults to default IaaS setting
-    secret_access_key: .properties.system_blobstore.external.secret_key 
+    secret_access_key: .properties.system_blobstore.external.secret_key
     signature_version: .properties.system_blobstore.external.signature_version
 - ignorable: true
   name: Verifiers::MysqlDatabaseVerifier
@@ -875,11 +875,11 @@ References to properties defined in the [property_blueprints](#property-blueprin
 
 ### <a id='verifiers'></a> verifiers
 
-Verifiers confirm that properties are set correctly in forms. If a verifier displays a warning, 
+Verifiers confirm that properties are set correctly in forms. If a verifier displays a warning,
 the form can still be saved and the warning can be ignored.
 
-Verifiers are similar to install-time verifiers except that they run after a form is 
-saved and not before **Apply Changes**. If you want to have a verifier run when a form is saved 
+Verifiers are similar to install-time verifiers except that they run after a form is
+saved and not before **Apply Changes**. If you want to have a verifier run when a form is saved
 and before **Apply Changes**, add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
 For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
@@ -1246,10 +1246,12 @@ For examples of supported constraint types, see [integer](#integer) below.
 
 The number of default instances for a job, including maximum, minimum, odd, and the ability to decrease sizing after deploy.
 
-If your product uses an external service that performs the same job as a service in Elastic Runtime,
+If your product uses an external service that performs the same job as a service in
+Pivotal Application Service (PAS),
 you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
 
-For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for Elastic Runtime. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
+For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL,
+which is the default system database for PAS. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
 
 For examples of supported constraint types, see [integer](#integer) below.
 
