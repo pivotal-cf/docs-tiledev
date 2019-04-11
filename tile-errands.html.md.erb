@@ -108,7 +108,7 @@ job_types:
 Colocated errand support is available in Ops Manager 2.0 and later.
 If your tile uses colocated errands, use the instructions in this section to ensure your tile is also compatible with Ops Manager 1.12 and earlier.
 
-When your tile no longer requires Ops Manager 1.12 support, configure your errands as either colocated or non-colocated. 
+When your tile no longer requires Ops Manager 1.12 support, configure your errands as either colocated or non-colocated.
 Future versions of Ops Manager will not support the workaround described in this section.
 
 The following example manifest shows an `example_colocated_errand` configured as a colocated errand in Ops Manager 2.0 and as an instance group errand in Ops Manager 1.12:
@@ -166,9 +166,9 @@ Post-deploy errands run by default. An operator can prevent a post-deploy errand
 
 ![Example Errand](img/example-errand.png)
 
-For example, Redis has a **Broker Registrar** post-deploy errand that the Elastic Runtime tile uses to register its service broker with the Cloud Controller and publish its service plans.
+For example, Redis has a **Broker Registrar** post-deploy errand that the Pivotal Application Service (PAS) tile uses to register its service broker with the Cloud Controller and publish its service plans.
 
-If an operator chooses **Off** in the drop-down menu for Elastic Runtime's **Broker Registrar** errand before installation, Elastic Runtime's service broker is not registered with the Cloud Controller and its service plans are not made public.
+If an operator chooses **Off** in the drop-down menu for the PAS **Broker Registrar** errand before installation, the PAS service broker is not registered with the Cloud Controller and its service plans are not made public.
 
 ##<a id='pre-delete'></a>Pre-Delete Errands
 
@@ -191,7 +191,7 @@ Pre-delete errands run by default. An operator can prevent a pre-delete errand f
 
 Some errands do not always need to run. For example, installing a minor patch to a existing service might not require re-registering its broker. Ops Manager lets operators save installation time by turning errands off or on. They set these errand run rules in two places:
 
-* **One-Time Rules** under **Pending Changes** in the Ops Manager Installation Dashboard. These rules only apply to the next time you run **Apply Changes** and do not persist after the next successful installation.  
+* **One-Time Rules** under **Pending Changes** in the Ops Manager Installation Dashboard. These rules only apply to the next time you run **Apply Changes** and do not persist after the next successful installation.
 ![Pending Changes](img/pending_changes.png)
 
 * **Persistent Rules** in the tile's **Errands** pane. These rules persist through subsequent installations, until changed in the **Errands** pane.
