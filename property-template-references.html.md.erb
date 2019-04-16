@@ -322,7 +322,7 @@ The following is an example of the properties that appear at the top of a produc
 <pre class="code">
   ---
   name: example-product
-  product_version: &lt;%= version.inspect %>
+  product_version: "1.0-build.0"
   minimum_version_for_upgrade: "1.7.0"
   pivnet_filename_regex: "product-*.pivotal"
   metadata_version: "1.11"
@@ -333,7 +333,7 @@ The following is an example of the properties that appear at the top of a produc
   service_broker: false # Default value
   stemcell_criteria:
     os: ubuntu-xenial
-    version: &lt;%= stemcell_version.inspect %&gt;
+    version: "97.0"
 
     enable_patch_security_updates: true
 
@@ -343,8 +343,8 @@ The following is an example of the properties that appear at the top of a produc
 
   releases:
     - name: example-release
-      file: &lt;%= release_file_name.inspect %&gt;
-      version: &lt;%= release_file_name.match(/^example-release-(.*)\.tgz$/)[1].inspect %&gt;
+      file: "example-release.tgz"
+      version: "15"
 
   variables:
     - name: credhub-password
@@ -481,7 +481,7 @@ Example:
  <pre class="code">
  stemcell\_criteria
   os: ubuntu-xenial
-  version: &lt;%= stemcell\_version.inspect %>
+  version: "97.0"
   enable\_patch\_security\_updates: true
  </pre>
 
