@@ -619,7 +619,7 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-        <code>BlobstoreVerifier</code>
+        <code>Verifiers::BlobstoreVerifier</code>
     </td>
     <td>
       Verifies that the specified AWS s3 bucket exists and is accessible
@@ -632,7 +632,7 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-        <code>LDAPBindVerifier</code>
+        <code>Verifiers::LDAPBindVerifier</code>
     </td>
     <td>
       Verifies that the specified LDAP server exists and that the provided credentials are valid
@@ -643,7 +643,7 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-      <code>MysqlDatabaseVerifier</code>
+      <code>Verifiers::MysqlDatabaseVerifier</code>
     </td>
     <td>
       Verifies that the specified MySQL server exists and that the provided credentials and database are valid
@@ -658,7 +658,7 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-      <code>SmtpAuthenticationVerifier</code>
+      <code>Verifiers::SmtpAuthenticationVerifier</code>
     </td>
     <td>
       Verifies that the specified SMTP server exists and that the provided credentials are valid
@@ -674,7 +674,7 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-      <code>SsoUrlVerifier</code>
+      <code>Verifiers::SsoUrlVerifier</code>
     </td>
     <td>
       Verifies that the specified SSO server exists
@@ -685,7 +685,7 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-      <code>StaticIpsVerifier</code>
+      <code>Verifiers::StaticIpsVerifier</code>
     </td>
     <td>
       Verifies that all requested static IPs fall within the subnet assigned to the job. See <code>static_ips</code> in <a href="#job-types">Job Types</a> below.
@@ -696,13 +696,28 @@ You can use the following install-time verifiers:
   </tr>
   <tr>
     <td>
-      <code>WildcardDomainVerifier</code>
+      <code>Verifiers::WildcardDomainVerifier</code>
     </td>
     <td>
       Verifies that the specified domain resolves using DNS
     </td>
     <td>
       <code>domain</code>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <code>Verifiers::VsphereConfigurationVerifier</code>
+    </td>
+    <td>
+      Verifies that the vSphere configuration is valid
+    </td>
+    <td>
+      <code>vcenter_hosturl</code>
+      <code>vcenter_username</code>
+      <code>vcenter_password</code>
+      <code>datacenter</code>
+      <code>datastore_pattern</code>
     </td>
   </tr>
 </table>
