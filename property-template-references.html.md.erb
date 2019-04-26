@@ -591,29 +591,31 @@ For more information, see [Managing Runtime Configs](./runtime-config.html).
 * **Type:** Optional
 
 Install-time verifiers confirm that properties for external services are set correctly.
+Install-time verifiers run in Ops Manager before changes are applied.
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by using
-the properties to connect to the MySQL database. Install-time verifiers run in Ops Manager before changes are applied.
+the properties to connect to the MySQL database. 
 
 Each install-time verifier requires the following keys:
 
-+ `name`: The type of verifier. The value must be one of the verifiers listed below.
-+ `properties`: The properties to verify. The required properties for each verifier are listed below.
++ `name`: The type of verifier. The value must be one of the verifiers listed in the table below.
++ `properties`: The properties to verify. The required properties for each verifier are listed in the 
+  table below.
 + `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the
-  verification errors are resolved and an error is displayed.
-  If this key is set to `true`, an operator can **Apply Changes** if they choose to ignore the displayed warning.
+  verification errors are resolved. 
+  If this key is set to `true`, an operator can ignore the warning message and **Apply Changes**.
   This key is set to `false` by default.
 
-You can use the following install-time verifiers:
+The following table lists the available install-time verifiers:
 
 <table class="nice">
   <tr>
-    <th width="240px">
-      Name
+    <th width="250">
+      Verifier Type
     </th>
     <th>
-      Description
+      Verifies that...
     </th>
-    <th width="200px">
+    <th width="210px">
       Required Properties
     </th>
   </tr>
@@ -622,12 +624,14 @@ You can use the following install-time verifiers:
         <code>Verifiers::BlobstoreVerifier</code>
     </td>
     <td>
-      Verifies that the specified AWS s3 bucket exists and is accessible
+      the specified AWS s3 bucket exists and is accessible.
     <td>
-        <code>access_key_id</code><br/>
-        <code>bucket_name</code><br/>
-        <code>secret_access_key</code><br/>
-        <code>signature_version</code>
+      <ul>
+        <li><code>access_key_id</code></li>
+        <li><code>bucket_name</code></li>
+        <li><code>secret_access_key</code></li>
+        <li><code>signature_version</code></li>
+      </ul>
     </td>
   </tr>
   <tr>
@@ -635,10 +639,12 @@ You can use the following install-time verifiers:
         <code>Verifiers::LDAPBindVerifier</code>
     </td>
     <td>
-      Verifies that the specified LDAP server exists and that the provided credentials are valid
+      the specified LDAP server exists and that the provided credentials are valid.
     <td>
-        <code>url</code><br/>
-        <code>credentials</code>
+      <ul>
+        <li><code>url</code></li>
+        <li><code>credentials</code></li>
+      </ul>
     </td>
   </tr>
   <tr>
@@ -646,14 +652,16 @@ You can use the following install-time verifiers:
       <code>Verifiers::MysqlDatabaseVerifier</code>
     </td>
     <td>
-      Verifies that the specified MySQL server exists and that the provided credentials and database are valid
+      the specified MySQL server exists and that the provided credentials and database are valid.
     </td>
     <td>
-      <code>database</code><br/>
-      <code>host</code><br/>
-      <code>password</code><br/>
-      <code>port</code><br/>
-      <code>username</code>
+      <ul>
+        <li><code>database</code></li>
+        <li><code>host</code></li>
+        <li><code>password</code></li>
+        <li><code>port</code></li>
+        <li><code>username</code></li>
+      </ul>
     </td>
   </tr>
   <tr>
@@ -661,15 +669,17 @@ You can use the following install-time verifiers:
       <code>Verifiers::SmtpAuthenticationVerifier</code>
     </td>
     <td>
-      Verifies that the specified SMTP server exists and that the provided credentials are valid
+      the specified SMTP server exists and that the provided credentials are valid.
     </td>
     <td>
-      <code>credentials</code><br/>
-      <code>address</code><br/>
-      <code>port</code><br/>
-      <code>helo_domain</code><br/>
-      <code>authentication</code><br/>
-      <code>enable_starttls_auto</code>
+      <ul>
+        <li><code>credentials</code></li>
+        <li><code>address</code></li>
+        <li><code>port</code></li>
+        <li><code>helo_domain</code></li>
+        <li><code>authentication</code></li>
+        <li><code>enable_starttls_auto</code></li>
+      </ul>
     </td>
   </tr>
   <tr>
@@ -677,10 +687,12 @@ You can use the following install-time verifiers:
       <code>Verifiers::SsoUrlVerifier</code>
     </td>
     <td>
-      Verifies that the specified SSO server exists
+      the specified SSO server exists.
     </td>
     <td>
-      <code>url</code>
+      <ul>
+        <li><code>url</code></li>
+      </ul>
     </td>
   </tr>
   <tr>
@@ -688,7 +700,7 @@ You can use the following install-time verifiers:
       <code>Verifiers::StaticIpsVerifier</code>
     </td>
     <td>
-      Verifies that all requested static IPs fall within the subnet assigned to the job. See <code>static_ips</code> in <a href="#job-types">Job Types</a> below.
+      all requested static IPs fall within the subnet assigned to the job. See <code>static_ips</code> in <a href="#job-types">Job Types</a> below.
     </td>
     <td>
       <em>(none)</em>
@@ -699,10 +711,12 @@ You can use the following install-time verifiers:
       <code>Verifiers::WildcardDomainVerifier</code>
     </td>
     <td>
-      Verifies that the specified domain resolves using DNS
+      the specified domain resolves using DNS.
     </td>
     <td>
-      <code>domain</code>
+      <ul>
+        <li><code>domain</code></li>
+      </ul>
     </td>
   </tr>
   <tr>
@@ -710,14 +724,16 @@ You can use the following install-time verifiers:
       <code>Verifiers::VsphereConfigurationVerifier</code>
     </td>
     <td>
-      Verifies that the vSphere configuration is valid
+      the vSphere configuration is valid.
     </td>
     <td>
-      <code>vcenter_hosturl</code>
-      <code>vcenter_username</code>
-      <code>vcenter_password</code>
-      <code>datacenter</code>
-      <code>datastore_pattern</code>
+      <ul>
+        <li><code>vcenter_hosturl</code></li>
+        <li><code>vcenter_username</code></li>
+        <li><code>vcenter_password</code></li>
+        <li><code>datacenter</code></li>
+        <li><code>datastore_pattern</code></li>
+      </ul>
     </td>
   </tr>
 </table>
