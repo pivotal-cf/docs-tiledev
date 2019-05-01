@@ -1,34 +1,39 @@
 ---
-title: PCF vX.X Partners Release Notice
+title: PCF Partners Release Notes
 owner: Technical Program Management
 ---
 
 <strong><%= modified_date %></strong>
 
 This topic describes the changes that Pivotal Cloud Foundry (PCF) vX.X introduces
-which might be relevant to partner service tiles. 
+which might be relevant to partner service tiles.
 
-For information about changes introduced in Ops Manager vX.X, 
+For information about changes introduced in Ops Manager vX.X,
 see [PCF Ops Manager vX.X Release Notes](https://docs.pivotal.io/pivotalcf/X-X/pcf-release-notes/opsmanager-rn.html).
-For information about breaking changes introduced in Pivotal Application Services vX.X, 
+For information about breaking changes introduced in Pivotal Application Services vX.X,
 see [PCF vX.X Breaking Changes](https://docs.pivotal.io/pivotalcf/X-X/pcf-release-notes/breaking-changes.html).
 
-## <a id="features"></a> Features
+## <a id="xx"></a> vX.X
+
+**Release Date: Month X, 2019**
+
+### Features
 
 New features and changes in this release:
 
-### <a id="feature"></a> A Feature
+* **Verifiers::VsphereConfigurationVerifier:** Tile authors can use an install_time verifier to
+validate vSphere configuration before changes are applied in Ops Manager.
+See [install\_time\_verifiers](./property-template-references.html#top-verifier) for more information.
 
+### Security Fixes
 
-### <a id="product-temp"></a> Product Template Property Improvements
+### Resolved Issues
 
-The product template has the following improvements:
+* The Ops Manager syslog template now supports service broker tiles.
 
-+ **`Verifiers::VsphereConfigurationVerifier`:** Tile authors can use an `install_time_verfier` to 
-validate vSphere configuration before changes are applied in Ops Manager. 
-See [install\_time\_verifiers](./property-template-references.html#top-verifier).
+### Known Issues
 
-## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
+### Compatibility
 
 Properties in the Pivotal Application Service (PAS) vX.X tile have changed.
 Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access
@@ -43,11 +48,11 @@ The following tables list the properties that Pivotal removed and added in PAS v
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
@@ -61,25 +66,13 @@ The following tables list the properties that Pivotal removed and added in PAS v
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
-  
+
 </table>
-
-## <a id="ki"></a> Known Issues
-
-This release has the following issues:
-
-### <a id="known-issue"></a> A Known Issue 
-
-## <a id="breaking-changes"></a> Breaking Changes
-
-This release has the following breaking changes:
-
-### <a id="breaking-change"></a> A Breaking Change
