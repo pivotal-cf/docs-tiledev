@@ -467,13 +467,7 @@ Set `service_broker` to `true` for on-demand service brokers. Setting `service_b
 * **Format:** Hash
 * **Type:** Required
 
-<<<<<<< HEAD
 `enable_patch_security_updates` allows you to automatically use the latest patched version of a stemcell. This is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators may experience longer than expected upgrade times.
-=======
-`enable_patch_security_updates` enables you to automatically use the latest patched version of a stemcell.
-This key is set to `true` by default. For products using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell.
-However, operators might experience longer than expected upgrade times.
->>>>>>> c83ba0d... remove ERT references [#165242199]
 
 Example:
 
@@ -486,41 +480,12 @@ Example:
 
 Pivotal recommends setting this property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates.
 
-<<<<<<< HEAD
 You do not specify which IaaS the Stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
-=======
-You do not specify which IaaS the stemcell targets. This keeps your product template
-IaaS agnostic so that one product template can be deployed on any IaaS.
->>>>>>> c83ba0d... remove ERT references [#165242199]
 
 For a list of stemcells, including OS and version, see [the BOSH hub](https://bosh.io/).
 
 For more information, see [Floating Stemcells](http://docs.pivotal.io/pivotalcf/customizing/understanding-stemcells.html).
 
-<<<<<<< HEAD
-=======
-### <a id='top-additional-stemcells-criteria'></a> additional\_stemcells\_criteria
-
-* **Format:** Array of hashes
-* **Type:** Optional
-
-A list of stemcell criteria that can be selected using the `stemcell_selector` property type. These stemcells are listed in additional to the stemcell configure with `stemcell_criteria`. After an operator has selected a stemcell, it becomes required.
-
-For more information about the `stemcell_selector` property type,
-see [stemcell_selector](#stemcell-selector) below.
-
-Example:
-
- <pre class="code">
- additional\_stemcells\_criteria:
-  - os: ubuntu-xenial
-    version: &lt;%= stemcell\_version.inspect %>
-    enable\_patch\_security\_updates: true
-  - os: windows2016
-    version: &lt;%= stemcell\_version.inspect %>
- </pre>
-
->>>>>>> c83ba0d... remove ERT references [#165242199]
 ### <a id='top-requires'></a> requires\_product\_versions
 
 * **Format:** Array of hashes
