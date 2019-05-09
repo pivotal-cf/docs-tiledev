@@ -6,27 +6,34 @@ owner: Technical Program Management
 <strong><%= modified_date %></strong>
 
 This topic describes the changes that Pivotal Cloud Foundry (PCF) vX.X introduces
-which might be relevant to partner service tiles. 
+which might be relevant to partner service tiles.
 
-For information about changes introduced in Ops Manager vX.X, 
+For information about changes introduced in Ops Manager vX.X,
 see [PCF Ops Manager vX.X Release Notes](https://docs.pivotal.io/pivotalcf/X-X/pcf-release-notes/opsmanager-rn.html).
-For information about breaking changes introduced in Pivotal Application Services vX.X, 
+For information about breaking changes introduced in Pivotal Application Services vX.X,
 see [PCF vX.X Breaking Changes](https://docs.pivotal.io/pivotalcf/X-X/pcf-release-notes/breaking-changes.html).
 
 ## <a id="features"></a> Features
 
 New features and changes in this release:
 
-### <a id="feature"></a> A Feature
+### <a id="multiple-stemcells"></a> Support for Multiple Stemcells
 
+Tile authors can have stemcells configured from different sets of criteria.
 
 ### <a id="product-temp"></a> Product Template Property Improvements
 
 The product template has the following improvements:
 
-+ **`Verifiers::VsphereConfigurationVerifier`:** Tile authors can use an `install_time_verfier` to 
-validate vSphere configuration before changes are applied in Ops Manager. 
++ **`Verifiers::VsphereConfigurationVerifier`:** Tile authors can use an `install_time_verifier` to
+validate vSphere configuration before changes are applied in Ops Manager.
 See [install\_time\_verifiers](./property-template-references.html#top-verifier).
+
++ **stemcell_criteria:** `enable_patch_security_updates` enables tile authors to automatically use the latest patched version of a stemcell. This increases security by automatically using the latest patched version of a stemcell. However, operators might experience longer upgrade times.
+See [stemcell_criteria](./property-template-references.html#top-stemcell-criteria).
+
++ **additional_stemcells_criteria:** tile authors can use the `stemcell_selector` property to select criteria for stemcells beyond those configured with `stemcell_criteria`.
+See [additional_stemcells_criteria](property-template-references.html#top-additional-stemcells-criteria).
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
@@ -43,11 +50,11 @@ The following tables list the properties that Pivotal removed and added in PAS v
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
@@ -61,15 +68,15 @@ The following tables list the properties that Pivotal removed and added in PAS v
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
-  
+
   <tr>
     <td></td>
   </tr>
-  
+
 </table>
 
 ## <a id="resolved"></a> Resolved Issues
@@ -82,7 +89,7 @@ This release fixes the following issues:
 
 This release has the following issues:
 
-### <a id="known-issue"></a> A Known Issue 
+### <a id="known-issue"></a> A Known Issue
 
 ## <a id="breaking-changes"></a> Breaking Changes
 
