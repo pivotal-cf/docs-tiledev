@@ -17,9 +17,15 @@ see [PCF v2.6 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-6/pcf-releas
 
 New features and changes in this release:
 
+### <a id="vsphere-properties"></a> Tile Developers Can Implement a Form Verifier to Confirm vSphere Properties
+
+An operator configuring a product tile on a vSphere deployment must configure vSphere properties. Incorrect configuration can cause deployment failures, and can be difficult to troubleshoot effectively. An optional form verifier is available that notifies tile operators when they have configured vSphere properties incorectly.
+
+For more information about this form verifier, see the [*install\_time\_verifiers*](./property-template-references.html#top-verifier).
+
 ### <a id="multiple-stemcells"></a> Support for Multiple Stemcells
 
-Tile authors can have stemcells configured from different sets of criteria. 
+Tile authors can have multiple stemcells configured from different sets of criteria. 
 See [Product Template Property Improvements](#product-temp) below for more information.
 
 ### <a id="product-temp"></a> Product Template Property Improvements
@@ -30,11 +36,8 @@ The product template has the following improvements:
 validate vSphere configuration before changes are applied in Ops Manager.
 See [install\_time\_verifiers](./property-template-references.html#top-verifier) for more information.
 
-+ **stemcell_criteria:** `enable_patch_security_updates` enables tile authors to automatically use the latest patched version of a stemcell. This increases security by automatically using the latest patched version of a stemcell. However, operators might experience longer upgrade times.
-See [stemcell_criteria](./property-template-references.html#top-stemcell-criteria) for more information.
-
-+ **additional_stemcells_criteria:** tile authors can use the `stemcell_selector` property to select criteria for stemcells beyond those configured with `stemcell_criteria`.
-See [additional_stemcells_criteria](property-template-references.html#top-additional-stemcells-criteria) for more information.
++ **`additional_stemcells_criteria`:** Tile authors can use the `stemcell_selector` property to select criteria for stemcells beyond those configured with `stemcell_criteria`. Tile developers can continue to specify `enable_patch_security_updates` for any additional stemcells.
+See [additional_stemcells_criteria](property-template-references.html#top-additional-stemcells-criteria) for more information. 
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
@@ -107,6 +110,8 @@ This release fixes the following issues:
 ## <a id="ki"></a> Known Issues
 
 This release has the following issues:
+
++ The `simple_credentials` property is not yet supported for `Verifiers::VsphereConfigurationVerifier`.
 
 ### <a id="known-issue"></a> A Known Issue
 
