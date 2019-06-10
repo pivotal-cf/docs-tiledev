@@ -484,7 +484,7 @@ Example:
  stemcell\_criteria
   os: ubuntu-xenial
   version: "97.0"
-  enable\_patch\_security\_updates: true
+  enable\_patch\_security\_updates: false
  </pre>
 
 Pivotal recommends setting the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your product does not receive security patches through automatic stemcell updates.
@@ -501,7 +501,7 @@ For more information, see [Floating Stemcells](http://docs.pivotal.io/pivotalcf/
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of stemcell criteria that can be selected using the `stemcell_selector` property type. These stemcells are listed in additional to the stemcell configure with `stemcell_criteria`. After an operator has selected a stemcell, it becomes required.
+A list of stemcell criteria that can be selected using the `stemcell_selector` property type. These stemcells are listed in addition to the stemcell configured with `stemcell_criteria`. After an operator has selected a stemcell, it becomes required.
 
 For more information about the `stemcell_selector` property type,
 see [stemcell_selector](#stemcell-selector) below.
@@ -512,7 +512,7 @@ Example:
  additional\_stemcells\_criteria:
   - os: ubuntu-xenial
     version: 97.0
-    enable\_patch\_security\_updates: true
+    enable\_patch\_security\_updates: false
   - os: windows2016
     version: 1709.1
  </pre>
