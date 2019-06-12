@@ -101,19 +101,25 @@ The following tables list the properties that Pivotal removed and added in PAS v
   </tr>
 </table>
 
-## <a id="resolved"></a> Resolved Issues
-
-This release fixes the following issues:
-
-+ The Ops Manager syslog template now supports service broker tiles.
 
 ## <a id="ki"></a> Known Issues
 
 This release has the following issues:
 
-### <a id="known-issue"></a> Simple Credentials Not Yet Supported for vSphere Verifier 
+### <a id="known-issue"></a> Simple Credentials Not Yet Supported for vSphere Verifiers 
 
 The `simple_credentials` property is not yet supported for `Verifiers::VsphereConfigurationVerifier`.
+
+For more information about vSphere verifiers, see [Tile Developers Can Implement a Form Verifier to Confirm vSphere Properties](#vsphere-properties) in this release note.
+
+### <a id="service-broker"></a> Ops Manager Syslog Template Is Not Supported for Service Broker Tiles
+
+Ops Manager syslog template does not propagate to service broker tiles.
+Tile developers with service broker tiles should continue to use their own syslog configurations.
+Service broker tiles with the syslog template configured do not display the syslog template.
+
+For more information about the Syslog template, see
+[Syslog Form Template Available for Tile Authors](https://docs.pivotal.io/tiledev/2-4/release-notes.html#syslog).
 
 ## <a id="breaking-changes"></a> Breaking Changes
 
