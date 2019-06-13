@@ -29,11 +29,11 @@ For more information about this form verifier, see the [install\_time\_verifiers
 
 ### <a id="multiple-stemcells"></a> Support for Multiple Stemcells
 
-Tile authors can develop tiles that support multiple stemcells. 
-Use the `additional_stemcells_criteria` key to specify an array of additional stemcells for operators to use. 
+Tile authors can develop tiles that support multiple stemcells by
+using the `additional_stemcells_criteria` key to specify an array of additional stemcells. 
 
-
-Operators can then choose a stemcell with the `stemcell_selector` property key.
+Tile authors can then use the `stemcell_selector` property key
+to allow operators to choose a stemcell for the tile. 
 
 See [Product Template Property Improvements](#product-temp) below for more information.
 
@@ -120,7 +120,8 @@ This release has the following issues:
 
 The `simple_credentials` property is not yet supported for `Verifiers::VsphereConfigurationVerifier`.
 
-For more information about vSphere verifiers, see [Tile Developers Can Implement a Form Verifier to Confirm vSphere Properties](#vsphere-properties) in this release note.
+For more information about vSphere verifiers, see [Tile Developers Can Implement a Form Verifier to Confirm vSphere Properties](#vsphere-properties) 
+in this release note.
 
 ### <a id="service-broker"></a> Ops Manager Syslog Template Is Not Supported for Service Broker Tiles
 
