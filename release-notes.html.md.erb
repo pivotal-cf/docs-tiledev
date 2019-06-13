@@ -32,6 +32,9 @@ For more information about this form verifier, see the [install\_time\_verifiers
 Tile authors can develop tiles that support multiple stemcells. 
 Use the `additional_stemcells_criteria` key to specify an array of additional stemcells for operators to use. 
 
+
+Operators can then choose a stemcell with the `stemcell_selector` property key.
+
 See [Product Template Property Improvements](#product-temp) below for more information.
 
 ### <a id="product-temp"></a> Product Template Property Improvements
@@ -44,7 +47,7 @@ See [install\_time\_verifiers](./property-template-references.html#top-verifier)
 
 + **`additional_stemcells_criteria`:** Tile authors can use the `stemcell_selector` property to select criteria for 
 stemcells beyond those configured with `stemcell_criteria`. Tile developers can continue to specify `enable_patch_security_updates` for any additional stemcells.
-See [additional_stemcells_criteria](property-template-references.html#top-additional-stemcells-criteria) for more information. 
+See [additional_stemcells_criteria](property-template-references.html#top-additional-stemcells-criteria) and [stemcell_selector](property-template-references.html#stemcell-selector) for more information. 
 
 ## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
 
