@@ -138,14 +138,14 @@ The tile manifest template defines these subdirectory locations, so they can res
 │   │       ├── 201512301631_convert_15_16_transmogrifier_rules.js
 │   │       └── 201611060205_example_migration.js
 │   └── releases
-│       └── example-release-18.tgz
+│       └── example-release-18.zip
 ```
 
 ### <a id='dot-pivotal'></a>.pivotal File Format
 
 Within the tile directory, the BOSH release exists as a gzipped tarfile.
 
-The entire tile directory is also a gzipped tarfile, with the `.tgz` extension renamed to `.pivotal`.
+The entire tile directory is also a gzipped tarfile, with the `.zip` extension renamed to `.pivotal`.
 
 You can use any zip utility to create a `.pivotal` file. Ensure that the top-level subfolders as seen above in the `example-product` folder remain.
 
@@ -166,7 +166,7 @@ Archive:  example-product.pivotal
      1228  07-08-16 09:32   migrations/v1/201512301631_convert_15_16_transmogrifier_rules.js
       582  07-08-16 09:32   migrations/v1/201611060205_example_migration.js
         0  08-09-16 16:11   releases/
-        0  07-12-16 17:19   releases/example-release-18.tgz
+        0  07-12-16 17:19   releases/example-release-18.zip
 </pre>
 
 ### <a id='repo'></a>GitHub Repository Structure
