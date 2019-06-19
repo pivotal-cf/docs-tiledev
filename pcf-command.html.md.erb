@@ -135,7 +135,7 @@ $ pcf install test-tile 0.0.2
 
 Where you would normally configure the tile settings in the GUI, the `configure`
 command lets you pass in any user-specified properties as a .yml file. This command
-also sets the stemcell for the tile to the same one used by your Elastic Runtime,
+also sets the stemcell for the tile to the same one used by your PAS,
 to avoid the need to upload a tile-specific stemcell.
 
 ```bash
@@ -217,9 +217,9 @@ up Ops Manager's available products (and disk space):
 $ pcf delete-unused-products
 ```
 
-##<a id="access-ert"></a> Accessing Elastic Runtime
+##<a id="access-ert"></a> Accessing PAS
 
-To see details about the Elastic Runtime of your PCF environment:
+To see details about the PAS of your PCF environment:
 
 ```bash
 $ pcf cf-info
