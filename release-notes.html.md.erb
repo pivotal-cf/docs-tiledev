@@ -1,105 +1,29 @@
 ---
-title: PCF v2.6 Partners Release Notes
+title: PCF v2.7 Partners Release Notes
 owner: Technical Program Management
 ---
 
 <strong><%= modified_date %></strong>
 
-This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.6 introduces
+This topic describes the changes that Pivotal Cloud Foundry (PCF) v2.7 introduces
 which might be relevant to partner service tiles.
 
-For information about changes introduced in Ops Manager v2.6,
-see [PCF Ops Manager v2.6 Release Notes](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/opsmanager-rn.html).
-For information about breaking changes introduced in Pivotal Application Services v2.6,
-see [PCF v2.6 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-6/pcf-release-notes/breaking-changes.html).
+For information about changes introduced in Ops Manager v2.7,
+see [PCF Ops Manager v2.7 Release Notes](https://docs.pivotal.io/pivotalcf/2-7/pcf-release-notes/opsmanager-rn.html).
+For information about breaking changes introduced in Pivotal Application Services v2.7,
+see [PCF v2.7 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-7/pcf-release-notes/breaking-changes.html).
 
 ## <a id="features"></a> Features
 
 New features and changes in this release:
 
-### <a id="vsphere-properties"></a> Tile Developers Can Implement a Form Verifier to Confirm vSphere Properties
+### <a id='consul-server'></a> Consul Server Instance Removed from PAS
 
-An operator configuring a product tile on a vSphere deployment must configure vSphere properties. Incorrect configuration can cause deployment failures, and can be difficult to troubleshoot effectively. An optional form verifier is available that notifies tile operators when they have configured vSphere properties incorectly.
+The consul server instance is removed from PAS. This saves VM resources and reduces maintenance for managing a clustered component.
 
-For more information about this form verifier, see the [*install\_time\_verifiers*](./property-template-references.html#top-verifier).
+In PAS v2.4, the instance count for consul server VMs was scaled down to zero. This allowed the consul server to continue to provide the consul link for tiles that consume it. In PAS v2.7, the consul server instance is removed from PAS. 
 
-### <a id="multiple-stemcells"></a> Support for Multiple Stemcells
-
-Tile authors can have multiple stemcells configured from different sets of criteria. 
-See [Product Template Property Improvements](#product-temp) below for more information.
-
-### <a id="product-temp"></a> Product Template Property Improvements
-
-The product template has the following improvements:
-
-+ **`Verifiers::VsphereConfigurationVerifier`:** Tile authors can use an `install_time_verifier` to
-validate vSphere configuration before changes are applied in Ops Manager.
-See [install\_time\_verifiers](./property-template-references.html#top-verifier) for more information.
-
-+ **`additional_stemcells_criteria`:** Tile authors can use the `stemcell_selector` property to select criteria for stemcells beyond those configured with `stemcell_criteria`. Tile developers can continue to specify `enable_patch_security_updates` for any additional stemcells.
-See [additional_stemcells_criteria](property-template-references.html#top-additional-stemcells-criteria) for more information. 
-
-## <a id="pas-properties"></a> Pivotal Application Service Tile Property Changes
-
-Properties in the Pivotal Application Service (PAS) v2.6 tile have changed.
-Tile developers must change any `(( ..cf.PROPERTY.NAME ))` calls accordingly if their tiles access
-PAS property values.
-
-The following tables list the properties that Pivotal removed and added in PAS v2.6:
-
-<table id='removed' border="1" class="nice" >
-  <tr>
-    <th>Removed Properties</th>
-  </tr>
-  <tr>
-    <td><code>stack_migration_acknowledgement</code></td>
-  </tr>
-</table>
-
-<table id='added' border="1" class="nice" >
-  <tr>
-    <th>Added Properties</th>
-  </tr>
-  <tr>
-    <td><code>autoscale_enable_notifications</code></td>
-  </tr>
-
-  <tr>
-    <td><code>cloud_controller_completed_tasks_cutoff_age_in_days</code></td>
-  </tr>
-
-  <tr>
-    <td><code>enable_garden_containerd_mode</code></td>
-  </tr>
-
-  <tr>
-    <td><code>log_cache_max_per_source</code></td>
-  </tr>
-
-  <tr>
-    <td><code>push_apps_manager_foundations</code></td>
-  </tr>
-
-  <tr>
-    <td><code>reverse_log_proxy_gateway_server_tls_cert</code></td>
-  </tr>
-
-  <tr>
-    <td><code>syslog_agent_enabled</code></td>
-  </tr>
-
-  <tr>
-    <td><code>trafficcontroller_tls_cert</code></td>
-  </tr>
-
-  <tr>
-    <td><code>system_metrics_enabled</code></td>
-  </tr>
-
-  <tr>
-    <td><code>system_metrics_tls_scraper_cert</code></td>
-  </tr>
-</table>
+For information about breaking changes caused by the removal of the consul server instance, see [Consul Clients Not Supported in PAS](#consul-clients-not-supported).
 
 ## <a id="resolved"></a> Resolved Issues
 
@@ -113,10 +37,27 @@ This release has the following issues:
 
 + The `simple_credentials` property is not yet supported for `Verifiers::VsphereConfigurationVerifier`.
 
-### <a id="known-issue"></a> A Known Issue
-
 ## <a id="breaking-changes"></a> Breaking Changes
 
 This release has the following breaking changes:
+
+### <a id='consul-clients-not-supported'></a> Consul Clients Not Supported in PAS
+
+The consul server instance is removed from PAS. Tiledev authors must remove any consul clients from their products to avoid failed deployments.
+
+To remove consul clients from your products, make the following changes to any `job_type` that is colocated with `consul_agent`:
+
+```
+- name: consul_agent
+    release: consul
+    ...
+    manifest: |
+      ...
+      consul:
+        client:
+          enabled: "(( $ops_manager.dns_enabled ? false : true ))"
+```
+
+For more information about removing consul clients from your products, see [Tile Authors Must Remove consul_agent](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-consul) in the PCF v2.4 Partner Release Notes.
 
 ### <a id="breaking-change"></a> A Breaking Change
