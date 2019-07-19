@@ -15,6 +15,14 @@
           Multiple <code>must_match_regex</code> constraints for a single property blueprint are evaluated in the order listed.
           See below for an example.
           DESC
+      },
+      {
+          name: 'constraints.must_be_cron_schedule',
+          description: <<~DESC
+            Creates a validator that ensures the value of the string satisfies a cron schedule expression.
+            If the user input is not a valid cron schedule expression, the form displays the specified <code>error_message</code>.
+            See below for an example.
+            DESC
       }
     ],
     additional_accessors: [],
@@ -36,6 +44,8 @@
                 error_message: 'This name cannot contain special characters.'
               - must_match_regex: '\A[^0-9]*\z'
                 error_message: 'This name cannot contain digits.'
+              - must_be_cron_schedule: true
+                error_message: 'This must be a valid cron schedule expression.'
 
           form_types:
             - name: example_form
