@@ -1285,6 +1285,8 @@ The stemcell OS that this job should use. It must be the value of the `os` key i
 
 This configuration allows tiles to have some jobs run on one operating system (e.g. Linux) and have other jobs run on something different (e.g. Windows).
 
+If the instance count of a job is `0` or a `zero_if` is satisfied, the specified stemcell will not be required.
+
 ### <a id='job-resource-def'></a> resource\_definitions
 
 * **Format:** Array of hashes
