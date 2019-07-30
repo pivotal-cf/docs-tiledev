@@ -1284,9 +1284,7 @@ A BOSH setting that controls the number of instances of this job that BOSH will 
 
 The stemcell operating system for this job. You must set `use_stemcell` to the value of an `os` key configured in `stemcell_criteria` or `additional_stemcell_criteria`.
 
-You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows.  
-
-If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the product. 
+You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows. If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the product. 
 
 If a job does not have a `use_stemcell` property, the job uses the stemcell operating system configured in `stemcell_criteria`. For more information, see [stemcell\_criteria](#top-stemcell-criteria) and [additional\_stemcell\_criteria](#top-additional-stemcells-criteria) above. 
 

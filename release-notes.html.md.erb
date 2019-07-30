@@ -29,9 +29,18 @@ For information about breaking changes caused by the removal of the consul serve
 
 PAS v2.7 includes CAPI v1.83.0, which supports upgrading service instances to the latest version of a service plan. This is an optional feature that service authors can implement. 
 
-App developers can check the `upgrade available` column in the output of the `cf services` command to see if a service broker supports upgrades. See [Upgrade a Service Instance](https://docs.pivotal.io/devguide/services/managing-services#upgrade) for more information.  
+App developers can check the `upgrade available` column in the output of the `cf services` command to see if a service broker supports upgrades. For more information, see [Upgrade a Service Instance](https://docs.pivotal.io/devguide/services/managing-services#upgrade).  
 
 If you are a service author and want to enable this feature, see [Updating a Service Instance](https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#updating-a-service-instance) in the _Open Service Broker API Specification_. 
+
+### <a id="use-stemcell"></a> BOSH Jobs Can Run on Different Stemcells
+
+Tile authors can specify the stemcell a BOSH job uses with the `use_stemcell` property.
+When `use_stemcell` is specified for a job, Ops Manager uploads this stemcell to BOSH and BOSH deploys the given instance group on the specified stemcell.
+
+Tile authors can use this property to enable jobs to run on different operating systems. For example, a tile authors can configure one job to run on Linux and configure a different job to run on Windows.
+
+For more information, see [use_stemcell](./property-template-references.html#job-use-stemcell).
 
 ## <a id="resolved"></a> Resolved Issues
 
