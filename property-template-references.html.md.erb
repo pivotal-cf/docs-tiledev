@@ -1012,18 +1012,9 @@ Ops Manager does not require tile authors to provide `vm_credentials` in the `pr
       release: example-release
       static_ip: 1
       dynamic_ip: 0
+      single_az_only: true
+      use_stemcell: ubuntu-xenial
       max_in_flight: 1
-      single_az_only: true:
-      instance_definition:
-        name: instances
-        type: integer
-        configurable: true
-        default: 1
-        constraints:
-          max: 1
-        zero_if:
-          property_reference: '.web_server.example_text'
-          property_value: 'magic value'
       resource_definitions:
         - name: ram
           type: integer
@@ -1043,6 +1034,52 @@ Ops Manager does not require tile authors to provide `vm_credentials` in the `pr
           type: integer
           configurable: true
           default: 1
+      instance_definition:
+        name: instances
+        type: integer
+        configurable: true
+        default: 1
+        constraints:
+          max: 1
+        zero_if:
+          property_reference: '.web_server.example_text'
+          property_value: 'magic value'
+      manifest: |
+        generated:
+          root_rsa_certificate: (( $ops_manager.ca_certificate ))
+          rsa_cert_credentials:
+            public_key_pem: (( generated_rsa_cert_credentials.public_key_pem ))
+            cert_and_private_key_pems: (( generated_rsa_cert_credentials.cert_and_private_key_pems ))
+          rsa_pkey_credentials:
+            public_key_pem: (( generated_rsa_pkey_credentials.public_key_pem ))
+            private_key_pem: (( generated_rsa_pkey_credentials.private_key_pem ))
+            public_key_openssh: (( generated_rsa_pkey_credentials.public_key_openssh ))
+            public_key_fingerprint: (( generated_rsa_pkey_credentials.public_key_fingerprint ))
+          salted_credentials:
+            sha512_hashed_password: (( generated_salted_credentials.sha512_hashed_password ))
+            identity: (( generated_salted_credentials.identity ))
+            salt: (( generated_salted_credentials.salt ))
+            password: (( generated_salted_credentials.password ))
+          simple_credentials:
+            identity: (( generated_simple_credentials.identity ))
+            password: (( generated_simple_credentials.password ))
+          secret: (( generated_secret.value ))
+          uuid: (( generated_uuid.value ))
+        configured:
+          string: (( example_string.value ))
+          integer: (( example_migrated_integer.value ))
+          ...
+          record_collection: (( .properties.example_collection.value || [] ))
+          selector: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
+        ops_manager_provided_accessors:
+          name: (( name ))
+          cpu: (( cpu ))
+          ram: (( ram ))
+          ephemeral_disk: (( ephemeral_disk ))
+          persistent_disk: (( persistent_disk ))
+          instances: (( instances ))
+          any_instances: (( any_instances ))
+          subnet_cidrs: (( subnet_cidrs ))
       property_blueprints:
       - name: static_ips
         type: ip_ranges
@@ -1170,42 +1207,6 @@ Ops Manager does not require tile authors to provide `vm_credentials` in the `pr
         type: ca_certificate
         configurable: true
         optional: true
-      manifest: |
-        generated:
-          root_rsa_certificate: (( $ops_manager.ca_certificate ))
-          rsa_cert_credentials:
-            public_key_pem: (( generated_rsa_cert_credentials.public_key_pem ))
-            cert_and_private_key_pems: (( generated_rsa_cert_credentials.cert_and_private_key_pems ))
-          rsa_pkey_credentials:
-            public_key_pem: (( generated_rsa_pkey_credentials.public_key_pem ))
-            private_key_pem: (( generated_rsa_pkey_credentials.private_key_pem ))
-            public_key_openssh: (( generated_rsa_pkey_credentials.public_key_openssh ))
-            public_key_fingerprint: (( generated_rsa_pkey_credentials.public_key_fingerprint ))
-          salted_credentials:
-            sha512_hashed_password: (( generated_salted_credentials.sha512_hashed_password ))
-            identity: (( generated_salted_credentials.identity ))
-            salt: (( generated_salted_credentials.salt ))
-            password: (( generated_salted_credentials.password ))
-          simple_credentials:
-            identity: (( generated_simple_credentials.identity ))
-            password: (( generated_simple_credentials.password ))
-          secret: (( generated_secret.value ))
-          uuid: (( generated_uuid.value ))
-        configured:
-          string: (( example_string.value ))
-          integer: (( example_migrated_integer.value ))
-          ...
-          record_collection: (( .properties.example_collection.value || [] ))
-          selector: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
-        ops_manager_provided_accessors:
-          name: (( name ))
-          cpu: (( cpu ))
-          ram: (( ram ))
-          ephemeral_disk: (( ephemeral_disk ))
-          persistent_disk: (( persistent_disk ))
-          instances: (( instances ))
-          any_instances: (( any_instances ))
-          subnet_cidrs: (( subnet_cidrs ))
 </pre>
 
 ### <a id='job-name'></a> name
@@ -1281,11 +1282,13 @@ A BOSH setting that controls the number of instances of this job that BOSH will 
 * **Format:** String
 * **Type:** Optional
 
-The stemcell OS that this job should use. It must be the value of the `os` key in [stemcell\_criteria](#top-stemcell-criteria) or [additional\_stemcell\_criteria](#top-additional-stemcells-criteria). Jobs without `use_stemcell` will use the stemcell OS declared in the `stemcell_criteria` of the product template.
+The stemcell operating system for this job. You must set `use_stemcell` to the value of an `os` key configured in `stemcell_criteria` or `additional_stemcell_criteria`.
 
-This configuration allows tiles to have some jobs run on one operating system (e.g. Linux) and have other jobs run on something different (e.g. Windows).
+You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows.  
 
-If the instance count of a job is `0` or a `zero_if` is satisfied, the specified stemcell will not be required.
+If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the product. 
+
+If a job does not have a `use_stemcell` property, the job uses the stemcell operating system configured in `stemcell_criteria`. For more information, see [stemcell\_criteria](#top-stemcell-criteria) and [additional\_stemcell\_criteria](#top-additional-stemcells-criteria) above. 
 
 ### <a id='job-resource-def'></a> resource\_definitions
 
