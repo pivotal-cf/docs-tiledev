@@ -52,16 +52,13 @@ For example, a tile authors can configure one job to run on Linux and configure 
 
 For more information, see [use_stemcell](./property-template-references.html#job-use-stemcell).
 
-### <a id="vcenter-creds"></a>  Simple Credentials Are Supported for vSphere Form Verifiers
-In PAS v2.7, tile authors can use the `vcenter_credentials` property to verify
-vSphere `simple_credentials`.
+## <a id="product-temp"></a> Product Template Property Improvements
 
-If tile authors added `Verifiers::VsphereConfigurationVerifier`
-to their tile, they must replace the `vcenter_username` and `vcenter_password` properties
-with the `vcenter_credentials` property.
+The product template has the following improvements:
 
-For more information about vSphere form verifiers,
-see [install\_time\_verifiers](.//property-template-references.html#top-verifier)
++ **`vcenter_credentials`:** Tile authors can use the `vcenter_credentials` property to verify
+vSphere `simple_credentials`. For information about the vSphere form verifier,
+see [install\_time\_verifiers](.//property-template-references.html#top-verifier).
 
 ## <a id="resolved"></a> Resolved Issues
 
@@ -73,8 +70,19 @@ This release fixes the following issues:
 
 This release has the following breaking changes:
 
-### <a id='vcenter-user-pass'></a> Username and Password Credentials Removed from 
-vSphere Form Verifiers
+### <a id='vcenter-user-pass'></a> Username and Password Properties Removed from vSphere Form Verifiers
+
+The `vcenter_username` and `vcenter_password` properties have been removed from
+the vSphere form verifier.
+
+If tile authors added `Verifiers::VsphereConfigurationVerifier`
+to their tile, they must replace the `vcenter_username` and `vcenter_password` properties
+with the `vcenter_credentials` property. If tile authors do not replace
+the username and password properties,
+the vSphere form verifier fails and prevents deployment.
+
+For information about vSphere form verifiers,
+see [install\_time\_verifiers](./property-template-references.html#top-verifier).
 
 ### <a id='consul-clients-not-supported'></a> Consul Clients Not Supported in PAS
 
