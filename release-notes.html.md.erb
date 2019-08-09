@@ -56,9 +56,15 @@ For more information, see [use_stemcell](./property-template-references.html#job
 
 The product template has the following improvements:
 
-+ **`vcenter_credentials`:** Tile authors can use the `vcenter_credentials` property to verify
-vSphere `simple_credentials`. For information about the vSphere form verifier,
-see [install\_time\_verifiers](.//property-template-references.html#top-verifier).
++ **`vcenter_credentials`:** Tile authors can use the `vcenter_credentials` type of `install_time_verifiers` property to verify vSphere `simple_credentials`.
+For information about the vSphere form verifier,
+see [install\_time\_verifiers](./property-template-references.html#top-verifier).
+
++ **`must_be_cron_schedule`:** Tile authors can use the `constraints.must_be_cron_schedule` attribute
+of the `string` property blueprint type to verify
+that form input is a valid `cron` expression.
+For information about the `string` blueprint type,
+see [string](./property-template-references.html#string).
 
 ## <a id="resolved"></a> Resolved Issues
 
