@@ -7,10 +7,10 @@ owner: Services
 
 This topic explains how to set up tile development environments, from simple standalone tools to a full <%= vars.product_name %> development environment. As you progress through the [stages](./stages.html) of tile development, you will likely also progress through these environments.
 
-## <a id="pcfdev"></a> PCF Dev and BOSH-Lite
+## <a id="pcfdev"></a> <%= vars.product_dev_local %> and BOSH-Lite
 
 Pivotal provides a lightweight (vagrant packaged) instance of <%= vars.product_name %> with some
-basic services as a free product named PCF Dev. This is a great environment
+basic services as a free product named <%= vars.product_dev_local %>. This is a great environment
 to develop and test everything that runs in Pivotal Application Service.
 
 Either of these environments allow you to develop the first three levels of service for <%= vars.product_name %>: a [User-Provided Service](./user-provided.html), a [Brokered Service](./brokered.html), and a [Managed Service](./managed.html).
@@ -28,9 +28,9 @@ tiles, except for Pivotal's Ops Manager. But if you followed the recommended wor
 
 - [Install BOSH-Lite](https://github.com/cloudfoundry/bosh-lite)
 
-	<p class="note"><strong>Note</strong>: For this type of development environment, you only need BOSH-Lite itself to deploy managed service releases. You do not need to follow the instructions to Deploy Cloud Foundry in BOSH-Lite, as Cloud Foundry is provided by the PCF Dev installation above.</p>
+	<p class="note"><strong>Note</strong>: For this type of development environment, you only need BOSH-Lite itself to deploy managed service releases. You do not need to follow the instructions to Deploy Cloud Foundry in BOSH-Lite, as Cloud Foundry is provided by the <%= vars.product_dev_local %> installation above.</p>
 
-### <a id="setup-pcfdev"></a>Setting up PCF Dev
+### <a id="setup-pcfdev"></a>Setting up <%= vars.product_dev_local %>
 
 - [Try <%= vars.product_name %> on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
 
