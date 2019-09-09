@@ -1,4 +1,4 @@
-## This repo is for Tile Developer Guide content only. See the [Tile Developer Guide Book Repo](https://github.com/pivotal-cf/docs-book-tiledev) for the book that publishes this content.
+Pivotal Platform## This repo is for Tile Developer Guide content only. See the [Tile Developer Guide Book Repo](https://github.com/pivotal-cf/docs-book-tiledev) for the book that publishes this content.
 
 ## Which branch to use?
 
@@ -6,7 +6,8 @@
 
 | Branch name | Use for… |
 |-------------| ------|
-| master      | This is the "edge" build, for PCF v2.5. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-n/ |
+| master      | This is the "edge" build, for Pivotal Platform v2.7. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-n/ |
+| 2.6       | v2.6 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-5/ and https://docs.pivotal.io/tiledev/2-5 |
 | 2.5       | v2.5 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-5/ and https://docs.pivotal.io/tiledev/2-5 |
 | 2.4         | v2.4 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-4/ and https://docs.pivotal.io/tiledev/2-4 |
 | 2.3         | v2.3 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-3/ and https://docs.pivotal.io/tiledev/2-3 |
@@ -23,17 +24,17 @@ List of terms that we want to use consistently in the doc:
 + Tile Dashboard CI–for the subsystem of the Tile Dashboard that does the automated testing. For example, "Tile Dashboard CI runs any post-deploy errands that your tile has defined." [MB 2018.07.11]
 
 
-## PCF Services Documentation Template
+## Pivotal Platform Services Documentation Template
 
-This template helps Pivotal development teams prepare documentation for Pivotal Cloud Foundry (PCF) services that appear on [Pivotal Network](https://network.pivotal.io/).
+This template helps Pivotal development teams prepare documentation for Pivotal Platform services that appear on [Pivotal Network](https://network.pivotal.io/).
 
 ## <a id='overview'></a>Overview
 
-Every PCF service has (or should have) documentation on the main Pivotal documentation site, [docs.pivotal.io](http://docs.pivotal.io) under **Pivotal Cloud Foundry Services**.
+Every Pivotal Platform service has (or should have) documentation on the main Pivotal documentation site, [docs.pivotal.io](http://docs.pivotal.io) under **Pivotal Platform Services**.
 
 ### <a id='template'></a>How To Use This Template
 
-You can use this template to develop documentation for a new PCF service. It includes sections for a Product Snapshot, prerequisites, instructions for installation and use, release notes, license information, and other generally useful and expected documentation.
+You can use this template to develop documentation for a new Pivotal Platform service. It includes sections for a Product Snapshot, prerequisites, instructions for installation and use, release notes, license information, and other generally useful and expected documentation.
 
 To begin using this repo to develop your documentation, perform the following steps:
 
@@ -41,11 +42,11 @@ To begin using this repo to develop your documentation, perform the following st
 1. Work your way through each topic, replacing the placeholders in ALL-CAPS and following the instructions in **bold**.
 1. Complete the subnav by replacing the placeholders in ALL-CAPS in the subnav file at `book/master_middleman/source/subnavs/service_subnav.erb` in this repo.
 1. View your documentation as a live local site in a browser, by following the steps below in the [How To Use Bookbinder To View Your Docs](#bookbinder) section.
-1. When you've finished your documentation, push your docs up to the remote and email the PCF Docs Team at cf-docs@pivotal.io.
+1. When you've finished your documentation, push your docs up to the remote and email the PCPivotal Platform Docs Team at cf-docs@pivotal.io.
 
 ### <a id='bookbinder'></a>How To Use Bookbinder To View Your Docs
 
-[Bookbinder](https://github.com/pivotal-cf/bookbinder/blob/master/README.md) is a command-line utility for stitching Markdown docs into a hostable web app. The PCF Docs Team uses Bookbinder to publish our docs site, but you can also use Bookbinder to view a live version of your documentation on your local machine.
+[Bookbinder](https://github.com/pivotal-cf/bookbinder/blob/master/README.md) is a command-line utility for stitching Markdown docs into a hostable web app. The Pivotal Platform Docs Team uses Bookbinder to publish our docs site, but you can also use Bookbinder to view a live version of your documentation on your local machine.
 
 Bookbinder draws the content for the site from `docs-content`, the subnav from `docs-book`, and various layout configuration and assets from `docs-layout`.
 
