@@ -20,10 +20,10 @@ There are two ways to do CI testing on your tile:
 ## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
 
 With your tile in our Tile Dashboard CI testing system, we all win.
-You stay on top of changes to PCF that may require changes in your tile.
-Our field representatives gain a clear understanding of your tile’s compatibility across PCF versions,
+You stay on top of changes to <%= vars.product_name %> that may require changes in your tile.
+Our field representatives gain a clear understanding of your tile’s compatibility across <%= vars.product_name %> versions,
 underlying IaaS, and different flavors of environments.
-This also relieves you from maintaining your own CI system, keeping up with latest PCF versions, etc.
+This also relieves you from maintaining your own CI system, keeping up with latest <%= vars.product_name %> versions, etc.
 
 The Tile Dashboard CI is part of our Enterprise Readiness criteria
 which is used to inform the field of the quality and capabilities of your tile,
@@ -42,7 +42,7 @@ The Tile Dashboard CI runs your tile through a series of steps, which include:
   - Use of properties whose values/meanings have changed.
   - Use of features that are no longer supported.
 
-3. Configuring, installing, testing, and uninstalling your tile in several PCF environments:
+3. Configuring, installing, testing, and uninstalling your tile in several <%= vars.product_name %> environments:
   - A patch release of every supported Pivotal Application Service minor version.
   - Every supported IaaS
   - Environments with extra configuration, such as multiple availability zones and IPsec
@@ -232,7 +232,7 @@ contact us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
 
 ### <a id="backing"></a> About Backing Services
 
-Your tile might require a backing service outside of the existing PCF environment,
+Your tile might require a backing service outside of the existing <%= vars.product_name %> environment,
 for example, your tile might be a service broker to a SaaS offering.
 
 You are responsible for maintaining the backing service in an environment
@@ -245,7 +245,7 @@ uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner pro
 to work with every new release of the platform.
 
 With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline
-that integrates and tests your tile on your own deployment of the latest PCF.
+that integrates and tests your tile on your own deployment of the latest <%= vars.product_name %>.
 
 While you are of course also free to use any other CI system you are familiar with,
 Pivotal's tools and documentation are built to make Concourse CI as easy as possible.
@@ -266,22 +266,22 @@ see the instructions [Concourse: Setup & Operations](https://concourse-ci.org/se
 A typical CI pipeline for a tile consists of the following jobs:
 
 - Build the tile
-- Deploy it to PCF
+- Deploy it to <%= vars.product_name %>
 - Run a set of deployment tests to verify that it deployed and works correctly
-- Remove it from PCF
+- Remove it from <%= vars.product_name %>
 
 You describe this pipeline in a `pipeline.yml` file that is then uploaded to the
 Concourse server. [Tile Generator](tile-generator.html) contains a sample
 pipeline that you can clone for your own tile. We are working on automating
 the process of generating a pipeline template for you.
 
-### <a id="pool"></a> Set Up PCF for Your CI Pipeline
+### <a id="pool"></a> Set Up <%= vars.product_name %> for Your CI Pipeline
 
-Pivotal partners who have us host their pipeline have access to a pool of PCF
+Pivotal partners who have us host their pipeline have access to a pool of <%= vars.product_name %>
 instances that are managed by us and are regularly updated with the latest
-(pre-)release versions of PCF. If you set up your own concourse server, you
-have to target your pipeline at a [PCF instance you have setup](./environments.html).
+(pre-)release versions of <%= vars.product_name %>. If you set up your own concourse server, you
+have to target your pipeline at a [<%= vars.product_name %> instance you have setup](./environments.html).
 
 Concourse has a resource type to manage a pool of resources that are shared
-between pipelines, which is what we use to serialize PCF access between the
+between pipelines, which is what we use to serialize <%= vars.product_name %> access between the
 partner pipelines that run on our concourse server.

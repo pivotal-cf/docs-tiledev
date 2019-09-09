@@ -5,19 +5,19 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This section gives a high-level overview of how tiles, Pivotal Cloud Foundry (PCF), and PCF service brokers work together.
+This section gives a high-level overview of how tiles, <%= vars.product_name %>, and <%= vars.product_name %> service brokers work together.
 
-## <a id="cf-broker"></a>Cloud Foundry Service Brokers and PCF Tiles
+## <a id="cf-broker"></a>Cloud Foundry Service Brokers and <%= vars.product_name %> Tiles
 
 Service brokers let developers create service instances in their development spaces that they can call from their code. To do this, the brokers provide an interface between the Cloud Controller and the add-on software service that they represent. The service can run internal or external to a CF deployment, but the service broker always runs inside the cloud.
 
 The service broker works by providing an API which the Cloud Controller calls to create service instances, bind them to apps, and perform other operations. Cloud Foundry service brokers are implemented as HTTP servers that conform to the [service broker API](http://docs.cloudfoundry.org/services/api.html).
 
-In addition to providing an API, a service broker publishes a service catalog that may include multiple service plans, such as a free tier and a metered tier. Brokers register their service plans with the Cloud Controller to populate the Marketplace, which developers access with `cf marketplace` or through the Pivotal Cloud Foundry (PCF) Apps Manager.
+In addition to providing an API, a service broker publishes a service catalog that may include multiple service plans, such as a free tier and a metered tier. Brokers register their service plans with the Cloud Controller to populate the Marketplace, which developers access with `cf marketplace` or through Pivotal Apps Manager.
 
-On PCF, cloud operators make software services available to developers by finding them on [Pivotal Network](https://network.pivotal.io/) and then installing and configuring them through a tile interface in the Ops Manager **Installation Dashboard**. Installing a service tile creates a service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. Developers can then create service instances in their spaces and bind them to their apps.
+On <%= vars.product_name %>, cloud operators make software services available to developers by finding them on [Pivotal Network](https://network.pivotal.io/) and then installing and configuring them through a tile interface in the Ops Manager **Installation Dashboard**. Installing a service tile creates a service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. Developers can then create service instances in their spaces and bind them to their apps.
 
 See the following topics:
 
-* [How PCF and PCF Services Work](cf-concepts.html)
+* [How <%= vars.product_name %> and <%= vars.product_name %> Services Work](cf-concepts.html)
 * [How Tiles Work](tile-structure.html)

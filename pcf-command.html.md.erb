@@ -7,24 +7,24 @@ owner: Services
 
 <% current_page.data.title = vars.product_name_lc + " Command Line Utility" %>
 
-The `pcf` utility provides a command line interface to Pivotal Cloud Foundry for
+The `<%= vars.product_name_lc %>` utility provides a command line interface to <%= vars.product_name %> for
 the purpose of deploying and testing tiles. Its primary reason for existence is
 to enable Ops Manager access from CI pipelines, but developers also find it
 convenient to use this CLI rather than the Ops manager GUI.
 
-The `pcf` utility also allows you to test your tile's BOSH errands
+The `<%= vars.product_name_lc %>` utility also allows you to test your tile's BOSH errands
 directly from your CLI, without going through Ops Manager and BOSH. This greatly
 reduces the time it takes to deploy/test each iteration of your software components.
 
 ##<a id="install"></a> Installation
 
-The `pcf` utility comes bundled with the Tile Generator tool. To
-install the `pcf` utility, follow the
+The `<%= vars.product_name_lc %>` utility comes bundled with the Tile Generator tool. To
+install the `<%= vars.product_name_lc %>` utility, follow the
 [Tile Generator installation instructions](tile-generator.html#how-to).
 
 ##<a id="auth"></a> Authentication
 
-The `pcf` utility looks for a file called `metadata` in the current directory.
+The `<%= vars.product_name_lc %>` utility looks for a file called `metadata` in the current directory.
 This file is expected to provide the URL and credentials to connect to
 Ops Manager, in the following format:
 
@@ -37,19 +37,19 @@ opsmgr:
 ```
 
 The reason for this file naming is because this is how Concourse passes
-credentials of a "claimed" PCF pool resource to the CI pipeline scripts.
+credentials of a "claimed" <%= vars.product_name %> pool resource to the CI pipeline scripts.
 For interactive use, this means that you will have to create a `metadata`
-file in the directory where you run the `pcf` command.
+file in the directory where you run the `<%= vars.product_name_lc %>` command.
 
 <p class='note'>Pivotal recommends that you do <strong>not</strong> create this file inside your git or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
 
 ##<a id="commands"></a> Commands
 
-The `pcf` utility implements many different commands. To see available commands:
+The `<%= vars.product_name_lc %>` utility implements many different commands. To see available commands:
 
 ```bash
-$ pcf --help
-Usage: pcf [OPTIONS] COMMAND [ARGS]...
+$ <%= vars.product_name_lc %> --help
+Usage: <%= vars.product_name_lc %> [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --help  Show this message and exit.
@@ -77,7 +77,7 @@ Commands:
 To see which products are currently available and installed in Ops Manager:
 
 ```bash
-$ pcf products
+$ <%= vars.product_name_lc %> products
 - p-bosh 1.7.0.0 (installed)
 - cf 1.7.0-build.258 (installed)
 - test-tile 0.3.95
@@ -86,14 +86,14 @@ $ pcf products
 To test if a specific product is available or installed from within a script:
 
 ```bash
-$ pcf is-available test-tile && echo "Product test-tile is available"
-$ pcf is-installed test-tile && echo "Product test-tile is installed"
+$ <%= vars.product_name_lc %> is-available test-tile && echo "Product test-tile is available"
+$ <%= vars.product_name_lc %> is-installed test-tile && echo "Product test-tile is installed"
 ```
 
 You can retrieve the settings for a specific product (this will give you a *lot* of json):
 
 ```bash
-$ pcf settings test-tile
+$ <%= vars.product_name_lc %> settings test-tile
 {
     "network_reference": "669e213111ab5aa1008a",
     "guid": "test-tile-be3e50cf26c530acca6e",
@@ -126,13 +126,13 @@ normally do through the Ops Manager GUI.
 Import your .pivotal file into Ops Manager:
 
 ```bash
-$ pcf import sample/product/test-tile-0.0.2.pivotal
+$ <%= vars.product_name_lc %> import sample/product/test-tile-0.0.2.pivotal
 ```
 
 Install the uploaded version of your product:
 
 ```bash
-$ pcf install test-tile 0.0.2
+$ <%= vars.product_name_lc %> install test-tile 0.0.2
 ```
 
 Where you would normally configure the tile settings in the GUI, the `configure`
@@ -141,7 +141,7 @@ also sets the stemcell for the tile to the same one used by Pivotal Application 
 to avoid the need to upload a tile-specific stemcell.
 
 ```bash
-$ pcf configure test-tile sample/missing-properties.yml
+$ <%= vars.product_name_lc %> configure test-tile sample/missing-properties.yml
 - Using stemcell bosh-vsphere-esxi-ubuntu-trusty-go_agent version 3215
 ```
 
@@ -157,7 +157,7 @@ username: SpongeBob
 password: { 'secret': Square'Pants }
 app2:
   persistence_store_type: none
-# In PCF 1.8+, BOSH-job-specific configuration is supported:
+# In <%= vars.product_name %> (formerly PCF) 1.8+, BOSH-job-specific configuration is supported:
 jobs:
   a_job:
     # Job resource configuration:
@@ -169,13 +169,13 @@ jobs:
 ```
 
 You must define any `secret` type property value as a hash, in curly brackets. Specifying a simple
-string value for a field of this type results in a `500 System Error` being returned from `pcf configure`.
+string value for a field of this type results in a `500 System Error` being returned from `<%= vars.product_name_lc %> configure`.
 The `secret` type property values can contain special characters.
 
 To see what changes are ready to be applied:
 
 ```bash
-$ pcf changes
+$ <%= vars.product_name_lc %> changes
 install: test-tile-207b165fcb7dc8b2597b
 delete:
 ```
@@ -183,7 +183,7 @@ delete:
 To apply these changes:
 
 ```bash
-$ pcf apply-changes
+$ <%= vars.product_name_lc %> apply-changes
   ===== 2016-04-21 18:45:05 UTC Running "bosh-init deploy /var/tempest/workspaces/default/deployments/bosh.yml"
   Deployment manifest: '/var/tempest/workspaces/default/deployments/bosh.yml'
   Deployment state: '/var/tempest/workspaces/default/deployments/bosh-state.json'
@@ -196,12 +196,12 @@ $ pcf apply-changes
     Validating deployment manifest... Finished (00:00:00)
 ```
 
-`pcf apply-changes` automatically tails the logs for the installation process
+`<%= vars.product_name_lc %> apply-changes` automatically tails the logs for the installation process
 it started. If this gets aborted for any reason, you can always tail the logs
 of the most recent installation:
 
 ```bash
-$ pcf logs
+$ <%= vars.product_name_lc %> logs
 ```
 
 ##<a id="remove"></a> Removing Tiles
@@ -209,22 +209,22 @@ $ pcf logs
 To uninstall a tile:
 
 ```bash
-$ pcf uninstall test-tile
+$ <%= vars.product_name_lc %> uninstall test-tile
 ```
 
 If you accumulate a lot of uninstalled tiles or old versions, you can clean
 up Ops Manager's available products (and disk space):
 
 ```bash
-$ pcf delete-unused-products
+$ <%= vars.product_name_lc %> delete-unused-products
 ```
 
 ##<a id="access-ert"></a> Accessing PAS
 
-To see details about the Pivotal Application Service of your PCF environment:
+To see details about the Pivotal Application Service of your <%= vars.product_name %> environment:
 
 ```bash
-$ pcf cf-info
+$ <%= vars.product_name_lc %> cf-info
 - admin_password: <redacted>
 - admin_username: admin
 - apps_domain: cfapps-04.example.com
@@ -233,10 +233,10 @@ $ pcf cf-info
 - system_services_username: system_services
 ```
 
-To target your `cf` command line at this PCF environment:
+To target your `cf` command line at this <%= vars.product_name %> environment:
 
 ```bash
-$ pcf target
+$ <%= vars.product_name_lc %> target
 Setting api endpoint to api.example.com...
 OK
 

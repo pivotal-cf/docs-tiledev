@@ -27,7 +27,7 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 configurations
 
 
-For the purpose of explanation, examples that refer to the product template use the [PCF example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
+For the purpose of explanation, examples that refer to the product template use the [<%= vars.product_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
 
 For more information about product template configuration, see [Top-Level Properties](#top-level).
 
@@ -249,22 +249,22 @@ Outside of properties, you can also retrieve information about various configura
 
 <table class="nice"><tr>
   <td>system_domain</td>
-  <td>Provides domain for system-level PCF components, such as the API, UAA, or Apps Manager.</td>
+  <td>Provides domain for system-level <%= vars.product_name %> components, such as the API, UAA, or Apps Manager.</td>
   </tr><tr>
   <td>apps_domain</td>
   <td>Provides the default domain used by applications</td>
   </tr><tr>
   <td>system_api_url</td>
-  <td>Provides the url to the PCF API component</td>
+  <td>Provides the url to the <%= vars.product_name %> API component</td>
   </tr><tr>
   <td>login_url</td>
-  <td>Provides the url to authenticate with the PCF components</td>
+  <td>Provides the url to authenticate with the <%= vars.product_name %> components</td>
   </tr><tr>
   <td>uaa_url</td>
-  <td>Provides the url to the PCF UAA component</td>
+  <td>Provides the url to the <%= vars.product_name %> UAA component</td>
   </tr><tr>
   <td>console_url</td>
-  <td>Provides the url to the PCF Apps Manager component</td>
+  <td>Provides the url to Pivotal Apps Manager component</td>
   </tr><tr>
   <td>default_reply_to</td>
   <td>Provides the default reply-to email address for the system domain</td>
@@ -523,7 +523,7 @@ Example:
 * **Type:** Required
 
 A list of product dependencies. If the required product
-is not present in the PCF installation, Ops Manager lists the needed dependencies
+is not present in the <%= vars.product_name %> installation, Ops Manager lists the needed dependencies
 and does not install your tile until the dependencies are satisfied.
 
 ### <a id='top-release'></a> releases

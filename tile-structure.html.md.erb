@@ -5,7 +5,7 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-Product tiles make it easy for cloud operators to offer new and upgraded software services to developers in a Pivotal Cloud Foundry (PCF) deployment. [Pivotal Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
+Product tiles make it easy for cloud operators to offer new and upgraded software services to developers in a <%= vars.product_name %> deployment. [Pivotal Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
 
 This topic explains what each functional element of a tile does and how you create or specify it as input to the [Tile Generator](./tile-generator.html) tool that creates `.pivotal` files.
 
@@ -13,9 +13,9 @@ This topic also describes the typical [structure](#structure) of a tile director
 
 ## <a id='functions'></a>Tile Functions
 
-PCF service tiles perform multiple functions that streamline the use of software services on PCF, including:
+<%= vars.product_name %> service tiles perform multiple functions that streamline the use of software services on <%= vars.product_name %>, including:
 
-* Deploy a [service broker](#broker) that interfaces between the Cloud Controller, PCF's main executive component, and the service.
+* Deploy a [service broker](#broker) that interfaces between the Cloud Controller, <%= vars.product_name %>'s main executive component, and the service.
 
 * [Publish a catalog](#catalog) of available service plans to the **Services Marketplace**.
 
@@ -23,7 +23,7 @@ PCF service tiles perform multiple functions that streamline the use of software
 
 * Generate a BOSH manifest for deploying instances of the service, populating it with both user-configured and [fixed](#fixed) properties.
 
-* Run BOSH [errands](#errands): deploy errands that set PCF up to run the service when an operator first deploys the service, and delete errands that clean up when an operator deletes the service.
+* Run BOSH [errands](#errands): deploy errands that set <%= vars.product_name %> up to run the service when an operator first deploys the service, and delete errands that clean up when an operator deletes the service.
 
 * Define [dependencies](#dependencies) for the tile, to prevent Ops Manager from installing the service when its dependencies are missing.
 
@@ -33,11 +33,11 @@ These functions are described in more detail below.
 
 ### <a id='broker'></a> Service Broker
 
-Service brokers integrate services with PCF by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. The [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html) topic specifies requirements for this API.
+Service brokers integrate services with <%= vars.product_runtime %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. The [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html) topic specifies requirements for this API.
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and [publishes](#catalog) the service plans that the broker offers.
 
-You can write a service broker in any language, and it can run anywhere, inside your PCF installation or external. See [Example Service Brokers](http://docs.pivotal.io/pivotalcf/services/examples.html) for sample code in Ruby, Java, and Go.
+You can write a service broker in any language, and it can run anywhere, inside your <%= vars.product_name %> installation or external. See [Example Service Brokers](http://docs.pivotal.io/pivotalcf/services/examples.html) for sample code in Ruby, Java, and Go.
 
 Specify the service broker for a tile in the tile directory's `tile.yml` file, as a [package](#packages) with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`. The `external-broker` type requires a `uri` value, for the service broker location.
 
@@ -45,19 +45,19 @@ Specify the service broker for a tile in the tile directory's `tile.yml` file, a
 
 Service brokers include [catalog metadata](http://docs.pivotal.io/pivotalcf/services/catalog-metadata.html) that list their service plans. This information publishes to the Marketplace that app developers use to browse and select services.
 
-Developers on either PCF or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`.
-But PCF also features a graphical Marketplace, and PCF service brokers support this Marketplace with additional catalog metadata fields for display names,
+Developers on either <%= vars.product_runtime %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`.
+But <%= vars.product_runtime %> also features a graphical Marketplace, and <%= vars.product_runtime %> service brokers support this Marketplace with additional catalog metadata fields for display names,
 logo images, and links to more information and documentation.
 
 Define this catalog metadata for your service by writing your service broker to return the API calls listed in the [Catalog Metadata](http://docs.pivotal.io/pivotalcf/services/catalog-metadata.html) topic.
 
 ### <a id='configure'></a> Configuration
 
-In the Ops Manager Installation Dashboard, service tiles present a form-based interface that cloud operators use to configure the service. These configured properties become part of the BOSH manifest that PCF uses to deploy instances of the service.
+In the Ops Manager Installation Dashboard, service tiles present a form-based interface that cloud operators use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.product_name %> uses to deploy instances of the service.
 
 You define this configuration interface in the `forms:` section of the `tile.yml` configuration file that you pass to the Tile Generator. Each named form element defines a configuration pane accessible under the tile's **Settings** tab.
 
-A left-side menu lists all configuration panes and indicates with check marks which ones have been configured. The menu lists service-specific panes, defined by the tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config** that all PCF products and services use.
+A left-side menu lists all configuration panes and indicates with check marks which ones have been configured. The menu lists service-specific panes, defined by the tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config** that all <%= vars.product_name %> products and services use.
 
 ![Form Layout](img/form-layout.png)
 
@@ -81,12 +81,12 @@ Include credentials to pass into a BOSH manifest as `salted_credentials` in your
 
 ### <a id='errands'></a> Errands
 
-Tile Generator automatically generates `deploy` and `delete` lifecycle errands for [packages](#packages) that deploy to PCF.
-These errand scripts deploy the service to PCF and publish its plans in the Marketplace, and remove the service from PCF and the Marketplace.
+Tile Generator automatically generates `deploy` and `delete` lifecycle errands for [packages](#packages) that deploy to <%= vars.product_name %>.
+These errand scripts deploy the service to <%= vars.product_name %> and publish its plans in the Marketplace, and remove the service from <%= vars.product_name %> and the Marketplace.
 
-You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` that prepare PCF to host the service or clean up before deleting it. You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
+You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` that prepare <%= vars.product_name %> to host the service or clean up before deleting it. You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
 
-For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the PCF layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as lifecycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
+For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the <%= vars.product_name %> layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as lifecycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
 
 Tile Generator writes the `bosh-release` errands into the main BOSH release that it creates for the service, and adds `docker-bosh` errands into a separate Docker BOSH release that the main release depends on.
 
@@ -190,18 +190,18 @@ Tile Generator does not dictate any directory structure for a GitHub repository,
 
 ### <a id='packages'></a>Packages
 
-PCF services typically require multiple component job processes to run concurrently, such as a main app, a helper app, and a service broker. They also require buildpacks that run as one-time compilation tasks. Services also require components such as external brokers or storage, which do not run as jobs, but nevertheless need to remain available.
+<%= vars.product_name %> services typically require multiple component job processes to run concurrently, such as a main app, a helper app, and a service broker. They also require buildpacks that run as one-time compilation tasks. Services also require components such as external brokers or storage, which do not run as jobs, but nevertheless need to remain available.
 
 The `tile yml` file that you pass to Tile Generator defines these service components it its `packages:` section. Each package has a name and a package type. The list of possible package types to pass to Tile Generator is in the [Tile Generator code](https://github.com/cf-platform-eng/tile-generator/blob/master/tile_generator/config.py#L59-L70). It includes:
 
-  * app - `cf push`ed to PCF
-  * docker-app - `cf push`ed to PCF (image will not be embedded so requires Docker registry access)
-  * app-broker - `cf push`ed to PCF and registered as a broker
-  * docker-app-broker - `cf push`ed to PCF and registered as a broker (image is not embedded, so requires Docker registry access)
+  * app - `cf push`ed to <%= vars.product_runtime %>
+  * docker-app - `cf push`ed to <%= vars.product_runtime %> (image will not be embedded so requires Docker registry access)
+  * app-broker - `cf push`ed to <%= vars.product_runtime %> and registered as a broker
+  * docker-app-broker - `cf push`ed to <%= vars.product_runtime %> and registered as a broker (image is not embedded, so requires Docker registry access)
   * external-broker - Registered as a broker
   * buildpack - installed with `cf create-buildpack`; runs as a one-time task rather than a long-running process
-  * docker-bosh - describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not PCF
-  * bosh-release - a pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not PCF; requires you to describe all jobs (long-running processes and errands)
+  * docker-bosh - describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.product_runtime %>
+  * bosh-release - a pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.product_runtime %>; requires you to describe all jobs (long-running processes and errands)
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same [location](#where).
 

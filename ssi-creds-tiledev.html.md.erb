@@ -5,13 +5,13 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This topic describes how to develop your Pivotal Cloud Foundry (PCF) service tile to support secure service instance (SSI) credentials using Runtime CredHub. For more information about Runtime CredHub, see [Runtime CredHub](https://docs.pivotal.io/pivotalcf/credhub/#runtime) in the _CredHub_ topic.
+This topic describes how to develop your <%= vars.product_name %> service tile to support secure service instance (SSI) credentials using Runtime CredHub. For more information about Runtime CredHub, see [Runtime CredHub](https://docs.pivotal.io/pivotalcf/credhub/#runtime) in the _CredHub_ topic.
 
 ## <a id="background"></a> Background
 
 When developers bind an app to a service instance, the binding typically includes _binding credentials_ required to access the service.
 
-In PCF v2.0 and later, service brokers can store binding credentials as SSI credentials in runtime CredHub and apps can retrieve these credentials from CredHub. This secures service instance credential management by avoiding the following:
+In <%= vars.product_name %> (formerly PCF) and later, service brokers can store binding credentials as SSI credentials in runtime CredHub and apps can retrieve these credentials from CredHub. This secures service instance credential management by avoiding the following:
 
 * Leaking environment variables to logs, which increases risk of disclosure.
 * Sending credentials between components, which increases risk of disclosure.
@@ -112,7 +112,7 @@ form_types:
   property_inputs:
   - reference: .JOB-NAME.secure_credentials
     label: Secure service instance credentials
-    description: "When checked, service instance credentials are stored in CredHub. Enable only when installing with PCF v2.0 or later and this feature is also enabled in the PAS tile."
+    description: "When checked, service instance credentials are stored in CredHub. Enable only when installing with <%= vars.product_name %> (formerly PCF) or later and this feature is also enabled in the PAS tile."
 
 property_blueprints:
   - name: hidden_credhub_selector

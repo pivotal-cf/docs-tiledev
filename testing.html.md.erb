@@ -10,7 +10,7 @@ This topic explains recommended testing practices for tile developers.
 ## <a id="testing"></a> Tile Testing
 
 Good testing assures tile developers that their product installs and runs properly on diverse platforms
-and assures PCF platform operators that the tile they install can provide its service successfully on their platform.
+and assures <%= vars.product_name %> platform operators that the tile they install can provide its service successfully on their platform.
 
 Pivotal recommends a pyramid structure for testing, starting with unit tests and stepping up to successively broader and more automated levels of integration.
 Pivotal uses and recommends [Concourse](./concourse.html) for creating build pipelines that follow this test structure.
@@ -18,7 +18,7 @@ Other continuous integration tools should also support a pyramid testing approac
 
 ### <a id="pyramid"></a> Tile Test Pyramid
 
-For PCF tiles, a typical test pyramid progresses as follows:
+For <%= vars.product_name %> tiles, a typical test pyramid progresses as follows:
 
 1. Unit tests for each tile **component** (e.g. service components, broker, adapter, and metrics emitter), manual by developer and in automated pipeline.
 
@@ -70,7 +70,7 @@ A typical smoke test runs as follows:
 
 ### <a id="general-recs"></a> General Recommendations
 
-The following are general recommendations for designing and running tests on PCF tiles:
+The following are general recommendations for designing and running tests on <%= vars.product_name %> tiles:
 
 * Clean up after yourself. Leave the environment exactly as it was before the test was run.
 
@@ -79,7 +79,7 @@ The following are general recommendations for designing and running tests on PCF
 * Design test suites for re-usability by making them highly parameterizable. Important parameters include:
   - External settings such as domains, creds, and certs
   - Plans to test against.
-    For example, the [Redis for PCF](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
+    For example, the [Redis for <%= vars.product_name %>](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
     for two different service plans, pre-provisioned and on-demand.
   - Timeouts, numbers of retries, and other things that you need to adjust for different environments
   - Switches to include or exclude portions of the tests such as generating metrics or backups

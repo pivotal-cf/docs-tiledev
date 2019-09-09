@@ -5,11 +5,11 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This topic provides resources to help you publish and update your service tile for Pivotal Cloud Foundry (PCF).
+This topic provides resources to help you publish and update your service tile for <%= vars.product_name %>.
 
 ## <a id="publish"></a> Publish Your Tile
 
-[The Pivotal Partner Software Product Release Cycle](./releases.html) explains how Pivotal works with partners to release PCF products,
+[The Pivotal Partner Software Product Release Cycle](./releases.html) explains how Pivotal works with partners to release <%= vars.product_name %> products,
 from the private alpha and closed beta phases, to general availability and publication on [Pivotal Network](http://network.pivotal.io).
 
 After you've packaged your product's BOSH releases, stemcell, metadata, and other tile components into a single zipped download file, post it to Pivotal Network in one of two ways:
@@ -20,7 +20,7 @@ After you've packaged your product's BOSH releases, stemcell, metadata, and othe
 
 ## <a id="update"></a> Update Your Tile
 
-Most tile updates originate with the tile developer, but new releases of PCF can also necessitate tile changes 
+Most tile updates originate with the tile developer, but new releases of <%= vars.product_name %> can also necessitate tile changes 
 to maintain compatibility with the current version of the platform.
 
 * Tile Generator automates tile versioning and upgrades.  
@@ -29,7 +29,7 @@ For more information, see [Versioning](./tile-generator.html#versioning) in the 
 * [Tile Upgrades](./tile-upgrades.html) explains how to write and include a JavaScript file that automates tile upgrades 
 by migrating property names and values from one tile version to another.
 
-* When changes to PCF require tile changes, Pivotal distributes instructions to all of its partners:
+* When changes to <%= vars.product_name %> require tile changes, Pivotal distributes instructions to all of its partners:
     * [Pivotal Cloud Foundry v2.2 Partners Release Notice](http://docs.pivotal.io/tiledev/2-2/release-notes.html)
     * [Pivotal Cloud Foundry v2.1 Partners Release Notice](http://docs.pivotal.io/tiledev/2-1/release-notes.html)
     * [Pivotal Cloud Foundry v2.0 Partners Release Notice](http://docs.pivotal.io/tiledev/2-0/release-notes.html)
