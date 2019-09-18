@@ -33,7 +33,7 @@ These functions are described in more detail below.
 
 ### <a id='broker'></a> Service Broker
 
-Service brokers integrate services with <%= vars.product_runtime %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. The [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html) topic specifies requirements for this API.
+Service brokers integrate services with <%= vars.app_runtime %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. The [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html) topic specifies requirements for this API.
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and [publishes](#catalog) the service plans that the broker offers.
 
@@ -45,8 +45,8 @@ Specify the service broker for a tile in the tile directory's `tile.yml` file, a
 
 Service brokers include [catalog metadata](http://docs.pivotal.io/pivotalcf/services/catalog-metadata.html) that list their service plans. This information publishes to the Marketplace that app developers use to browse and select services.
 
-Developers on either <%= vars.product_runtime %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`.
-But <%= vars.product_runtime %> also features a graphical Marketplace, and <%= vars.product_runtime %> service brokers support this Marketplace with additional catalog metadata fields for display names,
+Developers on either <%= vars.app_runtime_full %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`.
+But <%= vars.app_runtime %> also features a graphical Marketplace, and <%= vars.app_runtime %> service brokers support this Marketplace with additional catalog metadata fields for display names,
 logo images, and links to more information and documentation.
 
 Define this catalog metadata for your service by writing your service broker to return the API calls listed in the [Catalog Metadata](http://docs.pivotal.io/pivotalcf/services/catalog-metadata.html) topic.
@@ -194,14 +194,14 @@ Tile Generator does not dictate any directory structure for a GitHub repository,
 
 The `tile yml` file that you pass to Tile Generator defines these service components it its `packages:` section. Each package has a name and a package type. The list of possible package types to pass to Tile Generator is in the [Tile Generator code](https://github.com/cf-platform-eng/tile-generator/blob/master/tile_generator/config.py#L59-L70). It includes:
 
-  * app - `cf push`ed to <%= vars.product_runtime %>
-  * docker-app - `cf push`ed to <%= vars.product_runtime %> (image will not be embedded so requires Docker registry access)
-  * app-broker - `cf push`ed to <%= vars.product_runtime %> and registered as a broker
-  * docker-app-broker - `cf push`ed to <%= vars.product_runtime %> and registered as a broker (image is not embedded, so requires Docker registry access)
+  * app - `cf push`ed to <%= vars.app_runtime %>
+  * docker-app - `cf push`ed to <%= vars.app_runtime %> (image will not be embedded so requires Docker registry access)
+  * app-broker - `cf push`ed to <%= vars.app_runtime %> and registered as a broker
+  * docker-app-broker - `cf push`ed to <%= vars.app_runtime %> and registered as a broker (image is not embedded, so requires Docker registry access)
   * external-broker - Registered as a broker
   * buildpack - installed with `cf create-buildpack`; runs as a one-time task rather than a long-running process
-  * docker-bosh - describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.product_runtime %>
-  * bosh-release - a pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.product_runtime %>; requires you to describe all jobs (long-running processes and errands)
+  * docker-bosh - describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.app_runtime %>
+  * bosh-release - a pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.app_runtime %>; requires you to describe all jobs (long-running processes and errands)
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same [location](#where).
 

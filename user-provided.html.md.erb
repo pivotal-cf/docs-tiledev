@@ -5,19 +5,19 @@ owner: Services
 
 <strong><%= modified_date %></strong>
 
-This topic explains how to create a user-provided service for <%= vars.product_runtime %>.
+This topic explains how to create a user-provided service for <%= vars.app_runtime_full %>.
 
 ## <a id="overview"></a>Overview
 
-A <%= vars.product_runtime %> developer can call your service from their app code, even if the service runs outside of <%= vars.product_runtime %> and has no service broker. Use cases for this include:
+An <%= vars.app_runtime %> developer can call your service from their app code, even if the service runs outside of <%= vars.app_runtime %> and has no service broker. Use cases for this include:
 
 * Your software is available as a SaaS.
 
-* You already have a way to install your software on-premises at a customer site. 
+* You already have a way to install your software on-premises at a customer site.
 
-* Your customer already uses your software, is now adopting <%= vars.product_runtime %>, and wants to consume your software from applications that they deploy on <%= vars.product_runtime %>.
+* Your customer already uses your software, is now adopting <%= vars.app_runtime %>, and wants to consume your software from applications that they deploy on <%= vars.app_runtime %>.
 
-This do-it-yourself solution represents the lowest level of <%= vars.product_runtime %> service integration. It works only for services running external to <%= vars.product_runtime %>, and does not publish the services to the Services Marketplace or make them available to anyone outside the space of the developer who runs these commands. See the [User-Provided Service Instances](http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html) topic for more information.
+This do-it-yourself solution represents the lowest level of <%= vars.app_runtime %> service integration. It works only for services running external to <%= vars.app_runtime %>, and does not publish the services to the Services Marketplace or make them available to anyone outside the space of the developer who runs these commands. See the [User-Provided Service Instances](http://docs.pivotal.io/pivotalcf/devguide/services/user-provided.html) topic for more information.
 
 Running apps with a user-provided service is a great way to determine what information needs to be passed in the credential structure (useful in higher integration levels), verify that the integration works, and develop a test app that can continue to be used at higher levels. From the app developer perspective, once a user-provided service works, later integrations of the service will not require any further code changes. User-provided service bindings are fully forward-compatible with brokered service bindings.
 
