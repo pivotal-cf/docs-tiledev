@@ -27,9 +27,8 @@ PCF components publish logs and metrics to the Firehose through Loggregator agen
 
 Component VMs running PCF services can publish logs and metrics the same way, by including a Metron agent that writes to etcd. In PCF v1.10 and later, components only communicate with `etcd` through the secure, encrypted `https` protocol.
 Earlier versions of PCF permit both `https` and unencrypted `http` communications with etcd.
-=======
+
 Component VMs running PCF services can publish logs and metrics the same way, by including the same component, Loggregator Agent. Historically, components used Metron for this communication.
->>>>>>> daced7a... Edited code snippet and annotative remarks [#159468444]
 
 ### <a id="https"></a> HTTPS Protocol
 
