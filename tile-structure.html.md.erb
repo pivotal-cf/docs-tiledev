@@ -92,26 +92,7 @@ Tile Generator writes the `bosh-release` errands into the main BOSH release that
 
 ### <a id='dependencies'></a> Dependencies
 
-You can include both required and optional product dependencies for tiles: 
-
-* **Required Dependencies**: Required dependencies are always required. Meaning, in order to deploy the dependent tile, you must also deploy the dependency. 
-
-* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependency and the dependent tile to your environment. Meaning, if you upload only the dependent tile, you can deploy the tile without the optional dependency. However, if you upload the dependent tile and the optional dependency, you must deploy the optional dependency in order to deploy the dependent tile. 
-<br>
-<br>
-    Optional dependencies are useful when a tile is dependent on at least one of two or more dependencies. For example, a tile may be dependent on either Pivotal Application Service (PAS) or Pivotal Container Service (PKS). If you define PAS and PKS as optional dependecies, you can successfully deploy the dependent tile without having to deploy both PAS and PKS.
-
-Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` field under `requires_product_versions`. For example: 
-
-```
-requires_product_versions:
-  - name: cf
-    version: 2
-    optional: false
-  - name: pks
-    versions: 1.5
-    optional: true
-```
+Include product dependencies under `requires_product_versions` at the top of your `tile.yml` file.
 
 ### <a id='update'></a> Update Rules
 
