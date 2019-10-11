@@ -1,116 +1,31 @@
 ---
-title: Pivotal Platform v2.7 Partners Release Notes
+title: Pivotal Platform v2.8 Partners Release Notes
 owner: Technical Program Management
 ---
 
 <strong><%= modified_date %></strong>
 
-<% current_page.data.title = vars.product_name + " v2.7 Partners Release Notes" %>
+<% current_page.data.title = vars.product_name + " v2.8 Partners Release Notes" %>
 
 This topic describes the changes that <%= vars.product_name %> v2.7 introduces
 which might be relevant to partner service tiles.
 
-For information about changes introduced in Ops Manager v2.7,
-see [<%= vars.product_name %> Ops Manager v2.7 Release Notes](https://docs.pivotal.io/pivotalcf/2-7/pcf-release-notes/opsmanager-rn.html).
-For information about breaking changes introduced in Pivotal Application Services v2.7,
-see [<%= vars.product_name %> v2.7 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-7/pcf-release-notes/breaking-changes.html).
+For information about changes introduced in Ops Manager v2.8,
+see [<%= vars.product_name %> Ops Manager v2.8 Release Notes](https://docs.pivotal.io/pivotalcf/2-8/pcf-release-notes/opsmanager-rn.html).
+For information about breaking changes introduced in Pivotal Application Services v2.8,
+see [<%= vars.product_name %> v2.8 Breaking Changes](https://docs.pivotal.io/pivotalcf/2-8/pcf-release-notes/breaking-changes.html).
 
 ## <a id="features"></a> Features
 
 New features and changes in this release:
 
-### <a id='consul-server'></a> Consul Server Instance Removed from PAS
-
-The consul server instance is removed from PAS. This saves VM resources and
-reduces maintenance for managing a clustered component.
-
-In PAS v2.4, the instance count for consul server VMs was scaled down to zero.
-This allowed the consul server to continue to provide the consul link for tiles that consume it. In PAS v2.7, the consul server instance is removed from PAS.
-
-For information about breaking changes caused by the removal of the consul server instance,
-see [Consul Clients Not Supported in PAS](#consul-clients-not-supported).
-
-### <a id='upgrade-service-instances'></a> Support for Upgrading Service Instances
-
-PAS v2.7 includes CAPI v1.83.0, which supports upgrading service instances to the latest version of a service plan.
-This is an optional feature that service authors can implement.
-
-App developers can check the `upgrade available` column in the output of the `cf services` command
-to see if a service broker supports upgrades. For more information,
-see [Upgrade a Service Instance](https://docs.pivotal.io/devguide/services/managing-services#upgrade).
-
-If you are a service author and want to enable this feature,
-see [Updating a Service Instance](https://github.com/openservicebrokerapi/servicebroker/blob/master/spec.md#updating-a-service-instance)
-in the _Open Service Broker API Specification_.
-
-### <a id="use-stemcell"></a> BOSH Jobs Can Run on Different Stemcells
-
-Tile authors can specify the stemcell a BOSH job uses with the `use_stemcell` property.
-When `use_stemcell` is specified for a job, Ops Manager uploads this stemcell
-to BOSH and BOSH deploys the given instance group on the specified stemcell.
-
-Tile authors can use this property to enable jobs to run on different operating systems.
-For example, a tile authors can configure one job to run on Linux and configure a different job to run on Windows.
-
-For more information, see [use_stemcell](./property-template-references.html#job-use-stemcell).
-
-## <a id="product-temp"></a> Product Template Property Improvements
-
-The product template has the following improvements:
-
-+ **`vcenter_credentials`:** Tile authors can use the `vcenter_credentials` type of `install_time_verifiers` property to verify vSphere `simple_credentials`.
-For information about the vSphere form verifier,
-see [install\_time\_verifiers](./property-template-references.html#top-verifier).
-
-+ **`must_be_cron_schedule`:** Tile authors can use the `constraints.must_be_cron_schedule` attribute
-of the `string` property blueprint type to verify
-that form input is a valid `cron` expression.
-For information about the `string` blueprint type,
-see [string](./property-template-references.html#string).
 
 ## <a id="resolved"></a> Resolved Issues
 
 This release fixes the following issues:
 
-+ The Ops Manager syslog template now supports service broker tiles.
 
 ## <a id="breaking-changes"></a> Breaking Changes
 
 This release has the following breaking changes:
 
-### <a id='vcenter-user-pass'></a> Username and Password Properties Removed from vSphere Form Verifiers
-
-The `vcenter_username` and `vcenter_password` properties have been removed from
-the vSphere form verifier.
-
-If tile authors added `Verifiers::VsphereConfigurationVerifier`
-to their tile, they must replace the `vcenter_username` and `vcenter_password` properties
-with the `vcenter_credentials` property. If tile authors do not replace
-the username and password properties,
-the vSphere form verifier fails and prevents deployment.
-
-For information about vSphere form verifiers,
-see [install\_time\_verifiers](./property-template-references.html#top-verifier).
-
-### <a id='consul-clients-not-supported'></a> Consul Clients Not Supported in PAS
-
-The consul server instance is removed from PAS. Tiledev authors must remove any
-consul clients from their products to avoid failed deployments.
-
-To remove consul clients from your products, make the following changes to any
-`job_type` that is colocated with `consul_agent`:
-
-```
-- name: consul_agent
-    release: consul
-    ...
-    manifest: |
-      ...
-      consul:
-        client:
-          enabled: "(( $ops_manager.dns_enabled ? false : true ))"
-```
-
-For more information about removing consul clients from your products,
-see [Tile Authors Must Remove consul_agent](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-consul)
-in the PCF v2.4 Partner Release Notes.
