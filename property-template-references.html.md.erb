@@ -595,15 +595,16 @@ Install-time verifiers run in Ops Manager before changes are applied.
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by using
 the properties to connect to the MySQL database.
 
-Each install-time verifier requires the following keys:
+Each install-time verifier supports the following keys:
 
 + `name`: The type of verifier. The value must be one of the verifiers listed in the table below.
-+ `properties`: The properties to verify. The required properties for each verifier are listed in the
-  table below.
++ `properties`: A mapping of verifier inputs to either property references or static values. The required
+  properties for each verifier are listed in the table below.
 + `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the
   verification errors are resolved.
   If this key is set to `true`, an operator can ignore the warning message and **Apply Changes**.
   This key is set to `false` by default.
++ `run_on`: Determines when to run the verifier. Valid values include `'always'` and `'major_or_minor_upgrades'`. Defaults to `'always'`.
 
 The following table lists the available install-time verifiers:
 
@@ -616,7 +617,7 @@ The following table lists the available install-time verifiers:
       Verifies that...
     </th>
     <th width="210px">
-      Required Properties
+      Properties
     </th>
   </tr>
   <tr>
@@ -630,7 +631,8 @@ The following table lists the available install-time verifiers:
         <li><code>access_key_id</code></li>
         <li><code>bucket_name</code></li>
         <li><code>secret_access_key</code></li>
-        <li><code>signature_version</code></li>
+        <li><code>signature_version (optional)</code></li>
+        <li><code>region (optional)</code></li>
       </ul>
     </td>
   </tr>
@@ -661,6 +663,10 @@ The following table lists the available install-time verifiers:
         <li><code>password</code></li>
         <li><code>port</code></li>
         <li><code>username</code></li>
+        <li><code>tls_enabled (optional)</code></li>
+        <li><code>tls_ca (optional)</code></li>
+        <li><code>tls_certificate (optional)</code></li>
+        <li><code>tls_private_key (optional)</code></li>
       </ul>
     </td>
   </tr>
@@ -735,6 +741,24 @@ The following table lists the available install-time verifiers:
       </ul>
     </td>
   </tr>
+  <tr>
+    <td>
+      <code>Verifiers::HttpSuccessVerifier</code>
+    </td>
+    <td>
+      the specified endpoint returns successfully and the response matches the `must_match_regex` expression (if provided).
+    </td>
+    <td>
+      <ul>
+         <li><code>host</code></li>
+         <li><code>port</code></li>
+         <li><code>path</code></li>
+         <li><code>scheme</code></li>
+         <li><code>must_match_regex (optional)</code></li>
+         <li><code>skip_ssl_verification (optional)</code></li>
+      </ul>
+    </td>
+  </tr>
 </table>
 
 
@@ -766,6 +790,14 @@ install_time_verifiers:
     password: .properties.system_database.external.account_password
     port: .properties.system_database.external.port
     username: .properties.system_database.external.account_username
+- ignorable: true
+  name: Verifiers::HttpSuccessVerifier
+  run_on: major_or_minor_upgrades
+  properties:
+    host: .properties.external_host
+    scheme: https
+    port: 443
+    path: /verify
 ```
 
 ### <a id='top-icon-image'></a> icon\_image
