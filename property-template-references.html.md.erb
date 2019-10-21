@@ -23,7 +23,7 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 * **Property Blueprints:** The templates to represent values
 * **Form Types:** The way to expose property blueprints to generated forms
 * **Job Types:** configuration properties for jobs defined in the BOSH release
-* **Runtime Configs:** specifes the manifest for any number of global deployment
+* **Runtime Configs:** specifies the manifest for any number of global deployment
 configurations
 
 
@@ -164,6 +164,10 @@ These are the allowed accessors:
   <tr>
     <td>network_name</td>
     <td>Provides the name of the network assigned for the product</td>
+  </tr>
+  <tr>
+    <td>present?</td>
+    <td>Returns true when the product is staged or deployed</td>
   </tr>
 </table>
 
@@ -537,11 +541,24 @@ Example:
 ### <a id='top-requires'></a> requires\_product\_versions
 
 * **Format:** Array of hashes
-* **Type:** Required
+* **Type:** Optional
 
 A list of product dependencies. If the required product
 is not present in the <%= vars.product_name %> installation, Ops Manager lists the needed dependencies
 and does not install your tile until the dependencies are satisfied.
+
+Supported restriction operators: `=`, `!=`, `>`, `<`, `>=`, `<=`, `~>`
+
+Example:
+
+ <pre class="code">
+ requires\_product\_versions:
+  - name: product-one
+    version: '> 1.2'
+  - name: product-two
+    version: '~> 2.3.4'
+    optional: true
+ </pre>
 
 ### <a id='top-release'></a> releases
 
@@ -1334,7 +1351,7 @@ The stemcell operating system for this job. You must set `use_stemcell` to the v
 
 You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows. If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the product. 
 
-If a job does not have a `use_stemcell` property, the job uses the stemcell operating system configured in `stemcell_criteria`. For more information, see [stemcell\_criteria](#top-stemcell-criteria) and [additional\_stemcell\_criteria](#top-additional-stemcells-criteria) above. 
+If a job does not have a `use_stemcell` property, the job uses the stemcell operating system configured in `stemcell_criteria`. For more information, see [stemcell\_criteria](#top-stemcell-criteria) and [additional\_stemcell\_criteria](#top-additional-stemcells-criteria) above.
 
 ### <a id='job-resource-def'></a> resource\_definitions
 
@@ -1512,7 +1529,40 @@ All property blueprints can have the following attributes:
       Default: false.<br/>
       When set to true, Ops Manager will not allow this property to be changed after the product this property belongs to is successfully deployed.
     </td>
-  </td>
+  </tr>
+  <tr>
+    <td>
+      conditional_default
+    </td>
+    <td>
+      Optional.<br/>
+      Accepts two nested keys: <code>dependency_present</code> and <code>value</code><br/><br/>
+      The <code>conditional_default</code> key overrides the default value specified in the property blueprint only when that product dependency is present, otherwise the default value is used.
+      The <code>conditional_default</code> key is evaluated when the specified product dependency is imported AND reevaluated only when that product dependency is staged or deleted.<br/><br/>
+      E.g.<br/>
+      <pre>
+      - name: example_selector
+        type: selector
+        default: Yes
+        conditional_default:
+          dependency_present: cf
+          value: No
+        option_templates:
+          - name: yes_option
+            select_value: Yes
+            named_manifests:
+              - name: my_snippet
+                manifest: |
+                  ...
+          - name: no_option
+            select_value: No
+            named_manifests:
+              - name: my_other_snippet
+                manifest: |
+                  ...
+      </pre>
+    </td>
+  </tr>
 </table>
 
 ### <a id='configurable-and-auto-generated'></a>Configurable and Auto-Generated Properties
