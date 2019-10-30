@@ -1108,6 +1108,7 @@ Ops Manager does not require tile authors to provide `vm_credentials` in the `pr
         zero_if:
           property_reference: '.web_server.example_text'
           property_value: 'magic value'
+          allow_manual_selection_of_zero: false
       manifest: |
         generated:
           root_rsa_certificate: (( $ops_manager.ca_certificate ))
@@ -1381,6 +1382,8 @@ The number of default instances for a job, including maximum, minimum, odd, and 
 If your product uses an external service that performs the same job as a service in
 Pivotal Application Service (PAS),
 you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
+
+When `zero_if` is not active for an instance group, you are prevented from setting the instance count to 0. This behavior can be overridden by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
 
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL,
 which is the default system database for PAS. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
