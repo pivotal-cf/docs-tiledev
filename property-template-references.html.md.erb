@@ -1349,7 +1349,7 @@ A BOSH setting that controls the number of instances of this job that BOSH will 
 
 The stemcell operating system for this job. You must set `use_stemcell` to the value of an `os` key configured in `stemcell_criteria` or `additional_stemcell_criteria`.
 
-You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows. If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the product. 
+You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows. If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the product.
 
 If a job does not have a `use_stemcell` property, the job uses the stemcell operating system configured in `stemcell_criteria`. For more information, see [stemcell\_criteria](#top-stemcell-criteria) and [additional\_stemcell\_criteria](#top-additional-stemcells-criteria) above.
 
@@ -1383,7 +1383,7 @@ If your product uses an external service that performs the same job as a service
 Pivotal Application Service (PAS),
 you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
 
-When `zero_if` is not active for an instance group, you are prevented from setting the instance count to 0. This behavior can be overridden by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
+When `zero_if` is not active for an instance group, you cannot set the instance count to 0. You can override this by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
 
 For example, your product uses Amazon Relational Database Service (RDS) instead of MySQL,
 which is the default system database for PAS. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
