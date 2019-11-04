@@ -818,11 +818,11 @@ install_time_verifiers:
 - ignorable: true
   name: Verifiers::MysqlDatabaseVerifier
   properties:
-    database: .properties.account_database_name
+    database: "static-database-name"
     host: .properties.system_database.external.host
     password: .properties.system_database.external.account_password
-    port: .properties.system_database.external.port
-    username: .properties.system_database.external.account_username
+    port: 1234
+    username: example-dbuser
 - ignorable: true
   name: Verifiers::HttpSuccessVerifier
   run_on: major_or_minor_upgrades
@@ -1023,7 +1023,18 @@ form_types:
         properties:
           domain: .web_server.example_wildcard_domain
       - name: Verifiers::StaticIpsVerifier
+      - name: Verifiers::MysqlDatabaseVerifier
+        properties:
+          database: "static-database-name"
+          host: .properties.example-database-host
+          port: 1234
+          username: example-dbuser
 ```
+
+You can specify either a tile property reference or a static value for a form verifier.
+In the example above, `Verifiers::MysqlDatabaseVerifier` uses a tile property
+reference for the database host and static values for the database name, port
+number, and username.
 
 ### <a id='form-placeholder'></a> placeholder
 
