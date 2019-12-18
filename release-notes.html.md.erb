@@ -18,13 +18,16 @@ see [<%= vars.product_name %> v2.8 Breaking Changes](https://docs.pivotal.io/piv
 
 New features and changes in this release:
 
+### <a id='om-time-verifier'></a> HTTP Install-Time Verifier
+Tile authors can define an `HttpSuccessVerifier` install-time verifier that calls an
+HTTP endpoint on the broker.
 
-## <a id="resolved"></a> Resolved Issues
+Ops Manager executes this verifier after you click **Apply Changes**.
+If the HTTP response is not successful, the deployment fails and
+the verifier displays a warning message.
 
-This release fixes the following issues:
-
-
-## <a id="breaking-changes"></a> Breaking Changes
-
-This release has the following breaking changes:
+Tile authors can use this verifier
+to check if all service instances on an existing broker are on the current version.
+This prevents service instances from becoming orphaned after an upgrade.
+Tile authors can also specify that the verifier should only run on major or minor upgrades.
 
