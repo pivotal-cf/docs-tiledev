@@ -37,7 +37,7 @@ These functions are described in more detail below.
 
 ### <a id='broker'></a> Service Broker
 
-Service brokers integrate services with <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html).
+Service brokers integrate services with <%= vars.platform_name %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html).
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
 
@@ -49,7 +49,7 @@ Specify the service broker for a tile in the tile directory's `tile.yml` file, a
 
 Service brokers include catalog metadata that list their service plans. This information publishes to the Marketplace that app developers use to browse and select services.
 
-Developers on either <%= vars.app_runtime_abbr %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`. But <%= vars.app_runtime_abbr %> also features a graphical Marketplace, and <%= vars.app_runtime_abbr %> service brokers support this Marketplace with additional catalog metadata fields for display names, logo images, and links to more information and documentation.
+Developers on either <%= vars.platform_name %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`. But <%= vars.platform_name %> also features a graphical Marketplace, and <%= vars.platform_name %> service brokers support this Marketplace with additional catalog metadata fields for display names, logo images, and links to more information and documentation.
 
 Define this catalog metadata for your service by writing your service broker to return the API calls listed in the [Service Metadata](https://github.com/openservicebrokerapi/servicebroker/blob/v2.15/profile.md#service-metadata) section of _Open Service Broker API Profile (v2.15)_ in the Open Service Broker API repository on GitHub.
 
@@ -79,7 +79,7 @@ A tile also writes fixed, unconfigurable properties into the BOSH manifest that 
 
 #### <a id='credentials'></a> Credentials
 
-Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But you do not need to include credentials that already exist in other tiles, such as <%= vars.app_runtime_abbr %>. BOSH automatically generates these for any packages that require them.
+Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But you do not need to include credentials that already exist in other tiles, such as <%= vars.platform_name %>. BOSH automatically generates these for any packages that require them.
 
 ### <a id='errands'></a> Errands
 
@@ -219,21 +219,21 @@ Tile Generator does not dictate any directory structure for a GitHub repository,
 
 The `tile yml` file that you pass to Tile Generator defines these service components it its `packages:` section. Each package has a name and a package type. The list of possible package types to pass to Tile Generator is in the [Tile Generator code](https://github.com/cf-platform-eng/tile-generator/blob/master/tile_generator/config.py#L59-L70) on GitHub. It includes:
 
-* `app`: Pushed to <%= vars.app_runtime_abbr %>
+* `app`: Pushed to <%= vars.platform_name %>
 
-* `docker-app`: Pushed to <%= vars.app_runtime_abbr %> (image will not be embedded so requires Docker registry access).
+* `docker-app`: Pushed to <%= vars.platform_name %> (image will not be embedded so requires Docker registry access).
 
-* `app-broker`: Pushed to <%= vars.app_runtime_abbr %> and registered as a broker.
+* `app-broker`: Pushed to <%= vars.platform_name %> and registered as a broker.
 
-* `docker-app-broker`: Pushed to <%= vars.app_runtime_abbr %> and registered as a broker. Image is not embedded, so this package type requires Docker registry access.
+* `docker-app-broker`: Pushed to <%= vars.platform_name %> and registered as a broker. Image is not embedded, so this package type requires Docker registry access.
 
 * `external-broker`: Registered as a broker.
 
 * `buildpack`: Installed with `cf create-buildpack`. Runs as a one-time task rather than a long-running process.
 
-* `docker-bosh`: Describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.app_runtime_abbr %>.
+* `docker-bosh`: Describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.platform_name %>.
 
-* `bosh-release`: A pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.app_runtime_abbr %>. Requires you to describe all jobs (long-running processes and errands).
+* `bosh-release`: A pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.platform_name %>. Requires you to describe all jobs (long-running processes and errands).
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same location.
 
