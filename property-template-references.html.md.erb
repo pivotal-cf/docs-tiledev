@@ -59,9 +59,9 @@ These values include configurable properties and properties supplied by Ops Mana
 To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses, as shown in the following example:
 
 ```
-    manifest: |
-      pizza_toppings:
-        peppers: (( .properties.example_selector.pizza_option.peppers.value ))
+manifest: |
+  pizza_toppings:
+    peppers: (( .properties.example_selector.pizza_option.peppers.value ))
 ```
 
 ### <a id="triple-parens"></a> Triple Parentheses Expressions
@@ -71,11 +71,10 @@ Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`, designate prop
 To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation, as shown in the following example:
 
 ```
-    manifest: |
-      credhub:
-        concatenated_password: prefix-((( credhub-password )))-suffix
-        password: ((( credhub-password )))
-
+manifest: |
+  credhub:
+    concatenated_password: prefix-((( credhub-password )))-suffix
+    password: ((( credhub-password )))
 ```
 
 When Ops Manager parses a product template and BOSH parses a manifest, they both fill in properties designated by double-parens syntax.
@@ -137,7 +136,7 @@ For more information about the available properties and their accessors, see [Pr
 Product context is useful for accessing information about a tile. It can be used in a manifest using this syntax:
 
 ```
-  (( ..TILE-NAME.accessor ))
+(( ..TILE-NAME.accessor ))
 ```
 
 Where `TILE-NAME` is the name of the tile.
@@ -166,6 +165,8 @@ Outside of properties, you can also retrieve information about various configura
 
 The table below describes the accessors you can use to retrieve information about an Ops Manager deployment:
 
+| Accessor | Description |
+| -------- | ----------- |
 | `ca_certificate` | Provides the root CA cert that is used to sign the Director VM. |
 | `trusted_certificates` | Provides a list of certificates that the Director applies to all VMs. |
 | `http_proxy` | Provides the comma-separated values (CSV) that are entered when Ops Manager traffic is directed to an HTTP Proxy. |
@@ -179,6 +180,8 @@ The table below describes the accessors you can use to retrieve information abou
 
 The table below describes the accessors you can use to retrieve information about your BOSH Director:
 
+| Accessor | Description |
+| -------- | ----------- |
 | `guid` | Unique identifier for the BOSH Director. |
 | `deployment_ip` | Provides the IP address where the BOSH Director is deployed. |
 | `username` | Provides the username for the BOSH Director VM. |
@@ -195,6 +198,8 @@ The table below describes the accessors you can use to retrieve information abou
 
 The table below describes the accessors you can use to retrieve information about your PAS tile:
 
+| Accessor | Description |
+| -------- | ----------- |
 | `system_domain` | Provides domain for system-level PAS components, such as the API, UAA, or Apps Manager. |
 | `apps_domain` | Provides the default domain used by apps. |
 | `system_api_url` | Provides the URL to the PAS API component. |
@@ -211,6 +216,8 @@ The table below describes the accessors you can use to retrieve information abou
 
 The table below describes the accessors you can use to retrieve information about your own tile:
 
+| Accessor | Description |
+| -------- | ----------- |
 | `uaa_client_name` | rovides the UAA client name created for your tile to communicate with the BOSH Director. |
 | `uaa_client_secret` | Provides the UAA client secret created for your tile to communicate with the BOSH Director. |
 | `service_network` | rovides the name of the service network assigned to your tile. |
@@ -376,7 +383,7 @@ This regular expression allows Ops Manager's Pivotal Network integration to pull
 
 Set `service_broker` to `true` for on-demand service brokers. Setting `service_broker` to `true`:
 
-* Enables the service network selector property type
+* Enables the service network selector property type.
 
 * Requires the operator to select a service network during tile configuration. Tile authors can reference the selected service network with `(( $self.service_network ))`.
 
@@ -1257,9 +1264,9 @@ The resources you can set are:
 
 For examples of supported constraint types, see [integer](#integer).
 
-<p class="note"><strong>Note:</strong> If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the <strong>Ops Manager</strong> tile displays <strong>None</strong> under the persistent disk field.</p>
+<p class="note"><strong>Note:</strong> If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk field.</p>
 
-### <a id='job-instance-def'></a> instance\_definition
+### <a id='job-instance-def'></a> instance_definition
 
 * **Format:** Hash
 * **Type:** Required
@@ -1289,6 +1296,8 @@ For more information about referencing these properties, see [Referencing Proper
 
 The table below describes the double parentheses expressions Ops Manager provides to access information about the jobs that the manifest deploys:
 
+| Double Parentheses Expression | Description |
+| ----------------------------- | ----------- |
 | `(( name ))` | The name of the job. |
 | `(( cpu ))` | The CPU of the VM type configured for the job. |
 | `(( ram ))` | The RAM of the VM type configured for the job. |
@@ -1305,6 +1314,8 @@ The table below describes the double parentheses expressions Ops Manager provide
 
 All property blueprints can have the following attributes:
 
+| Property Blueprint | Description |
+| ------------------ | ----------- |
 | `name` | Required. The name of the property. The name is used to reference a property in `form_types` and in `(( ))` accessors. |
 | `type` | Required. The type of property. Must be one of the property types listed in this topic. |
 | `optional` | Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`. |
@@ -1345,9 +1356,9 @@ Properties with `configurable` set to `false`:
 * Do show up in forms, even if added under `form_types`.
 * Get auto-generated values filled in by Ops Manager if that specific type of property supports auto-generation of values.
 
-### <a id='named-manifest'></a> named_manifest for selector and collection type properties
+### <a id='named-manifest'></a> named_manifest for Selector and Collection Type Properties
 
-Specify a property for collection within the `named_manifest` section of the metadata.
+Specify a property for collection within the `named_manifest` section of the metadata, as in the example below:
 
 ```
 - name: certificate_collection
@@ -1393,7 +1404,7 @@ routing_certificates:
     certificate: CERTIFICATE
 ```
 
-For more information, see [Selector and Collection types](#complex).
+For more information, see [Selector and Collection Types](#complex).
 
 
 ## <a id='all-property-types'></a> All Property Blueprint Types
