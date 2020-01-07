@@ -1314,15 +1314,15 @@ The table below describes the double parentheses expressions Ops Manager provide
 
 All property blueprints can have the following attributes:
 
-* `name`: Required. The name of the property. The name is used to reference a property in `form_types` and in `(( ))` accessors. |
+* `name`: Required. The name of the property. The name is used to reference a property in `form_types` and in `(( ))` accessors.
 
-* `type`: Required. The type of property. Must be one of the property types listed in this topic. |
+* `type`: Required. The type of property. Must be one of the property types listed in this topic.
 
-* `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`. |
+* `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
 
-* `configurable`: Optional. Default: `false`. When set to `true` for property types that support operator configuration, the operator is not allowed to configure this value. Do not set `configurable: true` for property types that do not support operator configuration. When set to `false`, Ops Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated via the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Ops Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time. |
+* `configurable`: Optional. Default: `false`. When set to `true` for property types that support operator configuration, the operator is not allowed to configure this value. Do not set `configurable: true` for property types that do not support operator configuration. When set to `false`, Ops Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated via the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Ops Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
 
-* `freeze_on_deploy`: Optional. Default: `false`. When set to `true`, Ops Manager does not allow this property to be changed after the tile this property belongs to is successfully deployed. |
+* `freeze_on_deploy`: Optional. Default: `false`. When set to `true`, Ops Manager does not allow this property to be changed after the tile this property belongs to is successfully deployed.
 
 * `conditional_default`: Optional. Accepts two nested keys: `dependency_present` and `value`. The `conditional_default` key overrides the default value specified in the property blueprint only when that tile dependency is present. Otherwise, the default value is used. The `conditional_default` key is evaluated when the specified tile dependency is imported. It is reevaluated only when that tile dependency is staged or deleted. For example:
 
