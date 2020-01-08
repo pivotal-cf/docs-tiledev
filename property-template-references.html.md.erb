@@ -500,15 +500,24 @@ These are keys that define global deployment configurations. For more informatio
 * **Format:** Array of hashes
 * **Type:** Optional
 
-Install-time verifiers confirm that properties for external services are set correctly. Install-time verifiers run in Ops Manager before changes are applied. For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by using the properties to connect to the MySQL database.
+Install-time verifiers confirm that properties for external services are set correctly.
+Install-time verifiers run in Ops Manager before changes are applied.
+For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by
+using the properties to connect to the MySQL database.
 
 Each install-time verifier requires the following keys:
 
 * `name`: The type of verifier. The value must be one of the verifiers listed in the table below.
 
-* `properties`: A mapping of verifier inputs to either property references or static values. The required properties for each verifier are listed in the table below.
+* `properties`: A mapping of verifier inputs to either property references or static values.
+The required properties for each verifier are listed in the table below.
 
-* `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the verification errors are resolved. If this key is set to `true`, an operator can ignore the warning message and **Apply Changes**. This key is set to `false` by default.
+* `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the verification errors are resolved.
+If this key is set to `true`, an operator can ignore the warning message and **Apply Changes**.
+This key is set to `false` by default.
+
+For information about how operators manage and view verifiers,
+see [Managing Ops Manager Verifiers](https://docs.pivotal.io/platform/customizing/granular-verifier-control.html).
 
 The following table lists the available install-time verifiers:
 
@@ -544,7 +553,8 @@ The following table lists the available install-time verifiers:
         <code>Verifiers::LDAPBindVerifier</code>
     </td>
     <td>
-      the specified LDAP server exists and that the provided credentials are valid. Multiple LDAP servers may be verified if the <code>url</code> property is a space-separated list of server URLs.
+      the specified LDAP server exists and that the provided credentials are valid.
+      Multiple LDAP servers may be verified if the <code>url</code> property is a space-separated list of server URLs.
     <td>
       <ul>
         <li><code>url</code></li>
@@ -833,6 +843,9 @@ References to properties defined in the `property_blueprints` section of the pro
 Verifiers confirm that properties are set correctly in forms. If a verifier displays a warning, the form can still be saved and the warning can be ignored.
 
 Verifiers are similar to install-time verifiers except that they run after a form is saved and not before **Apply Changes**. If you want to have a verifier run when a form is saved and before **Apply Changes**, add the verifier to both the `verifiers` and `install_time_verifiers` sections.
+
+For information about how operators manage and view verifiers,
+see [Managing Ops Manager Verifiers](https://docs.pivotal.io/platform/customizing/granular-verifier-control.html).
 
 For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
 
