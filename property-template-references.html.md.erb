@@ -502,8 +502,11 @@ These are keys that define global deployment configurations. For more informatio
 
 Install-time verifiers confirm that properties for external services are set correctly.
 Install-time verifiers run in Ops Manager before changes are applied.
+This enables operators to correct invalid properties before deploying.
+
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by
-using the properties to connect to the MySQL database.
+using the properties to connect to the MySQL database. If the properties are invalid,
+the install-time verifier informs the operator.
 
 Each install-time verifier requires the following keys:
 
@@ -841,9 +844,15 @@ References to properties defined in the `property_blueprints` section of the pro
 
 ### <a id='verifiers'></a> verifiers
 
-Verifiers confirm that properties are set correctly in forms. If a verifier displays a warning, the form can still be saved and the warning can be ignored.
+Verifiers confirm that properties are set correctly in forms.
+If a verifier displays a warning, the form can still be saved and the warning can be ignored.
 
-Verifiers are similar to install-time verifiers except that they run after a form is saved and not before **Apply Changes**. If you want to have a verifier run when a form is saved and before **Apply Changes**, add the verifier to both the `verifiers` and `install_time_verifiers` sections.
+Verifiers are similar to install-time verifiers
+except that they run after a form is saved and not before **Apply Changes**.
+Verifiers do not block deployments and only inform operators that set properties are invalid.
+
+If you want to have a verifier run when a form is saved and before **Apply Changes**,
+add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
 For information about how operators manage and view verifiers,
 see [Managing Ops Manager Verifiers](https://docs.pivotal.io/platform/customizing/granular-verifier-control.html).
