@@ -17,3 +17,13 @@ see [<%= vars.product_name %> v2.9 Breaking Changes](https://docs.pivotal.io/piv
 ## <a id="features"></a> Features
 
 New features and changes in this release:
+
+### <a id="domain-style-url"></a> Tile Developers Can Specify Domain-Style URLs for S3-Compatible Blobstores
+
+A `use_path_style` property allows tile developers to optionally enable virtual-hosted-style, or domain-style, URLs for S3-compatible blobstores in the BlobstoreVerifier. 
+
+By default, the `use_path_style` property is `true`, which means that the blobstore uses path-style URLs. To use domain-style URLs, set `use_path_style` to `false`.
+
+This update allows you to use domain-style URLs for S3-compatible blobstores before AWS ends support for path-style URLs in October 2020.
+
+For more information about the end of support for path-style S3 bucket URLs, see [Amazon S3 Path Deprecation Plan – The Rest of the Story](https://aws.amazon.com/blogs/aws/amazon-s3-path-deprecation-plan-the-rest-of-the-story/) in the AWS News Blog. 
