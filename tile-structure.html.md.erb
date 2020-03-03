@@ -3,12 +3,12 @@ title: How Tiles Work
 owner: Services
 ---
 
-This topic describes how product tiles work in <%= vars.platform_name %>.
+This topic describes how product tiles work in <%= vars.platform_name_pivotal %>.
 
 
 ## <a id='overview'></a> Overview
 
-Product tiles make it easy for cloud operators to offer new and upgraded software services to developers in a <%= vars.platform_name %> deployment. [Pivotal Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
+Product tiles make it easy for cloud operators to offer new and upgraded software services to developers in a <%= vars.platform_name_pivotal %> deployment. [Pivotal Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
 
 This topic explains what each functional element of a tile does and how you create or specify it as input to the Tile Generator tool that creates `.pivotal` files. For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
 
@@ -17,9 +17,9 @@ This topic also describes the typical structure of a tile directory. This is use
 
 ## <a id='functions'></a> Tile Functions
 
-<%= vars.platform_name %> service tiles perform multiple functions that streamline the use of software services on <%= vars.platform_name %>, including:
+<%= vars.platform_name_pivotal %> service tiles perform multiple functions that streamline the use of software services on <%= vars.platform_name_pivotal %>, including:
 
-* Deploy a service broker that interfaces between the Cloud Controller, <%= vars.platform_name %>'s main executive component, and the service. For more information, see [Service Broker](#broker).
+* Deploy a service broker that interfaces between the Cloud Controller, <%= vars.platform_name_pivotal %>'s main executive component, and the service. For more information, see [Service Broker](#broker).
 
 * Publish a catalog of available service plans to the **Services Marketplace**. For more information, see [Catalog](#catalog).
 
@@ -27,7 +27,7 @@ This topic also describes the typical structure of a tile directory. This is use
 
 * Generate a BOSH manifest for deploying instances of the service, populating it with both user-configured and fixed properties. For more information, see [Fixed Properties](#fixed).
 
-* Run BOSH errands: deploy errands that set <%= vars.platform_name %> up to run the service when an operator first deploys the service, and delete errands that clean up when an operator deletes the service. For more information, see [Errands](#errands).
+* Run BOSH errands: deploy errands that set <%= vars.platform_name_pivotal %> up to run the service when an operator first deploys the service, and delete errands that clean up when an operator deletes the service. For more information, see [Errands](#errands).
 
 * Define dependencies for the tile, to prevent Ops Manager from installing the service when its dependencies are missing. For more information, see [Dependencies](#dependencies).
 
@@ -37,11 +37,11 @@ These functions are described in more detail below.
 
 ### <a id='broker'></a> Service Broker
 
-Service brokers integrate services with <%= vars.platform_name %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html).
+Service brokers integrate services with <%= vars.platform_name_pivotal %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html).
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
 
-You can write a service broker in any language, and it can run anywhere, inside your <%= vars.platform_name %> installation or external. For sample code in Ruby, Java, and Go, see [Example Service Brokers](http://docs.pivotal.io/pivotalcf/services/examples.html).
+You can write a service broker in any language, and it can run anywhere, inside your <%= vars.platform_name_pivotal %> installation or external. For sample code in Ruby, Java, and Go, see [Example Service Brokers](http://docs.pivotal.io/pivotalcf/services/examples.html).
 
 Specify the service broker for a tile in the tile directory's `tile.yml` file, as a package with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`. The `external-broker` type requires a `uri` value, for the service broker location. For more information, see [Packages](#packages).
 
@@ -49,17 +49,17 @@ Specify the service broker for a tile in the tile directory's `tile.yml` file, a
 
 Service brokers include catalog metadata that list their service plans. This information publishes to the Marketplace that app developers use to browse and select services.
 
-Developers on either <%= vars.platform_name %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`. But <%= vars.platform_name %> also features a graphical Marketplace, and <%= vars.platform_name %> service brokers support this Marketplace with additional catalog metadata fields for display names, logo images, and links to more information and documentation.
+Developers on either <%= vars.platform_name_pivotal %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`. But <%= vars.platform_name_pivotal %> also features a graphical Marketplace, and <%= vars.platform_name_pivotal %> service brokers support this Marketplace with additional catalog metadata fields for display names, logo images, and links to more information and documentation.
 
 Define this catalog metadata for your service by writing your service broker to return the API calls listed in the [Service Metadata](https://github.com/openservicebrokerapi/servicebroker/blob/v2.15/profile.md#service-metadata) section of _Open Service Broker API Profile (v2.15)_ in the Open Service Broker API repository on GitHub.
 
 ### <a id='configure'></a> Configuration
 
-In the Ops Manager Installation Dashboard, service tiles present a form-based interface that cloud operators use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name %> uses to deploy instances of the service.
+In the Ops Manager Installation Dashboard, service tiles present a form-based interface that cloud operators use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name_pivotal %> uses to deploy instances of the service.
 
 You define this configuration interface in the `forms:` section of the `tile.yml` configuration file that you pass to the Tile Generator. Each named form element defines a configuration pane accessible under the tile's **Settings** tab.
 
-A left-side menu lists all configuration panes and indicates with check marks which ones have been configured. The menu lists service-specific panes, defined by the tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config** that all <%= vars.platform_name %> products and services use.
+A left-side menu lists all configuration panes and indicates with check marks which ones have been configured. The menu lists service-specific panes, defined by the tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config** that all <%= vars.platform_name_pivotal %> products and services use.
 
 ![Form Layout](img/form-layout.png)
 
@@ -79,15 +79,15 @@ A tile also writes fixed, unconfigurable properties into the BOSH manifest that 
 
 #### <a id='credentials'></a> Credentials
 
-Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But you do not need to include credentials that already exist in other tiles, such as <%= vars.platform_name %>. BOSH automatically generates these for any packages that require them.
+Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But you do not need to include credentials that already exist in other tiles, such as <%= vars.platform_name_pivotal %>. BOSH automatically generates these for any packages that require them.
 
 ### <a id='errands'></a> Errands
 
-Tile Generator automatically generates `deploy` and `delete` lifecycle errands for packages that deploy to <%= vars.platform_name %>. These errand scripts deploy the service to <%= vars.platform_name %> and publish its plans in the Marketplace, and remove the service from <%= vars.platform_name %> and the Marketplace.
+Tile Generator automatically generates `deploy` and `delete` lifecycle errands for packages that deploy to <%= vars.platform_name_pivotal %>. These errand scripts deploy the service to <%= vars.platform_name_pivotal %> and publish its plans in the Marketplace, and remove the service from <%= vars.platform_name_pivotal %> and the Marketplace.
 
-You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` that prepare <%= vars.platform_name %> to host the service or clean up before deleting it. You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
+You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` that prepare <%= vars.platform_name_pivotal %> to host the service or clean up before deleting it. You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
 
-For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the <%= vars.platform_name %> layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as lifecycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
+For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the <%= vars.platform_name_pivotal %> layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as lifecycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
 
 Tile Generator writes the `bosh-release` errands into the main BOSH release that it creates for the service, and adds `docker-bosh` errands into a separate Docker BOSH release that the main release depends on.
 
@@ -97,7 +97,7 @@ You can include both required and optional product dependencies for tiles.
 
 * **Required Dependencies**: Required dependencies are always required. In order to deploy the dependent tile, you must also deploy the dependency. 
 
-* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.
+* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr_pivotal %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr_pivotal %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr_pivotal %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.
 
 Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` field under `requires_product_versions`. For example: 
 
@@ -215,25 +215,25 @@ Tile Generator does not dictate any directory structure for a GitHub repository,
 
 ### <a id='packages'></a> Packages
 
-<%= vars.platform_name %> services typically require multiple component job processes to run concurrently, such as a main app, a helper app, and a service broker. They also require buildpacks that run as one-time compilation tasks. Services also require components such as external brokers or storage, which do not run as jobs, but nevertheless need to remain available.
+<%= vars.platform_name_pivotal %> services typically require multiple component job processes to run concurrently, such as a main app, a helper app, and a service broker. They also require buildpacks that run as one-time compilation tasks. Services also require components such as external brokers or storage, which do not run as jobs, but nevertheless need to remain available.
 
 The `tile yml` file that you pass to Tile Generator defines these service components it its `packages:` section. Each package has a name and a package type. The list of possible package types to pass to Tile Generator is in the [Tile Generator code](https://github.com/cf-platform-eng/tile-generator/blob/master/tile_generator/config.py#L59-L70) on GitHub. It includes:
 
-* `app`: Pushed to <%= vars.platform_name %>
+* `app`: Pushed to <%= vars.platform_name_pivotal %>
 
-* `docker-app`: Pushed to <%= vars.platform_name %> (image will not be embedded so requires Docker registry access).
+* `docker-app`: Pushed to <%= vars.platform_name_pivotal %> (image will not be embedded so requires Docker registry access).
 
-* `app-broker`: Pushed to <%= vars.platform_name %> and registered as a broker.
+* `app-broker`: Pushed to <%= vars.platform_name_pivotal %> and registered as a broker.
 
-* `docker-app-broker`: Pushed to <%= vars.platform_name %> and registered as a broker. Image is not embedded, so this package type requires Docker registry access.
+* `docker-app-broker`: Pushed to <%= vars.platform_name_pivotal %> and registered as a broker. Image is not embedded, so this package type requires Docker registry access.
 
 * `external-broker`: Registered as a broker.
 
 * `buildpack`: Installed with `cf create-buildpack`. Runs as a one-time task rather than a long-running process.
 
-* `docker-bosh`: Describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.platform_name %>.
+* `docker-bosh`: Describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.platform_name_pivotal %>.
 
-* `bosh-release`: A pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.platform_name %>. Requires you to describe all jobs (long-running processes and errands).
+* `bosh-release`: A pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.platform_name_pivotal %>. Requires you to describe all jobs (long-running processes and errands).
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same location.
 
