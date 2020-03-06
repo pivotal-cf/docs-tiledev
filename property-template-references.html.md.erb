@@ -157,7 +157,7 @@ Outside of properties, you can also retrieve information about various configura
 
 * **$director:** Any tile can use this to obtain information about the BOSH Director.
 
-* **$runtime:** Any tile can use this to obtain information about the Pivotal Application Service (PAS) tile.
+* **$runtime:** Any tile can use this to obtain information about the <%= vars.app_runtime_full %> tile.
 
 * **$self:** Your own tile uses this to obtain information about its configuration.
 
@@ -196,16 +196,16 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='runtime'></a> $runtime
 
-The table below describes the accessors you can use to retrieve information about your PAS tile:
+The table below describes the accessors you can use to retrieve information about your <%= vars.app_runtime_abbr %> tile:
 
 | Accessor | Description |
 | -------- | ----------- |
-| `system_domain` | Provides domain for system-level PAS components, such as the API, UAA, or Apps Manager. |
+| `system_domain` | Provides domain for system-level <%= vars.app_runtime_abbr %> components, such as the API, UAA, or Apps Manager. |
 | `apps_domain` | Provides the default domain used by apps. |
-| `system_api_url` | Provides the URL to the PAS API component. |
-| `login_url` | Provides the URL to authenticate with the PAS components. |
-| `uaa_url` | Provides the URL to the PAS UAA component. |
-| `console_url` | Provides the URL to the PAS Apps Manager component. |
+| `system_api_url` | Provides the URL to the <%= vars.app_runtime_abbr %> API component. |
+| `login_url` | Provides the URL to authenticate with the <%= vars.app_runtime_abbr %> components. |
+| `uaa_url` | Provides the URL to the <%= vars.app_runtime_abbr %> UAA component. |
+| `console_url` | Provides the URL to the <%= vars.app_runtime_abbr %> Apps Manager component. |
 | `default_reply_to` | Provides the default reply-to email address for the system domain. |
 | `default_from` | Provides the default from email address of the system domain. |
 
@@ -365,7 +365,7 @@ The order in which a tile appears on the dashboard. The BOSH Director always app
 
 For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100.
 
-Pivotal recommends that you set it to 1.
+<%= vars.recommended_by %> recommends that you set it to 1.
 
 If all tiles have the same rank, Ops Manager sorts them alphabetically.
 
@@ -405,7 +405,7 @@ stemcell_criteria
   enable_patch_security_updates: false
 ```
 
-Pivotal recommends setting the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
+<%= vars.recommended_by %> recommends setting the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
 
 You do not specify which IaaS the stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
 
@@ -1298,11 +1298,11 @@ For examples of supported constraint types, see [integer](#integer).
 
 The number of default instances for a job, including maximum, minimum, odd, and the ability to decrease sizing after deploy.
 
-If your tile uses an external service that performs the same job as a service in PAS, you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
+If your tile uses an external service that performs the same job as a service in <%= vars.app_runtime_abbr %>, you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
 
 When `zero_if` is not active for an instance group, you cannot set the instance count to 0. You can override this by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
 
-For example, your tile uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for PAS. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
+For example, your tile uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for <%= vars.app_runtime_abbr %>. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
 
 For examples of supported constraint types, see [integer](#integer).
 
