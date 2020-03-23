@@ -9,7 +9,7 @@ This topic describes the Tile Generator tool, which helps tile authors develop, 
 ## <a id="overview"></a> Overview
 
 Tiles are the
-installation package format used by Pivotal Ops Manager to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
+installation package format used by Ops Manager to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
 uses templates and patterns that are based on years of experience integrating
 third-party services into Cloud Foundry and eliminates much of the need for
 you to have intimate knowledge of all the tools involved.
@@ -31,7 +31,7 @@ Service (PAS) or open-source Cloud Foundry
 - A **Concourse pipeline configuration** to enable Continuous Integration of
   your software with the latest versions of <%= vars.platform_name %>
 
-Use Tile Generator in combination with the [<%= vars.platform_name_lc %> utility](pcf-command.html)
+Use Tile Generator in combination with the [pcf utility](pcf-command.html)
 to enable rapid deploy and test cycles of your software.
 
 The current release of Tile Generator supports tiles that have any
@@ -93,7 +93,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
             source tile-generator-env/bin/activate
             pip install tile-generator
 
-        This puts the `tile` and `<%= vars.platform_name_lc %>` commands in your `PATH` when the virtualenv is active.
+        This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
         To deactivate the virtualenv, run the command `deactivate`.
 
         <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
@@ -123,7 +123,7 @@ release version of the Cloud Foundry CLI.
 
 Tile Generator is also available pre-installed in a Docker image on
 [Docker Hub](https://hub.docker.com/r/cfplatformeng/tile-generator/).
-This image contains the tile-generator `tile` and `<%= vars.platform_name_lc %>` commands, the
+This image contains the tile-generator `tile` and `pcf` commands, the
 necessary Python dependencies and the BOSH CLI.
 
 You can use this in Concourse pipelines by specifying it as the base image
