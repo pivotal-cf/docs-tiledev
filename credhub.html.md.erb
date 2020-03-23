@@ -13,11 +13,11 @@ Both BOSH CredHub and runtime CredHub are instances of the CredHub credential ma
 
 ## <a id="overview"></a> Overview
 
-Many <%= vars.product_name %> components use credentials to authenticate connections, and <%= vars.product_name %>  installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
+Many <%= vars.platform_name %> components use credentials to authenticate connections, and <%= vars.platform_name %>  installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
 
-In <%= vars.product_name %> v1.11.0, CredHub runs on the BOSH VM, alongside the BOSH Director and UAA. Ops Manager v1.11 stores its credentials in CredHub,
+In <%= vars.platform_name %> v1.11.0, CredHub runs on the BOSH VM, alongside the BOSH Director and UAA. Ops Manager v1.11 stores its credentials in CredHub,
 and users can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
-Tile developers can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.product_name %> apps can retrieve credentials using the CredHub API.
+Tile developers can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.platform_name %> apps can retrieve credentials using the CredHub API.
 
 See [Fetching Variable Names and Values](./get-credhub-vars.html) for how to fetch variable names and values using the CredHub API.
 
@@ -71,17 +71,17 @@ Tile developers can embed CredHub in product template and job template manifest 
       password: ((( credhub-password )))
 ```
 
-## <a id="limitations"></a> <%= vars.product_name %> Limitations
+## <a id="limitations"></a> <%= vars.platform_name %> Limitations
 
-<%= vars.product_name %> supports CredHub for credential storage, but it does not support the following:
+<%= vars.platform_name %> supports CredHub for credential storage, but it does not support the following:
 
-* Automatic backup and restore for CredHub, along with other <%= vars.product_name %> system components.
+* Automatic backup and restore for CredHub, along with other <%= vars.platform_name %> system components.
 
 * Automatic tile [upgrades](./tile-upgrades.html) that migrate all types of credentials defined in [property blueprints](./property-template-references.html#property-blueprints) in previous tile versions, to storage in CredHub.
 
 * Using CredHub to generate new credentials.
 
-Tile authors may choose to wait until <%= vars.product_name %> supports some or all of these features before incorporating CredHub into their service.
+Tile authors may choose to wait until <%= vars.platform_name %> supports some or all of these features before incorporating CredHub into their service.
 
 ## <a id="resources"></a> CredHub Resources
 

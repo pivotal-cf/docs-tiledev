@@ -6,7 +6,7 @@ owner: Services
 
 <% current_page.data.title = vars.product_name_lc + " Command Line Utility" %>
 
-The `<%= vars.product_name_lc %>` utility provides a command line interface to <%= vars.product_name %> for
+The `<%= vars.product_name_lc %>` utility provides a command line interface to <%= vars.platform_name %> for
 the purpose of deploying and testing tiles. Its primary reason for existence is
 to enable Ops Manager access from CI pipelines, but developers also find it
 convenient to use this CLI rather than the Ops manager GUI.
@@ -36,7 +36,7 @@ opsmgr:
 ```
 
 The reason for this file naming is because this is how Concourse passes
-credentials of a "claimed" <%= vars.product_name %> pool resource to the CI pipeline scripts.
+credentials of a "claimed" <%= vars.platform_name %> pool resource to the CI pipeline scripts.
 For interactive use, this means that you will have to create a `metadata`
 file in the directory where you run the `<%= vars.product_name_lc %>` command.
 
@@ -156,7 +156,7 @@ username: SpongeBob
 password: { 'secret': Square'Pants }
 app2:
   persistence_store_type: none
-# In <%= vars.product_name %> (formerly PCF) 1.8+, BOSH-job-specific configuration is supported:
+# In <%= vars.platform_name %> (formerly PCF) 1.8+, BOSH-job-specific configuration is supported:
 jobs:
   a_job:
     # Job resource configuration:
@@ -220,7 +220,7 @@ $ <%= vars.product_name_lc %> delete-unused-products
 
 ##<a id="access-ert"></a> Accessing PAS
 
-To see details about the Pivotal Application Service of your <%= vars.product_name %> environment:
+To see details about the Pivotal Application Service of your <%= vars.platform_name %> environment:
 
 ```bash
 $ <%= vars.product_name_lc %> cf-info
@@ -232,7 +232,7 @@ $ <%= vars.product_name_lc %> cf-info
 - system_services_username: system_services
 ```
 
-To target your `cf` command line at this <%= vars.product_name %> environment:
+To target your `cf` command line at this <%= vars.platform_name %> environment:
 
 ```bash
 $ <%= vars.product_name_lc %> target

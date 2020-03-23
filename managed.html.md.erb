@@ -4,17 +4,17 @@ owner: Services
 ---
 
 
-The topics in this subsection explain how to integrate your [brokered service](./brokered.html) more closely with <%= vars.product_name %> to create a managed service and service tile for <%= vars.product_name %>.
+The topics in this subsection explain how to integrate your [brokered service](./brokered.html) more closely with <%= vars.platform_name %> to create a managed service and service tile for <%= vars.product_name %>.
 
 ## <a id="overview"></a> Overview
 
-The next level of integration is to get your service to be deployed on <%= vars.product_name %> rather
+The next level of integration is to get your service to be deployed on <%= vars.platform_name %> rather
 than externally, on the same IaaS that your particular Cloud Foundry instance
 is deployed on, and by the same orchestration tool, [BOSH](http://bosh.io).
 
-This is usually one of the more involved integrations, as you will have to change your packaging to allow your service components to be deployed by [BOSH](http://bosh.io) onto the <%= vars.product_name %> infrastructure.
+This is usually one of the more involved integrations, as you will have to change your packaging to allow your service components to be deployed by [BOSH](http://bosh.io) onto the <%= vars.platform_name %> infrastructure.
 
-Offering your software as a managed service means that your <%= vars.product_name %> customers
+Offering your software as a managed service means that your <%= vars.platform_name %> customers
 will not have to learn different ways to deploy, manage, and monitor
 different components of their application platform.
 
@@ -48,6 +48,6 @@ your persistent storage across those as well.
 
 * Once you have created a BOSH release for your managed service integration, you can work through [Building Your First Tile](./index.html#tile-steps) to create your tile.
 
-* The [Tile Generator](./tile-generator.html) tool automatically creates the lifecycle errands that can run after a <%= vars.product_name %> tile is deployed or before it is removed. <%= vars.product_name %> operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.product_name %> operators control when errands run, and how to set default errand run rules in the tile.
+* The [Tile Generator](./tile-generator.html) tool automatically creates the lifecycle errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. <%= vars.platform_name %> operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.platform_name %> operators control when errands run, and how to set default errand run rules in the tile.
 
 At any level of integration, Pivotal recommends and supports using [Concourse](./concourse.html) for continuous integration during development.

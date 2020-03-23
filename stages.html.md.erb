@@ -6,7 +6,7 @@ owner: Services
 
 ## <a id="levels"></a> Integration Levels
 
-A service can integrate with <%= vars.product_name %> at four levels, shown here in order of increasing
+A service can integrate with <%= vars.platform_name %> at four levels, shown here in order of increasing
 integration. In general, user-experience and production-readiness improves as the
 integration level increases. But none of the higher levels is required. You can
 stop service integration and declare it complete (enough) after any of these:
@@ -24,7 +24,7 @@ staged integration approach is often possible and desirable.
 
 ## <a id="ups"></a> Level 1. User-Provided Service
 
-The service runs external to <%= vars.product_name %> and has no service broker or tile. To use a service
+The service runs external to <%= vars.platform_name %> and has no service broker or tile. To use a service
 with an app, the developer creates a service broker by running
 `cf create-user-provided-service` from the Cloud Foundry Command-Line Interface
 (cf CLI).
@@ -50,7 +50,7 @@ service tiles and how to create them.
 ## <a id="managed"></a> Level 3. Managed Service
 
 With a managed service, both the service broker and the service itself run within
-<%= vars.product_name %>. This enables <%= vars.product_name %> to manage, monitor, and increase service performance.
+<%= vars.product_name %>. This enables <%= vars.platform_name %> to manage, monitor, and increase service performance.
 
 As with the brokered service, the service has a service broker and a tile listed
 on Pivotal Network. Pivotal Network lists managed services as "for <%= vars.product_name %>," without

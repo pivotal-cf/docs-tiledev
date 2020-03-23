@@ -19,10 +19,10 @@ There are two ways to do CI testing on your tile:
 ## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
 
 With your tile in our Tile Dashboard CI testing system, we all win.
-You stay on top of changes to <%= vars.product_name %> that may require changes in your tile.
-Our field representatives gain a clear understanding of your tile’s compatibility across <%= vars.product_name %> versions,
+You stay on top of changes to <%= vars.platform_name %> that may require changes in your tile.
+Our field representatives gain a clear understanding of your tile’s compatibility across <%= vars.platform_name %> versions,
 underlying IaaS, and different flavors of environments.
-This also relieves you from maintaining your own CI system, keeping up with latest <%= vars.product_name %> versions, etc.
+This also relieves you from maintaining your own CI system, keeping up with latest <%= vars.platform_name %> versions, etc.
 
 The Tile Dashboard CI is part of our Enterprise Readiness criteria
 which is used to inform the field of the quality and capabilities of your tile,
@@ -41,7 +41,7 @@ The Tile Dashboard CI runs your tile through a series of steps, which include:
   - Use of properties whose values/meanings have changed.
   - Use of features that are no longer supported.
 
-3. Configuring, installing, testing, and uninstalling your tile in several <%= vars.product_name %> environments:
+3. Configuring, installing, testing, and uninstalling your tile in several <%= vars.platform_name %> environments:
   - A patch release of every supported Pivotal Application Service minor version.
   - Every supported IaaS
   - Environments with extra configuration, such as multiple availability zones and IPsec
@@ -231,7 +231,7 @@ contact us on [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
 
 ### <a id="backing"></a> About Backing Services
 
-Your tile might require a backing service outside of the existing <%= vars.product_name %> environment,
+Your tile might require a backing service outside of the existing <%= vars.platform_name %> environment,
 for example, your tile might be a service broker to a SaaS offering.
 
 You are responsible for maintaining the backing service in an environment
@@ -274,13 +274,13 @@ Concourse server. [Tile Generator](tile-generator.html) contains a sample
 pipeline that you can clone for your own tile. We are working on automating
 the process of generating a pipeline template for you.
 
-### <a id="pool"></a> Set Up <%= vars.product_name %> for Your CI Pipeline
+### <a id="pool"></a> Set Up <%= vars.platform_name %> for Your CI Pipeline
 
 Pivotal partners who have us host their pipeline have access to a pool of <%= vars.product_name %>
 instances that are managed by us and are regularly updated with the latest
 (pre-)release versions of <%= vars.product_name %>. If you set up your own concourse server, you
-have to target your pipeline at a [<%= vars.product_name %> instance you have setup](./environments.html).
+have to target your pipeline at a [<%= vars.platform_name %> instance you have setup](./environments.html).
 
 Concourse has a resource type to manage a pool of resources that are shared
-between pipelines, which is what we use to serialize <%= vars.product_name %> access between the
+between pipelines, which is what we use to serialize <%= vars.platform_name %> access between the
 partner pipelines that run on our concourse server.

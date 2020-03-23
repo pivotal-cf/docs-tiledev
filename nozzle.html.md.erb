@@ -4,13 +4,13 @@ owner: Services
 ---
 
 
-This topic explains how to integrate <%= vars.product_name %> services with Cloud Foundry's logging system, _Loggregator_, by writing to and reading from its _Firehose_ endpoint.
+This topic explains how to integrate <%= vars.platform_name %> services with Cloud Foundry's logging system, _Loggregator_, by writing to and reading from its _Firehose_ endpoint.
 
 ## <a id="overview"></a> Overview
 
-Cloud Foundry's Loggregator logging system collects logs and metrics from <%= vars.product_name %> apps and platform components and streams them to a single endpoint, Firehose. Your tile can integrate its service with Loggregator in two ways:
+Cloud Foundry's Loggregator logging system collects logs and metrics from <%= vars.platform_name %> apps and platform components and streams them to a single endpoint, Firehose. Your tile can integrate its service with Loggregator in two ways:
 
-* By sending your service component logs and metrics to the Firehose, to be streamed along with <%= vars.product_name %> core platform component logs and metrics
+* By sending your service component logs and metrics to the Firehose, to be streamed along with <%= vars.platform_name %> core platform component logs and metrics
 
 * By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or apps -- a built-in nozzle can enable a service to:
   - Drain metrics to an external dashboard product for system operators
@@ -22,9 +22,9 @@ For a real world production example of a nozzle see [Firehose-to-syslog](https:/
 
 ## <a id="firehose"></a> Firehose Communication
 
-<%= vars.product_name %> components publish logs and metrics to the Firehose through Loggregator agent processes that run locally on the component VMs. Loggregator agents input the data to the Loggregator system through a co-located Loggregator agent. To see how logs and metrics travel from <%= vars.product_name %> system components to the Firehose, see the [Cloud Foundry documentation](https://docs.cloudfoundry.org/loggregator/architecture.html).
+<%= vars.platform_name %> components publish logs and metrics to the Firehose through Loggregator agent processes that run locally on the component VMs. Loggregator agents input the data to the Loggregator system through a co-located Loggregator agent. To see how logs and metrics travel from <%= vars.platform_name %> system components to the Firehose, see the [Cloud Foundry documentation](https://docs.cloudfoundry.org/loggregator/architecture.html).
 
-Component VMs running <%= vars.product_name %> services can publish logs and metrics the same way, by including the same component, Loggregator Agent. Historically, components used Metron for this communication.
+Component VMs running <%= vars.platform_name %> services can publish logs and metrics the same way, by including the same component, Loggregator Agent. Historically, components used Metron for this communication.
 
 ### <a id="https"></a> HTTPS Protocol
 
@@ -197,7 +197,7 @@ has source code based on `firehose-to-syslog` and is packaged to run an app on <
 * [datadog-firehose-nozzle](https://github.com/DataDog/datadog-firehose-nozzle) is
 another real world implementation.
 
-## <a id="syslog-format-pcf"></a> Log Format for <%= vars.product_name %> Components
+## <a id="syslog-format-pcf"></a> Log Format for <%= vars.platform_name %> Components
 
 Pivotal's standard log format adheres to the [RFC-5424 syslog protocol](https://tools.ietf.org/html/rfc5424), with log messages formatted as follows:
 
@@ -207,7 +207,7 @@ The [Syslog Message Elements table](#syslog-elements) immediately below describe
 
 ### <a id="syslog-elements"></a> Syslog Message Elements
 
-This table describes each element of a standard <%= vars.product_name %> syslog message.
+This table describes each element of a standard <%= vars.platform_name %> syslog message.
 
 <table id='syslog-elements-table' border="1" class="nice" >
   <tr>
@@ -244,7 +244,7 @@ This table describes each element of a standard <%= vars.product_name %> syslog 
     <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log message. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
   </tr><tr>
     <td><code>${SD-ELEMENT-instance}</code></td>
-    <td>Structured data (SD) relevant to <%= vars.product_name %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log message. See the <a href="#sd-element">Structured Instance Data Format table</a> below for content and format.</td>
+    <td>Structured data (SD) relevant to <%= vars.platform_name %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log message. See the <a href="#sd-element">Structured Instance Data Format table</a> below for content and format.</td>
   </tr><tr>
     <td><code>${MESSAGE}</code></td>
     <td>The log message itself, ideally in JSON</td>
@@ -253,7 +253,7 @@ This table describes each element of a standard <%= vars.product_name %> syslog 
 
 ### <a id="severity"></a> RFC-5424 Severity Codes
 
-<%= vars.product_name %> components generate log messages with the following severity levels. The most common severity level is `13`.
+<%= vars.platform_name %> components generate log messages with the following severity levels. The most common severity level is `13`.
 
 <table id='severity-table' border="1" class="nice" >
   <tr>

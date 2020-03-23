@@ -4,11 +4,11 @@ owner: Services
 ---
 
 
-This topic explains how to set up tile development environments, from simple standalone tools to a full <%= vars.product_name %> development environment. As you progress through the [stages](./stages.html) of tile development, you will likely also progress through these environments.
+This topic explains how to set up tile development environments, from simple standalone tools to a full <%= vars.platform_name %> development environment. As you progress through the [stages](./stages.html) of tile development, you will likely also progress through these environments.
 
 ## <a id="pcfdev"></a> <%= vars.product_dev_local %> and BOSH-Lite
 
-Pivotal provides a lightweight (vagrant packaged) instance of <%= vars.product_name %> with some
+Pivotal provides a lightweight (vagrant packaged) instance of <%= vars.platform_name %> with some
 basic services as a free product named <%= vars.product_dev_local %>. This is a great environment
 to develop and test everything that runs in Pivotal Application Service.
 
@@ -21,7 +21,7 @@ purpose.
 
 Between these two components, you will have everything you need to develop
 tiles, except for Pivotal's Ops Manager. But if you followed the recommended workflow in [Building Your First Tile](./index.html#tile-steps) you will not need an actual full
-<%= vars.product_name %> environment until the later phases of your development.
+<%= vars.platform_name %> environment until the later phases of your development.
 
 ### <a id="setup-boshlite"></a>Setting up BOSH-Lite
 
@@ -31,20 +31,20 @@ tiles, except for Pivotal's Ops Manager. But if you followed the recommended wor
 
 ### <a id="setup-pcfdev"></a>Setting up <%= vars.product_dev_local %>
 
-- [Try <%= vars.product_name %> on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
+- [Try <%= vars.platform_name %> on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
 
 
 ## <a id="pws"></a>PWS or Other Supported CF Infrastructure
 
-Pivotal Web Services (PWS) is a highly-available, production-scale <%= vars.product_name %> environment hosted by Pivotal. You can use it to develop and run <%= vars.product_name %> apps, but a PWS account does not give access to Ops Manager and its Installation Dashboard, which is where <%= vars.product_name %> operators install and configure tiles.
+Pivotal Web Services (PWS) is a highly-available, production-scale <%= vars.platform_name %> environment hosted by Pivotal. You can use it to develop and run <%= vars.platform_name %> apps, but a PWS account does not give access to Ops Manager and its Installation Dashboard, which is where <%= vars.platform_name %> operators install and configure tiles.
 
 - [Set Up Your PWS Account and Download the cf CLI](http://docs.run.pivotal.io/starting/index.html) explains how to get started with Pivotal Web Services (PWS).
 
-## <a id="pcf"></a><%= vars.product_name %> with Ops Manager
+## <a id="pcf"></a><%= vars.platform_name %> with Ops Manager
 
-### <a id="shared"></a>Shared <%= vars.product_name %> Development Environments for Pivotal Partners
+### <a id="shared"></a>Shared <%= vars.platform_name %> Development Environments for Pivotal Partners
 
-Pivotal operates and manages a number of shared <%= vars.product_name %> development environments,
+Pivotal operates and manages a number of shared <%= vars.platform_name %> development environments,
 called Pivotal Integration Environments (PIEs),
 for Pivotal Technical Partnership Program (PTPP) program members to develop their tiles on.
 
@@ -58,9 +58,9 @@ using the credentials that you use for [Pivotal Partners Slack](https://pivotalp
 
 If you are not in the PTPP or cannot access Pivotal Partners Slack, email isv@pivotal.io.
 
-### <a id="diy"></a>Install Your Own <%= vars.product_name %> Environment
+### <a id="diy"></a>Install Your Own <%= vars.platform_name %> Environment
 
-If you need an isolated or dedicated <%= vars.product_name %> development environment, or you need to work offline, you can install your own environment that includes Pivotal's Ops Manager:
+If you need an isolated or dedicated <%= vars.platform_name %> development environment, or you need to work offline, you can install your own environment that includes Pivotal's Ops Manager:
 
 - [Installing <%= vars.product_name %>](http://docs.pivotal.io/pivotalcf/installing/index.html)
 <a name="operations"></a>
@@ -68,4 +68,4 @@ If you need an isolated or dedicated <%= vars.product_name %> development enviro
 <a name="upgrade"></a>
 - [Upgrading <%= vars.product_name %>](http://docs.pivotal.io/pivotalcf/customizing/upgrading-pcf.html)
 
-The PTPP program does not troubleshoot partner installations of <%= vars.product_name %> development environments.
+The PTPP program does not troubleshoot partner installations of <%= vars.platform_name %> development environments.

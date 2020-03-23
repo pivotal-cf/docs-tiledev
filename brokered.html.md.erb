@@ -4,11 +4,11 @@ owner: Services
 ---
 
 
-The topics in this subsection explain how to integrate your software service with <%= vars.product_name %> to create a brokered service and service tile for <%= vars.product_name %>.
+The topics in this subsection explain how to integrate your software service with <%= vars.platform_name %> to create a brokered service and service tile for <%= vars.product_name %>.
 
 ## <a id="overview"></a> Overview
 
-You can achieve the first real improvement in your <%= vars.product_name %> customers user experience by creating a [Service Broker](service-brokers.html) for your service.
+You can achieve the first real improvement in your <%= vars.platform_name %> customers user experience by creating a [Service Broker](service-brokers.html) for your service.
 
 A brokered service runs external to <%= vars.product_name %>, but it has a tile on [Pivotal Network](http://network.pivotal.io) (PivNet). Operators install, configure, and upgrade the tile through the Ops Manager Installation Dashboard.
 
@@ -24,7 +24,7 @@ a good way to publish a first tile that adds real value for customers who have b
 * A brokered service requires a service broker, which publishes an API to the Cloud Controller.  
 [Service Brokers](./service-brokers.html) explains how to create one. 
 
-* [Route Services](./service-brokers.html#route) explains how to create a route service, for use in the routing layer of <%= vars.product_name %> rather than by hosted <%= vars.product_name %> apps.
+* [Route Services](./service-brokers.html#route) explains how to create a route service, for use in the routing layer of <%= vars.platform_name %> rather than by hosted <%= vars.platform_name %> apps.
 
 * [Catalog](./service-brokers.html#catalog) explains how to design the part of your service broker API that publishes service plan information to the Services Marketplace.
 

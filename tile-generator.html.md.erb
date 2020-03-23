@@ -44,12 +44,12 @@ combination of the following package types:
 
 ### <a id="legacy"></a> Legacy Tiles and OSS-Compatible Service Brokers
 
-Many tile authors, in both Pivotal-internal teams and at external partner companies, built their <%= vars.product_name %> tiles before Tile Generator existed.
+Many tile authors, in both Pivotal-internal teams and at external partner companies, built their <%= vars.platform_name %> tiles before Tile Generator existed.
 
-Many other tile authors serve two markets with their service integrations, offering both a Cloud Foundry-compatible service broker to open-source users and corresponding <%= vars.product_name %> tile for <%= vars.product_name %> users.
+Many other tile authors serve two markets with their service integrations, offering both a Cloud Foundry-compatible service broker to open-source users and corresponding <%= vars.platform_name %> tile for <%= vars.platform_name %> users.
 They want to continue serving both sets of users.
 
-All of these tile authors can now use Tile Generator to simplify and speed up their development. Tile Generator can generate an OSS-compatible BOSH release service broker BOSH release in addition to a PivNet-ready <%= vars.product_name %> tile.
+All of these tile authors can now use Tile Generator to simplify and speed up their development. Tile Generator can generate an OSS-compatible BOSH release service broker BOSH release in addition to a PivNet-ready <%= vars.platform_name %> tile.
 
 
 ## <a id="screencast"></a> Screencast
@@ -517,7 +517,7 @@ To expose a container via
 for example, one of the Docker containers hosts an admin webapp interface,
 use `routes` to choose a port and prefix. The external URL
 is `[prefix]-[package.name].[system-domain]`.
-In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sys.example.com` is the <%= vars.product_name %> system domain.
+In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sys.example.com` is the <%= vars.platform_name %> system domain.
 `routes` is a list, so multiple containers can be exposed.
 
 ```
@@ -675,7 +675,7 @@ requires_product_versions:
   version: '~> 1.7'
 ```
 
-If the required product is not present in the <%= vars.product_name %> installation, Ops Manager
+If the required product is not present in the <%= vars.platform_name %> installation, Ops Manager
 displays a message saying
 `<your-tile> requires 'p-mysql' version '~> 1.7' as a dependency` and
 refuses to install your tile until that dependency is satisfied.

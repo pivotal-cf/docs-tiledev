@@ -29,7 +29,7 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 * **Runtime configs:** Specifies the manifest for any number of global deployment configurations.
 
-Examples in this topic that refer to the product template use the [<%= vars.product_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
+Examples in this topic that refer to the product template use the [<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
 
 For more information about product template configuration, see [Top-Level Properties](#top-level).
 
@@ -438,7 +438,7 @@ additional_stemcells_criteria:
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of tile dependencies. If the required tile is not present in the <%= vars.product_name %> installation, Ops Manager lists the needed dependencies and does not install your tile until the dependencies are satisfied.
+A list of tile dependencies. If the required tile is not present in the <%= vars.platform_name %> installation, Ops Manager lists the needed dependencies and does not install your tile until the dependencies are satisfied.
 
 Supported restriction operators are `=`, `!=`, `>`, `<`, `>=`, `<=`, and `~>`.
 
