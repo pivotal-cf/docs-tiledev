@@ -78,7 +78,7 @@ The following are general recommendations for designing and running tests on <%=
 * Design test suites for re-usability by making them highly parameterizable. Important parameters include:
   - External settings such as domains, creds, and certs
   - Plans to test against.
-    For example, the [Redis for <%= vars.product_name %>](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
+    For example, the [Redis for <%= vars.platform_name %>](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
     for two different service plans, pre-provisioned and on-demand.
   - Timeouts, numbers of retries, and other things that you need to adjust for different environments
   - Switches to include or exclude portions of the tests such as generating metrics or backups

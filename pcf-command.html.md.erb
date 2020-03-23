@@ -4,26 +4,26 @@ owner: Services
 ---
 
 
-<% current_page.data.title = vars.product_name_lc + " Command Line Utility" %>
+<% current_page.data.title = vars.platform_name_lc + " Command Line Utility" %>
 
-The `<%= vars.product_name_lc %>` utility provides a command line interface to <%= vars.platform_name %> for
+The `<%= vars.platform_name_lc %>` utility provides a command line interface to <%= vars.platform_name %> for
 the purpose of deploying and testing tiles. Its primary reason for existence is
 to enable Ops Manager access from CI pipelines, but developers also find it
 convenient to use this CLI rather than the Ops manager GUI.
 
-The `<%= vars.product_name_lc %>` utility also allows you to test your tile's BOSH errands
+The `<%= vars.platform_name_lc %>` utility also allows you to test your tile's BOSH errands
 directly from your CLI, without going through Ops Manager and BOSH. This greatly
 reduces the time it takes to deploy/test each iteration of your software components.
 
 ##<a id="install"></a> Installation
 
-The `<%= vars.product_name_lc %>` utility comes bundled with the Tile Generator tool. To
-install the `<%= vars.product_name_lc %>` utility, follow the
+The `<%= vars.platform_name_lc %>` utility comes bundled with the Tile Generator tool. To
+install the `<%= vars.platform_name_lc %>` utility, follow the
 [Tile Generator installation instructions](tile-generator.html#how-to).
 
 ##<a id="auth"></a> Authentication
 
-The `<%= vars.product_name_lc %>` utility looks for a file called `metadata` in the current directory.
+The `<%= vars.platform_name_lc %>` utility looks for a file called `metadata` in the current directory.
 This file is expected to provide the URL and credentials to connect to
 Ops Manager, in the following format:
 
@@ -38,17 +38,17 @@ opsmgr:
 The reason for this file naming is because this is how Concourse passes
 credentials of a "claimed" <%= vars.platform_name %> pool resource to the CI pipeline scripts.
 For interactive use, this means that you will have to create a `metadata`
-file in the directory where you run the `<%= vars.product_name_lc %>` command.
+file in the directory where you run the `<%= vars.platform_name_lc %>` command.
 
 <p class='note'>Pivotal recommends that you do <strong>not</strong> create this file inside your git or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
 
 ##<a id="commands"></a> Commands
 
-The `<%= vars.product_name_lc %>` utility implements many different commands. To see available commands:
+The `<%= vars.platform_name_lc %>` utility implements many different commands. To see available commands:
 
 ```bash
-$ <%= vars.product_name_lc %> --help
-Usage: <%= vars.product_name_lc %> [OPTIONS] COMMAND [ARGS]...
+$ <%= vars.platform_name_lc %> --help
+Usage: <%= vars.platform_name_lc %> [OPTIONS] COMMAND [ARGS]...
 
 Options:
   --help  Show this message and exit.
@@ -76,7 +76,7 @@ Commands:
 To see which products are currently available and installed in Ops Manager:
 
 ```bash
-$ <%= vars.product_name_lc %> products
+$ <%= vars.platform_name_lc %> products
 - p-bosh 1.7.0.0 (installed)
 - cf 1.7.0-build.258 (installed)
 - test-tile 0.3.95
@@ -85,14 +85,14 @@ $ <%= vars.product_name_lc %> products
 To test if a specific product is available or installed from within a script:
 
 ```bash
-$ <%= vars.product_name_lc %> is-available test-tile && echo "Product test-tile is available"
-$ <%= vars.product_name_lc %> is-installed test-tile && echo "Product test-tile is installed"
+$ <%= vars.platform_name_lc %> is-available test-tile && echo "Product test-tile is available"
+$ <%= vars.platform_name_lc %> is-installed test-tile && echo "Product test-tile is installed"
 ```
 
 You can retrieve the settings for a specific product (this will give you a *lot* of json):
 
 ```bash
-$ <%= vars.product_name_lc %> settings test-tile
+$ <%= vars.platform_name_lc %> settings test-tile
 {
     "network_reference": "669e213111ab5aa1008a",
     "guid": "test-tile-be3e50cf26c530acca6e",
@@ -125,13 +125,13 @@ normally do through the Ops Manager GUI.
 Import your .pivotal file into Ops Manager:
 
 ```bash
-$ <%= vars.product_name_lc %> import sample/product/test-tile-0.0.2.pivotal
+$ <%= vars.platform_name_lc %> import sample/product/test-tile-0.0.2.pivotal
 ```
 
 Install the uploaded version of your product:
 
 ```bash
-$ <%= vars.product_name_lc %> install test-tile 0.0.2
+$ <%= vars.platform_name_lc %> install test-tile 0.0.2
 ```
 
 Where you would normally configure the tile settings in the GUI, the `configure`
@@ -140,7 +140,7 @@ also sets the stemcell for the tile to the same one used by Pivotal Application 
 to avoid the need to upload a tile-specific stemcell.
 
 ```bash
-$ <%= vars.product_name_lc %> configure test-tile sample/missing-properties.yml
+$ <%= vars.platform_name_lc %> configure test-tile sample/missing-properties.yml
 - Using stemcell bosh-vsphere-esxi-ubuntu-trusty-go_agent version 3215
 ```
 
@@ -168,13 +168,13 @@ jobs:
 ```
 
 You must define any `secret` type property value as a hash, in curly brackets. Specifying a simple
-string value for a field of this type results in a `500 System Error` being returned from `<%= vars.product_name_lc %> configure`.
+string value for a field of this type results in a `500 System Error` being returned from `<%= vars.platform_name_lc %> configure`.
 The `secret` type property values can contain special characters.
 
 To see what changes are ready to be applied:
 
 ```bash
-$ <%= vars.product_name_lc %> changes
+$ <%= vars.platform_name_lc %> changes
 install: test-tile-207b165fcb7dc8b2597b
 delete:
 ```
@@ -182,7 +182,7 @@ delete:
 To apply these changes:
 
 ```bash
-$ <%= vars.product_name_lc %> apply-changes
+$ <%= vars.platform_name_lc %> apply-changes
   ===== 2016-04-21 18:45:05 UTC Running "bosh-init deploy /var/tempest/workspaces/default/deployments/bosh.yml"
   Deployment manifest: '/var/tempest/workspaces/default/deployments/bosh.yml'
   Deployment state: '/var/tempest/workspaces/default/deployments/bosh-state.json'
@@ -195,12 +195,12 @@ $ <%= vars.product_name_lc %> apply-changes
     Validating deployment manifest... Finished (00:00:00)
 ```
 
-`<%= vars.product_name_lc %> apply-changes` automatically tails the logs for the installation process
+`<%= vars.platform_name_lc %> apply-changes` automatically tails the logs for the installation process
 it started. If this gets aborted for any reason, you can always tail the logs
 of the most recent installation:
 
 ```bash
-$ <%= vars.product_name_lc %> logs
+$ <%= vars.platform_name_lc %> logs
 ```
 
 ##<a id="remove"></a> Removing Tiles
@@ -208,14 +208,14 @@ $ <%= vars.product_name_lc %> logs
 To uninstall a tile:
 
 ```bash
-$ <%= vars.product_name_lc %> uninstall test-tile
+$ <%= vars.platform_name_lc %> uninstall test-tile
 ```
 
 If you accumulate a lot of uninstalled tiles or old versions, you can clean
 up Ops Manager's available products (and disk space):
 
 ```bash
-$ <%= vars.product_name_lc %> delete-unused-products
+$ <%= vars.platform_name_lc %> delete-unused-products
 ```
 
 ##<a id="access-ert"></a> Accessing PAS
@@ -223,7 +223,7 @@ $ <%= vars.product_name_lc %> delete-unused-products
 To see details about the Pivotal Application Service of your <%= vars.platform_name %> environment:
 
 ```bash
-$ <%= vars.product_name_lc %> cf-info
+$ <%= vars.platform_name_lc %> cf-info
 - admin_password: <redacted>
 - admin_username: admin
 - apps_domain: cfapps-04.example.com
@@ -235,7 +235,7 @@ $ <%= vars.product_name_lc %> cf-info
 To target your `cf` command line at this <%= vars.platform_name %> environment:
 
 ```bash
-$ <%= vars.product_name_lc %> target
+$ <%= vars.platform_name_lc %> target
 Setting api endpoint to api.example.com...
 OK
 

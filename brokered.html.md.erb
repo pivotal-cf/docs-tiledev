@@ -4,20 +4,20 @@ owner: Services
 ---
 
 
-The topics in this subsection explain how to integrate your software service with <%= vars.platform_name %> to create a brokered service and service tile for <%= vars.product_name %>.
+The topics in this subsection explain how to integrate your software service with <%= vars.platform_name %> to create a brokered service and service tile for <%= vars.platform_name %>.
 
 ## <a id="overview"></a> Overview
 
 You can achieve the first real improvement in your <%= vars.platform_name %> customers user experience by creating a [Service Broker](service-brokers.html) for your service.
 
-A brokered service runs external to <%= vars.product_name %>, but it has a tile on [Pivotal Network](http://network.pivotal.io) (PivNet). Operators install, configure, and upgrade the tile through the Ops Manager Installation Dashboard.
+A brokered service runs external to <%= vars.platform_name %>, but it has a tile on [Pivotal Network](http://network.pivotal.io) (PivNet). Operators install, configure, and upgrade the tile through the Ops Manager Installation Dashboard.
 
 The service broker eliminates the need for your customers to know the URLs and
 credentials for your services; they are managed automatically by the
 broker.
 
 Building a broker for a (still) externally deployed service is generally
-a good way to publish a first tile that adds real value for customers who have both your software and <%= vars.product_name %>.
+a good way to publish a first tile that adds real value for customers who have both your software and <%= vars.platform_name %>.
 
 ## <a id="create"></a> Create a Brokered Service
 
@@ -29,7 +29,7 @@ a good way to publish a first tile that adds real value for customers who have b
 * [Catalog](./service-brokers.html#catalog) explains how to design the part of your service broker API that publishes service plan information to the Services Marketplace.
 
 * You can write your service broker in the language of your choice.  
-[Buildpacks](./buildpacks.html) explains how to create a language-specific buildpack that compiles and packages your service broker to run on <%= vars.product_name %>.
+[Buildpacks](./buildpacks.html) explains how to create a language-specific buildpack that compiles and packages your service broker to run on <%= vars.platform_name %>.
 
 * Once you have the individual components for your brokered service integration, you can work through  [Building Your First Tile](./index.html#tile-steps) to create your tile.
 

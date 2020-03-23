@@ -244,7 +244,7 @@ uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner pro
 to work with every new release of the platform.
 
 With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline
-that integrates and tests your tile on your own deployment of the latest <%= vars.product_name %>.
+that integrates and tests your tile on your own deployment of the latest <%= vars.platform_name %>.
 
 While you are of course also free to use any other CI system you are familiar with,
 Pivotal's tools and documentation are built to make Concourse CI as easy as possible.
@@ -265,9 +265,9 @@ see the instructions [Concourse: Setup & Operations](https://concourse-ci.org/se
 A typical CI pipeline for a tile consists of the following jobs:
 
 - Build the tile
-- Deploy it to <%= vars.product_name %>
+- Deploy it to <%= vars.platform_name %>
 - Run a set of deployment tests to verify that it deployed and works correctly
-- Remove it from <%= vars.product_name %>
+- Remove it from <%= vars.platform_name %>
 
 You describe this pipeline in a `pipeline.yml` file that is then uploaded to the
 Concourse server. [Tile Generator](tile-generator.html) contains a sample
@@ -276,9 +276,9 @@ the process of generating a pipeline template for you.
 
 ### <a id="pool"></a> Set Up <%= vars.platform_name %> for Your CI Pipeline
 
-Pivotal partners who have us host their pipeline have access to a pool of <%= vars.product_name %>
+Pivotal partners who have us host their pipeline have access to a pool of <%= vars.platform_name %>
 instances that are managed by us and are regularly updated with the latest
-(pre-)release versions of <%= vars.product_name %>. If you set up your own concourse server, you
+(pre-)release versions of <%= vars.platform_name %>. If you set up your own concourse server, you
 have to target your pipeline at a [<%= vars.platform_name %> instance you have setup](./environments.html).
 
 Concourse has a resource type to manage a pool of resources that are shared

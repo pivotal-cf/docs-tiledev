@@ -34,9 +34,9 @@ up to the developer.
 
 ## <a id="broker"></a> Level 2. Brokered Service
 
-A brokered service runs external to <%= vars.product_name %>, but has a tile on [Pivotal Network](http://network.pivotal.io).
+A brokered service runs external to <%= vars.platform_name %>, but has a tile on [Pivotal Network](http://network.pivotal.io).
 
-Pivotal Network designates brokered services by including "Service Broker for <%= vars.product_name %>"
+Pivotal Network designates brokered services by including "Service Broker for <%= vars.platform_name %>"
 in the name.
 
 Operators install, configure, and upgrade the tile through the Ops Manager
@@ -50,10 +50,10 @@ service tiles and how to create them.
 ## <a id="managed"></a> Level 3. Managed Service
 
 With a managed service, both the service broker and the service itself run within
-<%= vars.product_name %>. This enables <%= vars.platform_name %> to manage, monitor, and increase service performance.
+<%= vars.platform_name %>. This enables <%= vars.platform_name %> to manage, monitor, and increase service performance.
 
 As with the brokered service, the service has a service broker and a tile listed
-on Pivotal Network. Pivotal Network lists managed services as "for <%= vars.product_name %>," without
+on Pivotal Network. Pivotal Network lists managed services as "for <%= vars.platform_name %>," without
 "Service Broker" in the name.
 
 When the operator installs the tile, they allocate a block of VMs to run service
@@ -64,7 +64,7 @@ service tiles and how to create them.
 
 ## <a id="dynamic"></a>  Level 4. On-Demand (Dynamic) Service
 
-As with a managed service, an on-demand service and broker both run within <%= vars.product_name %>,
+As with a managed service, an on-demand service and broker both run within <%= vars.platform_name %>,
 and Pivotal Network lists the service tile without "Service Broker" in the name.
 But unlike a managed service, an on-demand service does not limit the number of
 service instance VMs.

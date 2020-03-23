@@ -4,7 +4,7 @@ owner: Services
 ---
 
 
-This topic describes the Tile Generator tool, which helps tile authors develop, package, test, and deploy services and other add-ons to <%= vars.product_name %>.
+This topic describes the Tile Generator tool, which helps tile authors develop, package, test, and deploy services and other add-ons to <%= vars.platform_name %>.
 
 ## <a id="overview"></a> Overview
 
@@ -19,7 +19,7 @@ you to have intimate knowledge of all the tools involved.
 Tile Generator takes your software components and a simple configuration file
 that provides the minimal amount of information to describe and customize your
 tile. It then creates everything that's required to deploy your software into
-<%= vars.product_name %>:
+<%= vars.platform_name %>:
 
 - **BOSH errands** to deploy and delete your software, including blue/green
   deployments for zero-downtime upgrades
@@ -29,9 +29,9 @@ Service (PAS) or open-source Cloud Foundry
   configured, and deployed, including UI forms and automatic upgrades from
   previous versions
 - A **Concourse pipeline configuration** to enable Continuous Integration of
-  your software with the latest versions of <%= vars.product_name %>
+  your software with the latest versions of <%= vars.platform_name %>
 
-Use Tile Generator in combination with the [<%= vars.product_name_lc %> utility](pcf-command.html)
+Use Tile Generator in combination with the [<%= vars.platform_name_lc %> utility](pcf-command.html)
 to enable rapid deploy and test cycles of your software.
 
 The current release of Tile Generator supports tiles that have any
@@ -93,7 +93,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
             source tile-generator-env/bin/activate
             pip install tile-generator
 
-        This puts the `tile` and `<%= vars.product_name_lc %>` commands in your `PATH` when the virtualenv is active.
+        This puts the `tile` and `<%= vars.platform_name_lc %>` commands in your `PATH` when the virtualenv is active.
         To deactivate the virtualenv, run the command `deactivate`.
 
         <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
@@ -123,7 +123,7 @@ release version of the Cloud Foundry CLI.
 
 Tile Generator is also available pre-installed in a Docker image on
 [Docker Hub](https://hub.docker.com/r/cfplatformeng/tile-generator/).
-This image contains the tile-generator `tile` and `<%= vars.product_name_lc %>` commands, the
+This image contains the tile-generator `tile` and `<%= vars.platform_name_lc %>` commands, the
 necessary Python dependencies and the BOSH CLI.
 
 You can use this in Concourse pipelines by specifying it as the base image
