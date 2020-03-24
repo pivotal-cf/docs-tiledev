@@ -4,15 +4,15 @@ owner: Services
 ---
 
 
-This topic explains recommended testing practices for tile developers. 
+This topic explains recommended testing practices for <%= vars.platform_name %> tile developers. 
 
 ## <a id="testing"></a> Tile Testing
 
 Good testing assures tile developers that their product installs and runs properly on diverse platforms
-and assures <%= vars.platform_name %> platform operators that the tile they install can provide its service successfully on their platform.
+and assures platform operators that the tile they install can provide its service successfully on their platform.
 
-Pivotal recommends a pyramid structure for testing, starting with unit tests and stepping up to successively broader and more automated levels of integration.
-Pivotal uses and recommends [Concourse](./concourse.html) for creating build pipelines that follow this test structure.
+<%= vars.company_name %> recommends a pyramid structure for testing, starting with unit tests and stepping up to successively broader and more automated levels of integration.
+<%= vars.company_name %> uses and recommends [Concourse](./concourse.html) for creating build pipelines that follow this test structure.
 Other continuous integration tools should also support a pyramid testing approach.
 
 ### <a id="pyramid"></a> Tile Test Pyramid
@@ -34,7 +34,7 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
       * **Default checks** that confirm "happy path" functionality.
   - Use the Ops Manager API to verify that property blueprints in the tile metadata are correct
     and that they translate correctly to the BOSH manifest that Ops Manager generates.
-  - Use the [Om](https://github.com/pivotal-cf/om) tool to call the Ops Manager API programmatically from Go.
+  - Use the [om](https://github.com/pivotal-cf/om) tool to call the Ops Manager API programmatically from Go.
     Avoid the unsupported opsmgr gem that called the Ops Manager API from Ruby.
   - Confirm manually that the tile wires property blueprints to the expected pane and form controls in the UI.
   - Test your environment using one of the environments described in [Development Environments](./environments.html)

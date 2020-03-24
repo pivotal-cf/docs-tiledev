@@ -4,7 +4,7 @@ owner: Services
 ---
 
 
-The topics in this subsection explain how to integrate your [brokered service](./brokered.html) more closely with <%= vars.platform_name %> to create a managed service and service tile for <%= vars.platform_name %>.
+The topics in this subsection explain how to integrate your [brokered service](./brokered.html) more closely with <%= vars.platform_name %> to create a managed service and service tile for VMware Tanzu.
 
 ## <a id="overview"></a> Overview
 
@@ -18,7 +18,7 @@ Offering your software as a managed service means that your <%= vars.platform_na
 will not have to learn different ways to deploy, manage, and monitor
 different components of their application platform.
 
-As with the brokered service, the service has a service broker and a tile listed on PivNet. PivNet lists managed services as "for <%= vars.platform_name %>," without "Service Broker" in the name.
+As with the brokered service, the service has a service broker and a tile listed on VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMware Tanzu," without "Service Broker" in the name.
 
 To integrate your service at this level, you will have to learn about stemcells, BOSH releases, and manifests. You will also have to decide how your service maps to virtual machines and how persistent storage is managed.
 
@@ -48,6 +48,6 @@ your persistent storage across those as well.
 
 * Once you have created a BOSH release for your managed service integration, you can work through [Building Your First Tile](./index.html#tile-steps) to create your tile.
 
-* The [Tile Generator](./tile-generator.html) tool automatically creates the lifecycle errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. <%= vars.platform_name %> operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.platform_name %> operators control when errands run, and how to set default errand run rules in the tile.
+* The [Tile Generator](./tile-generator.html) tool automatically creates the lifecycle errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. Operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.platform_name %> operators control when errands run, and how to set default errand run rules in the tile.
 
 At any level of integration, Pivotal recommends and supports using [Concourse](./concourse.html) for continuous integration during development.

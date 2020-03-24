@@ -10,7 +10,7 @@ product's availability time. Product teams create errands as part of a product p
 For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands),
 and for more information about errands in <%= vars.platform_name %>, see [Managing Errands in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html).
 
-In Ops Manager 2.0 and later, tile authors can choose to [colocate errands](#colocated) on existing VMs.
+In Ops Manager v2.0 and later, tile authors can choose to [colocate errands](#colocated) on existing VMs.
 When errands are not colocated, BOSH deploys a new VM for each errand defined in the tile metadata.
 Colocated errands can run alongside other jobs or errands on existing VMs in an operator's deployment.
 
@@ -24,7 +24,7 @@ not errands run. Tile authors can [set defaults](./property-template-references.
 
 ## <a id="colocated"></a>Define a Colocated Errand
 
-<p class="note"><strong>Note</strong>: Ops Manager 2.0 and later supports colocated errands.</p>
+<p class="note"><strong>Note</strong>: Ops Manager v2.0 and later supports colocated errands.</p>
 
 Instead of deploying a new VM for each errand, colocated errands run on an existing VM.
 Errands can run alongside other jobs on a VM, and multiple errands can be colocated on the same VM.
@@ -137,7 +137,7 @@ Dashboard or on the service's **Settings** tab **Errands** pane, before installi
 
 ![Example Errand](img/example-errand.png)
 
-For example, Redis has a **Broker Registrar** post-deploy errand that the Pivotal Application Service (PAS)  tile uses
+For example, Redis has a **Broker Registrar** post-deploy errand that the <%= vars.app_runtime_full %> tile uses
 to register its service broker with the Cloud Controller and publish its service plans.
 
 If an operator selects **Off** in dropdown for Redis's **Broker Registrar** errand
@@ -149,14 +149,14 @@ Pre-delete errands run after an operator chooses to delete a product, but before
 finishes deleting it.
 
 Typical pre-delete errands include cleanup of application artifacts and service
-broker de-registration. For example, Pivotal MySQL has a **Broker Deregistrar** pre-delete errand that:
+broker de-registration. For example, MySQL for VMware Tanzu has a **Broker Deregistrar** pre-delete errand that:
 
 * Purges the service offering
 * Purges all service instances
 * Purges all application bindings
 * Deletes the service broker from the Cloud Controller
 
-When an operator chooses to delete the Pivotal MySQL product, Ops Manager first
+When an operator chooses to delete the MySQL for VMware Tanzu product, Ops Manager first
 runs the **Broker Deregistrar** pre-delete errand, then deletes the product.
 
 Pre-delete errands run by default. An operator can prevent a pre-delete errand from running by setting

@@ -7,17 +7,17 @@ owner: Services
 BOSH CredHub is a secure credential management component that runs on the BOSH VM to minimize the surface area where credentials can be compromised.
 This topic provides resources for configuring service tiles to store their internal credentials in BOSH CredHub, instead of encoding them in product template and job template files.
 
-Credentials that service tiles store in BOSH CredHub for their own internal use are distinct from [secure service instance credentials](./ssi-creds-tiledev.html) that Pivotal Application Service (PAS) stores in runtime CredHub to enable PAS apps to securely access services.
+Credentials that service tiles store in BOSH CredHub for their own internal use are distinct from [secure service instance credentials](./ssi-creds-tiledev.html) that <%= vars.app_runtime_full %> stores in runtime CredHub to enable apps to securely access services.
 
 Both BOSH CredHub and runtime CredHub are instances of the CredHub credential management component. See the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html) for more information.
 
 ## <a id="overview"></a> Overview
 
-Many <%= vars.platform_name %> components use credentials to authenticate connections, and <%= vars.platform_name %>  installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
+Many <%= vars.platform_name %> components use credentials to authenticate connections, and <%= vars.platform_name %> installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
 
-In <%= vars.platform_name %> v1.11.0, CredHub runs on the BOSH VM, alongside the BOSH Director and UAA. Ops Manager v1.11 stores its credentials in CredHub,
+In <%= vars.platform_name %> v1.11.0 and later, CredHub runs on the BOSH VM, alongside the BOSH Director and UAA. Ops Manager v1.11 stores its credentials in CredHub,
 and users can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
-Tile developers can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.platform_name %> apps can retrieve credentials using the CredHub API.
+Tile developers can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.app_runtime_abbr %> apps can retrieve credentials using the CredHub API.
 
 See [Fetching Variable Names and Values](./get-credhub-vars.html) for how to fetch variable names and values using the CredHub API.
 
@@ -49,9 +49,7 @@ To migrate existing non-configurable credentials to CredHub, such as blobstore s
 
 For more information, read [Migrating Existing Credentials to CredHub](./migrating-credhub-credentials.html).
 
-[//]: # ( CREDHUB API AND CLI NOT READY YET IN FULL; UNCOMMENT BELOW WHEN READY )
-
-[//]: # ( For more information, see the [CredHub API](https://credhub-api.cfapps.io), the [CredHub CLI GitHub repository](https://github.com/cloudfoundry-incubator/credhub-cli), and the [CredHub Release GitHub repository](https://github.com/pivotal-cf/credhub-release). )
+For more information, see the [CredHub API](https://credhub-api.cfapps.io), the [CredHub CLI GitHub repository](https://github.com/cloudfoundry-incubator/credhub-cli), and the [CredHub Release GitHub repository](https://github.com/pivotal-cf/credhub-release).
 
 ## <a id="api-variables"></a>Fetching Variable Names and Values
 

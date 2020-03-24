@@ -6,13 +6,13 @@ owner: Services
 
 ## <a id="levels"></a> Integration Levels
 
-A service can integrate with <%= vars.platform_name %> at four levels, shown here in order of increasing
+A service can integrate with <%= vars.app_runtime_full %> at four levels, shown here in order of increasing
 integration. In general, user-experience and production-readiness improves as the
 integration level increases. But none of the higher levels is required. You can
 stop service integration and declare it complete (enough) after any of these:
 
 When integrating third-party software with Cloud Foundry, the effort
-typically progresses through increasing levels of integration. Pivotal recommends
+typically progresses through increasing levels of integration. <%= vars.company_name %> recommends
 this staged approach because it enables early feedback on the value and the
 design of the integration, which helps make better decisions about future
 stages.
@@ -24,7 +24,7 @@ staged integration approach is often possible and desirable.
 
 ## <a id="ups"></a> Level 1. User-Provided Service
 
-The service runs external to <%= vars.platform_name %> and has no service broker or tile. To use a service
+The service runs external to <%= vars.app_runtime_abbr %> and has no service broker or tile. To use a service
 with an app, the developer creates a service broker by running
 `cf create-user-provided-service` from the Cloud Foundry Command-Line Interface
 (cf CLI).
@@ -34,10 +34,9 @@ up to the developer.
 
 ## <a id="broker"></a> Level 2. Brokered Service
 
-A brokered service runs external to <%= vars.platform_name %>, but has a tile on [Pivotal Network](http://network.pivotal.io).
+A brokered service runs external to <%= vars.app_runtime_abbr %>, but has a tile on [VMware Tanzu Network](http://network.pivotal.io).
 
-Pivotal Network designates brokered services by including "Service Broker for <%= vars.platform_name %>"
-in the name.
+VMware Tanzu Network designates brokered services by including "Service Broker for VMware Tanzu" in the name.
 
 Operators install, configure, and upgrade the tile through the Ops Manager
 Installation Dashboard. Developers can then see your service plans and create
@@ -50,10 +49,10 @@ service tiles and how to create them.
 ## <a id="managed"></a> Level 3. Managed Service
 
 With a managed service, both the service broker and the service itself run within
-<%= vars.platform_name %>. This enables <%= vars.platform_name %> to manage, monitor, and increase service performance.
+<%= vars.app_runtime_abbr %>. This enables <%= vars.app_runtime_abbr %> to manage, monitor, and increase service performance.
 
 As with the brokered service, the service has a service broker and a tile listed
-on Pivotal Network. Pivotal Network lists managed services as "for <%= vars.platform_name %>," without
+on VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMware Tanzu," without
 "Service Broker" in the name.
 
 When the operator installs the tile, they allocate a block of VMs to run service
@@ -64,8 +63,8 @@ service tiles and how to create them.
 
 ## <a id="dynamic"></a>  Level 4. On-Demand (Dynamic) Service
 
-As with a managed service, an on-demand service and broker both run within <%= vars.platform_name %>,
-and Pivotal Network lists the service tile without "Service Broker" in the name.
+As with a managed service, an on-demand service and broker both run within <%= vars.app_runtime_abbr %>,
+and VMware Tanzu Network lists the service tile without "Service Broker" in the name.
 But unlike a managed service, an on-demand service does not limit the number of
 service instance VMs.
 The operator does not have to pre-allocate and provision VM resources for the
