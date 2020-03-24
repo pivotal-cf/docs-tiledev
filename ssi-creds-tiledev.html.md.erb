@@ -4,13 +4,13 @@ owner: Services
 ---
 
 
-This topic describes how to develop your <%= vars.platform_name %> service tile to support secure service instance (SSI) credentials using Runtime CredHub. For more information about Runtime CredHub, see [Runtime CredHub](https://docs.pivotal.io/pivotalcf/credhub/#runtime) in the _CredHub_ topic.
+This topic describes how to develop your <%= vars.platform_name %> service tile to support secure service instance (SSI) credentials using runtime CredHub. For more information about runtime CredHub, see [Runtime CredHub](https://docs.pivotal.io/pivotalcf/credhub/#runtime).
 
 ## <a id="background"></a> Background
 
 When developers bind an app to a service instance, the binding typically includes _binding credentials_ required to access the service.
 
-In <%= vars.platform_name %> (formerly PCF) and later, service brokers can store binding credentials as SSI credentials in runtime CredHub and apps can retrieve these credentials from CredHub. This secures service instance credential management by avoiding the following:
+In <%= vars.app_runtime_full %>, service brokers can store binding credentials as SSI credentials in runtime CredHub and apps can retrieve these credentials from CredHub. This secures service instance credential management by avoiding the following:
 
 * Leaking environment variables to logs, which increases risk of disclosure.
 * Sending credentials between components, which increases risk of disclosure.
@@ -26,9 +26,9 @@ To store binding credentials in runtime CredHub, your service tile needs to supp
 
 SSI credentials, which let apps access services through service instances, are distinct from the credentials that service tiles store in [BOSH CredHub](./credhub.html) for their own internal use. 
 
-When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when PAS binds an app to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the Cloud Controller (CC) to enable the app to access the service.
+When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when %= vars.app_runtime_abbr %> binds an app to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the Cloud Controller (CC) to enable the app to access the service.
 
-These SSI credentials are different from credentials that the tile uses internally, for example, to give the service broker access to an internal database. PAS generates the internal tile credentials for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
+These SSI credentials are different from credentials that the tile uses internally, for example, to give the service broker access to an internal database. <%= vars.app_runtime_abbr %> generates the internal tile credentials for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
 
 For more information on the CredHub credential management component, see the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html) topic.
 
@@ -36,13 +36,13 @@ The sections below describe an example implementation of how to add SSI credenti
 
 ## <a id="step1"></a> Step 1: Modify Your BOSH Release
 
-To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the Pivotal Application Service (PAS) tile, through a BOSH link.
+To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the <%= vars.app_runtime_abbr %> tile, through a BOSH link.
 
 <p class="note"><strong>Note</strong>: BOSH Links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links">BOSH Links</a>.</p>
 
 ### <a id="spec"></a> Update Spec File and Templates
 
-The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the PAS tile. To enable your service tile to retrieve these CredHub-provided properties, add a `consumes:` section with the BOSH link from the PAS tile to the spec file of the BOSH job that will use them and edit the job's templates to access the values in the link:
+The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the <%= vars.app_runtime_abbr %> tile. To enable your service tile to retrieve these CredHub-provided properties, add a `consumes:` section with the BOSH link from the <%= vars.app_runtime_abbr %>  tile to the spec file of the BOSH job that will use them and edit the job's templates to access the values in the link:
 
 ```
     consumes:
@@ -54,9 +54,9 @@ For information about using BOSH Links in the spec file and templates of a job a
 
 ### <a id="errand"></a> Save the Runtime CredHub Location
 
-To use the runtime CredHub location retrieved from the PAS tile, you must write a `post_deploy` [tile errand](tile-structure.html#errands) that saves the value out in some way and enables the service broker to access it.
+To use the runtime CredHub location retrieved from the <%= vars.app_runtime_abbr %> tile, you must write a `post_deploy` [tile errand](tile-structure.html#errands) that saves the value out in some way and enables the service broker to access it.
 
-Depending on how your tile deploys the service broker app, the service instance errand can save the CredHub location in different ways. If the tile pushes the broker as a Cloud Foundry app, the errand can store the location in an environment variable such as `CREDHUB_URL` for the service broker to call. If BOSH deploys the service broker outside of of PAS, the errand could write the CredHub location out to a templated configuration file that the service broker reads.
+Depending on how your tile deploys the service broker app, the service instance errand can save the CredHub location in different ways. If the tile pushes the broker as a Cloud Foundry app, the errand can store the location in an environment variable such as `CREDHUB_URL` for the service broker to call. If BOSH deploys the service broker outside of <%= vars.app_runtime_abbr %>, the errand could write the CredHub location out to a templated configuration file that the service broker reads.
 
 ### <a id="manifest"></a> Update Deployment Manifest
 
@@ -97,7 +97,7 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-In the example, the runtime CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.254.0.2`. This command uses the PAS BOSH DNS server to do lookup.
+In the example, the runtime CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.254.0.2`. This command uses the  <%= vars.app_runtime_abbr %> BOSH DNS server to do lookup.
 
 ## <a id="step3"></a> Step 3: Provide Operators with the Choice to Use CredHub
 
@@ -111,7 +111,7 @@ form_types:
   property_inputs:
   - reference: .JOB-NAME.secure_credentials
     label: Secure service instance credentials
-    description: "When checked, service instance credentials are stored in CredHub. Enable only when installing with <%= vars.platform_name %> (formerly PCF) or later and this feature is also enabled in the PAS tile."
+    description: "When checked, service instance credentials are stored in CredHub. Enable only when installing with Ops Manager and this feature is also enabled in the <%= vars.app_runtime_abbr %> tile."
 
 property_blueprints:
   - name: hidden_credhub_selector

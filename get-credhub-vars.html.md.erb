@@ -3,9 +3,7 @@ title: Fetching Variable Names and Values
 owner: CredHub
 ---
 
-<strong><%= modified_date %></strong>
-
-## Overview
+## <a id="overview"></a> Overview
 
 CredHub has two API endpoints to identify and re-use variables. Operators who want to see all the credentials associated with their product, or support engineers who want to troubleshoot issues specific to one virtual machine (VM), can use these APIs for those purposes.
 
@@ -14,11 +12,11 @@ The API endpoints perform these functions:
 * Identifying and printing the name of a variable
 * Using the name of the variable to identify and print the value of the variable
 
-### Using the API Endpoints
+### <a id="use-api-endpoints"></a> Using the API Endpoints
 
 Use these endpoints to view variables for any product in Ops Manager, except the BOSH Director. These endpoints are read-only. You cannot use them to add, remove, or rotate variables.
 
-## Fetching Variables
+## <a id="fetch-variables"></a> Fetching Variables
 
 This endpoint returns the list of variables associated with a product that are stored in CredHub. Not all variables are stored in CredHub. If you call a variable that is not stored in CredHub, the call returns an empty value.
 
@@ -28,7 +26,7 @@ $ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/
     -H "Authorization: Bearer EXAMPLE_UAA_ACCESS_TOKEN"
 </pre>
 
-### Example Response
+### <a id="example-response"></a> Example Response
 
 <pre class="terminal">
 HTTP/1.1 200 OK
@@ -38,7 +36,7 @@ HTTP/1.1 200 OK
 }
 </pre>
 
-### Query Parameters
+### <a id="query-params"></a> Query Parameters
 
 <table class="nice">
 	<th>Parameter</th>
@@ -51,7 +49,7 @@ HTTP/1.1 200 OK
 
 This endpoint returns a variable's name. Use the name in the next endpoint to return the variable's value.
 
-## Fetching Variable Values
+## <a id="fetch-var-values"></a> Fetching Variable Values
 
 This endpoint returns the value of a variable stored in CredHub. Not all variables are stored in CredHub, so if you call a variable that isn't in CredHub, the call will return an empty value.
 
@@ -61,7 +59,7 @@ $ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/
     -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-### Example Response 
+### <a id="example-response"></a> Example Response 
 
 <pre class="terminal">
 HTTP/1.1 200 OK
@@ -71,7 +69,7 @@ HTTP/1.1 200 OK
 }
 </pre>
 
-### Query Parameters
+### <a id="query-params-values"></a> Query Parameters
 <table>
 	<th>Parameter</th>
 	<th>Description</th>
