@@ -4,7 +4,7 @@ owner: London Services
 ---
 
 
-This topic describes the four phases of product release to <%= vars.platform_name %>.
+This topic describes the four phases of product release.
 
 ## <a id='alpha'></a>Phase 1: Alpha
 
@@ -22,16 +22,16 @@ A product should remain in Closed Beta while:
 - Users may experience major bugs.
 - Users may need to delete and reinstall tiles rather than upgrading them.
 
-Developers make products in Closed Beta available to specific groups or individual customers on [Pivotal Network](http://network.pivotal.io).
+Developers make products in Closed Beta available to specific groups or individual customers on [VMware Tanzu Network](http://network.pivotal.io).
 
 ### Requirements
 To enter Closed Beta, a product must meet the following requirements:
 
 * The product must run properly on at least one IaaS, so that customers can install and try it out. Supported infrastructures are AWS, vSphere and OpenStack.
 
-* Customers must be able to install the product error-free through a tile in Pivotal Ops Manager, and delete the product there without any traces remaining.
+* Customers must be able to install the product error-free through a tile in Ops Manager, and delete the product there without any traces remaining.
 
-* The product tile must target the latest released stemcell version, as listed on [Pivotal Network](https://network.pivotal.io/products/stemcells).
+* The product tile must target the latest released stemcell version, as listed on [VMware Tanzu Network](https://network.pivotal.io/products/stemcells).
 
 * The release notes must make clear the following constraints:
 
@@ -41,12 +41,12 @@ To enter Closed Beta, a product must meet the following requirements:
 
 * The product must fulfill its promised feature set, and perform as desired.
 
-Pivotal also recommends that any Closed Beta product include an easy way for users to provide feedback to the product developer.
+<%= vars.company_name %> also recommends that any Closed Beta product include an easy way for users to provide feedback to the product developer.
 
 ### Steps to Release
 The following steps create a new Closed Beta release for your product:
 
-1. Log into [Pivotal Network](http://network.pivotal.io).
+1. Log into [VMware Tanzu Network](http://network.pivotal.io).
 
 1. Create a new release for your product and populate all of the required fields.
 
@@ -54,7 +54,7 @@ The following steps create a new Closed Beta release for your product:
 
 1. Clearly state in the release description that the product cannot be upgraded, and that users may suffer data loss.
 
-1. Email your Pivotal contact to request product validation and Closed Beta release. Please provide basic instructions on how to validate the new feature set. Pivotal will verify that the release meets all requirements, then make it accessible to invited customers.
+1. Email your <%= vars.company_name %> contact to request product validation and Closed Beta release. Please provide basic instructions on how to validate the new feature set. <%= vars.company_name %> will verify that the release meets all requirements, then make it accessible to invited customers.
 
 ## <a id='public-beta'></a>Phase 3: Public Beta
 
@@ -68,7 +68,7 @@ Your product is a good candidate for the **Public Beta** stage if:
 - The product does not contain the full set of features intended for the final release.
 - You feel comfortable supporting this tile for customers.
 
-Products in Public Beta are available on [Pivotal Network](http://network.pivotal.io) to any user with a free Pivotal Network account.
+Products in Public Beta are available on [VMware Tanzu Network](http://network.pivotal.io) to any user with a free VMware Tanzu Network account.
 
 ### Requirements
 Products in Public Beta must meet the following requirements:
@@ -81,23 +81,23 @@ Products in Public Beta must meet the following requirements:
 
 * Tile version upgrades result in no data or configuration loss, and maintain service functionality and availability.
 
-* Where appropriate, <%= vars.platform_name %> integrations work properly, including:
+* Where appropriate, <%= vars.app_runtime_full %> integrations work properly, including:
   * Registered routes
   * UAA
   * Service brokers
 
 * You can respond to discovery of a security flaw on the [Common Vulnerabilities and Exposures (CVE) list](https://cve.mitre.org/cve/index.html) within a reasonable time frame. Security flaws include vulnerabilities in your stemcell or within one of the components of your tile. <br>
-For more information about the <%= vars.platform_name %> security policy, see [<%= vars.platform_name %> Security Overview and Policy](https://docs.pivotal.io/pivotalcf/security/process/pcf-security.html).
+For more information about the security policy, see [<%= vars.platform_name %> Security Overview and Policy](https://docs.pivotal.io/pivotalcf/security/process/pcf-security.html).
 
 ### Steps to Release
 
-1. Log into [Pivotal Network](http://network.pivotal.io).
+1. Log into [VMware Tanzu Network](http://network.pivotal.io).
 
 1. Create a new release for your product and populate all of the required fields.
 
 1. Check that the release version states **BETA**.
 
-1. Email your Pivotal contact to request product validation and Public Beta release. Please provide basic instructions on how to validate the new feature set. Pivotal will also validate the upgrade scenario and data persistence. After verifying that the release meets all requirements, Pivotal will make it visible to customers.
+1. Email your <%= vars.company_name %> contact to request product validation and Public Beta release. Please provide basic instructions on how to validate the new feature set. <%= vars.company_name %> will also validate the upgrade scenario and data persistence. After verifying that the release meets all requirements, <%= vars.company_name %>  will make it visible to customers.
 
 ## <a id='ga'></a>Phase 4: General Availability
 
@@ -131,7 +131,7 @@ Products must meet the following requirements for **General Availability**:
 * Product installation does not require an internet connection, after initial product download.
 
 ### Steps to Release
-1. Log into [Pivotal Network](http://network.pivotal.io).
+1. Log into [VMware Tanzu Network](http://network.pivotal.io).
 
 1. Create a new release for your product and populate all of the required fields.
-1. Email your Pivotal contact to request product validation and General Availability release. Please provide basic instructions on how to validate the new feature set. Pivotal will also validate the upgrade scenario and data persistence.
+1. Email your <%= vars.company_name %>  contact to request product validation and General Availability release. Please provide basic instructions on how to validate the new feature set. <%= vars.company_name %> will also validate the upgrade scenario and data persistence.

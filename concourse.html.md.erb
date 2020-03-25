@@ -5,12 +5,11 @@ owner: Services
 
 This topic describes how to do continuous integration (CI) testing on your tile.
 
-
 There are two ways to do CI testing on your tile:
 
-+ Use the Tile Dashboard provided as a service by the Pivotal ISV team.<br>
++ Use the Tile Dashboard provided as a service by the <%= vars.company_name %> ISV team.<br>
   See [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
-  This is the method recommended by Pivotal.
+  This is the method recommended by <%= vars.company_name %>.
 + Set up and use your own Concourse pipeline.<br>
   See [Set Up a Concourse Pipeline and Test Your Tile](#concourse) below.<br>
   This method is more time consuming and not recommended for new partners
@@ -34,7 +33,7 @@ For an introduction to our readiness criteria, see
 
 The Tile Dashboard CI runs your tile through a series of steps, which include:
 
-1. Downloading your tile from the Pivotal Network and checking hash integrity.
+1. Downloading your tile from the VMware Tanzu Network and checking hash integrity.
 
 2. Scanning your tile for known issues or potential problems, like:
   - Use of deprecated properties.
@@ -42,7 +41,8 @@ The Tile Dashboard CI runs your tile through a series of steps, which include:
   - Use of features that are no longer supported.
 
 3. Configuring, installing, testing, and uninstalling your tile in several <%= vars.platform_name %> environments:
-  - A patch release of every supported Pivotal Application Service minor version.
+  - A patch release of every supported 
+<%= vars.app_runtime_full %> minor version.
   - Every supported IaaS
   - Environments with extra configuration, such as multiple availability zones and IPsec
 
@@ -62,24 +62,24 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
 
 
 
-+ Your tile is uploaded to the [Pivotal Network](https://network.pivotal.io/).
++ Your tile is uploaded to the [VMware Tanzu Network](https://network.pivotal.io/).
 
     | If you are uploading a&hellip; | Then&hellip; |
     |------------------------------------|--------------|
     | first release     | contact the technical program management of the ISV team. |
-    | subsequent release| you can upload pre-releases to the Pivotal Network.|
+    | subsequent release| you can upload pre-releases to the VMware Tanzu Network.|
 
 
 ### <a id="intro"></a> About Configuring a Tile on the Tile Dashboard
 
-After your tile has been uploaded to the Pivotal Network, the Tile Dashboard starts to stage and scan it.
+After your tile has been uploaded to the VMware Tanzu Network, the Tile Dashboard starts to stage and scan it.
 For new tiles, this can take up to an hour.
 
 After the stage and scan, you need to configure your tile on the Tile Dashboard.
 Configuration specfies how the tile is installed on the test environment.
 
 Configuring your tile through the Tile Dashboard is equivalent to configuring the tile on Ops Manager
-after downloading it from the Pivotal Network.
+after downloading it from the VMware Tanzu Network.
 
 There are two ways that you can configure the tile on the Tile Dashboard:
 
@@ -247,13 +247,13 @@ With more effort, you can also follow the pointers below to set up your own Conc
 that integrates and tests your tile on your own deployment of the latest <%= vars.platform_name %>.
 
 While you are of course also free to use any other CI system you are familiar with,
-Pivotal's tools and documentation are built to make Concourse CI as easy as possible.
+<%= vars.company_name %>'s tools and documentation are built to make Concourse CI as easy as possible.
 
 ### <a id="server"></a> Set Up a Concourse Server
 
 You need a Concourse server to host your pipeline.
 
-If you partner with Pivotal,
+If you partner with <%= vars.company_name %>,
 the [Tile Dashboard CI](#tile-dashboard-ci) servers can host your pipeline
 and provide S3 storage to exchange artifacts with your own servers.
 
@@ -276,7 +276,7 @@ the process of generating a pipeline template for you.
 
 ### <a id="pool"></a> Set Up <%= vars.platform_name %> for Your CI Pipeline
 
-Pivotal partners who have us host their pipeline have access to a pool of <%= vars.platform_name %>
+<%= vars.company_name %> partners who have us host their pipeline have access to a pool of <%= vars.platform_name %>
 instances that are managed by us and are regularly updated with the latest
 (pre-)release versions of <%= vars.platform_name %>. If you set up your own concourse server, you
 have to target your pipeline at a [<%= vars.platform_name %> instance you have setup](./environments.html).

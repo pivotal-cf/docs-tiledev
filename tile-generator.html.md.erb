@@ -23,9 +23,8 @@ tile. It then creates everything that's required to deploy your software into
 
 - **BOSH errands** to deploy and delete your software, including blue/green
   deployments for zero-downtime upgrades
-- A **BOSH release** suitable for deploying your software to Pivotal Application
-Service (PAS) or open-source Cloud Foundry
-- A **Pivotal Ops Manager Tile** that can be imported into Ops Manager, installed,
+- A **BOSH release** suitable for deploying your software to <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) or open-source Cloud Foundry
+- An **Ops Manager Tile** that can be imported into Ops Manager, installed,
   configured, and deployed, including UI forms and automatic upgrades from
   previous versions
 - A **Concourse pipeline configuration** to enable Continuous Integration of
@@ -39,17 +38,17 @@ combination of the following package types:
 
 - Cloud Foundry Applications
 - Cloud Foundry Buildpacks
-- Cloud Foundry Service Brokers (both inside and outside PAS)
-- Docker images (both inside and outside PAS)
+- Cloud Foundry Service Brokers (both inside and outside <%= vars.app_runtime_abbr %>)
+- Docker images (both inside and outside <%= vars.app_runtime_abbr %>)
 
 ### <a id="legacy"></a> Legacy Tiles and OSS-Compatible Service Brokers
 
-Many tile authors, in both Pivotal-internal teams and at external partner companies, built their <%= vars.platform_name %> tiles before Tile Generator existed.
+Many tile authors, in both <%= vars.company_name %>-internal teams and at external partner companies, built their <%= vars.platform_name %> tiles before Tile Generator existed.
 
-Many other tile authors serve two markets with their service integrations, offering both a Cloud Foundry-compatible service broker to open-source users and corresponding <%= vars.platform_name %> tile for <%= vars.platform_name %> users.
+Many other tile authors serve two markets with their service integrations, offering both a Cloud Foundry-compatible service broker to open-source users and corresponding <%= vars.platform_name %> tile for <%= vars.app_runtime_abbr %> users.
 They want to continue serving both sets of users.
 
-All of these tile authors can now use Tile Generator to simplify and speed up their development. Tile Generator can generate an OSS-compatible BOSH release service broker BOSH release in addition to a PivNet-ready <%= vars.platform_name %> tile.
+All of these tile authors can now use Tile Generator to simplify and speed up their development. Tile Generator can generate an OSS-compatible BOSH release service broker BOSH release in addition to a VMware Tanzu-ready <%= vars.platform_name %> tile.
 
 
 ## <a id="screencast"></a> Screencast
@@ -80,7 +79,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
         </pre>
         <br>
   - Use Python 2 and [Virtualenv](https://virtualenv.pypa.io/en/stable/).
-    Pivotal recommends using a Virtualenv environment
+    <%= vars.company_name %> recommends using a Virtualenv environment
     to avoid conflicts with other Python packages.
     <br><br>
     A virtualenv is a directory containing dependencies for a project.
@@ -104,7 +103,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
 
 3. From within the root directory of the project for which you want to create a tile,
 initialize the directory as a tile repository by running the following commands:
-<p class="note"><strong>Note</strong>: Pivotal recommends that you use a git repository.</p>
+<p class="note"><strong>Note</strong>: <%= vars.company_name %> recommends that you use a git repository.</p>
 
     ```
     cd YOUR-PROD-DIRECTORY
@@ -117,7 +116,7 @@ initialize the directory as a tile repository by running the following commands:
         tile build
 
 The generator first creates a BOSH release in the `release` subdirectory,
-then wraps that release into a Pivotal tile, in the `product` subdirectory.
+then wraps that release into a tile, in the `product` subdirectory.
 If required for the installation, it automatically pulls down the latest
 release version of the Cloud Foundry CLI.
 
@@ -184,17 +183,17 @@ description: Longer description of the tile's purpose
 - The `name` should be informative.
   For example, you might want to use a name composed of your company and product names such as `acme-anvil`.
   The name should also match your product slug on
-  Pivotal Network, which enables update notifications for customers. Coordinate
+  VMware Tanzu Network, which enables update notifications for customers. Coordinate
   with your product team to agree on a name; marketing teams often care about the
-  name because it appears in Pivotal Network URLs.
+  name because it appears in VMware Tanzu Network URLs.
 
-- The `icon_file` should be a 128 x 128 pixel image that appears on your tile in the Ops Manager GUI.
+- The `icon_file` should be a 128 x 128 pixel image that appears on your tile in the Ops Manager UI.
   By convention, place any resources used by the tile in the `resources` sub-directory of your repository.
 
 - The `label` text appears on the tile under your icon. This should
-  match your product name on Pivotal Network. Coordinate with your
+  match your product name on VMware Tanzu Network. Coordinate with your
   product team to agree on a product name; marketing teams often care about
-  the product name because it appears on Pivotal Network.
+  the product name because it appears on VMware Tanzu Network.
 
 - The `description` should contain a description of the product. This
   is not currently used, but might be displayed in a future version of
@@ -208,7 +207,7 @@ each package entry depends on the type of package you are adding.
 #### <a id="pushed"></a> Pushed Apps
 
 Apps (including service brokers) that are being `cf push`ed into the
-PAS use the following format:
+<%= vars.app_runtime_abbr %> use the following format:
 
 ```yaml
 - name: my-application
@@ -261,7 +260,7 @@ existing service instance, use the `services` property of the `manifest` instead
 
 `needs_cf_credentials` causes the app to receive two additional environment
 variables named `CF_ADMIN_USER` and `CF_ADMIN_PASSWORD` with the admin credentials
-for the PAS into which they are being deployed. This allows apps and
+for the <%= vars.app_runtime_abbr %> into which they are being deployed. This allows apps and
 services to interact with the Cloud Controller.
 
 The `auto_services` feature is described in more detail below.
@@ -276,7 +275,7 @@ environment variables on the app:
 
 #### <a id="brokers"></a> Service Brokers
 
-Most modern service brokers are pushed into PAS as normal
+Most modern service brokers are pushed into <%= vars.app_runtime_abbr %> as normal
 CF apps. For these types of brokers, use the Pushed Application format
 specified above, but set the type to `app-broker` or `docker-app-broker` instead
 of just `app` or `docker-app`:
@@ -429,7 +428,7 @@ bosh-release package's deployment manifest, you can include the
 
 #### <a id="docker"></a> Docker Images
 
-Apps packaged as Docker images can be deployed inside or outside PAS.
+Apps packaged as Docker images can be deployed inside or outside <%= vars.app_runtime_abbr %>.
 To push a Docker image as a CF app, use the *Pushed Application*
 format specified above, but use the `docker-app` or `docker-app-broker` type instead
 of just `app` or `app-broker`. The Docker image to be used is then specified using
@@ -448,7 +447,7 @@ If this app is also a service broker, use `docker-app-broker` instead of just
 delegate their persistence to bound services.
 
 Docker apps that require persistent storage can not be deployed into
-PAS. These can be deployed to separate BOSH-managed VMs instead
+<%= vars.app_runtime_abbr %>. These can be deployed to separate BOSH-managed VMs instead
 by using the `docker-bosh` type:
 
 ```
@@ -517,7 +516,7 @@ To expose a container via
 for example, one of the Docker containers hosts an admin webapp interface,
 use `routes` to choose a port and prefix. The external URL
 is `[prefix]-[package.name].[system-domain]`.
-In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sys.example.com` is the <%= vars.platform_name %> system domain.
+In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sys.example.com` is the <%= vars.app_runtime_abbr %> system domain.
 `routes` is a list, so multiple containers can be exposed.
 
 ```
@@ -628,7 +627,7 @@ property_inputs:
 ### <a id='auto-provision'></a> Automatic Provisioning of Services
 
 Tile Generator automates the provisioning of services. Any app (including
-service brokers and Docker-based apps) that are being pushed into PAS
+service brokers and Docker-based apps) that are being pushed into <%= vars.app_runtime_abbr %>
 can automatically be bound to services through the `auto_services`
 feature:
 
@@ -688,7 +687,7 @@ the requested service.
 ### <a id='orgs-spaces'></a> Orgs and Spaces
 
 By default, Tile Generator creates a single new org and space for any
-packages that install into PAS, using the name of the tile and
+packages that install into <%= vars.app_runtime_abbr %>, using the name of the tile and
 appending `-org` and `-space`, respectively. The default memory quota for a
 newly created org is 1024 (1&nbsp;G). You can change any of these defaults by
 specifying the following properties in `tile.yml`:

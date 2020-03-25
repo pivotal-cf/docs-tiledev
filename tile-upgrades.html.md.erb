@@ -6,9 +6,9 @@ owner: Services
 
 This topic discusses product tile migrations, which refers to changing the name and values of properties when a customer upgrades tile versions. Tile authors supply a JavaScript file to trigger chaining migrations. Chaining migrations allows for multiple migrations to run sequentially.   
 
-<p class="note"><strong>Note</strong>: In order to use JS migrations, ensure you are using Ops Manager 1.7 or later.</p>
+<p class="note"><strong>Note</strong>: In order to use JS migrations, ensure you are using Ops Manager v1.7 or later.</p>
 
-<p class="note"><strong>Note: </strong>Changing the value of<code>single_az_only</code> for jobs launched by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. Contact <a href="http://support.pivotal.io/">Pivotal Support</a> for help avoiding this.</p>
+<p class="note"><strong>Note: </strong>Changing the value of<code>single_az_only</code> for jobs launched by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. Contact <a href="http://support.pivotal.io/">Support</a> for help avoiding this.</p>
 
 ## <a id='import'></a>Update Values or Property Names Using JavaScript##
 
@@ -119,17 +119,17 @@ Example:
         <td><code>properties['.properties.my-prop'].value = ['option1', 'option2']</code></td>
     </tr>
     <tr>
-        <td><code>rsa\_cert\_credentials</code></td>
+        <td><code>rsa_cert_credentials</code></td>
         <td>Object</td>
-        <td><code>properties['.properties.my-prop'].value = {'private\_key\_pem' => 'a-private-key', 'cert\_pem' => 'a-cert-pem'}</code></td>
+        <td><code>properties['.properties.my-prop'].value = {'private_key_pem' => 'a-private-key', 'cert\_pem' => 'a-cert-pem'}</code></td>
     </tr>
     <tr>
         <td><code>rsa_pkey_credentials</code></td>
         <td>Object</td>
-        <td><code>properties['.properties.my-prop'].value = {'private\_key\_pem' => 'a-private-key'}</code></td>
+        <td><code>properties['.properties.my-prop'].value = {'private_key_pem' => 'a-private-key'}</code></td>
     </tr>
     <tr>
-        <td><code>salted\_credentials</code></td>
+        <td><code>salted_credentials</code></td>
         <td>Object</td>
         <td><code>properties['.properties.my-prop'].value = {'identity' => 'an-identity', 'salt' => 'mortons', 'password' => 'books'}</code></td>
     </tr>
@@ -164,7 +164,7 @@ Example:
 </table>
 
 
-Single value properties refer to properties whose type are any of the following: boolean, ca\_certificate, domain, dropdown\_select, email, http\_url, integer, ip_address, ip\_ranges, ldap\_url, multi\_select\_options, network\_address, network\_address\_list, port, smtp\_authentication, string, string\_list, text, uuid.
+Single value properties refer to properties whose type are any of the following: boolean, ca_certificate, domain, dropdown_select, email, http_url, integer, ip_address, ip_ranges, ldap_url, multi_select_options, network_address, network_address_list, port, smtp_authentication, string, string_list, text, uuid.
 
 Refer to the example properties below when writing your own tile migration JS file:
 
@@ -217,7 +217,7 @@ Refer to the example properties below when writing your own tile migration JS fi
 </pre>
 
 
- <p class="note"><strong>Note</strong>: If your product uses Ops Manager 1.6 or earlier metadata, you need to write a transmogrifier content migration for customers using your product on 1.6, and a JavaScript migration for those on Ops Manager 1.7 or later. Review the transmogrifier example in the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.</p>
+ <p class="note"><strong>Note</strong>: If your product uses Ops Manager v1.6 or earlier metadata, you need to write a transmogrifier content migration for customers using your product on v1.6, and a JavaScript migration for those on Ops Manager v1.7 or later. Review the transmogrifier example in the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.</p>
 
 ## <a id='chaining'></a>Examples Demonstrating Chaining Migrations ##
 

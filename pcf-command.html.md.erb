@@ -6,7 +6,7 @@ owner: Services
 The `pcf` utility provides a command line interface to <%= vars.platform_name %> for
 the purpose of deploying and testing tiles. Its primary reason for existence is
 to enable Ops Manager access from CI pipelines, but developers also find it
-convenient to use this CLI rather than the Ops manager GUI.
+convenient to use this CLI rather than the Ops Manager UI.
 
 The `pcf` utility also allows you to test your tile's BOSH errands
 directly from your CLI, without going through Ops Manager and BOSH. This greatly
@@ -37,7 +37,7 @@ credentials of a "claimed" <%= vars.platform_name %> pool resource to the CI pip
 For interactive use, this means that you will have to create a `metadata`
 file in the directory where you run the `pcf` command.
 
-<p class='note'>Pivotal recommends that you do <strong>not</strong> create this file inside your git or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
+<p class='note'><%= vars.company_name %> recommends that you do <strong>not</strong> create this file inside your git or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
 
 ##<a id="commands"></a> Commands
 
@@ -117,7 +117,7 @@ $ pcf settings test-tile
 
 After your software works and correctly deploys using `test-errand`, you can go
 through the real Ops Manager deployment process from the CLI, as you would
-normally do through the Ops Manager GUI.
+normally do through the Ops Manager UI.
 
 Import your .pivotal file into Ops Manager:
 
@@ -131,9 +131,9 @@ Install the uploaded version of your product:
 $ pcf install test-tile 0.0.2
 ```
 
-Where you would normally configure the tile settings in the GUI, the `configure`
+Where you would normally configure the tile settings in the UI, the `configure`
 command lets you pass in any user-specified properties as a .yml file. This command
-also sets the stemcell for the tile to the same one used by Pivotal Application Service,
+also sets the stemcell for the tile to the same one used by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>),
 to avoid the need to upload a tile-specific stemcell.
 
 ```bash
@@ -215,9 +215,9 @@ up Ops Manager's available products (and disk space):
 $ pcf delete-unused-products
 ```
 
-##<a id="access-ert"></a> Accessing PAS
+##<a id="access-ert"></a> Accessing <%= vars.app_runtime_abbr %>
 
-To see details about the Pivotal Application Service of your <%= vars.platform_name %> environment:
+To see details about the <%= vars.app_runtime_abbr %> of your <%= vars.platform_name %> environment:
 
 ```bash
 $ pcf cf-info
@@ -229,7 +229,7 @@ $ pcf cf-info
 - system_services_username: system_services
 ```
 
-To target your `cf` command line at this <%= vars.platform_name %> environment:
+To target your `cf` command line at this <%= vars.app_runtime_abbr %> environment:
 
 ```bash
 $ pcf target

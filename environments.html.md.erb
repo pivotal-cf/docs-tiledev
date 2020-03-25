@@ -8,11 +8,11 @@ This topic explains how to set up tile development environments, from simple sta
 
 ## <a id="pcfdev"></a> <%= vars.product_dev_local %> and BOSH-Lite
 
-Pivotal provides a lightweight (vagrant packaged) instance of <%= vars.platform_name %> with some
+<%= vars.company_name %> provides a lightweight (vagrant packaged) instance of <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) with some
 basic services as a free product named <%= vars.product_dev_local %>. This is a great environment
-to develop and test everything that runs in Pivotal Application Service.
+to develop and test everything that runs in <%= vars.app_runtime_abbr %>.
 
-Either of these environments allow you to develop the first three levels of service for <%= vars.platform_name %>: a [User-Provided Service](./user-provided.html), a [Brokered Service](./brokered.html), and a [Managed Service](./managed.html).
+Either of these environments allow you to develop the first three levels of service for <%= vars.app_runtime_abbr %>: a [User-Provided Service](./user-provided.html), a [Brokered Service](./brokered.html), and a [Managed Service](./managed.html).
 
 If your integration includes managed services, you will also need an instance
 of BOSH that can manage virtual machines and BOSH releases for you.
@@ -20,7 +20,7 @@ of BOSH that can manage virtual machines and BOSH releases for you.
 purpose.
 
 Between these two components, you will have everything you need to develop
-tiles, except for Pivotal's Ops Manager. But if you followed the recommended workflow in [Building Your First Tile](./index.html#tile-steps) you will not need an actual full
+tiles, except for Ops Manager. But if you followed the recommended workflow in [Building Your First Tile](./index.html#tile-steps) you will not need an actual full
 <%= vars.platform_name %> environment until the later phases of your development.
 
 ### <a id="setup-boshlite"></a>Setting up BOSH-Lite
@@ -31,36 +31,36 @@ tiles, except for Pivotal's Ops Manager. But if you followed the recommended wor
 
 ### <a id="setup-pcfdev"></a>Setting up <%= vars.product_dev_local %>
 
-- [Try <%= vars.platform_name %> on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
+- [Try <%= vars.app_runtime_abbr %> on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
 
 
 ## <a id="pws"></a>PWS or Other Supported CF Infrastructure
 
-Pivotal Web Services (PWS) is a highly-available, production-scale <%= vars.platform_name %> environment hosted by Pivotal. You can use it to develop and run <%= vars.platform_name %> apps, but a PWS account does not give access to Ops Manager and its Installation Dashboard, which is where <%= vars.platform_name %> operators install and configure tiles.
+Pivotal Web Services (PWS) is a highly-available, production-scale %= vars.app_runtime_abbr %> environment hosted by <%= vars.company_name %>. You can use it to develop and run <%= vars.app_runtime_abbr %> apps, but a PWS account does not give access to Ops Manager and its Installation Dashboard, which is where operators install and configure tiles.
 
 - [Set Up Your PWS Account and Download the cf CLI](http://docs.run.pivotal.io/starting/index.html) explains how to get started with Pivotal Web Services (PWS).
 
-## <a id="pcf"></a><%= vars.platform_name %> with Ops Manager
+## <a id="pcf"></a><%= vars.app_runtime_abbr %> with Ops Manager
 
-### <a id="shared"></a>Shared <%= vars.platform_name %> Development Environments for Pivotal Partners
+### <a id="shared"></a>Shared <%= vars.app_runtime_abbr %> Development Environments for VMware Tanzu Partners
 
-Pivotal operates and manages a number of shared <%= vars.platform_name %> development environments,
+<%= vars.company_name %> operates and manages a number of shared <%= vars.app_runtime_abbr %> development environments,
 called Pivotal Integration Environments (PIEs),
 for Pivotal Technical Partnership Program (PTPP) program members to develop their tiles on.
 
 To use your assigned PIE environment:
 
-1. Log in to the Pivotal [Tile Dashboard](https://tile-dashboard.cfapps.io/)
+1. Log in to the <%= vars.company_name %> [Tile Dashboard](https://tile-dashboard.cfapps.io/)
 using the credentials that you use for [Pivotal Partners Slack](https://pivotalpartners.slack.com/).
 1. Click the `pie-xx` environment assigned to you.
 1. Log in to Ops Manager with the given Ops Manager URL and credentials.
-1. Log in to Pivotal Apps Manager or the cf CLI with the Cloud Foundry information provided on the same page.
+1. Log in to Apps Manager or the cf CLI with the Cloud Foundry information provided on the same page.
 
 If you are not in the PTPP or cannot access Pivotal Partners Slack, email isv@pivotal.io.
 
-### <a id="diy"></a>Install Your Own <%= vars.platform_name %> Environment
+### <a id="diy"></a>Install Your Own <%= vars.app_runtime_abbr %> Environment
 
-If you need an isolated or dedicated <%= vars.platform_name %> development environment, or you need to work offline, you can install your own environment that includes Pivotal's Ops Manager:
+If you need an isolated or dedicated <%= vars.app_runtime_abbr %> development environment, or you need to work offline, you can install your own environment that includes Ops Manager:
 
 - [Installing <%= vars.platform_name %>](http://docs.pivotal.io/pivotalcf/installing/index.html)
 <a name="operations"></a>
