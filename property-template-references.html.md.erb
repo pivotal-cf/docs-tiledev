@@ -190,7 +190,7 @@ The table below describes the accessors you can use to retrieve information abou
 | `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM. |
 | `hostname` | Provides the hostname for the BOSH Director VM. |
 | `tld` | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director. |
-| `metrics_server_enabled` | True if the `system-metrics-server` job is included. |
+| `metrics_server_enabled` | Returns `true` if the `system-metrics-server` job is included in the manifest.<br>For information about the job, see <a href="https://bosh.io/jobs/system-metrics-server?source=github.com/cloudfoundry/bosh-system-metrics-server-release">system-metrics-server job</a> in the BOSH documentation. |
 | `bosh_metrics_forwarder_client_name` | Provides the BOSH Metrics Forwarder client name. |
 | `bosh_metrics_forwarder_client_secret` | Provides the BOSH Metrics Forwarder client secret. |
 | `dns_release_present` | Exposes the BOSH Director configuration for `disable_dns_release`. |
