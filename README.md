@@ -8,9 +8,9 @@ This repo is for Tile Developer Guide content only. See the [Tile Developer Guid
 
 | Branch name | Use for… |
 |-------------| ------|
-| master      | This is the "edge" build, for Ops Mananger v2.9. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-n/  and https://docs.pivotal.io/tiledev/2-n |
-| master      | This is the 2.9 build, for Ops Manager Tile Dev Guide v2.9. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-9/  and https://docs.pivotal.io/tiledev/2-9 |
-| 2.8       | v2.6 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-8/ and https://docs.pivotal.io/tiledev/2-8 |
+| master      | This is the "edge" build, for Ops Mananger v2.10. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-n/  and https://docs.pivotal.io/tiledev/2-n |
+| 2.9     | Ops Manager Tile Dev Guide v2.9 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-9/  and https://docs.pivotal.io/tiledev/2-9 |
+| 2.8       | v2.8 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-8/ and https://docs.pivotal.io/tiledev/2-8 |
 | 2.7       | v2.7 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-7/ and https://docs.pivotal.io/tiledev/2-7 |
 | 2.6       | v2.6 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-6/ and https://docs.pivotal.io/tiledev/2-6 |
 | 2.5       | v2.5 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-5/ and https://docs.pivotal.io/tiledev/2-5 |
