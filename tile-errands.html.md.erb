@@ -149,14 +149,14 @@ Pre-delete errands run after an operator chooses to delete a product, but before
 finishes deleting it.
 
 Typical pre-delete errands include cleanup of application artifacts and service
-broker de-registration. For example, MySQL for VMware Tanzu has a **Broker Deregistrar** pre-delete errand that:
+broker de-registration. For example, VMware Tanzu SQL [MySQL] has a **Broker Deregistrar** pre-delete errand that:
 
 * Purges the service offering
 * Purges all service instances
 * Purges all application bindings
 * Deletes the service broker from the Cloud Controller
 
-When an operator chooses to delete the MySQL for VMware Tanzu product, Ops Manager first
+When an operator chooses to delete the VMware Tanzu SQL [MySQL] product, Ops Manager first
 runs the **Broker Deregistrar** pre-delete errand, then deletes the product.
 
 Pre-delete errands run by default. An operator can prevent a pre-delete errand from running by setting
