@@ -30,3 +30,10 @@ Tile authors can use this verifier
 to check if all service instances on an existing broker are on the current version.
 This prevents service instances from becoming orphaned after an upgrade.
 Tile authors can also specify that the verifier should only run on major or minor upgrades.
+
+## <a id="resolved"></a> Resolved Issues
+
+This release fixes the following issue:
+
++ In Ops Manager v2.8.2 and later, tiles that are declared under `requires_product_versions`
+  can successfully deploy even when `product_version` contains a build number.
