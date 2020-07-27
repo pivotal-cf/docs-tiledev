@@ -15,4 +15,12 @@ see [Breaking Changes](https://docs.pivotal.io/platform/2-10/release-notes/break
 
 ## <a id="features"></a> Features
 
-There are no changes in Ops Manager v2.10 that directly affect tile development for partners.
+New features and changes in this release that may affect tile development for partners:
+
+### <a id="log-format-change"></a> Timestamp Format Change for Diego Logs and Customizable <%= vars.app_runtime_abbr %> Component Logs
+
+<%= vars.app_runtime_abbr %> v2.10 modifies the timestamp format of Diego logs and removes the `diego_log_timestamp_format` tile property.
+
+In addition, operators can customize the overall format of <%= vars.app_runtime_abbr %> component logs. This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs. 
+
+For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html#timestamps) and [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps).
