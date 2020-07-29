@@ -17,10 +17,15 @@ see [Breaking Changes](https://docs.pivotal.io/platform/2-10/release-notes/break
 
 New features and changes in this release that may affect tile development for partners:
 
-### <a id="log-format-change"></a> Timestamp Format Change for Diego Logs and Customizable <%= vars.app_runtime_abbr %> Component Logs
+### <a id="log-format-change"></a> Timestamp Format Change and Customizable <%= vars.app_runtime_abbr %> Component Logs
 
-<%= vars.app_runtime_abbr %> v2.10 modifies the timestamp format of Diego logs and removes the `diego_log_timestamp_format` tile property.
+In <%= vars.app_runtime_abbr %> v2.10, operators can modify the timestamp format of <%= vars.app_runtime_abbr %> component logs.
 
-In addition, operators can customize the overall format of <%= vars.app_runtime_abbr %> component logs. This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs. 
+<%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces 
+it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
 
-For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html#timestamps) and [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps).
+For a current list of components that use the RFC3339 timestamp format, see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the VMware Tanzu Application Service for VMs v2.10 Release Notes. 
+
+This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs. 
+
+For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html#timestamps).
