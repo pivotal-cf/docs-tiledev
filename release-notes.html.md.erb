@@ -24,7 +24,7 @@ In <%= vars.app_runtime_abbr %> v2.10, operators can modify the timestamp format
 <%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces 
 it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
 
-For a current list of components that use the RFC3339 timestamp format, see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the VMware Tanzu Application Service for VMs v2.10 Release Notes. 
+For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_. 
 
 This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs. 
 
