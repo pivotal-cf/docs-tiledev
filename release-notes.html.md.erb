@@ -29,3 +29,10 @@ For more information about the end of support for path-style S3 bucket URLs, see
 
 For more information about the difference between path-style and virtual-hosted-style URLs, see [Virtual Hosting of Buckets](https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html) in the AWS documentation.
 
+### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Bulk Rotation of Certificates 
+
+In Ops Manager v2.9 and later, operators can perform a bulk rotation of all CAs and certificates in a foundation, which may include leaf certificates used by individual tiles. Ops Manager invokes CredHub Maestro to perform the bulk rotation of certificates. 
+
+To ensure compatibility with CredHub Maestro, your tile must use a specific format when referencing CAs. CredHub Maestro requires that triple parentheses references to any CAs that sign leaf certificates return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the least amount of downtime for your tile's services during certificate rotation.
+
+For more information and examples, see [Reference Existing CAs and Certificates in CredHub Variables](.
