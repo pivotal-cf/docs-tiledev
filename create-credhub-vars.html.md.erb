@@ -113,3 +113,96 @@ Use a BOSH link to share credentials across deployments. You can read about BOSH
 ```
 ((/EXAMPLE-PASSWORD))
 ```
+
+## <a id='credhub-ca-refs'></a> Reference Existing CAs in CredHub Variables
+
+This section describes how to reference existing CAs stored in CredHub correctly in your tile's property configuration. 
+
+In Ops Manager v2.9 and later, operators can perform a bulk rotation of all CAs and certificates in a foundation, which may include leaf certificates used by individual service tiles. Ops Manager invokes CredHub Maestro to perform this operation.
+
+CredHub Maestro requires that any triple parentheses references to CAs that sign leaf certificates must return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the least amount of downtime of your tile's services during certificate rotation. 
+
+When referencing a CA stored in CredHub, use the format `LEAF-CERTIFICATE-NAME.ca` to ensure that a concatenated version of the CA is returned. Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
+
+The following table presents examples of the correct and incorrect way to reference CAs and leaf certificates in order to support certificate rotation by CredHub Maestro.
+
+<div>
+  <table class="nice">
+    <style>
+      main table {
+        table-layout: fixed;
+      }
+    </style>
+  <col width="50%">
+  <col width="50%">
+  <tr>
+    <th> Correct Format </th>
+    <th> Incorrect Format </th>
+  </tr>
+  <tr>
+    <td>
+     <pre>
+templates:
+ - name: bpm
+   release: bpm
+ - manifest: |
+...
+.properties.routing_backends_client_cert_with_san.cert_pem ))
+    private_key: (( .properties.routing_backends_client_cert_with_san.private_key_pem ))
+    ca_certs: |
+      (( .properties.routing_custom_ca_certificates.value ))
+      (( $ops_manager.ca_certificate ))
+      <span style="font-weight: bold;background-color: #98FB98;">((( /cf/some-diego-leaf-cert.ca )))</span>
+      <span style="font-weight: bold;background-color: #98FB98;">((( /cf/some-diego-leaf-2-6.ca)))</span>
+      forwarded_client_cert: (( .properties.routing_tls_termination.selected_option.parsed_manifest(gorouter_forwarded_client_cert) ))
+variables: 
+ - name: /cf/diego-instance-identity-root-ca
+    options:
+      common_name: Diego Instance Identity Root CA
+      duration: 1095
+      is_ca: true
+      type: certificate
+ - name: /cf/diego-instance-identity-root-ca-2-6
+    options:
+      common_name: Diego Instance Identity Root CA
+      duration: 1095
+      is_ca: true
+      type: certificate 
+  <span style="font-weight:bold; background-color: #98FB98;">- name: /cf/some-diego-leaf-cert.ca</span>
+    options:
+      ca: /cf/diego-instance-identity-root-ca
+      type: certificate
+  <span style="font-weight:bold; background-color: #98FB98;">- name: /cf/some-diego-leaf-2-6.ca</span>
+    options:
+      ca: /cf/diego-instance-identity-root-ca-2-6
+      type: certificate </pre></td>
+<td valign="top">
+      <pre>
+templates:
+ - name: bpm
+   release: bpm
+ - manifest: |
+...
+.properties.routing_backends_client_cert_with_san.cert_pem ))
+    private_key: (( .properties.routing_backends_client_cert_with_san.private_key_pem ))
+    ca_certs: |
+      (( .properties.routing_custom_ca_certificates.value ))
+      (( $ops_manager.ca_certificate ))
+      <span style="font-weight: bold;background-color: #FFCCCB;">((( /cf/diego-instance-identity-root-ca.certificate )))</span>
+      <span style="font-weight: bold;background-color: #FFCCCB;">((( /cf/diego-instance-identity-root-ca-2-6.certificate )))</span>
+      forwarded_client_cert: (( .properties.routing_tls_termination.selected_option.parsed_manifest(gorouter_forwarded_client_cert) ))
+variables: 
+ - name: /cf/diego-instance-identity-root-ca
+   options:
+     common_name: Diego Instance Identity Root CA
+     duration: 1095
+     is_ca: true
+     type: certificate
+- name: /cf/diego-instance-identity-root-ca-2-6
+  options:
+     common_name: Diego Instance Identity Root CA
+     duration: 1095
+     is_ca: true
+     type: certificate</pre></td>
+  </tr>
+</table>
