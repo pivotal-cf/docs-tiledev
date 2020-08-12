@@ -39,6 +39,32 @@
           have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
           together to render a collection in a BOSH manifest.
           DESC
+      },
+      {
+        name: 'Logical Keys for GitOps style workflows',
+        description: <<~DESC,
+          Ops Manager assigns each element of a collection a GUID when it is created to track the element lifecycle
+          (e.g., to differentiate between changing an element and deleting and adding an element). 
+          This works well when using the Ops Manager GUI. 
+          But, this becomes a burden when customers want to maintain a common configuration across multiple 
+          Ops Manager environments. The collection element GUIDs will differ between Ops Manager environments, 
+          making a common configuration impossible.
+          <br/>
+          To address this issue, newer versions of the [<code>om</code> CLI treats certain collection element fields as logical keys](https://github.com/pivotal-cf/om/issues/207) 
+          - that is, a unique identifier for an element. The <code>om</code> CLI considers collection elements with matching logical key 
+          values as one and the same. With this, a customer can manage multiple Ops Manager environments with 
+          a single configuration, using logical keys for collection elements instead of managing GUIDs.
+          </br/>
+          The om CLI will use the following fields in collection elements as logical keys:
+          * <code>name</code>
+          * <code>key</code>
+          * <code>*name</code> (that is, any field ending in <code>name</code>)
+          <br/>
+          We strongly recommend including a logical key (and setting it as <code>freeze_on_deploy: true</code>) in each collection where a distinction 
+          between “update” and “delete and add” operations is important. One important example is in Service Broker plans, 
+          where updating a plan is very different than deleting and adding a plan 
+          (which could leave existing service instances orphaned).
+          DESC
       }
     ],
     additional_accessors: [
@@ -67,6 +93,7 @@
                 - name: name
                   type: string
                   configurable: true
+                  freeze_on_deploy: true
                 - name: public_key
                   type: string
                   configurable: true
@@ -137,6 +164,7 @@
                 - name: setting_name
                   type: string
                   configurable: true
+                  freeze_on_deploy: true
                 - name: setting_value
                   type: string
                   configurable: true
