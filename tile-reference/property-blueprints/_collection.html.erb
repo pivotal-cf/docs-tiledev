@@ -39,6 +39,23 @@
           have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
           together to render a collection in a BOSH manifest.
           DESC
+      },
+      {
+        name: 'Logical Keys for GitOps style workflows',
+        description: <<~DESC,
+          Ops Manager assigns each element of a collection a GUID. The GUID is to track the element lifecycle. For example, you can differentiate between deleting, adding, and changing an element.<br><br>
+          The collection element GUIDs differ between Ops Manager environments. This does not allow the ability to create a common configuration between environments.
+          <br><br>
+          To address this issue, newer versions of the Ops Manager CLI uses collection element fields as logical keys.
+          <br><br>
+          The Ops Manager CLI uses the following fields in collection elements as logical keys:
+          <ul><li><code>name</code></li>
+          <li><code>key</code></li>
+          <li>Any field ending in <code>name</code></li></ul>
+          <br>
+          VMware recommends including a logical key and setting <code>freeze_on_deploy: true</code> in each collection where you want to target 
+          “update” and “delete and add” operations separately. 
+          DESC
       }
     ],
     additional_accessors: [
