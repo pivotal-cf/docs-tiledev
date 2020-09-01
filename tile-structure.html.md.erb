@@ -37,11 +37,11 @@ These functions are described in more detail below.
 
 ### <a id='broker'></a> Service Broker
 
-Service brokers integrate services with <%= vars.platform_name_pivotal %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/pivotalcf/services/api.html).
+Service brokers integrate services with <%= vars.platform_name_pivotal %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/application-service/services/api.html).
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
 
-You can write a service broker in any language, and it can run anywhere, inside your <%= vars.platform_name_pivotal %> installation or external. For sample code in Ruby, Java, and Go, see [Example Service Brokers](http://docs.pivotal.io/pivotalcf/services/examples.html).
+You can write a service broker in any language, and it can run anywhere, inside your <%= vars.platform_name_pivotal %> installation or external. For sample code in Ruby, Java, and Go, see [Example Service Brokers](http://docs.pivotal.io/application-service/services/examples.html).
 
 Specify the service broker for a tile in the tile directory's `tile.yml` file, as a package with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`. The `external-broker` type requires a `uri` value, for the service broker location. For more information, see [Packages](#packages).
 
