@@ -512,10 +512,10 @@ This file must be a `.tgz`.
       - "custom_variable_name=((.properties.customer_name.value))"
 ```
 
-To expose a container via
-[gorouter](https://docs.cloudfoundry.org/concepts/architecture/router.html),
+To expose a container via the
+[<%= vars.app_runtime_abbr %> Routing Architecture](https://docs.cloudfoundry.org/concepts/cf-routing-architecture.html),
 for example, one of the Docker containers hosts an admin webapp interface,
-use `routes` to choose a port and prefix. The external URL
+use the [`routes` property of the apps manifest](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest-attributes.html#routes) to choose a port and prefix. The external URL
 is `[prefix]-[package.name].[system-domain]`.
 In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sys.example.com` is the <%= vars.product_name %> system domain.
 `routes` is a list, so multiple containers can be exposed.
