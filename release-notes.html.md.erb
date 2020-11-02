@@ -115,3 +115,33 @@ To remove consul clients from your products, make the following changes to any
 For more information about removing consul clients from your products,
 see [Tile Authors Must Remove consul_agent](https://docs.pivotal.io/tiledev/2-4/release-notes.html#breaking-consul)
 in the PCF v2.4 Partner Release Notes.
+
+## <a id="known-issues"></a> Known Issues
+
+Known issues in this release that may affect tile development for partners:
+
+### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
+
+An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
+
+The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
+
+<pre>
+{
+  "pre_deploy_check": {
+    ...
+    "properties": [
+      {
+        "name": ".properties.EXAMPLE-CERT-PROPERTY",
+        "type": "rsa_cert_credentials",
+        "errors": [
+          "can't be blank",
+          "can't be blank"
+        ]
+      }
+    ],
+    ...
+  }
+}
+</pre>
+Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
