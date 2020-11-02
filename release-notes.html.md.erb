@@ -21,23 +21,23 @@ New features and changes in this release that may affect tile development for pa
 
 In <%= vars.app_runtime_abbr %> v2.10, operators can modify the timestamp format of <%= vars.app_runtime_abbr %> component logs.
 
-<%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces 
+<%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces
 it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
 
-For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_. 
+For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_.
 
-This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs. 
+This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs.
 
 For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html#timestamps).
 
-### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Ops Manager Bulk Rotation of Certificates 
+### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Ops Manager Bulk Rotation of Certificates
 
 Ops Manager v2.10 invokes CredHub Maestro to perform the bulk rotation of various CAs and certificates within a foundation.
 
 To ensure compatibility with Ops Manager API certificate rotation
 and CredHub Maestro, you must use the concatenated
-`LEAF-CERTIFICATE-NAME.ca` format when referencing CAs 
-that sign leaf certificates in your tile's property configuration. 
+`LEAF-CERTIFICATE-NAME.ca` format when referencing CAs
+that sign leaf certificates in your tile's property configuration.
 Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
 
 The `.ca` accessor format returns a concatenated version of the CA, which includes the older and newer CA. The concatenated version ensures that jobs using leaf certificates do not lose trusted state during CA rotation and results in the least amount of downtime for your tile's services during certificate rotation.
@@ -48,18 +48,19 @@ For more information and configuration examples, see [Reference Existing CAs and
 
 Known issues in this release that may affect tile development for partners:
 
-### <a id="non-configurable-certs"></a> Non-configurable certs invalid within a selector
+### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
 
-A <code>rsa_cert_credentials</code> property with <code>configurable: false</code> is invalid within a <code>selector</code> property.
+An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
 
-The tile will not raise any validation errors, however during the pre-deploy check the following error will surface:
+The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
+
 <pre>
 {
   "pre_deploy_check": {
     ...
     "properties": [
       {
-        "name": ".properties.some-cert-property",
+        "name": ".properties.EXAMPLE-CERT-PROPERTY",
         "type": "rsa_cert_credentials",
         "errors": [
           "can't be blank",
@@ -71,3 +72,4 @@ The tile will not raise any validation errors, however during the pre-deploy che
   }
 }
 </pre>
+Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
