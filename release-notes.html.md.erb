@@ -19,7 +19,7 @@ New features and changes in this release:
 
 ### <a id="domain-style-url"></a> Tile Developers Can Use Domain-Style URLs for S3-Compatible Blobstores
 
-A `use_path_style` property allows tile developers to optionally enable virtual-hosted-style, or domain-style, URLs for S3-compatible blobstores in the BlobstoreVerifier. 
+A `use_path_style` property allows tile developers to optionally enable virtual-hosted-style, or domain-style, URLs for S3-compatible blobstores in the BlobstoreVerifier.
 
 By default, the `use_path_style` property is `true`, which means that the blobstore uses path-style URLs. To use domain-style URLs, set `use_path_style` to `false`.
 
@@ -29,15 +29,15 @@ For more information about the end of support for path-style S3 bucket URLs, see
 
 For more information about the difference between path-style and virtual-hosted-style URLs, see [Virtual Hosting of Buckets](https://docs.aws.amazon.com/AmazonS3/latest/dev/VirtualHosting.html) in the AWS documentation.
 
-### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Ops Manager Bulk Rotation of Certificates 
+### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Ops Manager Bulk Rotation of Certificates
 
 Ops Manager v2.9 invokes CredHub Maestro to perform the bulk rotation of various CAs
 and certificates within a foundation.
 
 To ensure compatibility with Ops Manager API certificate rotation
 and CredHub Maestro, you must use the concatenated
-`LEAF-CERTIFICATE-NAME.ca` format when referencing CAs 
-that sign leaf certificates in your tile's property configuration. 
+`LEAF-CERTIFICATE-NAME.ca` format when referencing CAs
+that sign leaf certificates in your tile's property configuration.
 Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
 
 The `.ca` accessor format returns a concatenated version of the CA,
@@ -46,3 +46,33 @@ that jobs using leaf certificates do not lose trusted state during CA rotation
 and results in the least amount of downtime for your tile's services during certificate rotation.
 
 For more information and configuration examples, see [Reference Existing CAs and Certificates in CredHub Variables](create-credhub-vars.html#credhub-ca-refs).
+
+## <a id="known-issues"></a> Known Issues
+
+Known issues in this release that may affect tile development for partners:
+
+### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
+
+An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
+
+The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
+
+<pre>
+{
+  "pre_deploy_check": {
+    ...
+    "properties": [
+      {
+        "name": ".properties.EXAMPLE-CERT-PROPERTY",
+        "type": "rsa_cert_credentials",
+        "errors": [
+          "can't be blank",
+          "can't be blank"
+        ]
+      }
+    ],
+    ...
+  }
+}
+</pre>
+Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
