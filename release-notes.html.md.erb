@@ -44,3 +44,30 @@ The `.ca` accessor format returns a concatenated version of the CA, which includ
 
 For more information and configuration examples, see [Reference Existing CAs and Certificates in CredHub Variables](create-credhub-vars.html#credhub-ca-refs).
 
+## <a id="known-issues"></a> Known Issues
+
+Known issues in this release that may affect tile development for partners:
+
+### <a id="non-configurable-certs"></a> Non-configurable certs invalid within a selector
+
+A <code>rsa_cert_credentials</code> property with <code>configurable: false</code> is invalid within a <code>selector</code> property.
+
+The tile will not raise any validation errors, however during the pre-deploy check the following error will surface:
+<pre>
+{
+  "pre_deploy_check": {
+    ...
+    "properties": [
+      {
+        "name": ".properties.some-cert-property",
+        "type": "rsa_cert_credentials",
+        "errors": [
+          "can't be blank",
+          "can't be blank"
+        ]
+      }
+    ],
+    ...
+  }
+}
+</pre>
