@@ -23,18 +23,19 @@ There are no changes in Ops Manager v2.10 that directly affect tile development 
 
 Known issues in this release that may affect tile development for partners:
 
-### <a id="non-configurable-certs"></a> Non-configurable certs invalid within a selector
+### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
 
-A <code>rsa_cert_credentials</code> property with <code>configurable: false</code> is invalid within a <code>selector</code> property.
+An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
 
-The tile will not raise any validation errors, however during the pre-deploy check the following error will surface:
+The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
+
 <pre>
 {
   "pre_deploy_check": {
     ...
     "properties": [
       {
-        "name": ".properties.some-cert-property",
+        "name": ".properties.EXAMPLE-CERT-PROPERTY",
         "type": "rsa_cert_credentials",
         "errors": [
           "can't be blank",
@@ -46,3 +47,4 @@ The tile will not raise any validation errors, however during the pre-deploy che
   }
 }
 </pre>
+Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
