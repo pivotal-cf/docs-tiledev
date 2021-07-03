@@ -35,13 +35,13 @@ Cloud Foundry is primarily a cloud native application platform. To understand ho
 
 Most value-add integrations are done by exposing your software to customer applications as services. To understand the service concepts, and what a service integration looks like, read the following documentation:
 
-- [Services Overview](https://docs.pivotal.io/application-service/devguide/services/index.html) explains how developers provision and use existing services in their apps.
+- [Services](https://docs.pivotal.io/application-service/services/overview.html) explains how developers provision and use existing services in their apps.
 - [Cloud Foundry Service Brokers and <%= vars.product_name %> Tiles](https://docs.pivotal.io/svc-sdk/odb/about.html#cf-broker) briefly describes the two main elements of <%= vars.product_name %> service integration: the service broker API, which connects the service to <%= vars.product_name %> internally by taking commands from the Cloud Controller; and the tile, a packaged interface that cloud operators use to install and configure a service within <%= vars.product_name %>.
 - [Custom Services](https://docs.pivotal.io/application-service/services/index.html) explains how service authors package their service as a [Managed Service](./managed.html) that is available for use by <%= vars.product_name %> operators and developers, and which runs locally on <%= vars.product_name %> rather than running remotely.
 
 ## <a id="buildpacks"></a> Buildpacks
 
-When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code. 
+When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code.
 Supplying buildpacks also provides a language-agnostic way to inject your code into the application container image.
 
 - [Application Staging Process](https://docs.pivotal.io/application-service/concepts/how-applications-are-staged.html) explains how <%= vars.product_name %> packages and deploys apps in containers with buildpacks so that they can run on multiple VMs interchangeably.
