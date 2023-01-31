@@ -1,0 +1,73 @@
+---
+template_variables:
+  book_title: VMware Tanzu Documentation
+  book_title_short: VMware Tanzu Docs
+  url_path: https://docs.pivotal.io/tiledev
+  title: <span class="title-deemph">VMware Tanzu</span> Documentation
+  title_image: images/icon-p-green.jpg
+  hero_text: "Detailed documentation to help you install, understand, and succeed with VMware's enterprise-grade software."
+  product_dev_local: Pivotal Dev
+  product_link: <div class="header-item"><a href="https://network.pivotal.io/products/pivotal-cf">Back to Product Page</a></div>
+  product_url: https://network.pivotal.io/products/pivotal-cf
+  support_link: <a href="https://pivotal.io/support" target="_blank">Support</a>
+  support_call_to_action: <a href="https://pivotal.io/support" target="_blank">Need Support?</a>
+  support_url: https://pivotal.io/support
+  path_to_partials: /pcf
+  use_global_header: true
+  global_header_product_href: https://network.pivotal.io/
+  global_header_product_link_text: Downloads
+  current_major_version: "2.9"
+  v_major_version: "v2.9"
+  api_version: "259"
+  ga_account_id: UA-39702075-1
+  gtm_account_id: GTM-MM86KCJ
+
+  # Tanzu product variables
+  platform_name: Ops Manager
+  platform_old: Pivotal Cloud Foundry
+  platform_code: PCF
+  product_name_lc: pcf
+  app_runtime_full: VMware Tanzu Application Service for VMs
+  app_runtime_abbr: TAS for VMs
+  app_runtime_abbr_lc: tas
+  segment_runtime_full: Isolation Segment
+  k8s_runtime_full: Tanzu Kubernetes Grid Integrated Edition
+  k8s_runtime_abbr: TKGI
+  windows_runtime_full: VMware Tanzu Application Service for VMs &#91;Windows&#93;
+  windows_runtime_abbr: TAS for VMs &#91;Windows&#93;
+  ops_manager_first: VMware Tanzu Operations Manager (Ops Manager)
+  ops_manager_full: VMware Tanzu Operations Manager
+  ops_manager: Ops Manager
+  company_name: VMware
+
+# Pivotal variables - v2.8 and earlier
+  platform_name_pivotal: Pivotal Platform
+  platform_old_pivotal: Pivotal Cloud Foundry
+  platform_code_pivotal: PCF
+  product_name_lc_pivotal: pcf
+  app_runtime_full_pivotal: Pivotal Application Service
+  app_runtime_pivotal: Application Service
+  app_runtime_abbr_pivotal: PAS
+  app_runtime_abbr_lc_pivotal: pas
+  k8s_runtime_full_pivotal: Enterprise Pivotal Container Service
+  k8s_runtime_pivotal: Enterprise PKS
+  k8s_runtime_abbr_pivotal: PKS
+  windows_runtime_full_pivotal: Pivotal Application Service for Windows
+  windows_runtime_pivotal: Application Service for Windows
+  windows_runtime_abbr_pivotal: PASW
+  ops_manager_full_pivotal: Pivotal Operations Manager
+  ops_manager_pivotal: Ops Manager
+  company_name_pivotal: Pivotal
+
+# Deprecated variables -- replace with current product variables when possible
+  product_name: Pivotal Platform
+  product_runtime: Pivotal Application Service
+  product_short: PAS
+
+# Book content variables
+  buildpacks_link: <a href="https://docs.pivotal.io/application-service/buildpacks/index.html">Buildpacks</a>
+  cli_install_link: <a href="https://docs.pivotal.io/application-service/cf-cli/install-go-cli.html">Installing the cf CLI</a>
+  recommended_by: VMware
+  oss_docs_ref: " in the Cloud Foundry documentation"
+  route_services_config: <h2><a id='enabling-route-services'></a>Enabling Route Services in PAS</h2>You configure route services for your deployment in the **Networking** pane of the PAS tile. For more information, see [Configuring PAS](https://docs.pivotal.io/application-service/customizing/configure-pas.html).
+  route_services_appsman1: <p class="note"><strong>Note</strong>&#58; The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="http://docs.pivotal.io/application-service/console/manage-apps.html#manage-route-services">Manage Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
