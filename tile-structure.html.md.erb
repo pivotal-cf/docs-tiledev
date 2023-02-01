@@ -165,7 +165,7 @@ The tile manifest template defines these subdirectory locations, so they can res
 
 The entire tile directory is a ZIP file, with the `.zip` extension renamed to `.pivotal`.
 
-<pre class='terminal'>
+<pre class="terminal">
 $ file TILE-NAME-TILE-VERSION.pivotal
 p-example-product-1.0.0.pivotal: Zip archive data, at least v1.0 to extract
 </pre>
@@ -181,7 +181,7 @@ Within the tile's `releases` subfolder, the BOSH release exists as a gzipped tar
 
 ### <a id='example-workflow'></a> Example Workflow
 
-<pre class='terminal'>
+<pre class="terminal">
 $ cd example-product
 $ zip -r example-product.pivotal metadata/ migrations/ releases/
 $ unzip -l example-product.pivotal
