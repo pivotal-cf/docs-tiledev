@@ -16,8 +16,9 @@ template_variables:
   use_global_header: true
   global_header_product_href: https://network.pivotal.io/
   global_header_product_link_text: Downloads
-  current_major_version: "2.9"
-  v_major_version: "v2.9"
+  current_major_version: "2-10"
+  dot_major_version: "2.10"
+  v_major_version: "v2.10"
   api_version: "259"
   ga_account_id: UA-39702075-1
   gtm_account_id: GTM-MM86KCJ
