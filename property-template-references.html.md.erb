@@ -996,216 +996,215 @@ Ops Manager does not require tile authors to provide `vm_credentials` in the `pr
 
 <p class="note"><strong>Note:</strong> Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Ops Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.</p>
 
-<pre style="height: 500px; overflow: auto;">
-
-  job_types:
-    - name: web_server
-      resource_label: Web Server
-      templates:
-        - name: web_server
-          release: example-release
-        - name: time_logger
-          release: example-release
-      release: example-release
-      static_ip: 1
-      dynamic_ip: 0
-      single_az_only: true
-      use_stemcell: ubuntu-xenial
-      max_in_flight: 1
-      resource_definitions:
-        - name: ram
-          type: integer
-          configurable: true
-          default: 1024
-        - name: ephemeral_disk
-          type: integer
-          configurable: true
-          default: 2048
-        - name: persistent_disk
-          type: integer
-          configurable: true
-          default: 1024
-          constraints:
-            min: 1024
-        - name: cpu
-          type: integer
-          configurable: true
-          default: 1
-      instance_definition:
-        name: instances
+```
+job_types:
+  - name: web_server
+    resource_label: Web Server
+    templates:
+      - name: web_server
+        release: example-release
+      - name: time_logger
+        release: example-release
+    release: example-release
+    static_ip: 1
+    dynamic_ip: 0
+    single_az_only: true
+    use_stemcell: ubuntu-xenial
+    max_in_flight: 1
+    resource_definitions:
+      - name: ram
+        type: integer
+        configurable: true
+        default: 1024
+      - name: ephemeral_disk
+        type: integer
+        configurable: true
+        default: 2048
+      - name: persistent_disk
+        type: integer
+        configurable: true
+        default: 1024
+        constraints:
+          min: 1024
+      - name: cpu
         type: integer
         configurable: true
         default: 1
-        constraints:
-          max: 1
-        zero_if:
-          property_reference: '.web_server.example_text'
-          property_value: 'magic value'
-          allow_manual_selection_of_zero: false
-      manifest: |
-        generated:
-          root_rsa_certificate: (( $ops_manager.ca_certificate ))
-          rsa_cert_credentials:
-            public_key_pem: (( generated_rsa_cert_credentials.public_key_pem ))
-            cert_and_private_key_pems: (( generated_rsa_cert_credentials.cert_and_private_key_pems ))
-          rsa_pkey_credentials:
-            public_key_pem: (( generated_rsa_pkey_credentials.public_key_pem ))
-            private_key_pem: (( generated_rsa_pkey_credentials.private_key_pem ))
-            public_key_openssh: (( generated_rsa_pkey_credentials.public_key_openssh ))
-            public_key_fingerprint: (( generated_rsa_pkey_credentials.public_key_fingerprint ))
-          salted_credentials:
-            sha512_hashed_password: (( generated_salted_credentials.sha512_hashed_password ))
-            identity: (( generated_salted_credentials.identity ))
-            salt: (( generated_salted_credentials.salt ))
-            password: (( generated_salted_credentials.password ))
-          simple_credentials:
-            identity: (( generated_simple_credentials.identity ))
-            password: (( generated_simple_credentials.password ))
-          secret: (( generated_secret.value ))
-          uuid: (( generated_uuid.value ))
-        configured:
-          string: (( example_string.value ))
-          integer: (( example_migrated_integer.value ))
-          ...
-          record_collection: (( .properties.example_collection.value || [] ))
-          selector: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
-        ops_manager_provided_accessors:
-          name: (( name ))
-          cpu: (( cpu ))
-          ram: (( ram ))
-          ephemeral_disk: (( ephemeral_disk ))
-          persistent_disk: (( persistent_disk ))
-          instances: (( instances ))
-          any_instances: (( any_instances ))
-          subnet_cidrs: (( subnet_cidrs ))
-      property_blueprints:
-      - name: static_ips
-        type: ip_ranges
-        configurable: true
-        optional: true
-      - name: generated_rsa_cert_credentials
-        type: rsa_cert_credentials
-      - name: generated_rsa_pkey_credentials
-        type: rsa_pkey_credentials
-      - name: generated_salted_credentials
-        type: salted_credentials
-      - name: generated_simple_credentials
-        type: simple_credentials
-      - name: generated_secret
-        type: secret
-      - name: generated_uuid
-        type: uuid
-      - name: example_string_with_placeholder
-        type: string
-        configurable: true
-        optional: true
-        placeholder: 'Configure me!'
-      - name: example_string
-        type: string
-        configurable: true
-        default: 'Hello world'
-        constraints:
-        - must_match_regex: '^[^!@#$%^&*()]*$'
-          error_message: 'This name cannot contain capital digits.'
-        - must_match_regex: '^[^0-9]*$'
-          error_message: 'This name cannot contain digits.'
-      - name: example_migrated_integer
-        type: integer
-        configurable: true
-        default: 1
-      - name: example_boolean
-        type: boolean
-        configurable: true
-        default: true
-      - name: example_dropdown
-        type: dropdown_select
-        configurable: true
-        default: kiwi
-        options:
-          - name: kiwi
-            label: 'label for kiwi'
-          - name: lime
-            label: 'label for lime'
-          - name: avocado
-            label: 'label for avocado'
-      - name: example_domain
-        type: domain
-        configurable: true
-        default: www.example.com
-      - name: example_wildcard_domain
-        type: wildcard_domain
-        configurable: true
-        default: 'example.com'
-      - name: example_string_list
-        type: string_list
-        configurable: true
-        default: 'a,list,of,strings'
-      - name: example_text
-        type: text
-        configurable: true
-        default: 'some_text'
-      - name: example_ldap_url
-        type: ldap_url
-        configurable: true
-        default: 'ldap://example.com'
-      - name: example_email
-        type: email
-        configurable: true
-        default: foo@example.com
-      - name: example_http_url
-        type: http_url
-        configurable: true
-        default: 'http://www.example.com'
-      - name: example_ip_address
-        type: ip_address
-        configurable: true
-        default: '192.168.0.1'
-      - name: example_ip_ranges
-        type: ip_ranges
-        configurable: true
-        default: '1.1.1.1-1.1.1.4,2.2.2.1-2.2.2.4'
-      - name: example_multi_select_options
-        type: multi_select_options
-        configurable: true
-        default: ['earth', 'jupiter']
-        options:
-          - name: mercury
-            label: 'label for mercury'
-          - name: venus
-            label: 'label for venus'
-          - name: earth
-            label: 'label for earth'
-          - name: mars
-            label: 'label for mars'
-          - name: jupiter
-            label: 'label for jupiter'
-          - name: saturn
-            label: 'label for saturn'
-          - name: uranus
-            label: 'label for uranus'
-          - name: neptune
-            label: 'label for neptune'
-      - name: example_network_address_list
-        type: network_address_list
-        configurable: true
-        default: '1.1.1.1,example.com,foo.bar.example.com'
-      - name: example_network_address
-        type: network_address
-        configurable: true
-        default: '1.1.1.1'
-      - name: example_port
-        type: port
-        configurable: true
-        default: 1111
-      - name: example_smtp_authentication
-        type: smtp_authentication
-        configurable: true
-        default: plain
-      - name: client_certificate
-        type: ca_certificate
-        configurable: true
-        optional: true
-</pre>
+    instance_definition:
+      name: instances
+      type: integer
+      configurable: true
+      default: 1
+      constraints:
+        max: 1
+      zero_if:
+        property_reference: '.web_server.example_text'
+        property_value: 'magic value'
+        allow_manual_selection_of_zero: false
+    manifest: |
+      generated:
+        root_rsa_certificate: (( $ops_manager.ca_certificate ))
+        rsa_cert_credentials:
+          public_key_pem: (( generated_rsa_cert_credentials.public_key_pem ))
+          cert_and_private_key_pems: (( generated_rsa_cert_credentials.cert_and_private_key_pems ))
+        rsa_pkey_credentials:
+          public_key_pem: (( generated_rsa_pkey_credentials.public_key_pem ))
+          private_key_pem: (( generated_rsa_pkey_credentials.private_key_pem ))
+          public_key_openssh: (( generated_rsa_pkey_credentials.public_key_openssh ))
+          public_key_fingerprint: (( generated_rsa_pkey_credentials.public_key_fingerprint ))
+        salted_credentials:
+          sha512_hashed_password: (( generated_salted_credentials.sha512_hashed_password ))
+          identity: (( generated_salted_credentials.identity ))
+          salt: (( generated_salted_credentials.salt ))
+          password: (( generated_salted_credentials.password ))
+        simple_credentials:
+          identity: (( generated_simple_credentials.identity ))
+          password: (( generated_simple_credentials.password ))
+        secret: (( generated_secret.value ))
+        uuid: (( generated_uuid.value ))
+      configured:
+        string: (( example_string.value ))
+        integer: (( example_migrated_integer.value ))
+        ...
+        record_collection: (( .properties.example_collection.value || [] ))
+        selector: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
+      ops_manager_provided_accessors:
+        name: (( name ))
+        cpu: (( cpu ))
+        ram: (( ram ))
+        ephemeral_disk: (( ephemeral_disk ))
+        persistent_disk: (( persistent_disk ))
+        instances: (( instances ))
+        any_instances: (( any_instances ))
+        subnet_cidrs: (( subnet_cidrs ))
+    property_blueprints:
+    - name: static_ips
+      type: ip_ranges
+      configurable: true
+      optional: true
+    - name: generated_rsa_cert_credentials
+      type: rsa_cert_credentials
+    - name: generated_rsa_pkey_credentials
+      type: rsa_pkey_credentials
+    - name: generated_salted_credentials
+      type: salted_credentials
+    - name: generated_simple_credentials
+      type: simple_credentials
+    - name: generated_secret
+      type: secret
+    - name: generated_uuid
+      type: uuid
+    - name: example_string_with_placeholder
+      type: string
+      configurable: true
+      optional: true
+      placeholder: 'Configure me!'
+    - name: example_string
+      type: string
+      configurable: true
+      default: 'Hello world'
+      constraints:
+      - must_match_regex: '^[^!@#$%^&*()]*$'
+        error_message: 'This name cannot contain capital digits.'
+      - must_match_regex: '^[^0-9]*$'
+        error_message: 'This name cannot contain digits.'
+    - name: example_migrated_integer
+      type: integer
+      configurable: true
+      default: 1
+    - name: example_boolean
+      type: boolean
+      configurable: true
+      default: true
+    - name: example_dropdown
+      type: dropdown_select
+      configurable: true
+      default: kiwi
+      options:
+        - name: kiwi
+          label: 'label for kiwi'
+        - name: lime
+          label: 'label for lime'
+        - name: avocado
+          label: 'label for avocado'
+    - name: example_domain
+      type: domain
+      configurable: true
+      default: www.example.com
+    - name: example_wildcard_domain
+      type: wildcard_domain
+      configurable: true
+      default: 'example.com'
+    - name: example_string_list
+      type: string_list
+      configurable: true
+      default: 'a,list,of,strings'
+    - name: example_text
+      type: text
+      configurable: true
+      default: 'some_text'
+    - name: example_ldap_url
+      type: ldap_url
+      configurable: true
+      default: 'ldap://example.com'
+    - name: example_email
+      type: email
+      configurable: true
+      default: foo@example.com
+    - name: example_http_url
+      type: http_url
+      configurable: true
+      default: 'http://www.example.com'
+    - name: example_ip_address
+      type: ip_address
+      configurable: true
+      default: '192.168.0.1'
+    - name: example_ip_ranges
+      type: ip_ranges
+      configurable: true
+      default: '1.1.1.1-1.1.1.4,2.2.2.1-2.2.2.4'
+    - name: example_multi_select_options
+      type: multi_select_options
+      configurable: true
+      default: ['earth', 'jupiter']
+      options:
+        - name: mercury
+          label: 'label for mercury'
+        - name: venus
+          label: 'label for venus'
+        - name: earth
+          label: 'label for earth'
+        - name: mars
+          label: 'label for mars'
+        - name: jupiter
+          label: 'label for jupiter'
+        - name: saturn
+          label: 'label for saturn'
+        - name: uranus
+          label: 'label for uranus'
+        - name: neptune
+          label: 'label for neptune'
+    - name: example_network_address_list
+      type: network_address_list
+      configurable: true
+      default: '1.1.1.1,example.com,foo.bar.example.com'
+    - name: example_network_address
+      type: network_address
+      configurable: true
+      default: '1.1.1.1'
+    - name: example_port
+      type: port
+      configurable: true
+      default: 1111
+    - name: example_smtp_authentication
+      type: smtp_authentication
+      configurable: true
+      default: plain
+    - name: client_certificate
+      type: ca_certificate
+      configurable: true
+      optional: true
+```
 
 ### <a id='job-name'></a> name
 
