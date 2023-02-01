@@ -1,66 +1,95 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a single string value selected from allowed disk types.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: false,
-    value_accessor_description: <<~DESCRIPTION,
-      Returns a string containing the size of the selected disk in megabytes, e.g. "1024".  If nothing or "Automatic" was specified by the operator,
-      then then this returns the smallest disk that is greater than the <code>default</code> value specified in <code>resource_definitions</code>.
+### <a id="disk-type-dropdown"></a> disk_type_dropdown
+
+This holds a single string value selected from allowed disk types.
+
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> resource_definitions </td>
+    <td>
+      Optional. An array of objects with the same schema as <code>resource_definitions</code>
+      for <code>job_types</code>.
+      For <code>disk_type_dropdown</code>, <code>resource_definitions</code>
+      should only have one element with <code>name</code> “persistent_disk”.
+      This element can also specify a <code>default</code> which OpsManager uses
+      as a minimum bound when it selects a default value.
+      It can also specify <code>constraints</code>, which can be any set of
+      constraints that can be specified for an integer property.
+      For examples of supported constraint types, see <a href="#integer">integer</a> below.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>
+      Returns a string containing the size of the selected disk in
+      megabytes, for example, “1024”.  If the operator specifies no value or “Automatic”,
+      then this returns the smallest disk that is greater than the <code>default</code>
+      value specified in <code>resource_definitions</code>.
       If no default was specified, then this returns the smallest disk in the catalog.
-      DESCRIPTION
-    value_present_accessor_description: 'Returns true only if a disk type is selected.  If the user has selected "Automatic", <code>value_present?</code> will be false.',
-    additional_property_blueprint_attributes: [
-      {
-        name: 'resource_definitions',
-        description: <<~DESCRIPTION,
-          Optional. An array of objects with the same schema as <code>resource_definitions</code> for <code>job_types</code>.
-          For <code>disk_type_dropdown</code>, <code>resource_definitions</code> should only have one element with <code>name</code> "persistent_disk".
-          This element can also specify a <code>default</code> which OpsManager uses as a minimum bound when it selects a default value.
-          It can also specify <code>constraints</code>, which can be any set of constraints that can be specified for an integer property.
-          For examples of supported constraint types, see <a href='#integer'>integer</a> below.
-        DESCRIPTION
-      }
-    ],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with Disk Types Dropdown',
-          path: 'img/example-disk-type-dropdown-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_disk_type_dropdown
-              type: disk_type_dropdown
-              configurable: true
-              resource_definitions:
-                - name: persistent_disk
-                  default: 4096
-                  constraints:
-                    min: 2048
+    </td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>
+      Returns <code>true</code> only if a disk type is selected. If the user has selected
+      “Automatic”, <code>value_present?</code> will be <code>false</code>.
+    </td>
+  </tr>
+</table>
 
-          form_types:
-            - name: example_form
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.example_disk_type_dropdown
-                  label: 'Example disk_type_dropdown'
-                  description: 'This is an example'
+#### Example
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: "Hello user, I see that your favorite disk size greater than 2 Gb is: (( .properties.example_disk_type_dropdown.value ))."
-        METADATA
-      }
-    ]
-} %>
+```yaml
+property_blueprints:
+  - name: example_disk_type_dropdown
+    type: disk_type_dropdown
+    configurable: true
+    resource_definitions:
+      - name: persistent_disk
+        default: 4096
+        constraints:
+          min: 2048
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_disk_type_dropdown
+        label: 'Example disk_type_dropdown'
+        description: 'This is an example'
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  &lt;&lt;: *job_type_boilerplate
+  templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: "Hello user, I see that your favorite disk size greater than 2 Gb is: (( .properties.example_disk_type_dropdown.value ))."
+```
+
+<img src="img/example-disk-type-dropdown-tile.png" alt="Example Product with Disk Types Dropdown">

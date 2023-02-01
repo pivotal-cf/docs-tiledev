@@ -1,47 +1,75 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a single integer value. Allowed values are 0 through 65535 and null.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns an integer or null.',
-    value_present_accessor_description: 'Returns true if value is not null.',
-    additional_property_blueprint_attributes: [],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with Port',
-          path: 'img/example-port-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_port
-              type: port
-              configurable: true
-              default: 3000
+### <a id="port"></a> port
 
-          form_types:
-            - name: example_port
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.example_port
-                  label: Example Port
-                  description: 'Configure a property of type port'
+This holds a single integer value. Allowed values are 0 through 65535 and null.
 
-          job_types:
-            - name: example-job
-              resource_label: An Example Job
-              <<: *job_type_boilerplate
-              templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: Hello, user. I see your favorite network port is (( .properties.example_port.value )).
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns an integer or null.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if value is not null.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_port
+    type: port
+    configurable: true
+    default: 3000
+
+form_types:
+  - name: example_port
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_port
+        label: Example Port
+        description: 'Configure a property of type port'
+
+job_types:
+  - name: example-job
+    resource_label: An Example Job
+    &lt;&lt;: *job_type_boilerplate
+    templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: Hello, user. I see your favorite network port is (( .properties.example_port.value )).
+```
+
+<img src="img/example-port-tile.png" alt="Example Product with Port">

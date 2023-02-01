@@ -1,99 +1,133 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a single integer value.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns an integer or null.',
-    value_present_accessor_description: 'Returns true if value is an integer.',
-    additional_property_blueprint_attributes: [
-        name: 'constraints',
-        description: 'Constrains which integer values are considered valid. See the below table for all supported constraint types.'
-    ],
-    constraints: [
-      {
-        name: 'max',
-        description: 'Sets the maximum value of the integer.'
-      },
-      {
-        name: 'may_only_be_odd_or_zero',
-        description: 'Sets the integer to only allow odd or zero values.'
-      },
-      {
-        name: 'may_only_increase',
-        description: 'Sets the integer to only increase in value.'
-      },
-      {
-        name: 'min',
-        description: 'Sets the minimum value of the integer.'
-      },
-  
-      {
-        name: 'modulo',
-        description: 'Sets the integer to only be divisable by the given value.'
-      },
-      {
-        name: 'power_of_two',
-        description: 'Sets the integer to only be a power of two.'
-      },
-      {
-        name: 'zero_or_min',
-        description: 'Sets the minimum value of the integer but allows zero.'
-      }
-    ],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with Integer',
-          path: 'img/example-integer-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_integer1
-              type: integer
-              configurable: true
-              default: 9
-              constraints: # the following constraints allow the values 9, 15, and 21
-                min: 8
-                max: 21
-                may_only_increase: true
-                may_only_be_odd_or_zero: true
-                modulo: 3
-            - name: example_integer2 # the following constraints allow the values 8 and 16
-              type: integer
-              configurable: true
-              optional: true
-              constraints:
-                zero_or_min: 5
-                max: 20
-                power_of_two: true
+### <a id="integer"></a> integer
 
-          form_types:
-            - name: example_integer
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.example_integer1
-                  label: Example Integer 1
-                  description: 'Configure a property of type integer'
-                - reference: .properties.example_integer2
-                  label: Example Integer 2
-                  description: 'Configure another property of type integer'
+This holds a single integer value.
 
-          job_types:
-            - name: example-job
-              resource_label: An Example Job
-              <<: *job_type_boilerplate
-              templates:
-              - name: tcp_keepalive
-                release: os-conf
-                manifest: |
-                  tcp_keepalive:
-                    time: (( .properties.example_integer1.value ))
-                    interval: (( .properties.example_integer2.value ))
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+    </td>
+  </tr>
+  <tr>
+    <td> constraints </td>
+    <td>
+      Constrains which integer values are considered valid.
+      See the below table for all supported constraint types.
+    </td>
+  </tr>
+</table>
+
+#### Supported Constraints
+
+<table class="nice">
+  <tr>
+    <td> max </td>
+    <td> Sets the maximum value of the integer. </td>
+  </tr>
+  <tr>
+    <td> may_only_be_odd_or_zero </td>
+    <td> Sets the integer to only allow odd or zero values. </td>
+  </tr>
+  <tr>
+    <td> may_only_increase </td>
+    <td> Sets the integer to only increase in value. </td>
+  </tr>
+  <tr>
+    <td> min </td>
+    <td> Sets the minimum value of the integer. </td>
+  </tr>
+  <tr>
+    <td> modulo </td>
+    <td> Sets the integer to only be divisable by the given value. </td>
+  </tr>
+  <tr>
+    <td> power_of_two </td>
+    <td> Sets the integer to only be a power of two. </td>
+  </tr>
+  <tr>
+    <td> zero_or_min </td>
+    <td> Sets the minimum value of the integer but allows zero. </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns an integer or null.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if value is an integer.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_integer1
+    type: integer
+    configurable: true
+    default: 9
+    constraints: # the following constraints allow the values 9, 15, and 21
+      min: 8
+      max: 21
+      may_only_increase: true
+      may_only_be_odd_or_zero: true
+      modulo: 3
+  - name: example_integer2 # the following constraints allow the values 8 and 16
+    type: integer
+    configurable: true
+    optional: true
+    constraints:
+      zero_or_min: 5
+      max: 20
+      power_of_two: true
+
+form_types:
+  - name: example_integer
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_integer1
+        label: Example Integer 1
+        description: 'Configure a property of type integer'
+      - reference: .properties.example_integer2
+        label: Example Integer 2
+        description: 'Configure another property of type integer'
+
+job_types:
+  - name: example-job
+    resource_label: An Example Job
+    &lt;&lt;: *job_type_boilerplate
+    templates:
+    - name: tcp_keepalive
+      release: os-conf
+      manifest: |
+        tcp_keepalive:
+          time: (( .properties.example_integer1.value ))
+          interval: (( .properties.example_integer2.value ))
+```
+
+<img src="img/example-integer-tile.png" alt="Example Product with Integer">
