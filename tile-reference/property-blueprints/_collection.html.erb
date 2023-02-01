@@ -1,206 +1,245 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds multiple records of a group of custom defined properties.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    additional_default_description: <<~DESC,
-      If specified, the default value must be an array where each item of the array has the keys and values which are appropriate for the property blueprints provided. For the example below, a default value could be:
-      <pre><code>default:
+### <a id="collection"></a> collection
+
+This holds multiple records of a group of custom defined properties.
+
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+      <br><br>
+      If specified, the default value must be an array where each item of the array
+      has the keys and values which are appropriate for the property blueprints provided.
+      For the example below, a default value could be:
+      <pre class="terminal">default:
         - name: sam
           public_key: ssh-rsa AAAAB3NzaC1yc2EAAAAD...
           sudo: true
-      </code></pre>
-      DESC
-    value_accessor_description: <<~DESC,
+      </pre>
+    </td>
+  </tr>
+  <tr>
+    <td> property_blueprints </td>
+    <td>
+      A group of property blueprints that each record will have. Any type and combination
+      of property types can be used except collections and selectors which cannot be nested
+      inside of collections.
+    </td>
+  </tr>
+  <tr>
+    <td> named_manifests </td>
+    <td>
+      An array of objects each containing a <code>name</code> and a <code>manifest</code>.
+      The manifest specifies the YAML which can be used with <code>parsed_manifest(name)</code>
+      where the manifest will be interpolated for each record in the collection.
+      The manifest has a special property level, <code>current_record</code>, which has
+      all the properties in a record of the collection.  The provided example below shows
+      have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
+      together to render a collection in a BOSH manifest.
+    </td>
+  </tr>
+  <tr>
+    <td> Logical Keys for GitOps style workflows </td>
+    <td>
+      <%= vars.ops_manager %> assigns each element of a collection a GUID.
+      The GUID is to track the element lifecycle of deleting, adding, and changing an element.
+      <br><br>
+      The collection element GUIDs differ between Ops Manager environments.
+      This does not allow the ability to create a common configuration between environments.
+      <br><br>
+      To address this issue, newer versions of the Ops Manager CLI uses collection element fields as logical keys.
+      <br><br>
+      The <%= vars.ops_manager %> CLI uses the following fields in collection elements as logical keys:
+      <ul>
+        <li><code>name</code></li>
+        <li><code>key</code></li>
+        <li>Any field ending in <code>name</code></li>
+      </ul>
+      <br>
+      <%= vars.recommended_by %> recommends including a logical key and setting
+      <code>freeze_on_deploy: true</code> in each collection where you want to
+      target “update” and “delete and add” operations separately.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>parsed_manifest(<em>named</em>)</td>
+    <td>
+      An array of interpolated YAML elements (often objects, but could be strings or numbers).
+      Where each element of the array is an interpolation of the <code>named_manifest</code> for each record.
+    </td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>
       An array of objects whose keys are the property names specified under <code>property_blueprints</code>,
-      and whose values are the <code>.value</code> for each property. For example, if a collection \"albums\"
+      and whose values are the <code>.value</code> for each property. For example, if a collection “albums”
       had properties: title (string) and explicit (boolean), <code>(( albums.value ))</code> would render:
-      <pre><code>[\n&nbsp;&nbsp;{title: 'album-one', explicit: true},\n&nbsp;&nbsp;{title: 'album-two', explicit: false}\n]</code></pre>
-      DESC
-    value_present_accessor_description: nil, # collections do not support `.value_present?`
-    additional_property_blueprint_attributes: [
-      {
-        name: 'property_blueprints',
-        description: <<~DESC,
-          A group of property blueprints that each record will have. Any type and combination
-          of property types can be used except collections and selectors which cannot be nested
-          inside of collections.
-          DESC
-      },
-      {
-        name: 'named_manifests',
-        description: <<~DESC,
-          An array of objects each containing a <code>name</code> and a <code>manifest</code>.
-          The manifest specifies the YAML which can be used with <code>parsed_manifest(name)</code>
-          where the manifest will be interpolated for each record in the collection.
-          The manifest has a special property level, <code>current_record</code>, which has
-          all the properties in a record of the collection.  The provided example below shows
-          have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
-          together to render a collection in a BOSH manifest.
-          DESC
-      },
-      {
-        name: 'Logical Keys for GitOps style workflows',
-        description: <<~DESC,
-          Ops Manager assigns each element of a collection a GUID. The GUID is to track the element lifecycle of deleting, adding, and changing an element.<br><br>
-          The collection element GUIDs differ between Ops Manager environments. This does not allow the ability to create a common configuration between environments.
-          <br><br>
-          To address this issue, newer versions of the Ops Manager CLI uses collection element fields as logical keys.
-          <br><br>
-          The Ops Manager CLI uses the following fields in collection elements as logical keys:
-          <ul><li><code>name</code></li>
-          <li><code>key</code></li>
-          <li>Any field ending in <code>name</code></li></ul>
-          <br>
-          VMware recommends including a logical key and setting <code>freeze_on_deploy: true</code> in each collection where you want to target
-          “update” and “delete and add” operations separately.
-          DESC
-      }
-    ],
-    additional_accessors: [
-      {
-        name: 'parsed_manifest(<em>named</em>)',
-        description: <<~DESC,
-          An array of interpolated YAML elements (often objects, but could be strings or numbers).
-          Where each element of the array is an interpolation of the <code>named_manifest</code> for
-          each record.
-        DESC
-      }
-    ],
-    examples: [
-      {
-        name: 'Example using `.value` accessor',
-        image: {
-          name: 'Example Product with a Collection',
-          path: 'img/example-collection-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: users_to_add
-              type: collection
-              configurable: true
-              property_blueprints:
-                - name: name
-                  type: string
-                  configurable: true
-                - name: public_key
-                  type: string
-                  configurable: true
-                - name: sudo
-                  type: boolean
-                  configurable: true
+      <pre class="terminal">
+      [
+      &nbsp;&nbsp;{title: 'album-one', explicit: true},
+      &nbsp;&nbsp;{title: 'album-two', explicit: false}
+      ]
+      </pre>
+    </td>
+  </tr>
+</table>
 
-          form_types:
-            - name: example_form
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.users_to_add
-                  label: 'Users to add'
-                  description: 'will added to deployed VM'
-                  property_inputs:
-                    - reference: name
-                      label: Username
-                      description: username of the added user
-                    - reference: public_key
-                      label: Public key
-                      description: RSA public key used to SSH onto the VM
-                    - reference: sudo
-                      label: make sudoer
-                      description: if checked, user will be able to sudo
+#### Example using <code>.value</code> accessor
 
-          job_types:
-            - name: example-job
-              resource_label: An Example Job
-              <<: *job_type_boilerplate
-              templates:
-                - name: user_add
-                  release: os-conf
-                  manifest: |
-                    users: ((.properties.users_to_add.value))
-        METADATA
-        manifest_snippet: <<~MANIFEST_SNIPPET,
-          ...
-          instance_groups:
-          - name: example-job
-            jobs:
-            - name: user_add
-              release: os-conf
-              ...
-              properties:
-                users:
-                - name: tom
-                  public_key: ssh-rsa MFwwDQYJKoZIhvcNAQEBBQ...
-                  sudo: false
-                - name: sameer
-                  public_key: ssh-rsa MFwwDQYJKoZIhvcNAQEBBQ...
-                  sudo: true
-          ...
-        MANIFEST_SNIPPET
-      },
-      {
-        name: 'Example with `.parsed_manifest(name)`',
-        image: {
-          name: 'Example Product with a Collection',
-          path: 'img/example-tile-with-collection-with-parsed-manifest.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: sysctls
-              type: collection
-              configurable: true
-              property_blueprints:
-                - name: setting_name
-                  type: string
-                  configurable: true
-                - name: setting_value
-                  type: string
-                  configurable: true
-              named_manifests:
-                - name: name_value_format
-                  manifest: (( current_record.setting_name.value ))=(( current_record.setting_value.value ))
+```yaml
+property_blueprints:
+  - name: users_to_add
+    type: collection
+    configurable: true
+    property_blueprints:
+      - name: name
+        type: string
+        configurable: true
+        freeze_on_deploy: true
+      - name: public_key
+        type: string
+        configurable: true
+      - name: sudo
+        type: boolean
+        configurable: true
 
-          form_types:
-            - name: example_form
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.sysctls
-                  label: 'Custom sysctls'
-                  description: 'sysctl configuration settings to be placed in /etc/sysctl.d'
-                  property_inputs:
-                    - reference: setting_name
-                      label: Setting name
-                      description: the sysctl setting name, e.g. net.core.somaxconn
-                    - reference: setting_value
-                      label: Setting value
-                      description: value for this sysctl setting
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.users_to_add
+        label: 'Users to add'
+        description: 'will added to deployed VM'
+        property_inputs:
+          - reference: name
+            label: Username
+            description: username of the added user
+          - reference: public_key
+            label: Public key
+            description: RSA public key used to SSH onto the VM
+          - reference: sudo
+            label: make sudoer
+            description: if checked, user will be able to sudo
 
-          job_types:
-            - name: example-job
-              resource_label: An Example Job
-              <<: *job_type_boilerplate
-              templates:
-                - name: sysctl
-                  release: os-conf
-                  manifest: |
-                    sysctl: (( .properties.sysctls.parsed_manifest(name_value_format) ))
-        METADATA
-        manifest_snippet: <<~MANIFEST_SNIPPET,
-          ...
-          instance_groups:
-          - name: example-job
-            jobs:
-            - name: sysctl
-              release: os-conf
-              ...
-              properties:
-                sysctl:
-                - foo=bar
-                - fooz=baz
-          ...
-        MANIFEST_SNIPPET
-      }
-    ],
-} %>
+job_types:
+  - name: example-job
+    resource_label: An Example Job
+    &lt;&lt;: *job_type_boilerplate
+    templates:
+      - name: user_add
+        release: os-conf
+        manifest: |
+          users: ((.properties.users_to_add.value))
+```
+
+<img src="img/example-collection-tile.png" alt="Example Product with a Collection">
+
+##### Resulting manifest snippet
+
+```yaml
+...
+instance_groups:
+- name: example-job
+  jobs:
+  - name: user_add
+    release: os-conf
+    ...
+    properties:
+      users:
+      - name: tom
+        public_key: ssh-rsa MFwwDQYJKoZIhvcNAQEBBQ...
+        sudo: false
+      - name: sameer
+        public_key: ssh-rsa MFwwDQYJKoZIhvcNAQEBBQ...
+        sudo: true
+...
+```
+
+#### Example with <code>.parsed_manifest(name)</code>
+
+```yaml
+property_blueprints:
+  - name: sysctls
+    type: collection
+    configurable: true
+    property_blueprints:
+      - name: setting_name
+        type: string
+        configurable: true
+        freeze_on_deploy: true
+      - name: setting_value
+        type: string
+        configurable: true
+    named_manifests:
+      - name: name_value_format
+        manifest: (( current_record.setting_name.value ))=(( current_record.setting_value.value ))
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.sysctls
+        label: 'Custom sysctls'
+        description: 'sysctl configuration settings to be placed in /etc/sysctl.d'
+        property_inputs:
+          - reference: setting_name
+            label: Setting name
+            description: the sysctl setting name, e.g. net.core.somaxconn
+          - reference: setting_value
+            label: Setting value
+            description: value for this sysctl setting
+
+job_types:
+  - name: example-job
+    resource_label: An Example Job
+    &lt;&lt;: *job_type_boilerplate
+    templates:
+      - name: sysctl
+        release: os-conf
+        manifest: |
+          sysctl: (( .properties.sysctls.parsed_manifest(name_value_format) ))
+```
+
+<img src="img/example-tile-with-collection-with-parsed-manifest.png" alt="Example Product with a Collection">
+
+##### Resulting manifest snippet
+
+```yaml
+...
+instance_groups:
+- name: example-job
+  jobs:
+  - name: sysctl
+    release: os-conf
+    ...
+    properties:
+      sysctl:
+      - foo=bar
+      - fooz=baz
+...
+```
