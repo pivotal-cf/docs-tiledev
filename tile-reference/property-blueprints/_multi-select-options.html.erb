@@ -70,7 +70,7 @@ form_types:
 job_types:
   - name: example-job
     resource_label: An Example Job
-    &lt;&lt;: *job_type_boilerplate
+    <<: *job_type_boilerplate
     templates:
     - name: modprobe
       release: os-conf
