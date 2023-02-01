@@ -1,66 +1,90 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds single string value selected from allowed vm_types.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: false,
-    value_accessor_description: 'Returns a string which is the name of the selected VM type.',
-    value_present_accessor_description: 'Returns true if value is a non-empty string.',
-    additional_property_blueprint_attributes: [
-        {
-            name: 'resource_definitions',
-            description: <<~DESCRIPTION,
-          Optional. An array of objects with the same schema as <code>resource_definitions</code> for <code>job_types</code>.
-          For <code>vm_type_dropdown</code>, <code>resource_definitions</code> can have elements with <code>name</code> "ram", "cpu", or "ephemeral_disk".
-          This element can also specify a <code>default</code> which OpsManager uses as a minimum bound when it selects a default value.
-          It can also specify <code>constraints</code>, which can be any set of constraints that can be specified for an integer property.
-          For examples of supported constraint types, see <a href='#integer'>integer</a> above.
-        DESCRIPTION
-        }
-    ],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with VM Types Dropdown',
-          path: 'img/example-vm-type-dropdown-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_vm_type_dropdown
-              type: vm_type_dropdown
-              configurable: true
-              resource_definitions:
-              - name: ram
-                default: 4096
-              - name: cpu
-                default: 1
-              - name: ephemeral_disk
-                default: 4096
-                constraints:
-                  min: 2048
+### <a id="vm-type-drowdown"></a> vm_type_dropdown
 
-          form_types:
-            - name: example_vm_type_dropdown
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.example_vm_type_dropdown
-                  label: Example VM Type Dropdown
-                  description: 'Configure a property of type vm_type_dropdown'
+This holds single string value selected from allowed vm_types.
 
-          job_types:
-            - name: example-job
-              resource_label: An Example Job
-              <<: *job_type_boilerplate
-              templates:
-                - name: login_banner
-                  release: os-conf
-                  manifest: |
-                    login_banner:
-                      text: Hello. Your chosen VM Type is (( .properties.example_vm_type_dropdown.value )).
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td>resource_definitions</td>
+    <td>
+      Optional. An array of objects with the same schema as <code>resource_definitions</code>
+      for <code>job_types</code>. For <code>vm_type_dropdown</code>, <code>resource_definitions</code>
+      can have elements with <code>name</code> “ram”, “cpu”, or “ephemeral_disk”.
+      This element can also specify a <code>default</code> which OpsManager uses as a
+      minimum bound when it selects a default value.
+      It can also specify <code>constraints</code>, which can be any set of constraints
+      that can be specified for an integer property.
+      For examples of supported constraint types, see <a href="#integer">integer</a> above.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns a string which is the name of the selected VM type.</td>
+  </tr>
+
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if value is a non-empty string.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_vm_type_dropdown
+    type: vm_type_dropdown
+    configurable: true
+    resource_definitions:
+    - name: ram
+      default: 4096
+    - name: cpu
+      default: 1
+    - name: ephemeral_disk
+      default: 4096
+      constraints:
+        min: 2048
+
+form_types:
+  - name: example_vm_type_dropdown
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_vm_type_dropdown
+        label: Example VM Type Dropdown
+        description: 'Configure a property of type vm_type_dropdown'
+
+job_types:
+  - name: example-job
+    resource_label: An Example Job
+    &lt;&lt;: *job_type_boilerplate
+    templates:
+      - name: login_banner
+        release: os-conf
+        manifest: |
+          login_banner:
+            text: Hello. Your chosen VM Type is (( .properties.example_vm_type_dropdown.value )).
+```
+
+<img src="img/example-vm-type-dropdown-tile.png" alt="Example Product with VM Types Dropdown">

@@ -1,72 +1,94 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a single string value.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: false,
-    value_accessor_description: 'Returns the string value or null.',
-    value_present_accessor_description: 'Returns true only if the value is a non-empty string.',
-    additional_property_blueprint_attributes: [
-      {
-        name: 'constraints.must_match_regex',
-        description: <<~DESC
-          A regular expression that the user input must match. Create a validator that runs on the form save event.
-          If the user input does not match the <code>must_match_regex</code> constraint, the form displays the specified <code>error_message</code>.
-          Multiple <code>must_match_regex</code> constraints for a single property blueprint are evaluated in the order listed.
-          See below for an example.
-          DESC
-      },
-      {
-          name: 'constraints.must_be_cron_schedule',
-          description: <<~DESC
-            Creates a validator that ensures the value of the string satisfies a cron schedule expression.
-            If the user input is not a valid cron schedule expression, the form displays the specified <code>error_message</code>.
-            See below for an example.
-            DESC
-      }
-    ],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with String Information',
-          path: 'img/example-string-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_string
-              type: string
-              configurable: true
-              default: 'Karl'
-              constraints:
-              - must_match_regex: '\A[^!@#$%^&*()]*\z'
-                error_message: 'This name cannot contain special characters.'
-              - must_match_regex: '\A[^0-9]*\z'
-                error_message: 'This name cannot contain digits.'
-              - must_be_cron_schedule: true
-                error_message: 'This must be a valid cron schedule expression.'
+### <a id="string"></a> string
 
-          form_types:
-            - name: example_form
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.example_string
-                  label: 'Example string'
-                  description: 'This is an example'
+This holds a single string value.
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: Hello, (( .properties.example_string.value ))! Welcome.
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> constraints.must_match_regex </td>
+    <td>
+      A regular expression that the user input must match.
+      Create a validator that runs on the form save event.
+      If the user input does not match the <code>must_match_regex</code> constraint,
+      the form displays the specified <code>error_message</code>.
+      Multiple <code>must_match_regex</code> constraints for a single property
+      blueprint are evaluated in the order listed. See below for an example.
+    </td>
+  </tr>
+  <tr>
+    <td> constraints.must_be_cron_schedule </td>
+    <td>
+      Creates a validator that ensures the value of the string satisfies a cron schedule expression.
+      If the user input is not a valid cron schedule expression, the form displays
+      the specified <code>error_message</code>. See below for an example.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns the string value or null.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true only if the value is a non-empty string.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_string
+    type: string
+    configurable: true
+    default: 'Karl'
+    constraints:
+    - must_match_regex: 'A[^!@#$%^&amp;*()]*z'
+      error_message: 'This name cannot contain special characters.'
+    - must_match_regex: 'A[^0-9]*z'
+      error_message: 'This name cannot contain digits.'
+    - must_be_cron_schedule: true
+      error_message: 'This must be a valid cron schedule expression.'
+
+form_types:
+  - name: example_form
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_string
+        label: 'Example string'
+        description: 'This is an example'
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  &lt;&lt;: *job_type_boilerplate
+  templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: Hello, (( .properties.example_string.value ))! Welcome.
+```
+
+<img src="img/example-string-tile.png" alt="Example Product with String Information">
