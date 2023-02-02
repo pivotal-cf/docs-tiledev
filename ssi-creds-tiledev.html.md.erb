@@ -20,13 +20,13 @@ To store binding credentials in runtime CredHub, your service tile needs to supp
 
 * Discover the location of runtime CredHub.
 * Provide this CredHub location to the broker app. The service broker uses the provided location to store binding credentials in CredHub.
-* Enable operators to select the SSI credentials option in the tile UI. 
+* Enable operators to select the SSI credentials option in the tile UI.
 
 ### <a id="ssi-vs-internal"></a> Difference between SSI and Internal Service Credentials
 
-SSI credentials, which let apps access services through service instances, are distinct from the credentials that service tiles store in [BOSH CredHub](./credhub.html) for their own internal use. 
+SSI credentials, which let apps access services through service instances, are distinct from the credentials that service tiles store in [BOSH CredHub](./credhub.html) for their own internal use.
 
-When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when %= vars.app_runtime_abbr %> binds an app to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the Cloud Controller (CC) to enable the app to access the service.
+When a service uses SSI credentials, its service broker stores the binding credentials in runtime CredHub. Then, when <%= vars.app_runtime_abbr %> binds an app to an instance of the service, the broker retrieves the credentials from runtime CredHub and delivers them to the Cloud Controller (CC) to enable the app to access the service.
 
 These SSI credentials are different from credentials that the tile uses internally, for example, to give the service broker access to an internal database. <%= vars.app_runtime_abbr %> generates the internal tile credentials for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
 
@@ -63,7 +63,7 @@ Depending on how your tile deploys the service broker app, the service instance 
 In the BOSH release for your tile, edit the deployment manifest `.yml` file so that it contains the BOSH link to CredHub:
 
 ```
-- name: broker      
+- name: broker
   release: my-broker-release
   consumes:
     credhub:
@@ -161,55 +161,57 @@ To enable your service broker to store binding credentials in runtime CredHub an
 1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint for setting the `json` credential type with a user-provided value. See the following example for how to format your API call:
 
     ```
-  curl "https://CREDHUB.INTERNAL_URL:CREDHUB.PORT/api/v1/data" \
-  -X PUT \
-  -d '{
-      "name": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
-      "type": "json",
-      "value": {
-        "uri": "SERVICE-URL",
-        "username": "USERNAME",
-        "password": "PASSWORD"
-      }
-     }' \
-  -H 'Content-type: application/json'
+    curl "https://CREDHUB.INTERNAL_URL:CREDHUB.PORT/api/v1/data" \
+    -X PUT \
+    -d '{
+        "name": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
+        "type": "json",
+        "value": {
+          "uri": "SERVICE-URL",
+          "username": "USERNAME",
+          "password": "PASSWORD"
+        }
+       }' \
+    -H 'Content-type: application/json'
     ```
-  Where:
-  * `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub.
-  * `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
-  * `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
-  * `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
-  * `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
-  * `SERVICE-URL` is the URL of your service.
-  * `USERNAME` and `PASSWORD` are your binding credentials.
+
+    Where:
+
+    * `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub.
+    * `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
+    * `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
+    * `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
+    * `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
+    * `SERVICE-URL` is the URL of your service.
+    * `USERNAME` and `PASSWORD` are your binding credentials.
 
     For further reference, see the [Set Credentials](https://credhub-api.cfapps.io/#set-credentials) section of the CredHub API documentation.
 
 1. Grant your application permission to read the credential from CredHub:
 
-	```
-curl "https://CREDHUB.INTERNAL_URL:CREDHUB.PORT/api/v2/permissions" \
-  -X POST \
-  -d '
-  {
-    "path": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
-    "actor": "mtls-app:APP-GUID"
-    "operations": ["read"]
-  }' \
-  -H "authorization: bearer [TOKEN]" \
-  -H 'content-type: application/json'
-	```
-  Where:
-  * `APP-GUID` is the GUID of the CF application being used
+    ```
+    curl "https://CREDHUB.INTERNAL_URL:CREDHUB.PORT/api/v2/permissions" \
+      -X POST \
+      -d '
+      {
+        "path": "/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME",
+        "actor": "mtls-app:APP-GUID"
+        "operations": ["read"]
+      }' \
+      -H "authorization: bearer [TOKEN]" \
+      -H 'content-type: application/json'
+    ```
+
+    Where `APP-GUID` is the GUID of the CF application being used
 
 1. Modify your service broker so that it returns a reference to the stored credentials in response to the binding request from the CC. Return the credentials as a single key `credhub-ref` with its value formatted as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`. For example, the binding response might look like the following:
 
     ```
-  {
-    "credentials": {
-      "credhub-ref": "/c/example-service-broker/example-service/faa677f5-25cd-4f1e-8921-14a9d5ab48b8/credentials"
+    {
+      "credentials": {
+        "credhub-ref": "/c/example-service-broker/example-service/faa677f5-25cd-4f1e-8921-14a9d5ab48b8/credentials"
+      }
     }
-  }
     ```
 
 <p class="note"><strong>Note:</strong> Java Virtual Machine (JVM) apps can use <a href="https://projects.spring.io/spring-credhub">Spring CredHub</a> to access the CredHub API.</p>
