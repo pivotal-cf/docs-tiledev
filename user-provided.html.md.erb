@@ -27,17 +27,19 @@ To use an external service that has no tile:
 
 1. Create a service instance by running:
 
-	```
-	cf create-user-provided-service YOUR-SERVICE-NAME -p CREDENTIALS
-	```
-	Where:
-	* `YOUR-SERVICE-NAME` is the name of the service instance you want to create.
-	* `CREDENTIALS` is a valid JSON string that contains the URL and credentials necessary to connect to your externally-deployed service.
+    ```
+    cf create-user-provided-service YOUR-SERVICE-NAME -p CREDENTIALS
+    ```
+
+    Where:
+
+    * `YOUR-SERVICE-NAME` is the name of the service instance you want to create.
+    * `CREDENTIALS` is a valid JSON string that contains the URL and credentials necessary to connect to your externally-deployed service.
 
 1. Bind the service instance to their app by running:
 
-	```
-	cf bind-service
-	```
+    ```
+    cf bind-service
+    ```
 
 By doing this, app developers can bind their apps to your service and write all code necessary to access it through a <%= vars.app_runtime_abbr %> service binding.

@@ -8,17 +8,17 @@ This topic discusses product tile migrations, which refers to changing the name 
 
 <p class="note"><strong>Note</strong>: In order to use JS migrations, ensure you are using Ops Manager v1.7 or later.</p>
 
-<p class="note"><strong>Note: </strong>Changing the value of<code>single_az_only</code> for jobs launched by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. Contact <a href="http://support.pivotal.io/">Support</a> for help avoiding this.</p>
+<p class="note"><strong>Note: </strong>Changing the value of <code>single_az_only</code> for jobs launched by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. Contact <a href="http://support.pivotal.io/">Support</a> for help avoiding this.</p>
 
 ## <a id='import'></a>Update Values or Property Names Using JavaScript##
 
 To update a product tile, tile authors must complete the following steps:
 
-1. In a single `.js` file, write JavaScript functions which return a hash of the tile’s properties. 
+1. In a single `.js` file, write JavaScript functions which return a hash of the tile’s properties.
 
-1. Name the file in the format `TIMESTAMP_NAME.js`. TIMESTAMP must be in the form “YYYYMMDDHHMM” to indicate when the author created the migration. NAME is a human-readable name for the migration, for example, `201606150900_example-product.js`. 
+1. Name the file in the format `TIMESTAMP_NAME.js`. `TIMESTAMP` must be in the form “YYYYMMDDHHMM” to indicate when the author created the migration. `NAME` is a human-readable name for the migration, for example, `201606150900_example-product.js`.
 
-1. Copy the `TIMESTAMP_NAME.js` file to the PRODUCT/migrations/v1 directory.
+1. Copy the `TIMESTAMP_NAME.js` file to the `PRODUCT/migrations/v1` directory.
 
 
 ### <a id='js-example'></a>Example JavaScript Migration File###
@@ -121,7 +121,7 @@ Example:
     <tr>
         <td><code>rsa_cert_credentials</code></td>
         <td>Object</td>
-        <td><code>properties['.properties.my-prop'].value = {'private_key_pem' => 'a-private-key', 'cert\_pem' => 'a-cert-pem'}</code></td>
+        <td><code>properties['.properties.my-prop'].value = {'private_key_pem' => 'a-private-key', 'cert_pem' => 'a-cert-pem'}</code></td>
     </tr>
     <tr>
         <td><code>rsa_pkey_credentials</code></td>
@@ -134,7 +134,7 @@ Example:
         <td><code>properties['.properties.my-prop'].value = {'identity' => 'an-identity', 'salt' => 'mortons', 'password' => 'books'}</code></td>
     </tr>
     <tr>
-        <td><code>simple\_credentials</code></td>
+        <td><code>simple_credentials</code></td>
         <td>Object</td>
         <td><code>properties['.properties.my-prop'].value = {'identity' => 'an-identity', 'password' => 'secret'}</code></td>
     </tr>
@@ -164,7 +164,27 @@ Example:
 </table>
 
 
-Single value properties refer to properties whose type are any of the following: boolean, ca_certificate, domain, dropdown_select, email, http_url, integer, ip_address, ip_ranges, ldap_url, multi_select_options, network_address, network_address_list, port, smtp_authentication, string, string_list, text, uuid.
+Single value properties refer to properties whose type are any of the following:
+
+- `boolean`
+- `ca_certificate`
+- `domain`
+- `dropdown_select`
+- `email`
+- `http_url`
+- `integer`
+- `ip_address`
+- `ip_ranges`
+- `ldap_url`
+- `multi_select_options`
+- `network_address`
+- `network_address_list`
+- `port`
+- `smtp_authentication`
+- `string`
+- `string_list`
+- `text`
+- `uuid`
 
 Refer to the example properties below when writing your own tile migration JS file:
 
