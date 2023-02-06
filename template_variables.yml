@@ -29,6 +29,7 @@ template_variables:
   platform_old: Pivotal Cloud Foundry
   platform_code: PCF
   product_name_lc: pcf
+  app_runtime_first: VMware Tanzu Application Service for VMs (TAS for VMs)
   app_runtime_full: VMware Tanzu Application Service for VMs
   app_runtime_abbr: TAS for VMs
   app_runtime_abbr_lc: tas
