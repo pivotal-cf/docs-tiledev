@@ -1,6 +1,6 @@
 ## About this repo
 
-This repo is for Tile Developer Guide content only. See the [Tile Developer Guide Book Repo](https://github.com/pivotal-cf/docs-book-tiledev) for the book that publishes this content.
+This repo is for Tile Developer Guide content.
 
 ## Which branch to use?
 
@@ -8,9 +8,10 @@ This repo is for Tile Developer Guide content only. See the [Tile Developer Guid
 
 | Branch name | Use for… |
 |-------------| ------|
-| master      | This is the "edge" build, for Ops Mananger v2.11. It publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-n/  and https://docs.pivotal.io/tiledev/2-n |
-| 2.10     | Ops Manager Tile Dev Guide v2.10 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-10/  and https://docs.pivotal.io/tiledev/2-10 |
-| 2.9     | Ops Manager Tile Dev Guide v2.9 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-9/  and https://docs.pivotal.io/tiledev/2-9 |
+| master      | This is the "edge" build, for Ops Manager v3.1. It publishes to https://docs-staging.vmware.com/en/draft/Tile-Developer-Guide/3.1/tile-dev-guide/index.html |
+| 3.0       | Ops Manager Tile Dev Guide v3.0 publishes to https://docs-staging.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html and https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html |
+| 2.10      | Ops Manager Tile Dev Guide v2.10 publishes to https://docs-staging.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html and https://docs.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html |
+| 2.9       | Ops Manager Tile Dev Guide v2.9 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-9/  and https://docs.pivotal.io/tiledev/2-9 |
 | 2.8       | v2.8 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-8/ and https://docs.pivotal.io/tiledev/2-8 |
 | 2.7       | v2.7 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-7/ and https://docs.pivotal.io/tiledev/2-7 |
 | 2.6       | v2.6 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-6/ and https://docs.pivotal.io/tiledev/2-6 |
@@ -29,136 +30,88 @@ List of terms that we want to use consistently in the doc:
 + The Tile Dashboard–for the UI/product as a whole. For example, "Log in to the Tile Dashboard. [MB 2018.07.11]
 + Tile Dashboard CI–for the subsystem of the Tile Dashboard that does the automated testing. For example, "Tile Dashboard CI runs any post-deploy errands that your tile has defined." [MB 2018.07.11]
 
+## Releasing a New Minor Version
 
-## VMware Tanzu Services Documentation Template
+Because **master** is the latest and greatest documentation, the process would be to cut a **x.x** branch
+for the version that **master** was targeting during that time.
 
-This template helps VMware Tanzu development teams prepare documentation for VMware Tanzu services that appear on [VMware Tanzu Network](https://network.pivotal.io/).
+After this point, **master** will then be the target for the next version of this product.
 
-## <a id='overview'></a>Overview
+## Partials
 
-Every VMware Tanzu service has (or should have) documentation on the main VMware Tanzu documentation site, [docs.pivotal.io](http://docs.pivotal.io) under **VMware Tanzu Services**.
+Cross-product partials for these docs are single sourced from the [Docs Partials](https://github.com/pivotal-cf/docs-partials) repository.
 
-### <a id='template'></a>How To Use This Template
+## Contributing to Documentation
 
-You can use this template to develop documentation for a new VMware Tanzu service. It includes sections for a Product Snapshot, prerequisites, instructions for installation and use, release notes, license information, and other generally useful and expected documentation.
+If there is some documentation to add for an unreleased patch version of these docs, then create a branch off of the live branch
+you intend to modify and create a pull request against that branch.
+After the version that change is targeting is released, the pull request can be merged and will be live
+the next time a documentation deployment occurs.
 
-To begin using this repo to develop your documentation, perform the following steps:
+If the documentation is meant to be target several released versions,
+then you will need to:
 
-1. Clone this repo onto your local machine.
-1. Work your way through each topic, replacing the placeholders in ALL-CAPS and following the instructions in **bold**.
-1. Complete the subnav by replacing the placeholders in ALL-CAPS in the subnav file at `book/master_middleman/source/subnavs/service_subnav.erb` in this repo.
-1. View your documentation as a live local site in a browser, by following the steps below in the [How To Use Bookbinder To View Your Docs](#bookbinder) section.
-1. When you've finished your documentation, push your docs up to the remote and email the Docs Team at cf-docs@pivotal.io.
+- create a pull request for each individual minor version
+- or ask the technical writer to cherry-pick to particular branches/versions.
 
-### <a id='bookbinder'></a>How To Use Bookbinder To View Your Docs
+For instructions on how to create a pull request on a branch and instructions on how to create a
+pull request using a fork, see
+[Creating a PR](https://docs-wiki.sc2-04-pcf1-apps.oc.vmware.com/wiki/external/create-pr.html)
+in the documentation team wiki.
 
-[Bookbinder](https://github.com/pivotal-cf/bookbinder/blob/master/README.md) is a command-line utility for stitching Markdown docs into a hostable web app. The VMware Tanzu Docs Team uses Bookbinder to publish our docs site, but you can also use Bookbinder to view a live version of your documentation on your local machine.
+## Publishing Docs
 
-Bookbinder draws the content for the site from `docs-content`, the subnav from `docs-book`, and various layout configuration and assets from `docs-layout`.
+- [docworks](https://docworks.vmware.com/) is the main tool for managing docs used by writers.
+- [docsdash](https://docsdash.vmware.com/) is a deployment UI which manages the promotion from
+staging to pre-prod to production. The process below describes how to upload our docs to staging,
+replacing the publication with the same version.
 
-To use Bookbinder to view your documentation, perform the following steps:
+### Prepare Markdown Files
 
-1. On your local machine, `cd` into `docs-book` in the cloned repo.
-1. Run `bundle install` to make sure you have all the necessary gems installed.
-1. Build your documentation site with `bookbinder` in one of the two following ways:
-	* Run `bookbinder watch` to build an interactive version of the docs and navigate to `localhost:4567/myservice/` in a browser. (It may take a moment for the site to load at first.) This builds a site from your content repo at `docs-content`, and then watches that repo to update the site if you make any changes to the repo.
-	* Run `bookbinder bind local` to build a Rack web-app of the book. After the bind has completed, `cd` into the `final_app` directory and run `rackup`. Then navigate to `localhost:9292/myservice/` in a browser.
+- Markdown files live in this repo.
+- Images should live in an `images` directory at the same level and linked with a relative link.
+- Each page requires an entry in [config/toc.md](config/toc.md) for the table of contents.
+- Variables live in [config/template_variables.yml](config/template_variables.yml).
 
-### <a id='zero-to-bookbinder'></a>Zero to Bookbinder: How to Install Bookbinder and Build, View, and Edit Your Docs from Nothing
+### In Docsdash
 
-If you are reading this, VMware has invited you to a git repo where you can build and edit documentation in the Ruby / Markdown / HTML format that the online publishing tool [Bookbinder](https://github.com/pivotal-cf/bookbinder/blob/master/README.md) uses to build VMware Tanzu's documentation.
+1. Wait about 1 minute for processing to complete after uploading.
+2. Go to https://docsdash.vmware.com/deployment-stage
 
-Here's how to install Bookbinder and build your docs from the repo, starting from scratch, on a Mac OS X machine.
+   There should be an entry with a blue link which says `Documentation` and points to staging.
 
-<p class="note"><strong>Note</strong>: All steps below are implicitly preceded with, "If you haven't already..." You should skip any installation steps that have already contributed to your environment.</p>
+### Promoting to Pre-Prod and Prod
 
-#### Install Ruby
+**Prerequisite** Needs additional privileges - reach out to a manager on the docs team [#tanzu-docs](https://vmware.slack.com/archives/C055V2M0H) or ask a writer to do this step for you.
 
-In Terminal window:
+1. Go to Staging publications in docsdash
+  https://docsdash.vmware.com/deployment-stage
 
-1. Make and `cd` into a workspace directory.
+2. Select a publication (make sure it's the latest version)
 
-    `$ mkdir workspace`
+3. Click "Deploy selected to Pre-Prod" and wait for the pop to turn green (refresh if necessary after about 10s)
 
-     `$ cd workspace`
+4. Go to Pre-Prod list
+  https://docsdash.vmware.com/deployment-pre-prod
 
-1. Follow the instructions at `http://brew.sh` to install brew / homebrew
+5. Select a publication
 
-    `$ /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"`
+6. Click "Sign off for Release"
 
-1. Install your own (non-system) ruby.
+7. Wait for your username to show up in the "Signed off by" column
 
-    `$ brew install ruby`
+8. Select the publication again
 
-#### Set up Git
+9. Click "Deploy selected to Prod"
 
-1. Download and Install git by following the instructions at [git-scm.com](https://git-scm.com/download/).
+## Troubleshooting Markdown
 
-1. Install your own (non-system) bash-completion (optional).
+| Problem | List displays as a paragraph |
+|---------|-----------|
+| Symptom:| Bulleted or numbered lists look fine on GitHub but display as a single paragraph in HTML.|
+| Solution: | Add a blank line after the stem sentence and before the first item in the list or convert from Markdown to HTML|
 
-    `$ brew install git bash-completion`
-
-1. If you don't already have one, generate a public/private RSA key pair, and save the key to your `~/.ssh` directory.
-    ```
-    $ ssh-keygen
-    Generating public/private rsa key pair.
-    Enter file in which to save the key (/Users/YOUR-USERID/.ssh/id_rsa):
-    ```
-
-1. Get a [Github](http://github.com) account.
-
-1. Add your RSA public key to your Github account / profile page.
-
-    `$ cat ~/.ssh/id_rsa.pub # copy and paste this into Github profile page as new key`
-
-#### Get the Correct Ruby Version
-
-1. Install a Ruby manager such as chruby.
-
-    `$ brew install chruby`
-
-1. Add your Ruby manager to your `~/.bashrc` by appending the following line:
-
-    `source /usr/local/opt/chruby/share/chruby/chruby.sh`
-
-1. Install the `ruby-install` installer.
-
-    `$ brew install ruby-install`
-
-1. Run `ruby-install` to install Ruby.
-
-    `$ ruby-install ruby 2.3`
-
-#### Install Bookbinder
-
-1. Install `bundler`.
-
-    `$ gem install bundler`
-
-1. Install bookbinder (the `bookbindery` gem).
-
-    `$ gem install bookbindery`
-
-#### Build the Docs Locally
-
-1. Clone the docs template repo you will be building from.
-
-    `$ git clone git@github.com:pivotal-cf-experimental/docs-pcfservices-template`
-
-1. `cd` into the `book` subdirectory of the repo.
-
-   `$ cd docs-partners-template/docs-book`
-
-1. Run `bundle install` to install all book dependencies.
-
-    `$ bundle install`
-
-1. Run `bookbinder watch` to build the book on your machine. If it doesn't succeed, try prepending the command with `bundle exec` so that bookbinder uses local gems instead of global gems.
-
-   `$ bundle exec bookbinder watch`
-
-1. Browse to `localhost:4567` to view the book locally and "watch" any changes that you make to source `html.md.erb` files. As you make and save changes to the local source files for your site, you will see them in your browser after a slight delay.
-
-After each session of writing or revising your docs source files, commit and push them to your github repo.
-
-Happy documenting!
+| Problem | List numbering is broken: every item is `1.` |
+|---------|-----------|
+| Symptom:| Each numbered item in a list is a `1.` instead of `1.`, `2.`, `3.`, etc|
+| Solution: | Try removing any blank newlines within each step.|
