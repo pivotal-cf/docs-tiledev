@@ -37,7 +37,7 @@ These functions are described in more detail below.
 
 ### <a id='broker'></a> Service Broker
 
-Service brokers integrate services with <%= vars.app_runtime_abbr %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API v2.10](http://docs.pivotal.io/application-service/services/api.html).
+Service brokers integrate services with <%= vars.app_runtime_abbr %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API](http://docs.pivotal.io/application-service/services/api.html).
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
 
@@ -93,13 +93,13 @@ Tile Generator writes the `bosh-release` errands into the main BOSH release that
 
 ### <a id='dependencies'></a> Dependencies
 
-You can include both required and optional product dependencies for tiles. 
+You can include both required and optional product dependencies for tiles.
 
-* **Required Dependencies**: Required dependencies are always required. In order to deploy the dependent tile, you must also deploy the dependency. 
+* **Required Dependencies**: Required dependencies are always required. In order to deploy the dependent tile, you must also deploy the dependency.
 
 * **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.<p class="note"><strong>Note:</strong> After the dependency is installed, it is mandatory even if marked as optional.</p>
 
-Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` field under `requires_product_versions`. For example: 
+Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` field under `requires_product_versions`. For example:
 
 ```
 requires_product_versions:
@@ -165,7 +165,7 @@ The tile manifest template defines these subdirectory locations, so they can res
 
 The entire tile directory is a ZIP file, with the `.zip` extension renamed to `.pivotal`.
 
-<pre class='terminal'>
+<pre class="terminal">
 $ file TILE-NAME-TILE-VERSION.pivotal
 p-example-product-1.0.0.pivotal: Zip archive data, at least v1.0 to extract
 </pre>
@@ -181,7 +181,7 @@ Within the tile's `releases` subfolder, the BOSH release exists as a gzipped tar
 
 ### <a id='example-workflow'></a> Example Workflow
 
-<pre class='terminal'>
+<pre class="terminal">
 $ cd example-product
 $ zip -r example-product.pivotal metadata/ migrations/ releases/
 $ unzip -l example-product.pivotal

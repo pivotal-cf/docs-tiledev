@@ -1,45 +1,73 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a string value',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    additional_property_blueprint_attributes: [],
-    allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns a string or null.',
-    value_present_accessor_description: 'Returns true only if the value of the property is set.',
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with CA Certificate',
-          path: 'img/example-ca-certificate-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-          - name: ca_cert
-            type: ca_certificate
-            configurable: true
+This holds a string value.
 
-          form_types:
-          - name: example_form
-            label: 'Example form'
-            description: 'An example form'
-            property_inputs:
-              - reference: .properties.ca_cert
-                label: 'Trusted CA certs'
-                description: 'These certificates will be trusted by the deployed VM'
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-              - name: ca_certs
-                release: os-conf
-                manifest: |
-                  certs: (( .properties.ca_cert.value ))
-        METADATA
-      }
-    ]
-} %>
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns a string or null.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true only if the value of the property is set.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+- name: ca_cert
+  type: ca_certificate
+  configurable: true
+
+form_types:
+- name: example_form
+  label: 'Example form'
+  description: 'An example form'
+  property_inputs:
+    - reference: .properties.ca_cert
+      label: 'Trusted CA certs'
+      description: 'These certificates will be trusted by the deployed VM'
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  <<: *job_type_boilerplate
+  templates:
+    - name: ca_certs
+      release: os-conf
+      manifest: |
+        certs: (( .properties.ca_cert.value ))
+```
+
+<img src="img/example-ca-certificate-tile.png" alt="Example Product with CA Certificate">
+
+<br><hr>

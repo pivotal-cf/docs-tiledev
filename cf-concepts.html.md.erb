@@ -3,9 +3,6 @@ title: How TAS for VMs and Ops Manager Services Work
 owner: Services
 ---
 
-<% current_page.data.title = "How " + vars.app_runtime_abbr + " and " + vars.platform_name + " Services Work" %>
-
-
 There are many ways to integrate services with <%= vars.app_runtime_full %> and <%= vars.platform_name %>. The right one for each service depends on what the service does, and how
 customer applications consume it. To determine the best way to integrate your
 service, you'll need a good understanding of <%= vars.app_runtime_abbr %> concepts like applications, containers, services, brokers, and buildpacks.
@@ -20,7 +17,7 @@ For general overview of <%= vars.app_runtime_abbr %>, and the various ways to in
 use the following links:
 
 - [Cloud Foundry Subsystems](http://docs.pivotal.io/application-service/concepts/overview.html) provides high-level descriptions of internal functions performed by different <%= vars.app_runtime_abbr %> components.
-- [Cloud Foundry Command Line Interface (cf CLI)](http://docs.pivotal.io/application-service/cf-cli/index.html) links to topics that explain how to direct <%= vars.papp_runtime_abbr %> deployment from your local command line.
+- [Cloud Foundry Command Line Interface (cf CLI)](http://docs.pivotal.io/application-service/cf-cli/index.html) links to topics that explain how to direct <%= vars.app_runtime_abbr %> deployment from your local command line.
 - [Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html) describes the Ops Manager and Installation Dashboard interfaces, where cloud operators see, install, configure, and deploy service tiles.
 - [Apps Manager](http://docs.pivotal.io/application-service/console/index.html) describes the Apps Manager interface, where app developers create and configure service instances and bind them to their apps.
 
@@ -41,7 +38,7 @@ Most value-add integrations are done by exposing your software to customer appli
 
 ## <a id="buildpacks"></a> Buildpacks
 
-When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code. 
+When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code.
 Supplying buildpacks also provides a language-agnostic way to inject your code into the application container image.
 
 - [Application Staging Process](http://docs.pivotal.io/application-service/concepts/how-applications-are-staged.html) explains how <%= vars.app_runtime_abbr %> packages and deploys apps in containers with buildpacks so that they can run on multiple VMs interchangeably.

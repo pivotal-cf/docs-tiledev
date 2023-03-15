@@ -1,148 +1,169 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: <<~DESCRIPTION,
-      Provides the ability to switch between groups of properties. Shows in the UI as a radio button group,
-      potentially with additional options nested under each radio button.
+Provides the ability to switch between groups of properties. Shows in the UI as a radio button group,
+potentially with additional options nested under each radio button.
 
-      Selectors are unique in the way that property information is accessed. Ops Manager provides accessors
-      available at the top-level selector property, accessors for retrieving a specific property in an
-      option group, and the ability to provide manifest snippets for a selector option group.
+Selectors are unique in the way that property information is accessed. Ops Manager provides accessors
+available at the top-level selector property, accessors for retrieving a specific property in an
+option group, and the ability to provide manifest snippets for a selector option group.
 
-      Each selector group may provide manifest snippets. This is because Ops Manager does not support
-      conditionally adding manifest snippets. A manifest snippet should be present within all option groups,
-      and can be used to create a simple kind of branching logic in manifest generation.
-      Only one of these sets is evaluated and inserted into the job's manifest.
-    DESCRIPTION
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    additional_default_description: <<~DESC,
+Each selector group may provide manifest snippets. This is because Ops Manager does not support
+conditionally adding manifest snippets. A manifest snippet should be present within all option groups,
+and can be used to create a simple kind of branching logic in manifest generation.
+Only one of these sets is evaluated and inserted into the job’s manifest.
+
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+      <br><br>
       If specified, the default value should be one of the values of <code>select_value</code>.
-      DESC
-    value_accessor_description: 'Returns the <code>select_value</code> of the selected option. For example, the selector shown in the example below might return "Filet Mignon" as its value.',
-    value_present_accessor_description: false,
-    additional_property_blueprint_attributes: [
-      {
-        name: 'option_templates',
-        description: <<~DESC,
-          An array of objects which defines the options available.  See example below.
-        DESC
-      },
-    ],
-    additional_accessors: [
-      {
-        name: 'selected_option.parsed_manifest(manifest_snippet_name)',
-        description: <<~DESC,
-          Returns a parsed named manifest snippet for the currently selected option.
-          <br/>Example: <code>.properties.example_selector.selected_option.parsed_manifest(my_snippet)</code>
-          DESC
-      },
-      {
-        name: 'SPECIFIC_SELECTOR_OPTION_GROUP.OPTION_GROUP_PROPERTY.value',
-        description: <<~DESC,
-          Scopes the accessor to a specific selector option group.<br>Does not return meaningful information alone.
-          Must be followed with the name and accessor of a specific property in the option group.
-          <br/>Example: <code>.properties.example_selector.filet_mignon_option.review.value</code>
-          DESC
-      }
-    ],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with a Selector',
-          path: 'img/example-selector-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_selector
-              type: selector
-              configurable: true
-              default: Pizza
-              freeze_on_deploy: true
-              option_templates:
-                - name: pizza_option
-                  select_value: Pizza
-                  named_manifests:
-                    - name: my_snippet
-                      manifest: |
-                        pizza_toppings:
-                          pepperoni: (( .properties.example_selector.pizza_option.pepperoni.value ))
-                          other: (( .properties.example_selector.pizza_option.other_toppings.value ))
-                  property_blueprints:
-                    - name: pepperoni
-                      type: boolean
-                      configurable: true
-                      freeze_on_deploy: true
-                    - name: other_toppings
-                      type: string
-                      configurable: true
-                      optional: true
-                - name: filet_mignon_option
-                  select_value: Filet Mignon
-                  named_manifests:
-                    - name: my_snippet
-                      manifest: |
-                        rarity: (( .properties.example_selector.filet_mignon_option.rarity_dropdown.value ))
-                        review: (( .properties.example_selector.filet_mignon_option.review.value ))
-                  property_blueprints:
-                    - name: rarity_dropdown
-                      type: dropdown_select
-                      configurable: true
-                      default: rare
-                      options:
-                        - name: rare
-                          label: 'Rare'
-                        - name: medium
-                          label: 'Medium'
-                        - name: well-done
-                          label: 'Well done'
-                    - name: review
-                      type: string
-                      configurable: true
-                      default: A+ power seller of mail order steak
-                      optional: false
+    </td>
+  </tr>
+  <tr>
+    <td> option_templates </td>
+    <td> An array of objects which defines the options available.  See example below.</td>
+  </tr>
+</table>
 
-          form_types:
-            - name: example_selector_form
-              label: 'Selector Example'
-              description: 'A selector example form'
-              property_inputs:
-                - reference: .properties.example_selector
-                  label: 'Food Choices'
-                  selector_property_inputs:
-                    - reference: .properties.example_selector.pizza_option
-                      label: 'Pizza'
-                      property_inputs:
-                        - reference: .properties.example_selector.pizza_option.pepperoni
-                          label: 'Add Pepperoni'
-                          description: 'Yum!'
-                        - reference: .properties.example_selector.pizza_option.other_toppings
-                          label: 'Other toppings'
-                    - reference: .properties.example_selector.filet_mignon_option
-                      label: 'Filet Mignon'
-                      property_inputs:
-                        - reference: .properties.example_selector.filet_mignon_option.rarity_dropdown
-                          label: 'How rare?'
-                          description: 'Extinct.'
-                        - reference: .properties.example_selector.filet_mignon_option.review
-                          label: 'Write your review'
-                          description: '"E.g. Would not buy again"'
+#### Accessors
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: |
-                      Would you like some (( .properties.example_selector.value ))?
-                      I'm asking because you mentioned (( .properties.example_selector.pizza_option.other_toppings.value ))
-                    more_manifest_ignored_by_os_conf: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>selected_option.parsed_manifest(manifest_snippet_name)</td>
+    <td>
+      Returns a parsed named manifest snippet for the currently selected option.
+      <br>Example: <code>.properties.example_selector.selected_option.parsed_manifest(my_snippet)</code>
+    </td>
+  </tr>
+  <tr>
+    <td>SPECIFIC_SELECTOR_OPTION_GROUP.OPTION_GROUP_PROPERTY.value</td>
+    <td>
+      Scopes the accessor to a specific selector option group.
+      <br>Does not return meaningful information alone.
+      Must be followed with the name and accessor of a specific property in the option group.
+      <br>Example: <code>.properties.example_selector.filet_mignon_option.review.value</code>
+    </td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>
+      Returns the <code>select_value</code> of the selected option. For example,
+      the selector shown in the example below might return “Filet Mignon” as its value.
+    </td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_selector
+    type: selector
+    configurable: true
+    default: Pizza
+    freeze_on_deploy: true
+    option_templates:
+      - name: pizza_option
+        select_value: Pizza
+        named_manifests:
+          - name: my_snippet
+            manifest: |
+              pizza_toppings:
+                pepperoni: (( .properties.example_selector.pizza_option.pepperoni.value ))
+                other: (( .properties.example_selector.pizza_option.other_toppings.value ))
+        property_blueprints:
+          - name: pepperoni
+            type: boolean
+            configurable: true
+            freeze_on_deploy: true
+          - name: other_toppings
+            type: string
+            configurable: true
+            optional: true
+      - name: filet_mignon_option
+        select_value: Filet Mignon
+        named_manifests:
+          - name: my_snippet
+            manifest: |
+              rarity: (( .properties.example_selector.filet_mignon_option.rarity_dropdown.value ))
+              review: (( .properties.example_selector.filet_mignon_option.review.value ))
+        property_blueprints:
+          - name: rarity_dropdown
+            type: dropdown_select
+            configurable: true
+            default: rare
+            options:
+              - name: rare
+                label: 'Rare'
+              - name: medium
+                label: 'Medium'
+              - name: well-done
+                label: 'Well done'
+          - name: review
+            type: string
+            configurable: true
+            default: A+ power seller of mail order steak
+            optional: false
+
+form_types:
+  - name: example_selector_form
+    label: 'Selector Example'
+    description: 'A selector example form'
+    property_inputs:
+      - reference: .properties.example_selector
+        label: 'Food Choices'
+        selector_property_inputs:
+          - reference: .properties.example_selector.pizza_option
+            label: 'Pizza'
+            property_inputs:
+              - reference: .properties.example_selector.pizza_option.pepperoni
+                label: 'Add Pepperoni'
+                description: 'Yum!'
+              - reference: .properties.example_selector.pizza_option.other_toppings
+                label: 'Other toppings'
+          - reference: .properties.example_selector.filet_mignon_option
+            label: 'Filet Mignon'
+            property_inputs:
+              - reference: .properties.example_selector.filet_mignon_option.rarity_dropdown
+                label: 'How rare?'
+                description: 'Extinct.'
+              - reference: .properties.example_selector.filet_mignon_option.review
+                label: 'Write your review'
+                description: '"E.g. Would not buy again"'
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  <<: *job_type_boilerplate
+  templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: |
+            Would you like some (( .properties.example_selector.value ))?
+            I'm asking because you mentioned (( .properties.example_selector.pizza_option.other_toppings.value ))
+          more_manifest_ignored_by_os_conf: (( .properties.example_selector.selected_option.parsed_manifest(my_snippet) ))
+```
+
+<img src="img/example-selector-tile.png" alt="Example Product with a Selector">
+
+<br><hr>

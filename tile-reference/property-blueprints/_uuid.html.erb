@@ -1,34 +1,51 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a string uuid value.',
-    credential: false,
-    auto_generatable: true,
-    operator_configurable: false,
-    allows_default_to_be_specified: false,
-    value_accessor_description: 'Returns a string or null.',
-    value_present_accessor_description: 'Returns true if value is a non-empty string.',
-    additional_property_blueprint_attributes: [],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: nil, # no screenshot because it is not operator configurable, so there is no UI
-        metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_uuid
-              type: uuid
-              configurable: false
+This holds a string uuid value.
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: Hello. Your UUID is (( .properties.example_uuid.value ))
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>yes</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>no</td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns a string or null.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if value is a non-empty string.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_uuid
+    type: uuid
+    configurable: false
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  <<: *job_type_boilerplate
+  templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: Hello. Your UUID is (( .properties.example_uuid.value ))
+```
+
+<br><hr>

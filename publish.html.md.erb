@@ -19,17 +19,18 @@ After you've packaged your product's BOSH releases, stemcell, metadata, and othe
 
 ## <a id="update"></a> Update Your Tile
 
-Most tile updates originate with the tile developer, but new releases of <%= vars.platform_name %> can also necessitate tile changes 
+Most tile updates originate with the tile developer, but new releases of <%= vars.platform_name %> can also necessitate tile changes
 to maintain compatibility with the current version of the platform.
 
-* Tile Generator automates tile versioning and upgrades.  
+* Tile Generator automates tile versioning and upgrades.
 For more information, see [Versioning](./tile-generator.html#versioning) in the Tile Generator documentation.
 
-* [Tile Upgrades](./tile-upgrades.html) explains how to write and include a JavaScript file that automates tile upgrades 
+* [Tile Upgrades](./tile-upgrades.html) explains how to write and include a JavaScript file that automates tile upgrades
 by migrating property names and values from one tile version to another.
 
 * When changes to <%= vars.platform_name %> require tile changes, VMware distributes instructions to all of its partners through the Partners Release Notice:
-    * [Ops Manager v2.10 Partners Release Notice](release-notes.html)
-    * [Ops Manager v2.9 Partners Release Notice](http://docs.pivotal.io/tiledev/2-9/release-notes.html)
+    * [<%= vars.ops_manager %> <%= vars.v_major_version %> Partners Release Notice](release-notes.html)
+    * [<%= vars.ops_manager %> v2.10 Partners Release Notice](http://docs.pivotal.io/tiledev/2-10/release-notes.html)
+    * [<%= vars.ops_manager %> v2.9 Partners Release Notice](http://docs.pivotal.io/tiledev/2-9/release-notes.html)
     * [Pivotal Platform v2.8 Partners Release Notice](http://docs.pivotal.io/tiledev/2-8/release-notes.html)
     * [Pivotal Platform v2.7 Partners Release Notice](http://docs.pivotal.io/tiledev/2-7/release-notes.html)

@@ -1,95 +1,119 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: <<~DESCRIPTION,
-      Provides the ability to select between all available stemcell criteria. The stemcell selector is automatically
-      populated with a list of all stemcell operating systems that are listed in the <code>stemcell&#95;criteria</code> and
-      <code>additional&#95;stemcells&#95;criteria</code> top-level properties.
+Provides the ability to select between all available stemcell criteria. The stemcell selector is automatically
+populated with a list of all stemcell operating systems that are listed in the <code>stemcell_criteria</code> and
+<code>additional_stemcells_criteria</code> top-level properties.
 
-      After an operator has selected a stemcell listed in <code>stemcell_selector</code>, that stemcell is required to deploy the product.
-      
-      For more information about the <code>stemcell&#95;criteria</code> top-level 
-      property, see <a href= "#top-stemcell-criteria">stemcell&#95;criteria</a> above.
-        
-      For more information about the <code>additional&#95;stemcells&#95;criteria</code> top-level 
-      property, see <a href= "#top-additional-stemcells-criteria">additional&#95;stemcells&#95;criteria</a> above.
-      
-    DESCRIPTION
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    additional_default_description: <<~DESC,
+After an operator has selected a stemcell listed in <code>stemcell_selector</code>, that stemcell is required to deploy the product.
+
+For more information about the <code>stemcell_criteria</code> top-level
+property, see <a href="#top-stemcell-criteria">stemcell_criteria</a> above.
+
+For more information about the <code>additional_stemcells_criteria</code> top-level
+property, see <a href="#top-additional-stemcells-criteria">additional_stemcells_criteria</a> above.
+
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
+
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+      <br><br>
       If specified, the default value should be the operating system of a stemcell criteria.
-      DESC
-    value_accessor_description: 'Returns the selected operating system.',
-    value_present_accessor_description: 'Returns true if the operator has selected an operating system.',
-    additional_property_blueprint_attributes: [],
-    additional_accessors: [
-      {
-        name: 'os',
-        description: <<~DESC,
-          The operating system of the stemcell that is assigned to the product. This is not always the same as <code>value</code>.
-          If a stemcell is selected but not assigned, this is set to <code>nil</code>.
-          DESC
-      },
-      {
-        name: 'version',
-        description: <<~DESC,
-          The version of the stemcell that is assigned to the product.
-          If a stemcell is selected but not assigned, this is set to <code>nil</code>.
-        DESC
-      },
-      {
-        name: 'assigned?',
-        description: <<~DESC,
-          Boolean. Returns true if there is an assigned stemcell that matches the selected stemcell.
-        DESC
-      }
-    ],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Stemcell Selector',
-          path: 'img/example-stemcell-selector-tile.png'
-        },
-        metadata: <<~METADATA,
-          stemcell_criteria:
-            os: ubuntu-xenial
-            version: 1.0.0
-          additional_stemcells_criteria:
-            os: windows2016
-            version: 1.0.0
+    </td>
+  </tr>
+</table>
 
-          property_blueprints:
-            - name: example_stemcell_selector
-              type: stemcell_selector
-              configurable: true
-              optional: true
-          form_types:
-            - name: example_stemcell_selector_form
-              label: 'Stemcell Selector Example'
-              description: 'A stemcell selector example form'
-              property_inputs:
-                - reference: .properties.example_stemcell_selector
-                  label: 'Example stemcell selector'
-                  description: 'Select which stemcell you want to use'
+#### Accessors
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: |
-                      Stemcell Assigned?: (( .properties.example_stemcell_selector.assigned? ))
-                      Assigned stemcell OS: (( .properties.example_stemcell_selector.os ))
-                      Assigned stemcell version: (( .properties.example_stemcell_selector.version ))
-                      Selected stemcell?: (( .properties.example_stemcell_selector.value_present? ))
-                      Selected stemcell OS: (( .properties.example_stemcell_selector.value ))
-        METADATA
-      }
-    ]
-} %>
+<table class="nice">
+  <tr>
+    <td>os</td>
+    <td>
+      The operating system of the stemcell that is assigned to the product.
+      This is not always the same as <code>value</code>.
+      If a stemcell is selected but not assigned, this is set to <code>nil</code>.
+    </td>
+  </tr>
+  <tr>
+    <td>version</td>
+    <td>
+      The version of the stemcell that is assigned to the product.
+      If a stemcell is selected but not assigned, this is set to <code>nil</code>.
+    </td>
+  </tr>
+  <tr>
+    <td>assigned?</td>
+    <td>
+      Boolean. Returns true if there is an assigned stemcell that matches the selected stemcell.
+    </td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>Returns the selected operating system.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if the operator has selected an operating system.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+stemcell_criteria:
+  os: ubuntu-xenial
+  version: 1.0.0
+additional_stemcells_criteria:
+  os: windows2016
+  version: 1.0.0
+
+property_blueprints:
+  - name: example_stemcell_selector
+    type: stemcell_selector
+    configurable: true
+    optional: true
+form_types:
+  - name: example_stemcell_selector_form
+    label: 'Stemcell Selector Example'
+    description: 'A stemcell selector example form'
+    property_inputs:
+      - reference: .properties.example_stemcell_selector
+        label: 'Example stemcell selector'
+        description: 'Select which stemcell you want to use'
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  <<: *job_type_boilerplate
+  templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: |
+            Stemcell Assigned?: (( .properties.example_stemcell_selector.assigned? ))
+            Assigned stemcell OS: (( .properties.example_stemcell_selector.os ))
+            Assigned stemcell version: (( .properties.example_stemcell_selector.version ))
+            Selected stemcell?: (( .properties.example_stemcell_selector.value_present? ))
+            Selected stemcell OS: (( .properties.example_stemcell_selector.value ))
+```
+
+<img src="img/example-stemcell-selector-tile.png" alt="Example Stemcell Selector">
+
+<br><hr>

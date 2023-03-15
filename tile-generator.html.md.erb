@@ -59,17 +59,18 @@ For a 7-minute introduction into what Tile Generator is and does, see
 
 ## <a id="how-to"></a> How to Use
 
-1. Install the Tile Generator by doing one of the following:<br><br>
-  - Download the Tile Generator binary for your platform from
-  [GitHub](https://github.com/cf-platform-eng/tile-generator/releases/latest),
-    and then make it executable and available by running the following commands:
+1. Install the Tile Generator by doing one of the following:
+
+    - Download the Tile Generator binary for your platform from
+    [GitHub](https://github.com/cf-platform-eng/tile-generator/releases/latest),
+      and then make it executable and available by running the following commands:
 
         ```
         chmod +x TILE-BINARY
         mv TILE-BINARY /usr/local/bin/tile
         ```
-        Where:<br>
-        `TILE-BINARY` is the name of the tile binary file.<br><br>
+
+        Where `TILE-BINARY` is the name of the tile binary file.
 
         For example:
 
@@ -77,20 +78,22 @@ For a 7-minute introduction into what Tile Generator is and does, see
         chmod +x tile_darwin-64bit
         mv tile_darwin-64bit /usr/local/bin/tile
         </pre>
-        <br>
-  - Use Python 2 and [Virtualenv](https://virtualenv.pypa.io/en/stable/).
-    <%= vars.company_name %> recommends using a Virtualenv environment
-    to avoid conflicts with other Python packages.
-    <br><br>
-    A virtualenv is a directory containing dependencies for a project.
-    When a virtual environment is active, packages install into the
-    virtualenv instead of the system-wide Python installation.
-    <br><br>
-    To use this method run the following commands:
 
-            virtualenv -p python2 tile-generator-env
-            source tile-generator-env/bin/activate
-            pip install tile-generator
+    - Use Python 2 and [Virtualenv](https://virtualenv.pypa.io/en/stable/).
+      <%= vars.company_name %> recommends using a Virtualenv environment
+      to avoid conflicts with other Python packages.
+      <br><br>
+      A virtualenv is a directory containing dependencies for a project.
+      When a virtual environment is active, packages install into the
+      virtualenv instead of the system-wide Python installation.
+      <br><br>
+      To use this method run the following commands:
+
+        ```
+        virtualenv -p python2 tile-generator-env
+        source tile-generator-env/bin/activate
+        pip install tile-generator
+        ```
 
         This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
         To deactivate the virtualenv, run the command `deactivate`.
@@ -103,17 +106,21 @@ For a 7-minute introduction into what Tile Generator is and does, see
 
 3. From within the root directory of the project for which you want to create a tile,
 initialize the directory as a tile repository by running the following commands:
-<p class="note"><strong>Note</strong>: <%= vars.company_name %> recommends that you use a git repository.</p>
+
+    <p class="note"><strong>Note</strong>: <%= vars.company_name %> recommends that you use a git repository.</p>
 
     ```
     cd YOUR-PROD-DIRECTORY
     tile init
     ```
+
 4. Edit the generated `tile.yml` file to define your tile.
 
 5. Build your tile by running:
 
-        tile build
+    ```
+    tile build
+    ```
 
 The generator first creates a BOSH release in the `release` subdirectory,
 then wraps that release into a tile, in the `product` subdirectory.
@@ -165,7 +172,7 @@ You can build this sample using the following steps:
     Docker image using the provided <code>Dockerfile</code> and change the image name in
     <code>sample/tile.yml</code> to include the modified code in app3.</p>
 
-## <a id="define"></a> Define your Tile in <i>tile.yml</i>
+## <a id="define"></a> Define your Tile in <code>tile.yml</code>
 
 All required configuration for your tile is in the file called `tile.yml`.
 `tile init` creates an initial version for you that can serve as a template.
@@ -298,10 +305,12 @@ of just `app` or `docker-app`:
   enable_global_access_to_plans: true  # optional
 ```
 
-  <p class="note"><strong>Note</strong>: Unless you specify the `enable_global_access_to_plans: true` option, your
+  <p class="note">
+    <strong>Note</strong>: Unless you specify the <code>enable_global_access_to_plans: true</code> option, your
     broker's services do not appear in the user's Marketplaces.
-    Operators have to use the `cf enable-service-access` command to allow
-    specific users, orgs, and spaces to access your services.</p>
+    Operators have to use the <code>cf enable-service-access</code> command to allow
+    specific users, orgs, and spaces to access your services.
+  </p>
 
 Your broker is automatically registered with the Cloud Controller. The
 Cloud Controller invokes your broker's endpoints, and it uses basic

@@ -1,64 +1,93 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds an array of strings selected string values.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns the <code>name</code> of the selected option.',
-    value_present_accessor_description: 'Returns true if an option in selected, and that option\'s name is a non-empty string.',
-    additional_default_description: 'The default value should be one of the options\' names. For example, in the example shown below, "tomato" could be used as the default.',
-    additional_property_blueprint_attributes: [
-      {
-        name: 'options',
-        description: <<~DESCRIPTION,
-          An array of hashes, each item specifying a:
-          <code>name</code>, which becomes the value of the property if this option is selected, and
-          <code>label</code> shows up as the text in the dropdown for this option.
-        DESCRIPTION
-      }
-    ],
-    additional_accessors: [],
-    examples: [
-      {
-        name: 'Example',
-        image: {
-          name: 'Example Product with Multi-Select Options',
-          path: 'img/example-dropdown-select-tile.png'
-        },
-        metadata: <<~METADATA,
-          property_blueprints:
-          - name: example_dropdown_select
-            type: dropdown_select
-            default: kiwi
-            configurable: true
-            options:
-            - name: kiwi
-              label: 'Kiwi'
-            - name: lime
-              label: 'Lime'
-            - name: tomato
-              label: 'Tomato'
+This holds an array of strings selected string values.
 
-          form_types:
-          - name: example_dropdown
-            label: 'Example form'
-            description: 'An example form'
-            property_inputs:
-            - reference: .properties.example_dropdown_select
-              label: Favorite fruit
-              description: 'What is your favorite fruit?'
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
 
-          job_types:
-          - name: example-job
-            resource_label: An Example Job
-            <<: *job_type_boilerplate
-            templates:
-            - name: login_banner
-              release: os-conf
-              manifest: |
-                login_banner:
-                  text: Hello, user. I see your favorite fruit is (( .properties.example_dropdown_select.value )).
-        METADATA
-      }
-    ]
-} %>
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+      <br><br>
+      The default value should be one of the options’ names.
+      For example, in the example shown below, “tomato” could be used as the default.
+    </td>
+  </tr>
+  <tr>
+    <td> options </td>
+    <td>
+      An array of hashes, each item specifying a:
+      <code>name</code>, which becomes the value of the property if this option is selected, and
+      <code>label</code> shows up as the text in the dropdown for this option.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>value</td>
+    <td>Returns the <code>name</code> of the selected option.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if an option in selected, and that option’s name is a non-empty string.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+- name: example_dropdown_select
+  type: dropdown_select
+  default: kiwi
+  configurable: true
+  options:
+  - name: kiwi
+    label: 'Kiwi'
+  - name: lime
+    label: 'Lime'
+  - name: tomato
+    label: 'Tomato'
+
+form_types:
+- name: example_dropdown
+  label: 'Example form'
+  description: 'An example form'
+  property_inputs:
+  - reference: .properties.example_dropdown_select
+    label: Favorite fruit
+    description: 'What is your favorite fruit?'
+
+job_types:
+- name: example-job
+  resource_label: An Example Job
+  <<: *job_type_boilerplate
+  templates:
+  - name: login_banner
+    release: os-conf
+    manifest: |
+      login_banner:
+        text: Hello, user. I see your favorite fruit is (( .properties.example_dropdown_select.value )).
+```
+
+<img src="img/example-dropdown-select-tile.png" alt="Example Product with Multi-Select Options">
+
+<br><hr>

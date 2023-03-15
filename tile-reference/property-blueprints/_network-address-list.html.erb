@@ -1,53 +1,80 @@
-<%= partial 'tile-reference/property-blueprint', locals: {
-    description: 'This holds a string which is a comma-separated list of hostnames and IP addresses.',
-    credential: false,
-    auto_generatable: false,
-    operator_configurable: true,
-    allows_default_to_be_specified: true,
-    value_accessor_description: 'Returns a string which is a comma-separated list of hostnames and IP addresses or null.',
-    value_present_accessor_description: 'Returns true if value is a non-empty string.',
-    additional_property_blueprint_attributes: [],
-    additional_accessors: [
-        {
-            name: 'parsed_network_addresses',
-            description: 'Returns the list of hostnames and IP addresses as an array of strings'
-        }
-    ],
-    examples: [
-        {
-            name: 'Example',
-            image: {
-                name: 'Example Product with Network Address List',
-                path: 'img/example-network-address-list-tile.png'
-            },
-            metadata: <<~METADATA,
-          property_blueprints:
-            - name: example_network_address_list
-              type: network_address_list
-              configurable: true
-              default: 'localhost,8.8.8.8'
+This holds a string which is a comma-separated list of hostnames and IP addresses.
 
-          form_types:
-            - name: example_network_address_list
-              label: 'Example form'
-              description: 'An example form'
-              property_inputs:
-                - reference: .properties.example_network_address_list
-                  label: Example Network Address List
-                  description: 'Configure a property of type network_address_list'
+<table class="nice">
+  <tr>
+    <td>credential</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports auto-generation</td>
+    <td>no</td>
+  </tr>
+  <tr>
+    <td>supports operator configuration</td>
+    <td>yes</td>
+  </tr>
+</table>
 
-          job_types:
-            - name: example-job
-              resource_label: An Example Job
-              <<: *job_type_boilerplate
-              templates:
-              - name: login_banner
-                release: os-conf
-                manifest: |
-                  login_banner:
-                    text: Hello, user. I see your favorite network addresses are (( .properties.example_network_address_list.value )).
-                    an_ignored_array_of_network_addresses: (( .properties.example_network_address_list.parsed_network_addresses ))
-        METADATA
-        }
-    ]
-} %>
+#### Property Blueprint Attributes
+
+<table class="nice">
+  <tr>
+    <td> default </td>
+    <td>
+      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Cannot be used when the property also has <code>optional: true</code>.
+    </td>
+  </tr>
+</table>
+
+#### Accessors
+
+<table class="nice">
+  <tr>
+    <td>parsed_network_addresses</td>
+    <td>Returns the list of hostnames and IP addresses as an array of strings</td>
+  </tr>
+  <tr>
+    <td>value</td>
+    <td>Returns a string which is a comma-separated list of hostnames and IP addresses or null.</td>
+  </tr>
+  <tr>
+    <td>value_present?</td>
+    <td>Returns true if value is a non-empty string.</td>
+  </tr>
+</table>
+
+#### Example
+
+```yaml
+property_blueprints:
+  - name: example_network_address_list
+    type: network_address_list
+    configurable: true
+    default: 'localhost,8.8.8.8'
+
+form_types:
+  - name: example_network_address_list
+    label: 'Example form'
+    description: 'An example form'
+    property_inputs:
+      - reference: .properties.example_network_address_list
+        label: Example Network Address List
+        description: 'Configure a property of type network_address_list'
+
+job_types:
+  - name: example-job
+    resource_label: An Example Job
+    <<: *job_type_boilerplate
+    templates:
+    - name: login_banner
+      release: os-conf
+      manifest: |
+        login_banner:
+          text: Hello, user. I see your favorite network addresses are (( .properties.example_network_address_list.value )).
+          an_ignored_array_of_network_addresses: (( .properties.example_network_address_list.parsed_network_addresses ))
+```
+
+<img src="img/example-network-address-list-tile.png" alt="Example Product with Network Address List">
+
+<br><hr>
