@@ -48,7 +48,7 @@ exports.migrate = function(input) {
 
 ```
 
-The properties object passed to your anonymous JavaScript migration functions are composed of properties at the [job-level](/property-template-references.html#job-types) and [product-level](/property-template-references.html#property-blueprints). Review the property names in the example metadata file in [Tutorial Tile V3](https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v3) for more information about job-level and product-level properties. The tile author must update migrations to match the corresponding product metadata file.
+The properties object passed to your anonymous JavaScript migration functions are composed of properties at the [job-level](property-template-references.html#job-types) and [product-level](property-template-references.html#property-blueprints). Review the property names in the example metadata file in [Tutorial Tile V3](https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v3) for more information about job-level and product-level properties. The tile author must update migrations to match the corresponding product metadata file.
 
 Each property's key in the properties object is its property reference from the metadata file. Property references use one of the following forms:
 
@@ -59,7 +59,7 @@ Each property's key in the properties object is its property reference from the 
 The object accessed through the property reference contains a value key whose structure is specific to the type of the property. Objects may be a string, an array, or a hash. Review the reference below for the structure of each type of property.
 
 
-## <a id='js-api'></a>JavaScript Migrations API
+## <a id='js-api'></a> JavaScript Migrations API
 
 Inside a JavaScript migration function, the system provides the following functions for your code:
 
