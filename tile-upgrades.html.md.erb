@@ -5,14 +5,16 @@ owner: Services
 
 This topic discusses product tile migrations, which refers to changing the name and values of properties when a customer upgrades tile versions. Tile authors supply a JavaScript file to trigger chaining migrations. Chaining migrations allows for multiple migrations to run sequentially.
 
+<p class='note'><strong>Note:</strong> In order to use JS migrations, ensure you are using Ops Manager v1.7 or later.</p>
+
 <p class='note'><strong>Note:</strong> Changing the value of<code>single_az_only</code> for jobs launched by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. To avoid this, contact <a href="https://tanzu.vmware.com/support">Support</a>.</p>
 
 
 ## <a id='import'></a> Update Values or Property Names Using JavaScript
 
-To update a product tile, tile authors must complete the following steps:
+To update a product tile:
 
-1. In a single `.js` file, write JavaScript functions which return a hash of the tile’s properties.
+1. In a single `.js` file, write JavaScript functions which return a hash of the tile's properties.
 
 1. Name the file in the format `TIMESTAMP_NAME.js`. `TIMESTAMP` must be in the form "YYYYMMDDHHMM" to indicate when the author created the migration. `NAME` is a human-readable name for the migration, for example, `201606150900_example-product.js`.
 
@@ -50,13 +52,15 @@ The properties object passed to your anonymous JavaScript migration functions ar
 
 Each property's key in the properties object is its property reference from the metadata file. Property references use one of the following forms:
 
-* `.properties.{property_name}`  for product-level properties
+* `.properties.{property_name}` for product-level properties
 * `.{job_name}.{property_name}` for job-level properties
 * `.properties.{property_name}.options.{option_name}` or `.{job_name}.{property_name}.options.{option_name}` for selector option properties
 
 The object accessed through the property reference contains a value key whose structure is specific to the type of the property. Objects may be a string, an array, or a hash. Review the reference below for the structure of each type of property.
 
+
 ## <a id='js-api'></a>JavaScript Migrations API
+
 Inside a JavaScript migration function, the system provides the following functions for your code:
 
 ```
@@ -161,7 +165,6 @@ Example:
     </tr>
 </table>
 
-
 Single value properties refer to properties whose type are any of the following:
 
 - `boolean`
@@ -232,14 +235,14 @@ Refer to the example properties below when writing your own tile migration JS fi
 }
 ```
 
- <p class='note'><strong>Note</strong>: If your product uses Ops Manager v1.6 or earlier metadata, you need to write a transmogrifier content migration for customers using your product on v1.6, and a JavaScript migration for those on Ops Manager v1.7 or later. Review the transmogrifier example in the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.</p>
+ <p class='note'><strong>Note:</strong> If your product uses Ops Manager v1.6 or earlier metadata, you need to write a transmogrifier content migration for customers using your product on v1.6, and a JavaScript migration for those on Ops Manager v1.7 or later. Review the transmogrifier example in the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.</p>
 
 
 ## <a id='chaining'></a> Examples Demonstrating Chaining Migrations
 
 Migration chaining allows for multiple migrations to run sequentially when an upgrade is performed that skips an intermediate version. For example, suppose you have three versions of your product: v1.6.0, v1.7.0, and v1.7.1. The v1.6.0 product contains v1.6 metadata, so it does not contain any JavaScript migrations.
 
-<%= image_tag("/img/chain-migration-scenario.png") %>
+<%= image_tag("img/chain-migration-scenario.png") %>
 
 The following customer upgrade scenarios illustrate chaining migrations in more detail, and use the example product versions described above.
 
@@ -247,19 +250,19 @@ The following customer upgrade scenarios illustrate chaining migrations in more 
 
 In this scenario, the customer starts with the v1.6.0 product installed. After upgrading to Ops Manager v1.7 or higher, they decide to upgrade the product to v1.7.0. This causes the `migration 201606010000_a.js` to run. Several weeks later, the customer decides to upgrade from v1.7.0 to v1.7.1. Now the `201607010000_b.js` migration runs. Even though the v1.7.1 product includes both migrations, Ops Manager does not re-run `201606010000_a.js`, because it maintains a record of migrations.
 
-<%= image_tag("/img/chain-migration-scenarioA.png") %>
+<%= image_tag("img/chain-migration-scenarioA.png") %>
 
 ### Scenario B: Upgrading Directly from v1.6.0 -> v1.7.1
 
 In this scenario, the customer also starts with v1.6.0 installed, but they decide to upgrade directly to v1.7.1, skipping the v1.7.0 version. Both migrations run in lexicographical order.
 
-<%= image_tag("/img/chain-migration-scenarioB.png") %>
+<%= image_tag("img/chain-migration-scenarioB.png") %>
 
 ### Scenario C: Installing v1.7.0, Then Upgrading to v1.7.1
 
 In this scenario, the customer starts with nothing installed. They perform a clean install of version v1.7.0 of the product. On install of v1.7.0, no migrations run because migrations only run on upgrades. Later, the customer decides to upgrade to v1.7.1 of the product. Because v1.7.1 contains both migrations, and because no migrations have run on this system, only the second migration `201607010000_b.js` runs. The system recorded the fact that v1.7.0 includes `201606010000_a.js`, so that migration does not run.
 
-<%= image_tag("/img/chain-migration-scenarioC.png") %>
+<%= image_tag("img/chain-migration-scenarioC.png") %>
 
 ### Scenario D: Installing v1.7.1
 
