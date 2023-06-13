@@ -1,10 +1,10 @@
 ---
-title: Creating New Variables in CredHub
+title: Creating new variables in credHub
 owner: CredHub
 ---
 
 
-This topic explains how CredHub manages variables in the context of a larger deployment, and how to create new variables for use in CredHub. 
+This page explains how CredHub manages variables in the context of a larger deployment, and how to create new variables for use in CredHub.
 
 ## <a id='background'></a> Background
 
@@ -17,7 +17,7 @@ variables:
     type: password
 ```
 
-You can reference these variables in the manifest snippets in their tile metadata using a triple parentheses syntax: 
+You can reference these variables in the manifest snippets in their tile metadata using a triple parentheses syntax:
 
 ```
 ((( EXAMPLE-CREDHUB-PASSWORD )))
@@ -51,7 +51,7 @@ Once CredHub has been deployed and configured on the Director, any Director depl
 
 The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
 
-The manifest excerpt below includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>. 
+The manifest excerpt below includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>.
 
 When this manifest is deployed, the BOSH Director retrieves the stored variables and replaces them with the credential values associated with each variable. The <code>EXAMPLE-TLS</code> variables include property accessors, so only the `certificate` and `private_key` components are interpolated.
 
@@ -59,13 +59,13 @@ When this manifest is deployed, the BOSH Director retrieves the stored variables
 name: demo-deploy
 
 instance_groups:
-  jobs: 
-  - name: demo 
+  jobs:
+  - name: demo
     release: demo
     properties:
       demo:
         password: ((EXAMPLE-PASSWORD))
-        tls: 
+        tls:
           certificate: ((EXAMPLE-TLS.certificate))
           private_key: ((EXAMPLE-TLS.private_key))
 ```
@@ -74,30 +74,30 @@ Ops Manager configures the Director to generate a credential if it does not exis
 
 ```
 ---
-name: demo deploy 
+name: demo deploy
 
-variables: 
+variables:
 - name: EXAMPLE-PASSWORD
   type: password
 - name: EXAMPLE-CA
   type: certificate
-  options: 
+  options:
     is_ca: true
     common_name: 'Example Certificate Authority'
 - name: EXAMPLE-TLS
   type: certificate
-  options: 
+  options:
     ca: EXAMPLE-CA
     common_name: example.com
 
 instance_groups:
-  jobs: 
-  - name: demo 
+  jobs:
+  - name: demo
     release: demo
     properties:
       demo:
         password: (( EXAMPLE-PASSWORD ))
-        tls: 
+        tls:
           certificate: (( EXAMPLE-TLS.certificate ))
           private_key: (( EXAMPLE-TLS.private_key ))
 ```
