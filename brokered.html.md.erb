@@ -4,7 +4,7 @@ owner: Services
 ---
 
 
-The topics in this subsection explain how to integrate your software service with <%= vars.platform_name %> to create a brokered service and service tile for <%= vars.platform_name %>.
+This page explain how to integrate your software service with <%= vars.platform_name %> to create a brokered service and service tile for <%= vars.platform_name %>.
 
 ## <a id="overview"></a> Overview
 
@@ -21,14 +21,14 @@ a good way to publish a first tile that adds real value for customers who have b
 
 ## <a id="create"></a> Create a Brokered Service
 
-* A brokered service requires a service broker, which publishes an API to the Cloud Controller.  
-[Service Brokers](./service-brokers.html) explains how to create one. 
+* A brokered service requires a service broker, which publishes an API to the Cloud Controller.
+[Service Brokers](./service-brokers.html) explains how to create one.
 
 * [Route Services](./service-brokers.html#route) explains how to create a route service, for use in the routing layer of <%= vars.platform_name %> rather than by hosted <%= vars.platform_name %> apps.
 
 * [Catalog](./service-brokers.html#catalog) explains how to design the part of your service broker API that publishes service plan information to the Services Marketplace.
 
-* You can write your service broker in the language of your choice.  
+* You can write your service broker in the language of your choice.
 [Buildpacks](./buildpacks.html) explains how to create a language-specific buildpack that compiles and packages your service broker to run on <%= vars.platform_name %>.
 
 * Once you have the individual components for your brokered service integration, you can work through  [Building Your First Tile](./index.html#tile-steps) to create your tile.
