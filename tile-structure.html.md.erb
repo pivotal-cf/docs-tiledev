@@ -1,21 +1,21 @@
 ---
-title: How Tiles Work
+title: A summary of the operation of service tiles
 owner: Services
 ---
 
-This topic describes how product tiles work in <%= vars.platform_name %>.
+Here is the process and elements of how a service tile work in <%= vars.platform_name %>.
 
 
 ## <a id='overview'></a> Overview
 
 Product tiles make it easy for cloud operators to offer new and upgraded software services to developers in an <%= vars.platform_name %> deployment. [VMware Tanzu Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
 
-This topic explains what each functional element of a tile does and how you create or specify it as input to the Tile Generator tool that creates `.pivotal` files. For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
+This explains what each functional element of a tile does and how you create or specify it as input to the Tile Generator tool that creates `.pivotal` files. For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
 
-This topic also describes the typical structure of a tile directory. This is useful information for modifying generated tiles or legacy tiles that were created without the Tile Generator.
+It also describes the typical structure of a tile directory. This is useful information for modifying generated tiles or legacy tiles that were created without the Tile Generator.
 
 
-## <a id='functions'></a> Tile Functions
+## <a id='functions'></a> Tile functions
 
 <%= vars.platform_name %> service tiles perform multiple functions that streamline the use of software services, including:
 
