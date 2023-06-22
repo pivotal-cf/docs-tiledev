@@ -1,4 +1,7 @@
-# Contributing to Tile Developer documentation
+---
+title: Contributing guide to Tile Developer documentation
+owner: Services
+---
 
 The Tile Developer documentation project team welcomes contributions from the community. Before you start working with
 the Tile Developer documentation, please
@@ -8,7 +11,7 @@ as an open-source patch.
 
 ## Contribution Flow
 
-This is a rough outline of what a contributor's workflow looks like:
+This is an outline of what a contributor's workflow looks like:
 
 - Create a topic branch from where you want to base your work
 - Make commits of logical units
