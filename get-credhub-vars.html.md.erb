@@ -1,9 +1,9 @@
 ---
-title: Fetching Variable Names and Values
+title: Fetching variable names and values with CredHub for your services
 owner: CredHub
 ---
 
-## <a id="overview"></a> Overview
+## <a id="overview"></a> CredHub Process overview
 
 CredHub has two API endpoints to identify and re-use variables. Operators who want to see all the credentials associated with their product, or support engineers who want to troubleshoot issues specific to one virtual machine (VM), can use these APIs for those purposes.
 
@@ -21,8 +21,8 @@ Use these endpoints to view variables for any product in Ops Manager, except the
 This endpoint returns the list of variables associated with a product that are stored in CredHub. Not all variables are stored in CredHub. If you call a variable that is not stored in CredHub, the call returns an empty value.
 
 <pre class="terminal">
-$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables" \ 
-    -X GET \ 
+$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables" \
+    -X GET \
     -H "Authorization: Bearer EXAMPLE_UAA_ACCESS_TOKEN"
 </pre>
 
@@ -54,12 +54,12 @@ This endpoint returns a variable's name. Use the name in the next endpoint to re
 This endpoint returns the value of a variable stored in CredHub. Not all variables are stored in CredHub, so if you call a variable that isn't in CredHub, the call will return an empty value.
 
 <pre class="terminal">
-$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables?name=EXAMPLE-VARIABLE-NAME" \ 
-    -X GET \ 
+$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables?name=EXAMPLE-VARIABLE-NAME" \
+    -X GET \
     -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-### <a id="example-response"></a> Example Response 
+### <a id="example-response"></a> Example Response
 
 <pre class="terminal">
 HTTP/1.1 200 OK
