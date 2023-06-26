@@ -17,12 +17,12 @@ There are two ways to do CI testing on your tile:
 ## <a id="dashboard"></a>Use Tile Dashboard CI to test your tile
 
 With your tile in our Tile Dashboard CI testing system, you stay on top of changes to <%= vars.platform_name %> that might require changes in your tile.
-VMware's field representatives gain a clear understanding of your tile’s compatibility across <%= vars.platform_name %> versions,
+Our field representatives gain a clear understanding of your tile’s compatibility across <%= vars.platform_name %> versions,
 underlying IaaS, and different flavors of environments.
 This relieves you from maintaining your own CI system, keeping up with latest <%= vars.platform_name %> versions, etc.
 
-The Tile Dashboard CI is part of VMware's Enterprise Readiness criteria
-which is used to monitor the field of the quality and capabilities of your tile.
+The Tile Dashboard CI is part of the VMware Enterprise Readiness criteria
+which monitors the field of the quality and capabilities of your tile.
 For an introduction to our readiness criteria, see
 [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0).
 
@@ -67,10 +67,10 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
 
 ### <a id="intro"></a> About configuring a tile on the Tile Dashboard
 
-After your tile has been uploaded to the VMware Tanzu Network, the Tile Dashboard starts to stage and scan it.
+After your tile is uploaded to the VMware Tanzu Network, the Tile Dashboard starts to stage and scan it.
 For new tiles, this can take up to an hour.
 
-After the stage and scan, you need to configure your tile on the Tile Dashboard.
+After the stage and scan, you must configure your tile on the Tile Dashboard.
 Configuration specfies how the tile is installed on the test environment.
 
 Configuring your tile through the Tile Dashboard is equivalent to configuring the tile on Ops Manager
@@ -86,7 +86,7 @@ There are two ways that you can configure the tile on the Tile Dashboard:
 
 ### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and locate the configuration page
 
-To log in to the Tile Dashboard and navigate to the configuration page, do the following:
+To log in to the Tile Dashboard and navigate to the configuration page:
 
 1.  Log in to your PivotalPartners.slack.com account.
 
@@ -112,22 +112,28 @@ The form pulls properties from your `tile.yml` file parsing the `properties_blue
 For general information about `properties_blueprints`,
 see [Configuration Properties](./reference.html#properties).
 
-In the form, you can configure strings, integers, booleans, dropdowns, selectors,
-network addresses, ports, secrets, and simple credentials.
+In the form, you can configure
+
+* strings
+* integers
+* booleans
+* dropdowns
+* selectors,
+* network addresses, ports, secrets, and simple credentials.
 To configure other types, such as nested collections, use the **Advanced - JSON Properties** tab.
 See [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).
 For a complete list of property types, see [Property and Template References](property-template-references.html).
 
-To configure install properties for your tile using the **Properties** tab, do the following:
+To configure install properties for your tile using the **Properties** tab:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 2. Click the **Properties** tab.
 
 3. Review or specify the value for each property.
    If a property is required and is missing valid values, the field displays in red.
 
-3. When no fields are red, click **Save** or **Save and Run**.
+3. When you've cleared all of the red fields, click **Save** or **Save and Run**.
 
 ### <a id="config-with-advanced-tab"></a> Configure your tile using the advanced - JSON properties Tab
 
@@ -137,9 +143,9 @@ For more information about this format,
 see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
 
 
-To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
+To configure install properties for your tile using the **Advanced - JSON Properties** tab:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 2. Click the **Advanced - JSON Properties** tab.
 
@@ -168,19 +174,16 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 
 ### <a id="environment-sensitive-values"></a> Environment-sensitive values
 
-Some property values may need to vary between test environments. An example is availability zone names.
-For these environment-sensitive properties, we provide placeholder values that are replaced
+Some property values can vary between test environments, such as availability zone names.
+For these environment-sensitive properties, VMware providea placeholder values that are replaced
 with an appropriate value for each test environment when the test is run.
-A description of these placeholder values appears on the **Tile Configuration** tabs for easy reference.
+A description of these placeholder values appears on the **Tile Configuration** tabs for reference.
 
 ###<a id="uaa-users"></a> Specify UAA users
 
-Include a list of UAA users for testing your tile.
+To specify the UAA users:
 
-To specify the UAA users, do the following:
-
-1. If you are not already on the configuration page,
-   complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 1. At the bottom of the configuration page, click **+** to expand the box and view the fields.
 
@@ -191,16 +194,13 @@ To specify the UAA users, do the following:
 
 ###<a id="save-and-run"></a> Save and run
 
-When the configuration is complete, the config icon shows green.
-At this point, you can test the tile on all the environments, by doing the following:
-
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
 
 1. Click **Save and Run**.
 
     This tests the tile on all the environments.
 
-    ![Success Config save succeeded! Tile CI begun! message appears when the run starts.](img/save-and-run-message.png)
+    ![alttext="Success Config save succeeded! Tile CI begun! message appears when the run starts.](img/save-and-run-message.png)
 
 3. Click **Tiles** in the toolbar to return to the tiles view.
 
@@ -251,7 +251,7 @@ If you partner with <%= vars.company_name %>,
 the [Tile Dashboard CI](#tile-dashboard-ci) servers can host your pipeline
 and provide S3 storage to exchange artifacts with your own servers.
 
-If you choose to set up your own Concourse server,
+If you set up your own Concourse server,
 see the instructions [Concourse: Setup & Operations](https://concourse-ci.org/setup-and-operations.html).
 
 ### <a id="pipeline"></a> Create a Concourse pipeline for your tile
