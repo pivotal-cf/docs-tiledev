@@ -3,9 +3,7 @@ title: Contributing guide to Tile Developer documentation
 owner: Services
 ---
 
-The Tile Developer documentation project team welcomes contributions from the community. Before you start working with
-the Tile Developer documentation, please
-read our [Developer Certificate of Origin](https://cla.vmware.com/dco). All contributions to this repository must be
+The Tile Developer documentation project team welcomes contributions from the community. [Developer Certificate of Origin](https://cla.vmware.com/dco) is the guide to. All contributions to this repository must be
 signed as described on that page. Your signature certifies that you wrote the patch or have the right to pass it on
 as an open-source patch.
 
@@ -33,10 +31,9 @@ git push origin my-new-feature
 If your PR fails to pass CI or needs changes based on code review, you'll most likely want to squash these changes into
 existing commits.
 
-If your pull request contains a single commit or your changes are related to the most recent commit, you can simply
-amend the commit.
+If your pull request contains a single commit or your changes are related to the most recent commit, you can amend the commit.
 
-Be sure to add a comment to the PR indicating your new changes are ready to review, as GitHub does not generate a
+Always add a comment to the PR indicating your new changes are ready to review, as GitHub does not generate a
 notification when you git push.
 
 ### Formatting Commit Messages
@@ -44,6 +41,6 @@ notification when you git push.
 We follow the conventions on [Conventional Commits](https://www.conventionalcommits.org/) and
 [How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/).
 
-Be sure to include any related GitHub issue references in the commit message.  See
+Always include any related GitHub issue references in the commit message.  See
 [GFM syntax](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) for referencing issues
 and commits.
