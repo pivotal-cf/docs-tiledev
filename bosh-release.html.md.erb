@@ -16,7 +16,7 @@ manifest containing configuration and deployment properties.
 
 The BOSH manifest specifies the following major components:
 
-- **Packages** that can be installed on <%= vars.platform_name %> stemcells to create VM
+- **Packages** that must be installed on <%= vars.platform_name %> stemcells to create VM
 images
 
 - **Jobs** that describe how to install, run, and remove your software
@@ -24,9 +24,9 @@ images
 - A **Monitor** script, that describes how to monitor the health of your
 service components and stop or restart them
 
-## <a id="resources"></a> BOSH Resources
+## <a id="resources"></a> BOSH resources
 
-These topics give more details on BOSH and BOSH releases:
+These links provide details on BOSH and BOSH releases:
 
 - [BOSH Documentation](http://bosh.io/docs) is the top-level contents page for
 BOSH documentation.
@@ -37,7 +37,7 @@ does.
 - [BOSH Basic Workflow](http://bosh.io/docs/basic-workflow.html) lists the
 high-level steps for creating a BOSH deployment.
 
-## <a id="create"></a>Creating a BOSH Release
+## <a id="create"></a>Creating a BOSH release
 
 These topics explain how to create a BOSH release:
 
@@ -71,7 +71,7 @@ stemcells and application dependencies, such as frameworks and libraries. Instea
 you become directly responsible for managing all software that is in the Docker
 images you deploy.
 
-## <a id="enhancing"></a>Enhancing the BOSH Release
+## <a id="enhancing"></a>Enhancing the BOSH release
 
 After the basic BOSH release is in place, additional features for logging
 help operators run the service. For logging information, see
@@ -85,7 +85,7 @@ Integrating syslog forwarding into a tile should not require code changes;
 it only requires including the release and configuration forms in the `tile.yml`.
 For an example, see [pcf-examples/tile-for-bosh-with-syslog](https://github.com/cf-platform-eng/pcf-examples/tree/master/tile-for-bosh-with-syslog).
 
-## <a id="backup"></a>BOSH Backup and Restore
+## <a id="backup"></a>BOSH backup and restore
 
 The [BOSH Backup and Restore Developer's Guide](https://docs.cloudfoundry.org/bbr/bbr-devguide.html)
 describes the framework for release authors to add backup and restore functionality
