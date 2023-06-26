@@ -11,7 +11,7 @@ There are two ways to do CI testing on your tile:
   See [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
   This is the method recommended by <%= vars.company_name %>.
 + Set up and use your own Concourse pipeline.<br>
-  See [Set Up a Concourse Pipeline and Test Your Tile](#concourse) below.<br>
+  See [Set Up a concourse pipeline and test your tile](#concourse) below.<br>
   New partners work on only one tile at a time.
 
 ## <a id="dashboard"></a>Use Tile Dashboard CI to test your tile
@@ -105,7 +105,7 @@ To log in to the Tile Dashboard and navigate to the configuration page:
 
      ![The configure link is in the top left corner under the logo](img/configurelink.png)
 
-### <a id="config-with-property-tab"></a> Configure your tile Using the properties tab
+### <a id="config-with-property-tab"></a> Configure your tile using the properties tab
 
 The **Properties** tab view allows you to configure installation properties through a form.
 The form pulls properties from your `tile.yml` file parsing the `properties_blueprints`.
@@ -231,7 +231,7 @@ for example, your tile might be a service broker to a SaaS offering.
 You are responsible for maintaining the backing service in an environment
 that the Tile Dashboard can reach, that is, it must be internet-facing.
 
-## <a id="concourse"></a> Set Up a Concourse Pipeline and Test Your Tile
+## <a id="concourse"></a> Set Up a Concourse pipeline and test your tile
 
 The [Tile Dashboard CI](#tile-dashboard-ci) that <%= vars.company_name %> runs for its technical partnership program members
 uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue
@@ -243,7 +243,7 @@ that integrates and tests your tile on your own deployment of the latest <%= var
 While you are of course also free to use any other CI system you are familiar with,
 <%= vars.company_name %>'s tools and documentation are built to make Concourse CI as easy as possible.
 
-### <a id="server"></a> Set Up a Concourse Server
+### <a id="server"></a> Set up a Concourse server
 
 You need a Concourse server to host your pipeline.
 
