@@ -3,7 +3,7 @@ title: How TAS for VMs and Ops Manager Services Work
 owner: Services
 ---
 There are many ways to integrate services with <%= vars.app_runtime_full %> and <%= vars.platform_name %>. The right one for each service depends on what the service does, and how
-customer applications consume it. To determine the best way to integrate your
+your customer applications consume it. To determine the best way to integrate your
 service, you'll need a good understanding of <%= vars.app_runtime_abbr %> concepts like applications, containers, services, brokers, and buildpacks.
 
 Here is a collection of links to documentation for the most relevant
@@ -44,10 +44,10 @@ Supplying buildpacks also provides a language-agnostic way to inject your code i
 - [Language Buildpacks](http://docs.pivotal.io/application-service/buildpacks/index.html) describes the language-specific buildpacks support <%= vars.app_runtime_abbr %> apps.
 - [Custom Buildpacks](https://docs.pivotal.io/application-service/buildpacks/custom.html) describes how to use supply buildpacks to add dependencies or code without having to change (multiple) language-sepcific buildpacks.
 
-## <a id="agents"></a> Embedded Agents
+## <a id="agents"></a> Embedded a∏gents
 
-Some integrations depend on the ability to inject code into the application container.
-We refer to these injected components as "container-embedded agents".
+Some integrations can inject code into the application container.
+VMware refers to these injected components as "container-embedded agents".
 [Buildpacks](./buildpacks.html#other) provide a mechanism to inject components into the application container image, and the `.profile.d` directory provides a way to start agents before or alongside the customer application.
 
 - [Agent Injection with a supply buildpack](https://docs.pivotal.io/application-service/buildpacks/custom.html)
