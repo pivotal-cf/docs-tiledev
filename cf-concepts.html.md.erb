@@ -15,7 +15,7 @@ concepts. If you prefer to learn through guided training,
 For general overview of <%= vars.app_runtime_abbr %>, and the various ways to interact with it,
 use the following links:
 
-- [Cloud Foundry Subsystems](http://docs.pivotal.io/application-service/concepts/overview.html) provides high-level descriptions of internal functions performed by different <%= vars.app_runtime_abbr %> components.
+- [Cloud Foundry subsystems](http://docs.pivotal.io/application-service/concepts/overview.html) provides high-level descriptions of internal functions performed by different <%= vars.app_runtime_abbr %> components.
 - [Cloud Foundry Command Line Interface (cf CLI)](http://docs.pivotal.io/application-service/cf-cli/index.html) links to topics that explain how to direct <%= vars.app_runtime_abbr %> deployment from your local command line.
 - [Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html) describes the Ops Manager and Installation Dashboard interfaces, where cloud operators see, install, configure, and deploy service tiles.
 - [Apps Manager](http://docs.pivotal.io/application-service/console/index.html) describes the Apps Manager interface, where app developers create and configure service instances and bind them to their apps.
@@ -24,15 +24,15 @@ use the following links:
 
 Cloud Foundry is primarily a cloud native application platform. To understand how to integrate your services with Cloud Foundry, you should understand how your customers are using the platform to develop, deploy, and operate their applications.
 
-- [Developer Guide](http://docs.pivotal.io/application-service/devguide/index.html) explains how to push an app to run on <%= vars.platform_name %> and enable it to use services.
-- [Overview of Logging and Metrics](https://docs.pivotal.io/application-service/loggregator/data-sources.html) describes how <%= vars.app_runtime_abbr %> aggregates and streams logs and metrics from the apps it hosts and from internal system components.
+- [Developer guide](http://docs.pivotal.io/application-service/devguide/index.html) explains how to push an app to run on <%= vars.platform_name %> and enable it to use services.
+- [Overview of logging and metrics](https://docs.pivotal.io/application-service/loggregator/data-sources.html) describes how <%= vars.app_runtime_abbr %> aggregates and streams logs and metrics from the apps it hosts and from internal system components.
 
 ## <a id="services"></a> Services
 
 Most value-add integrations are done by exposing your software to customer applications as services. To understand the service concepts, and what a service integration looks like, read the following documentation:
 
 - [Services](http://docs.pivotal.io/application-service/services/overview.html) explains how developers provision and use existing services in their apps.
-- [Cloud Foundry Service Brokers and <%= vars.platform_name %> Tiles](http://docs.pivotal.io/on-demand-service-broker/about.html#cf-broker) briefly describes the two main elements of <%= vars.platform_name %> service integration: the service broker API, which connects the service to <%= vars.app_runtime_abbr %> internally by taking commands from the Cloud Controller; and the tile, a packaged interface that cloud operators use to install and configure a service within <%= vars.platform_name %>.
+- [Cloud Foundry service brokers and <%= vars.platform_name %> Tiles](http://docs.pivotal.io/on-demand-service-broker/about.html#cf-broker) briefly describes the two main elements of <%= vars.platform_name %> service integration: the service broker API, which connects the service to <%= vars.app_runtime_abbr %> internally by taking commands from the Cloud Controller; and the tile, a packaged interface that cloud operators use to install and configure a service within <%= vars.platform_name %>.
 - [Custom Services](http://docs.pivotal.io/application-service/services/index.html) explains how service authors package their service as a [Managed Service](./managed.html) that is available for use by operators and developers, and which runs locally on <%= vars.app_runtime_abbr %> rather than running remotely.
 
 ## <a id="buildpacks"></a> Buildpacks
@@ -44,7 +44,7 @@ Supplying buildpacks also provides a language-agnostic way to inject your code i
 - [Language Buildpacks](http://docs.pivotal.io/application-service/buildpacks/index.html) describes the language-specific buildpacks support <%= vars.app_runtime_abbr %> apps.
 - [Custom Buildpacks](https://docs.pivotal.io/application-service/buildpacks/custom.html) describes how to use supply buildpacks to add dependencies or code without having to change (multiple) language-sepcific buildpacks.
 
-## <a id="agents"></a> Embedded a∏gents
+## <a id="agents"></a> Embedded agents
 
 Some integrations can inject code into the application container.
 VMware refers to these injected components as "container-embedded agents".
@@ -56,7 +56,7 @@ VMware refers to these injected components as "container-embedded agents".
 
 ## <a id="nozzles"></a> Nozzles
 
-Cloud Foundry's logging system, Loggregator, has a feature named **firehose**. The firehose includes the combined stream of logs from all apps, plus metrics data from Cloud Foundry components, and is intended to be used by operators and administrators.
+Loggregator, Cloud Foundry's logging system, has a feature named **firehose**. The firehose includes the combined stream of logs from all apps, plus metrics data from Cloud Foundry components, and is intended to be used by operators and administrators.
 
 A nozzle takes this data and forwards it to an external logging and/or metrics solution.
 
