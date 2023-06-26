@@ -16,9 +16,9 @@ credentials for your services; they are managed automatically by the
 broker.
 
 Building a broker for a (still) externally deployed service is generally
-a good way to publish a first tile that adds real value for customers who have both your software and <%= vars.platform_name %>.
+a good way to publish a first tile that adds real value for your customers who have both your software and <%= vars.platform_name %>.
 
-## <a id="create"></a> Create a Brokered Service
+## <a id="create"></a> Create a brokered service
 
 * A brokered service requires a service broker, which publishes an API to the Cloud Controller.
 [Service Brokers](./service-brokers.html) explains how to create one.
@@ -30,6 +30,6 @@ a good way to publish a first tile that adds real value for customers who have b
 * You can write your service broker in the language of your choice.
 [Buildpacks](./buildpacks.html) explains how to create a language-specific buildpack that compiles and packages your service broker to run on <%= vars.platform_name %>.
 
-* Once you have the individual components for your brokered service integration, you can work through  [Building Your First Tile](./index.html#tile-steps) to create your tile.
+* After you have the individual components for your brokered service integration, you can work through  [Building Your First Tile](./index.html#tile-steps) to create your tile.
 
 At any level of integration, <%= vars.company_name %> recommends and supports using [Concourse](./concourse.html) for continuous integration during development.
