@@ -4,13 +4,13 @@ owner: Services
 ---
 There are many ways to integrate services with <%= vars.app_runtime_full %> and <%= vars.platform_name %>. The right one for each service depends on what the service does, and how
 your customer applications consume it. To determine the best way to integrate your
-service, you'll need a good understanding of <%= vars.app_runtime_abbr %> concepts like applications, containers, services, brokers, and buildpacks.
+service, you need a good understanding of <%= vars.app_runtime_abbr %> concepts like applications, containers, services, brokers, and buildpacks.
 
 Here is a collection of links to documentation for the most relevant
 concepts. If you prefer to learn through guided training,
 [ask us](mailto:mjoseph@pivotal.io) about available training options.
 
-## <a id="overview"></a>General Overview
+## <a id="overview"></a>General overview
 
 For general overview of <%= vars.app_runtime_abbr %>, and the various ways to interact with it,
 use the following links:
@@ -22,14 +22,14 @@ use the following links:
 
 ## <a id="applications"></a> Applications
 
-Cloud Foundry is primarily a cloud native application platform. To understand how to integrate your services with Cloud Foundry, you should understand how your customers are using the platform to develop, deploy, and operate their applications.
+Cloud Foundry is primarily a cloud-native application platform. To understand how to integrate your services with Cloud Foundry, you should understand how your customers are using the platform to develop, deploy, and operate their applications.
 
 - [Developer guide](http://docs.pivotal.io/application-service/devguide/index.html) explains how to push an app to run on <%= vars.platform_name %> and enable it to use services.
 - [Overview of logging and metrics](https://docs.pivotal.io/application-service/loggregator/data-sources.html) describes how <%= vars.app_runtime_abbr %> aggregates and streams logs and metrics from the apps it hosts and from internal system components.
 
 ## <a id="services"></a> Services
 
-Most value-add integrations are done by exposing your software to customer applications as services. To understand the service concepts, and what a service integration looks like, read the following documentation:
+Most value-add integrations are done by exposing your software to your customer applications as services. To understand the service concepts, and what a service integration looks like, read the following documentation:
 
 - [Services](http://docs.pivotal.io/application-service/services/overview.html) explains how developers provision and use existing services in their apps.
 - [Cloud Foundry service brokers and <%= vars.platform_name %> Tiles](http://docs.pivotal.io/on-demand-service-broker/about.html#cf-broker) briefly describes the two main elements of <%= vars.platform_name %> service integration: the service broker API, which connects the service to <%= vars.app_runtime_abbr %> internally by taking commands from the Cloud Controller; and the tile, a packaged interface that cloud operators use to install and configure a service within <%= vars.platform_name %>.
