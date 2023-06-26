@@ -3,19 +3,19 @@ title: How to integrate your software as an on-demand service
 owner: Services
 ---
 
-This topic explains how to integrate your software as an on-demand service and service tile for <%= vars.platform_name %>.
+Here's how to integrate your software as an on-demand service and service tile for <%= vars.platform_name %>.
 
 ## <a id="overview"></a> Overview
 
 Brokered service and managed service integrations assume that you have a single VM instance deployed for your software deployed, or a limited number of VMs.
 
-These VMs can be multi-tenant, and you can possibly scale them manually to accommodate many concurrent applications. But for real production deployments, most of your customers will want dedicated VM instances of your service for each application.
+These VMs are multi-tenant, and you can possibly scale them manually to accommodate many concurrent applications. But for real production deployments, most of your customers will want dedicated VM instances of your service for each application.
 
 On-demand (dynamic) services enable this flexibility in a scalable way. When an operator deploys the service, do not pre-allocate VM resources for service instances. Instead, they define an allowable range of VM memory and CPU sizes and create a dedicated network on the IaaS to host any required number of service instance VMs.
 
 When a developer creates an instance of an on-demand service, they provision its resources within the allowed range, and BOSH dynamically creates a new, dedicated VM for the instance.
 
-## <a id="create"></a> Create an On-Demand Service
+## <a id="create"></a> Create an on-demand Service
 
 The best way to create an on-demand service is to use the [On-Demand Services SDK](http://docs.pivotal.io/on-demand-service-broker).
 
@@ -25,13 +25,13 @@ The on-demand service author does not write a service broker. Instead, they writ
 
 To create their tile, the tile author then feeds their service adapter and the BOSH release of the ODB to [Tile Generator](./tile-generator.html).
 
-* [On-Demand Services SDK](https://docs.pivotal.io/svc-sdk/odb/) documentation explains how to write a service adapter for an on-demand service that uses the ODB.
+* [On-demand services SDK](https://docs.pivotal.io/svc-sdk/odb/) documentation explains how to write a service adapter for an on-demand service that uses the ODB.
 
 * Once you have the individual components for your brokered service integration, you can work through [Building Your First Tile](./index.html#tile-steps) to create your tile.
 
 At any level of integration, <%= vars.company_name %> recommends and supports using [Concourse](./concourse.html) for continuous integration during development.
 
-### <a id="dynamic-ha"></a> High Availability
+### <a id="dynamic-ha"></a> High availability
 
 If you had not [already configured](./managed.html#managed-ha) your service for High Availability as a managed service, the final step would be to consider how
 you can make each of your dynamically-provisioned service instances more highly available.
