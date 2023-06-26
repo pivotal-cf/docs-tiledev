@@ -3,11 +3,10 @@ title: Contributing guide to Tile Developer documentation
 owner: Services
 ---
 
-The Tile Developer documentation project team welcomes contributions from the community. [Developer Certificate of Origin](https://cla.vmware.com/dco) is the guide to. All contributions to this repository must be
-signed as described on that page. Your signature certifies that you wrote the patch or have the right to pass it on
+The Tile Developer documentation project established  the [Developer Certificate of Origin](https://cla.vmware.com/dco) requirement for all contributions to this repository.  Submitted content must be signed as described on that page. Your signature certifies that you wrote the patch or have the right to pass it on
 as an open-source patch.
 
-## Contribution Flow
+## Contribution flow
 
 This is an outline of what a contributor's workflow looks like:
 
@@ -28,17 +27,15 @@ git push origin my-new-feature
 
 ### Updating pull requests
 
-If your PR fails to pass CI or needs changes based on code review, you'll most likely want to squash these changes into
-existing commits.
+If your PR fails to pass CI or needs changes based on code review, VMware recommends squashing these changes into existing commits.
 
 If your pull request contains a single commit or your changes are related to the most recent commit, you can amend the commit.
 
-Always add a comment to the PR indicating your new changes are ready to review, as GitHub does not generate a
-notification when you git push.
+Always add a comment to the PR indicating your new changes are ready to review, as GitHub does not generate a notification when you Git push.
 
-### Formatting Commit Messages
+### Formatting commit messages
 
-We follow the conventions on [Conventional Commits](https://www.conventionalcommits.org/) and
+VMware follow the conventions on [Conventional Commits](https://www.conventionalcommits.org/) and
 [How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/).
 
 Always include any related GitHub issue references in the commit message.  See
