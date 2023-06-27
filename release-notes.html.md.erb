@@ -14,11 +14,11 @@ see [Breaking Changes](https://docs.pivotal.io/platform/3-0/release-notes/breaki
 
 There are no changes in <%= vars.ops_manager %> <%= vars.v_major_version %> that directly affect tile development for partners.
 
-## <a id="known-issues"></a> Known Issues
+## <a id="known-issues"></a> Known issues
 
-Known issues in this release that may affect tile development for partners:
+Known issues in this release that can affect tile development for partners:
 
-### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
+### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
 
 An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
 
@@ -44,3 +44,13 @@ The tile does not raise any validation errors, but the following error appears d
 ```
 
 Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
+<<<<<<< Updated upstream
+=======
+
+### <a id="removed-accessors"></a> Removed accessors
+
+The following accessors have been removed; referencing them returns invalid data but does not cause an error:
+
+- `bosh_metrics_forwarder_client_name`
+- `bosh_metrics_forwarder_client_secret`
+>>>>>>> Stashed changes
