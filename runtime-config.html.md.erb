@@ -32,7 +32,7 @@ TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 
 ![Runtime Config Unique ID](img/runtime-config-id.png)
 
-## <a id="create"></a>Add a Runtime Config
+## <a id="create"></a>Add a runtime config
 
 Tile authors can add `runtime_configs` as a top-level property in tile metadata. In the runtime config section, the tile author defines configuration properties that Ops Manager applies to all deployments. A tile can support any number of runtime configs.
 
@@ -73,7 +73,7 @@ For more information about top-level properties in the tile manifest, see [Top-L
 <p class="note"><strong>Note:</strong> The names you choose must be unique across a deployment. <%= vars.company_name %> recommends appending your product name or another unique identifier to each of the named items in the <code>runtime_configs</code> section.</p>
 
 
-## <a id="delete"></a>Delete a Runtime Config
+## <a id="delete"></a>Delete a runtime config
 
 Tile authors can remove an existing runtime config from a tile.
 When the operator upgrades the tile, Ops Manager detects the missing reference and deletes the runtime config.
@@ -111,7 +111,7 @@ For a runtime config tile, tile authors are not required to define the following
 
 ![Runtime Config Tile on the Ops Manager Installation Dashboard](img/runtime-config-dashboard.png)
 
-### <a id="example"></a>Example Runtime Config-Only Tile
+### <a id="example"></a>Example runtime config-Only tile
 
 The following example shows a runtime config tile with minimal configuration:
 
@@ -171,6 +171,6 @@ runtime_configs:
               (( .properties.example_string.value )).
 ```
 
-In the runtime config example above, the `login-banner` job prints a banner when a user logs into any VM in the deployment. The operator can use the default value defined in the `form_types` section of the metadata or configure the banner by editing the **Example string** value in Ops Manager.
+In the runtime config example previous, the `login-banner` job prints a banner when a user logs into any VM in the deployment. The operator can use the default value defined in the `form_types` section of the metadata or configure the banner by editing the **Example string** value in Ops Manager.
 
-![Runtime Config Tile Information](img/runtime-config-tile.png)
+![Runtime config tile information](img/runtime-config-tile.png)
