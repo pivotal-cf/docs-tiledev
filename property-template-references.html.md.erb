@@ -1,5 +1,5 @@
 ---
-title: Property and template References
+title: Property and template references
 owner: Ops Manager
 ---
 
@@ -7,10 +7,10 @@ Here are instructions to help you describes the product template of your tile an
 
 The `metadata` subdirectory of a tile contains a product template file in `.yml` format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into its deployment manifest.
 
-You can modify your tile's product template in many different ways. The sections below describe what the product template contains and how to modify it to include different properties.
+You can edit your tile's product template in many different ways. The sections that follow describe what the product template contains and how to edit it to include different properties.
 
 
-## <a id="product-template"></a> Product Template Contents
+## <a id="product-template"></a> Product template contents
 
 The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to:
 
@@ -26,16 +26,16 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 * **Runtime configs:** Specifies the manifest for any number of global deployment configurations.
 
-Examples in this topic that refer to the product template use the [<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
+Examples refer to the product template use the [<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
 
 For more information about product template configuration, see [Top-Level Properties](#top-level).
 
 To learn how to configure your tile's forms, see [Form Properties](#form-properties).
 
 
-## <a id='property-values'></a> Modifying the Product Template
+## <a id='property-values'></a> Editing the product template
 
-You can modify the product template to designate property values.
+You can edit the product template to designate property values.
 
 Within the product template, there are two sections with `manifest` snippets:
 
@@ -47,7 +47,7 @@ You can use special expressions in these snippets to include property values tha
 
 These special expressions take two forms: double parentheses expressions and triple parentheses expressions.
 
-### <a id="double-parens"></a> Double Parentheses Expressions
+### <a id="double-parens"></a> Double parentheses Expressions
 
 Double parentheses expressions, such as `(( PROPERTY-VALUE ))`, designate property values that Ops Manager fills in when it generates the deployment manifest. This occurs after the user clicks **Apply Changes**.
 
@@ -61,7 +61,7 @@ manifest: |
     peppers: (( .properties.example_selector.pizza_option.peppers.value ))
 ```
 
-### <a id="triple-parens"></a> Triple Parentheses Expressions
+### <a id="triple-parens"></a> Triple parentheses expressions
 
 Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`, designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials are designated in triple parentheses.
 
@@ -82,7 +82,7 @@ Ops Manager strips the outer parentheses from these expressions and includes the
 
 For more information about tile properties, see [Referencing Properties](#property-refs).
 
-### <a id='property-refs'></a> Referencing Properties
+### <a id='property-refs'></a> Referencing properties
 
 Each property is represented by two segments:
 
@@ -100,7 +100,7 @@ Where:
 * `PROPERTY-LOCATION` is the location of the property.
 * `ACCESSOR` is the accessor.
 
-#### <a id="property-location"></a> Referencing a Location
+#### <a id="property-location"></a> Referencing a location
 
 The method of referencing the location of the property varies. The following table describes the different methods of referencing a property:
 
@@ -112,7 +112,7 @@ The method of referencing the location of the property varies. The following tab
 | ..other_product.properties.top_level_property | The property blueprint called "top_level_property" found in the global list of properties of the tile "other_product". |
 | ..other_product.job_two.job_level_property | The property blueprint called "job_level_property" found in the list of properties of the job "job_one" of the tile "other_product". |
 
-#### <a id="accessor-location"></a> Referencing an Accessor
+#### <a id="accessor-location"></a> Referencing an accessor
 
 Accessors vary between property blueprint types. The following example uses the property blueprint type `string` with its one accessor, `value`:
 
@@ -128,7 +128,7 @@ Ops Manager allows empty arrays in double-parentheses expressions. For example:
 
 For more information about the available properties and their accessors, see [Property Blueprint Reference](#property-blueprints).
 
-### <a id='product'></a> Product Context
+### <a id='product'></a> Product context
 
 Product context is useful for accessing information about a tile. It can be used in a manifest using this syntax:
 
@@ -146,7 +146,7 @@ These are the allowed accessors:
 | network_name | Provides the name of the network assigned for the tile. |
 | present? | Returns `true` when the tile is staged or deployed |
 
-### <a id='dollar'></a> Dollar Contexts
+### <a id='dollar'></a> Dollar contexts
 
 Outside of properties, you can also retrieve information about various configuration details of your tile and Ops Manager.
 
@@ -160,7 +160,7 @@ Outside of properties, you can also retrieve information about various configura
 
 #### <a id='ops-manager'></a> $ops_manager
 
-The table below describes the accessors you can use to retrieve information about an Ops Manager deployment:
+The table that follows describes the accessors you can use to retrieve information about an Ops Manager deployment:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -175,7 +175,7 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='director'></a> $director
 
-The table below describes the accessors you can use to retrieve information about your BOSH Director:
+The table that describes the accessors you can use to retrieve information about your BOSH Director:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -195,7 +195,7 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='runtime'></a> $runtime
 
-The table below describes the accessors you can use to retrieve information about your <%= vars.app_runtime_abbr %> tile:
+The table that follows describes the accessors you can use to retrieve information about your <%= vars.app_runtime_abbr %> tile:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -210,10 +210,7 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='self'></a> $self
 
-<!--INSTEAD OF "PRODUCT," SHOULD WE SAY "TILE?" IT SEEMS LIKE THE USE OF
-"PRODUCT" VS. "TILE" IS ARBITRARY AND CONFUSING.-->
-
-The table below describes the accessors you can use to retrieve information about your own tile:
+The table that follows describes the accessors you can use to retrieve information about your own tile:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -222,7 +219,7 @@ The table below describes the accessors you can use to retrieve information abou
 | `service_network` | Provides the name of the service network assigned to your tile. |
 | `stemcell_version` | Provides the version of the stemcell your tile uses. |
 
-### <a id='complex'></a> Complex Properties: Selectors and Collections
+### <a id='complex'></a> Complex properties: selectors and collections
 
 Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Others are complex, such as selectors or collections.
 
@@ -239,9 +236,9 @@ The selector and collections inputs are referenced by their selector and collect
 Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selectors and collections can exist alone, or nest within each other or within different parts of the manifest.
 
 
-## <a id='top-level'></a> Top-Level Properties
+## <a id='top-level'></a> Top-level properties
 
-The exerpt below is an example of the properties that appear at the top of a product template. Definitions of each property follow this example.
+The exerpt that follows is an example of the properties that appear at the top of a product template. Definitions of each property follow this example.
 
 ```
 ---
@@ -297,7 +294,7 @@ runtime_configs:
             (( .properties.example_string.value )).
 ```
 
-### <a id='top-name'></a> name
+### <a id='top-name'></a> Name
 
 * **Format:** String
 * **Type:** Required
@@ -338,21 +335,21 @@ Bumping the version number enables new properties that are not present in an old
 
 The `metadata_version` corresponds to a major or minor release of Ops Manager. Ops Manager can accept a tile with a `metadata_version` that is older than the Ops Manager version, but Ops Manager cannot accept a tile with a `metadata_version` that is newer than the Ops Manager version. It is therefore best practice to set the `metadata_version` to be the same as the oldest version of Ops Manager that the tile version supports.
 
-### <a id='top-label'></a> label
+### <a id='top-label'></a> Label
 
 * **Format:** String
 * **Type:** Optional
 
 The label that appears in the tile when it displays in the Ops Manager Dashboard.
 
-### <a id='top-description'></a> description
+### <a id='top-description'></a> Description
 
 * **Format:** String
 * **Type:** Optional
 
 A description of the tile.
 
-### <a id='top-rank'></a> rank
+### <a id='top-rank'></a> Rank
 
 * **Format:** Integer
 * **Type:** Optional
@@ -476,7 +473,7 @@ Each release requires the following keys:
 * `file`
 * `version`
 
-### <a id='top-variables'></a> variables
+### <a id='top-variables'></a> Variables
 
 * **Format:** Array of hashes
 * **Type:** Optional
@@ -537,7 +534,7 @@ Each install-time verifier supports the following keys:
 * `name`: The type of verifier. The value must be one of the verifiers listed in the table below.
 
 * `properties`: A mapping of verifier inputs to either property references or static values.
-The required properties for each verifier are listed in the table below.
+The required properties for each verifier are listed in the table that follows.
 
 * `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the verification errors are resolved.
 If this key is set to `true`, an operator can ignore the warning message and **Apply Changes**.
@@ -774,11 +771,11 @@ For more information about the Syslog BOSH release, see the [Syslog BOSH Release
 For more information about migrating an existing form to the Ops Manager provided syslog form, see [Migrating Existing Syslog Configuration to Ops Manager](./migrating-syslog-configuration.html).
 
 
-## <a id='form-properties'></a> Form Properties
+## <a id='form-properties'></a> Form properties
 
 Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
 
-Form properties reference `property_blueprints`. Property blueprints define each field's data type. For a corresponding example to the `form_types` example below, see [property_blueprints](#property-blueprints).
+Form properties reference `property_blueprints`. Property blueprints define each field's data type. For a corresponding example to the `form_types` example that follows, see [property_blueprints](#property-blueprints).
 
 The following is an example of the properties that appear in the `form_types` section of a product template:
 
@@ -868,28 +865,28 @@ form_types:
           domain: .web_server.example_ip_address
 ```
 
-### <a id='form-name'></a> name
+### <a id='form-name'></a> Name
 
 * **Format:** String
 * **Type:** Required
 
 The internal name of the form.
 
-### <a id='form-label'></a> label
+### <a id='form-label'></a> Label
 
 * **Format:** String
 * **Type:** Required
 
 The label of the form as it appears as a link on the left hand side of each form.
 
-### <a id='form-description'></a> description
+### <a id='form-description'></a> Description
 
 * **Format:** String
 * **Type:** Optional
 
 The description of the form. Appears at the top of the form as a header.
 
-### <a id='form-markdown'></a> markdown
+### <a id='form-markdown'></a> Markdown
 
 * **Format:** Markdown
 * **Type:** Optional
@@ -903,7 +900,7 @@ Provide a block of markdown to display at the top of the form, including image s
 
 References to properties defined in the `property_blueprints` section of the product template.
 
-### <a id='verifiers'></a> verifiers
+### <a id='verifiers'></a> Verifiers
 
 Verifiers confirm that properties are set correctly in forms.
 If a verifier displays a warning, the form can still be saved and the warning can be ignored.
@@ -949,7 +946,7 @@ form_types:
 
 You can specify either a tile property reference or a static value for a form verifier. In the example above, `Verifiers::MysqlDatabaseVerifier` uses a tile property reference for the database host and static values for the database name, port number, and username.
 
-### <a id='form-placeholder'></a> placeholder
+### <a id='form-placeholder'></a> Placeholder
 
 * **Format:** String
 * **Type:** Optional
@@ -974,7 +971,7 @@ The `placeholder` attribute displays for the following form types:
 * `port`
 
 
-## <a id='job-types'></a> Job Types
+## <a id='job-types'></a> Job types
 
 The following is an example of the `job_types` section that appears in a product template.
 
@@ -1196,7 +1193,7 @@ job_types:
       optional: true
 ```
 
-### <a id='job-name'></a> name
+### <a id='job-name'></a> Name
 
 * **Format:** String
 * **Type:** Required
@@ -1210,7 +1207,7 @@ The name of the job as it is to be created in the Ops Manager generated BOSH man
 
 The label of the job as it is to appear in the resources page of the tile.
 
-### <a id='job-template'></a> templates
+### <a id='job-template'></a> Templates
 
 * **Format:** Array of hashes
 * **Type:** Required
@@ -1222,31 +1219,31 @@ Each element has the following fields:
 * `consumes`
 * `provides`
 
-#### <a id='template-name'></a> name
+#### <a id='template-name'></a> Name
 
 * **Format:** Name of the job template to use
 * **Type:** Required
 
-#### <a id='template-release'></a> release
+#### <a id='template-release'></a> Release
 
 * **Format:** Name of the release the template is from
 * **Type:** Required
 
-#### <a id='template-consumes'></a> consumes
+#### <a id='template-consumes'></a> Consumes
 
 * **Format:** YAML string defining BOSH links that this job consumes
 * **Type:** Optional
 
 For more information about BOSH links, see [Links](https://bosh.io/docs/links.html) in the BOSH documentation.
 
-#### <a id='template-provides'></a> provides
+#### <a id='template-provides'></a> Provides
 
 * **Format:** YAML string defining BOSH links that this job provides
 * **Type:** Optional
 
 For more information about BOSH links, see [Links](https://bosh.io/docs/links.html) in the BOSH documentation.
 
-### <a id='job-release'></a> release
+### <a id='job-release'></a> Release
 
 * **Format:** String
 * **Type:** Required
@@ -1317,7 +1314,7 @@ For examples of supported constraint types, see [integer](#integer).
 
 <p class="note"><strong>Note:</strong> If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.</p>
 
-### <a id='job-manifest'></a> manifest
+### <a id='job-manifest'></a> Manifest
 
 * **Format:** Text snippet, prefaced by pipe symbol: `|`
 * **Type:** Optional
@@ -1326,9 +1323,9 @@ Ops Manager generates a BOSH manifest that defines properties for each job the m
 
 For more information about referencing these properties, see [Referencing Properties](#property-refs).
 
-#### <a id='job-accessors'></a> Job Accessors
+#### <a id='job-accessors'></a> Job sccessors
 
-The table below describes the double parentheses expressions Ops Manager provides to access information about the jobs that the manifest deploys:
+The table that describes the double parentheses expressions Ops Manager provides to access information about the jobs that the manifest deploys:
 
 | Double Parentheses Expression | Description |
 | ----------------------------- | ----------- |
@@ -1342,9 +1339,9 @@ The table below describes the double parentheses expressions Ops Manager provide
 | `(( subnet_cidrs ))` | A list of CIDRs associated with the job. |
 
 
-## <a id='property-blueprints'></a> Property Blueprint Reference
+## <a id='property-blueprints'></a> Property blueprint reference
 
-### <a id='common-attributes'></a> Common Property Blueprint Attributes
+### <a id='common-attributes'></a> Common property blueprint attributes
 
 All property blueprints can have the following attributes:
 
@@ -1382,11 +1379,11 @@ All property blueprints can have the following attributes:
                 ...
     ```
 
-### <a id='configurable-and-auto-generated'></a> Configurable and Auto-Generated Properties
+### <a id='configurable-and-auto-generated'></a> Configurable and auto-generated properties
 
 When a property has `configurable: true` and is added to a `form_type`, the operator can configure the value of that property.
 
-Alternatively, a property with `configurable: false` gets a value auto-generated by Ops Manager. For which property types support each of these usages, see the sections below.
+Alternatively, a property with `configurable: false` gets a value auto-generated by Ops Manager. For which property types support each of these usages, see the sections that follow.
 
 Properties with `configurable` set to `false`:
 
@@ -1394,9 +1391,9 @@ Properties with `configurable` set to `false`:
 * Do not show up in forms, even if added under `form_types`.
 * Get auto-generated values filled in by Ops Manager if that specific type of property supports auto-generation of values.
 
-### <a id='named-manifest'></a> named_manifest for Selector and Collection Type Properties
+### <a id='named-manifest'></a> named_manifest for selector and collection type properties
 
-Specify a property for collection within the `named_manifest` section of the metadata, as in the example below:
+Specify a property for collection within the `named_manifest` section of the metadata, as in the example that follows:
 
 ```
 - name: certificate_collection
@@ -1445,7 +1442,7 @@ routing_certificates:
 For more information, see [Selector and Collection Types](#complex).
 
 
-## <a id='all-property-types'></a> All Property Blueprint Types
+## <a id='all-property-types'></a> All property blueprint Types
 
 These sections describe every property blueprint type.
 
@@ -1578,9 +1575,9 @@ These sections describe every property blueprint type.
 <%= partial 'tile-reference/property-blueprints/wildcard-domain' %>
 
 
-## <a id='using-provided-examples'></a> Use the Examples Provided
+## <a id='using-provided-examples'></a> Use the examples provided
 
-You can copy each example into the `metadata.yml` template below and package it together along with the [`os-conf`](https://github.com/cloudfoundry/os-conf-release/releases) release as a `.pivotal` file to make a working tile.
+You can copy each example into the `metadata.yml` template that follows and package it together along with the [`os-conf`](https://github.com/cloudfoundry/os-conf-release/releases) release as a `.pivotal` file to make a working tile.
 
 ```
 ---
@@ -1602,7 +1599,7 @@ rank: 1
 icon_image: iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAADElEQVQI12NgaC8BAAGGAPwUz8ygAAAAAElFTkSuQmCC
 
  includes: # This top-level key is ignored by Ops Manager.
-  # This anchor is only to make the examples below more terse and is not required.
+  # This anchor is only to make the examples that follow more terse and is not required.
   job_type_boilerplate: &job_type_boilerplate
     max_in_flight: 1
     single_az_only: true
