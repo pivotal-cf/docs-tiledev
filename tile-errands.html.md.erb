@@ -9,27 +9,26 @@ product's availability time. Product teams create errands as part of a product p
 For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands),
 and for more information about errands in <%= vars.platform_name %>, see [Managing Errands in Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/managing_errands.html).
 
-In Ops Manager v2.0 and later, tile authors can choose to [colocate errands](#colocated) on existing VMs.
-When errands are not colocated, BOSH deploys a new VM for each errand defined in the tile metadata.
-Colocated errands can run alongside other jobs or errands on existing VMs in an operator's deployment.
+In Ops Manager v2.0 and later, tile authors can choose to [co-locate errands](#colocated) on existing VMs.
+When errands are not co-located, BOSH deploys a new VM for each errand defined in the tile metadata.
+Co-located errands can run alongside other jobs or errands on existing VMs in an operator's deployment.
 
 Products can have two kinds of errands. [Post-deploy errands](#post-deploy) run after a product
 installs but before Ops Manager displays makes it available for use.
-[Pre-delete errands](#pre-delete) run after an operator chooses to delete a product, but before
+[Pre-delete errands](#pre-delete) run after an operator deletes a product, but before
 Ops Manager finishes removing it from use.
 
-To save deployment time, operators can set [errand run rules](#run-rules) that dictate whether or
-not errands run. Tile authors can [set defaults](./property-template-references.html#top-level) for these run rules.
+To save deployment time, operators can set [errand run rules](#run-rules) that dictate if errands run. Tile authors can [set defaults](./property-template-references.html#top-level) for these run rules.
 
-## <a id="colocated"></a>Define a Colocated Errand
+## <a id="colocated"></a>Define a co-located errand
 
-<p class="note"><strong>Note</strong>: Ops Manager v2.0 and later supports colocated errands.</p>
+<p class="note"><strong>Note</strong>: Ops Manager v2.0 and later supports co-located errands.</p>
 
-Instead of deploying a new VM for each errand, colocated errands run on an existing VM.
-Errands can run alongside other jobs on a VM, and multiple errands can be colocated on the same VM.
+Instead of deploying a new VM for each errand, co-located errands run on an existing VM.
+Errands can run alongside other jobs on a VM, and multiple errands can be co-located on the same VM.
 Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
 
-To configure a colocated errand, define the following properties in the `pre_delete_errands` and
+To configure a co-located errand, define the following properties in the `pre_delete_errands` and
 `post_deploy_errands` sections of the tile metadata:
 
 <table>
@@ -42,7 +41,7 @@ To configure a colocated errand, define the following properties in the `pre_del
       <code>example_colocated_errand</code>.</td>
   </tr><tr>
     <td><code>colocated: true</code></td>
-    <td>Set this value to <code>true</code> to enable colocated errands. If you do not set this value,
+    <td>Set this value to <code>true</code> to enable co-located errands. If you do not set this value,
       Ops Manager ignores all other errand attributes in this section.</td>
   </tr><tr>
     <td><code>run_default: on</code></td>
@@ -74,12 +73,12 @@ To configure a colocated errand, define the following properties in the `pre_del
   </tr>
 </table>
 
-After defining the errand in the sections above, add the errand to the job properties in the
+After defining the errand in the sections previous, add the errand to the job properties in the
 `job_types` section.
 
-## <a id="colocated-example"></a>Colocated Errand Example Manifest
+## <a id="colocated-example"></a>Colocated errand example manifest
 
-The following example shows colocated `post_deploy_errands` and `pre_delete_errands` sections
+The following example shows co-located `post_deploy_errands` and `pre_delete_errands` sections
 in the tile metadata:
 
 ```yaml
@@ -93,14 +92,14 @@ post_deploy_errands:
     instances:
       - web_server/first
     label: colocated errand on web_server
-    description: This errand does little more than print a message to prove colocated errands work.
+    description: This errand does little more than print a message to prove co-located errands work.
 
 pre_delete_errands:
   - name: example-errand
     impact_warning: "This is an impact warning for your pre-delete errand."
   ```
 
-The following example shows the colocated errands referenced within the `job_type`:
+The following example shows the co-located errands referenced within the `job_type`:
 
 ```yaml
 job_types:
@@ -123,7 +122,7 @@ job_types:
     max_in_flight: 1
 ```
 
-##<a id='post-deploy'></a>Post-Deploy Errands
+##<a id='post-deploy'></a>Post-deploy errands
 
 Post-deploy errands run after a product installs, but before Ops Manager makes it available for use.
 
@@ -134,15 +133,15 @@ Post-deploy errands run by default. An operator can prevent a post-deploy errand
 setting its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
 Dashboard or on the service's **Settings** tab **Errands** pane, before installing the product.
 
-![Example Errand](img/example-errand.png)
+![alttext="Here is an example of an Errand"](img/example-errand.png)
 
 For example, Redis has a **Broker Registrar** post-deploy errand that the <%= vars.app_runtime_full %> tile uses
 to register its service broker with the Cloud Controller and publish its service plans.
 
-If an operator selects **Off** in dropdown for Redis's **Broker Registrar** errand
+If an operator selects **Off** in drop-down menu for Redis's **Broker Registrar** errand
 before installation, Redis's service broker is not registered with the Cloud Controller and its service plans are not made public.
 
-##<a id='pre-delete'></a>Pre-Delete Errands
+##<a id='pre-delete'></a>Pre-delete errands
 
 Pre-delete errands run after an operator chooses to delete a product, but before Ops Manager actually
 finishes deleting it.
@@ -162,7 +161,7 @@ Pre-delete errands run by default. An operator can prevent a pre-delete errand f
 its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
 Dashboard or on the product tile's **Settings** tab **Errands** pane, before installing the product.
 
-##<a id='run-rules'></a>Errand Run Rules
+##<a id='run-rules'></a>Errand run rules
 
 Some errands do not always need to run. For example, installing a minor patch to a existing service
 might not require re-registering its broker. Ops Manager lets operators save installation time by
