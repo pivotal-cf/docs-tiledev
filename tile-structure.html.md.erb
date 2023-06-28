@@ -61,7 +61,7 @@ You define this configuration interface in the `forms:` section of the `tile.yml
 
 A left-side menu lists all configuration panes and indicates with check marks which ones have been configured. The menu lists service-specific panes, defined by the tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config** that all <%= vars.platform_name %> products and services use.
 
-![Form Layout](img/form-layout.png)
+![alt-text="Example form Layout"](img/form-layout.png)
 
 Each form, or configuration pane, has `label` for the menu text, a `description` to appear up top, and `property_inputs` that define the configuration fields themselves. To construct your `forms`, see [Property and Template References](./property-template-references.html).
 
@@ -251,4 +251,4 @@ Where packaged processes run depends on their package type, as follows:
 
 The service tile's **Resource Config** pane allows the operator to configure resources individually for each package. This pane also allows operators to provision resources for VMs that handle one-time tasks, with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
 
-![Service Tile Resource Config](img/service-resource-config.png)
+![alt-text="Here is an example service tile resource config.](img/service-resource-config.png)
