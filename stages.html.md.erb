@@ -3,7 +3,7 @@ title: Types of integration for your services
 owner: Services
 ---
 
-## <a id="levels"></a> Integration Levels
+## <a id="levels"></a> Integration levels
 
 A service can integrate with <%= vars.app_runtime_full %> at four levels, shown here in order of increasing
 integration. In general, user-experience and production-readiness improves as the
@@ -21,7 +21,7 @@ staged integration approach is often possible and desirable.
 
 ![Service Integration Stages](img/integration-stages.png)
 
-## <a id="ups"></a> Level 1. User-Provided Service
+## <a id="ups"></a> Level 1: User-provided Service
 
 The service runs external to <%= vars.app_runtime_abbr %> and has no service broker or tile. To use a service
 with an app, the developer creates a service broker by running
@@ -31,7 +31,7 @@ with an app, the developer creates a service broker by running
 Configuring, running, upgrading, and paying for a user-provided service are all
 up to the developer.
 
-## <a id="broker"></a> Level 2. Brokered Service
+## <a id="broker"></a> Level 2: Brokered service
 
 A brokered service runs external to <%= vars.app_runtime_abbr %>, but has a tile on [VMware Tanzu Network](http://network.pivotal.io).
 
@@ -42,10 +42,10 @@ Installation Dashboard. Developers can then see your service plans and create
 service instances in Apps Manager, or by running `cf marketplace` and
 `cf create-service` from the command-line.
 
-The [Brokered Service](./brokered.html) topic has more information about brokered
+[Brokered Service](./brokered.html) has more information about brokered
 service tiles and how to create them.
 
-## <a id="managed"></a> Level 3. Managed Service
+## <a id="managed"></a> Level 3: Managed service
 
 With a managed service, both the service broker and the service itself run within
 <%= vars.app_runtime_abbr %>. This enables <%= vars.app_runtime_abbr %> to manage, monitor, and increase service performance.
@@ -57,10 +57,10 @@ on VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMw
 When the operator installs the tile, they allocate a block of VMs to run service
 instances and provisions their CPU and memory resources uniformly.
 
-The [Managed Service](./managed.html) topic has more information about managed
+[Managed Service](./managed.html) has more information about managed
 service tiles and how to create them.
 
-## <a id="dynamic"></a>  Level 4. On-Demand (Dynamic) Service
+## <a id="dynamic"></a>  Level 4. On-demand (dynamic) service
 
 As with a managed service, an on-demand service and broker both run within <%= vars.app_runtime_abbr %>,
 and VMware Tanzu Network lists the service tile without "Service Broker" in the name.
@@ -73,5 +73,5 @@ When a developer creates an instance of an on-demand service, they provision its
 resources (within an allowed range) and BOSH dynamically creates a new, dedicated
 VM for the instance.
 
-The [On-Demand Service](./on-demand.html) topic has more information about
+[On-Demand Service](./on-demand.html) has more information about
 On-Demand service tiles and how to create them.
