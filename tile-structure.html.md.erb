@@ -33,9 +33,9 @@ It also describes the typical structure of a tile directory. This is useful info
 
 * Support one-click installation and upgrading from previous versions. For more information, see [Update Rules](#update).
 
-These functions are described in more detail below.
+These functions are described in more detail as follows.
 
-### <a id='broker'></a> Service Broker
+### <a id='broker'></a> Service broker
 
 Service brokers integrate services with <%= vars.app_runtime_abbr %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API](http://docs.pivotal.io/application-service/services/api.html).
 
@@ -69,7 +69,7 @@ For each property, you can combine specifications for `name`, `type`, `default`,
 
 <p class="note"><strong>Note:</strong> In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding field value types and constraints.</p>
 
-#### <a id='appearance'></a> Tile Appearance
+#### <a id='appearance'></a> Tile appearance
 
 In the Ops Manager Installation Dashboard, your service tile bears an identifying label, description, and logo icon. Specify these at the top of your `tile.yml` configuration file as `label`, `description`, and `icon_file`. The value of `icon_file` should be the name of a 128×128 pixel PNG image.
 
@@ -111,7 +111,7 @@ requires_product_versions:
     optional: true
 ```
 
-### <a id='update'></a> Update Rules
+### <a id='update'></a> Update rules
 
 Tile Generator automatically generates the JavaScript migration file that enables one-click updates from Ops Manager. This file describes how to change existing tile property names and values in order to match the new version of the tile.
 
@@ -120,7 +120,7 @@ A mature tile may contain several of these `.js` files, from previous versions a
 You can add custom update code in the `tile.yml` Tile Generator configuration file, following the properties documented in the [Update Values or Property Names Using JavaScript](./tile-upgrades.html#import) section of the _Upgrading Tiles_ topic.
 
 
-## <a id='structure'></a> Tile File Format and Structure
+## <a id='structure'></a> Tile file format and structure
 
 Tile directories contain the following components, which include each other as shown:
 
@@ -179,7 +179,7 @@ You can use any ZIP utility to create a `.pivotal` file. Ensure that the top-lev
 
 Within the tile's `releases` subfolder, the BOSH release exists as a gzipped tarfile.
 
-### <a id='example-workflow'></a> Example Workflow
+### <a id='example-workflow'></a> Example workflow
 
 <pre class="terminal">
 $ cd example-product
@@ -199,7 +199,7 @@ Archive:  example-product.pivotal
         0  07-12-16 17:19   releases/example-release-18.tgz
 </pre>
 
-### <a id='repo'></a> GitHub Repository Structure
+### <a id='repo'></a> GitHub repository structure
 
 Tile developers typically develop and archive their code on GitHub, and their Concourse build pipeline pulls from GitHub to perform continuous integration.
 
@@ -237,7 +237,7 @@ The `tile yml` file that you pass to Tile Generator defines these service compon
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same location.
 
-#### <a id='where'></a> Where Package Processes Run
+#### <a id='where'></a> Where Package processes Run
 
 Where packaged processes run depends on their package type, as follows:
 
@@ -247,7 +247,7 @@ Where packaged processes run depends on their package type, as follows:
 
 * `external-broker` and `buildpack` packages run one-time tasks, not long-running processes, on Diego Cells.
 
-#### <a id='process'></a> Package VM Resources
+#### <a id='process'></a> Package VM resources
 
 The service tile's **Resource Config** pane allows the operator to configure resources individually for each package. This pane also allows operators to provision resources for VMs that handle one-time tasks, with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
 
