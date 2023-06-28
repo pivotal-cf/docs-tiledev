@@ -3,19 +3,18 @@ title: Testing your service tiles
 owner: Services
 ---
 
-
-Here you will find recommended testing practices for <%= vars.platform_name %> tile developers.
+Here's recommended testing practices for <%= vars.platform_name %> tile developers.
 
 ## <a id="testing"></a> Service tile testing
 
 Good testing assures tile developers that their product installs and runs properly on diverse platforms
-and assures platform operators that the tile they install can provide its service successfully on their platform.
+and assures platform operators that the tile they install can provide its service on their platform.
 
 <%= vars.company_name %> recommends a pyramid structure for testing, starting with unit tests and stepping up to successively broader and more automated levels of integration.
 <%= vars.company_name %> uses and recommends [Concourse](./concourse.html) for creating build pipelines that follow this test structure.
-Other continuous integration tools should also support a pyramid testing approach.
+Other continuous integration tools must support a pyramid testing approach.
 
-### <a id="pyramid"></a> Tile Test Pyramid
+### <a id="pyramid"></a> Tile test pyramid
 
 For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follows:
 
@@ -25,8 +24,8 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
   - **Functional tests** covering the main features of the service.
       The main features typically interact with almost all important external integration points, so these tests confirm product functionality.
   - **Smoke tests** (lifecycle tests) for service instances that create and bind a service instance, call it from a test app,
-      check the logs it generates, and delete it.
-      For a typical end-to-end test sequence, see [Smoke Tests](#smoke) below.
+      verify the logs it generates, and delete it.
+      For a typical end-to-end test sequence, see [Smoke Tests](#smoke) as follows.
 
 1. System tests of **tile** operation within Ops Manager.
   - These include:
@@ -41,7 +40,7 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
 
 <p class="note"><strong>Note</strong>: System tests might incur costs from using third party services, IaaS resources, etc.</p>
 
-### <a id="smoke"></a> Smoke Tests
+### <a id="smoke"></a> Smoke tests
 
 Smoke tests are end-to-end lifecycle tests for service instances that you can include as [post-deploy errands](./tile-errands.html#post-deploy)
 within a tile and also automate in [Concourse](./concourse.html) or other integration platforms.
@@ -54,7 +53,7 @@ A typical smoke test runs as follows:
 
 1. Enable service access for the created org.
 
-1. Iterate through all service plans (or a subset of them) to do the following:
+1. Iterate through all service plans (or a subset of them):
   1. Create a service instance for the plan.
   1. Push a test app.
   1. Bind the service instance to the app.
@@ -67,7 +66,7 @@ A typical smoke test runs as follows:
 
 1. Delete the test org and space.
 
-### <a id="general-recs"></a> General Recommendations
+### <a id="general-recs"></a> General recommendations
 
 The following are general recommendations for designing and running tests on <%= vars.platform_name %> tiles:
 
@@ -76,11 +75,11 @@ The following are general recommendations for designing and running tests on <%=
 * Generate verbose logging with lots of contextual data to make troubleshooting easier.
 
 * Design test suites for re-usability by making them highly parameterizable. Important parameters include:
-  - External settings such as domains, creds, and certs
+  - External settings such as domains, creds, and certificates.
   - Plans to test against.
     For example, the [Redis for <%= vars.platform_name %>](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
     for two different service plans, pre-provisioned and on-demand.
-  - Timeouts, numbers of retries, and other things that you need to adjust for different environments
+  - Timeouts, numbers of retries, and other things that must be adjusted for different environments
   - Switches to include or exclude portions of the tests such as generating metrics or backups
 
 * Re-use tests that exist already, for example in Concourse.
@@ -89,4 +88,4 @@ The following are general recommendations for designing and running tests on <%=
   See the [MySQL Test App](https://github.com/cloudfoundry-incubator/cf-mysql-acceptance-tests/tree/master/assets/sinatra_app) an example.
 
 * When testing manually, using the UI is better than calling the underlying API directly.
-  Use UIs and APIs the way a customer would.
+  Use UIs and APIs the way your customer would.
