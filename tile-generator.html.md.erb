@@ -251,7 +251,7 @@ cd <your project dir>
 zip -r resources/<your project name>.zip <list of file and dirs to include in the zip>
 ```
 
-If your app is a service broker, use `app-broker` as the type instead of just
+If your app is a service broker, use `app-broker` as the type instead of
 `app`. The app is then automatically registered as a broker on install,
 and deleted on uninstall.
 
@@ -284,7 +284,7 @@ environment variables on the app:
 Most modern service brokers are pushed into <%= vars.app_runtime_abbr %> as normal
 CF apps. For these types of brokers, use the Pushed Application format
 specified above, but set the type to `app-broker` or `docker-app-broker` instead
-of just `app` or `docker-app`:
+of `app` or `docker-app`:
 
 ```
 - name: my-broker
@@ -439,7 +439,7 @@ bosh-release package's deployment manifest, you can include the
 Apps packaged as Docker images can be deployed inside or outside <%= vars.app_runtime_abbr %>.
 To push a Docker image as a CF app, use the *Pushed Application*
 format specified above, but use the `docker-app` or `docker-app-broker` type instead
-of just `app` or `app-broker`. The Docker image to be used is then specified using
+of `app` or `app-broker`. The Docker image to be used is then specified using
 the `image` property:
 
 ```
@@ -450,7 +450,7 @@ the `image` property:
     ...
 ```
 
-If this app is also a service broker, use `docker-app-broker` instead of just
+If this app is also a service broker, use `docker-app-broker` instead of
 `docker-app`. This option is appropriate for Docker-wrapped 12-factor apps that
 delegate their persistence to bound services.
 
@@ -668,7 +668,7 @@ tile, Tile Generator attempts to update the plan while preserving
 the service (thus not causing data loss during upgrade). If the service
 does not support plan changes, this causes the upgrade to fail.
 
-`configurable_persistence` is really just a special case of `auto_services`,
+`configurable_persistence` is really a special case of `auto_services`,
 letting the user choose between some standard brokers.
 
 ### <a id='declare-dependencies'></a> Declaring product dependencies

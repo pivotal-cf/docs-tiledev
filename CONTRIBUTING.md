@@ -38,6 +38,6 @@ Always add a comment to the PR indicating your new changes are ready to review, 
 VMware follow the conventions on [Conventional Commits](https://www.conventionalcommits.org/) and
 [How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/).
 
-Always include any related GitHub issue references in the commit message.  See
-[GFM syntax](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) for referencing issues
+Always include any related GitHub problem references in the commit message.  See
+[GFM syntax](https://guides.github.com/features/mastering-markdown/#GitHub-flavored-markdown) for referencing problems
 and commits.
