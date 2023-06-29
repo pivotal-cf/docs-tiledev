@@ -248,7 +248,7 @@ The following customer upgrade scenarios illustrate chaining migrations in more 
 
 ### Scenario A: Upgrading from v1.6.0 -> v1.7.0 -> v1.7.1
 
-In this scenario, your customer starts with the v1.6.0 product installed. After upgrading to Ops Manager v1.7 or higher, they decide to upgrade the product to v1.7.0. This causes the `migration 201606010000_a.js` to run. Several weeks later, the customer decides to upgrade from v1.7.0 to v1.7.1. Now the `201607010000_b.js` migration runs. Even though the v1.7.1 product includes both migrations, Ops Manager does not re-run `201606010000_a.js`, because it maintains a record of migrations.
+In this scenario, your customer starts with the v1.6.0 product installed. After upgrading to Ops Manager v1.7 or later, they decide to upgrade the product to v1.7.0. This causes the `migration 201606010000_a.js` to run. Several weeks later, the customer decides to upgrade from v1.7.0 to v1.7.1. Now the `201607010000_b.js` migration runs. Even though the v1.7.1 product includes both migrations, Ops Manager does not re-run `201606010000_a.js`, because it maintains a record of migrations.
 
 ![alt-text="Example chain migration scenario A"](img/chain-migration-scenarioA.png)
 
