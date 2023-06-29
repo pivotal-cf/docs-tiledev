@@ -719,7 +719,7 @@ apply_open_security_group: true
 ### <a id="stemcells"></a> Stemcells
 
 Tile Generator defaults to a recent stemcell supported by Ops Manager.
-In most cases the default is fine, because the stemcell is only used to execute
+In most cases the default is fine, because the stemcell is only used to run
 CF command lines and/or the Docker daemon. But if you have specific stemcell
 requirements, you can override the defaults in your `tile.yml` file by including
 a `stemcell-criteria` section and replacing the appopriate values:
@@ -763,7 +763,7 @@ packages:
 
 `deploy` and `delete` completely replace the standard errand commands for the
 package in which you include them. If you want to keep the standard commands, but
-add additional commands to execute before or after the standard errand, use
+add additional commands to run before or after the standard errand, use
 `pre_deploy`, `post_deploy`, `pre_delete`, and `post_delete` instead.
 
 
