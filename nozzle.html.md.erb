@@ -84,8 +84,7 @@ A service tile can install a nozzle as either a managed service, with package ty
 <%= vars.company_name %> recommends developing a nozzle in Go to leverage the
 [NOAA library](https://github.com/cloudfoundry/noaa).
 NOAA does the heavy lifting of establishing
-an authenticated websocket connection to the logging system
-as well as de-serializing the protocol buffers.
+an authenticated websocket connection to the logging system and de-serializing the protocol buffers.
 
 Draining the logs consists of:
 
@@ -143,7 +142,7 @@ in GitHub.
 The above events show how this data targets two different personae:
 platform operators and app developers. Keep this in mind when designing an integration.
 
-The `doppler.firehose` scope gets nozzle data for *every* app as well as the platform.
+The `doppler.firehose` scope gets nozzle data for *every* app and the platform.
 Any filtering based on the event payload is the nozzle implementor's responsibility.
 An advanced integration could combine a
 [service broker](service-brokers.html) with a nozzle to:
