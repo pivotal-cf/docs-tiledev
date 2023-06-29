@@ -87,7 +87,7 @@ replacing the publication with the same version.
 1. Go to Staging publications in docsdash
   https://docsdash.vmware.com/deployment-stage
 
-2. Select a publication (make sure it's the latest version)
+2. Select a publication ( that it's the latest version)
 
 3. Click "Deploy selected to Pre-Prod" and wait for the pop to turn green (refresh if necessary after about 10s)
 
