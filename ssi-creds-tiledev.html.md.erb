@@ -56,7 +56,7 @@ For information about using BOSH Links in the spec file and templates of a job a
 
 To use the runtime CredHub location retrieved from the <%= vars.app_runtime_abbr %> tile, you must write a `post_deploy` [tile errand](tile-structure.html#errands) that saves the value out in some way and enables the service broker to access it.
 
-Depending on how your tile deploys the service broker app, the service instance errand can save the CredHub location in different ways. If the tile pushes the broker as a Cloud Foundry app, the errand can store the location in an environment variable such as `CREDHUB_URL` for the service broker to call. If BOSH deploys the service broker outside of <%= vars.app_runtime_abbr %>, the errand could write the CredHub location out to a templated configuration file that the service broker reads.
+Depending on how your tile deploys the service broker app, the service instance errand can save the CredHub location in different ways. If the tile pushes the broker as a Cloud Foundry app, the errand can store the location in an environment variable such as `CREDHUB_URL` for the service broker to call. If BOSH deploys the service broker outside of <%= vars.app_runtime_abbr %>, the errand can write the CredHub location out to a templated configuration file that the service broker reads.
 
 ### <a id="manifest"></a> Update deployment manifest
 
