@@ -10,7 +10,7 @@ Cloud Foundry's Loggregator logging system collects your logs and metrics from a
 
 * By sending your service component logs and metrics to the Firehose, to be streamed with core platform component logs and metrics
 
-* By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or apps -- a built-in nozzle can enable a service to:
+* By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or apps -- a built-in nozzle can activate a service to:
   - Drain metrics to an external dashboard product for system operators
   - Send HTTP request details to search or analysis tools
   - Drain app logs to an external system
@@ -26,7 +26,7 @@ Component VMs running <%= vars.app_runtime_abbr %> services can publish logs and
 
 ### <a id="https"></a> HTTPS Protocol
 
-To enable a service component to supply logs and metrics to the Firehose through encrypted communications,
+To activate a service component to supply logs and metrics to the Firehose through encrypted communications,
 do the following:
 
 1. Include a Loggregator agent in the service component's template definitions.
