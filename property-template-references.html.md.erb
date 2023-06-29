@@ -759,7 +759,7 @@ This is the icon that displays on the tile in the Ops Manager Installation Dashb
 * **Format:** String
 * **Type:** Optional
 
-A publicly available URL that is passed to BOSH in order to download your releases during installation. If you use this text box, BOSH Director must have internet connectivity. This allows you to package your tile without releases, decreasing the tile size.
+A publicly available URL that is passed to BOSH to download your releases during installation. If you use this text box, BOSH Director must have internet connectivity. This allows you to package your tile without releases, decreasing the tile size.
 
 ### <a id="syslog-flag"></a> opsmanager_syslog
 
@@ -979,7 +979,7 @@ The following is an example of the `job_types` section that appears in a product
 
 This section defines the jobs that end up in a BOSH manifest. Those jobs are defined in your BOSH release.
 
-Jobs require many different settings in order to function properly. That is the core of what Ops Manager does for you: Ops Manager asks a user to designate values for those settings and generates a manifest based on what the user specifies.
+Jobs require many different settings to function properly. That is the core of what Ops Manager does for you: Ops Manager asks a user to designate values for those settings and generates a manifest based on what the user specifies.
 
 Ops Manager does not require tile authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
@@ -1351,7 +1351,7 @@ All property blueprints can have the following attributes:
 
 * `type`: Required. The type of property. Must be one of the property types listed in this topic.
 
-* `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this text box has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
+* `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set todeploy, nor does it validate that this text box has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
 
 * `configurable`: Optional. Default: `false`. When set to `true` for property types that support operator configuration, the operator is not allowed to configure this value. Do not set `configurable: true` for property types that do not support operator configuration. When set to `false`, Ops Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated via the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Ops Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
 
