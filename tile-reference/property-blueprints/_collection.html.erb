@@ -63,13 +63,13 @@ This holds multiple records of a group of custom defined properties.
       The collection element GUIDs differ between Ops Manager environments.
       This does not allow the ability to create a common configuration between environments.
       <br><br>
-      To address this issue, newer versions of the Ops Manager CLI uses collection element fields as logical keys.
+      To address this issue, newer versions of the Ops Manager CLI uses collection element text boxes as logical keys.
       <br><br>
-      The <%= vars.ops_manager %> CLI uses the following fields in collection elements as logical keys:
+      The <%= vars.ops_manager %> CLI uses the following text boxes in collection elements as logical keys:
       <ul>
         <li><code>name</code></li>
         <li><code>key</code></li>
-        <li>Any field ending in <code>name</code></li>
+        <li>Any text box ending in <code>name</code></li>
       </ul>
       <br>
       <%= vars.recommended_by %> recommends including a logical key and setting

@@ -352,7 +352,7 @@ service_plan_forms:
       max: 500
 ```
 
-Name and GUID fields are supplied by default for each plan, but all other fields
+Name and GUID text boxes are supplied by default for each plan, but all other text boxes
 are optional and customizable. Multiple forms are supported. The operator-configured
 plans are passed to your service broker in JSON format in an environment variable
 named after your form but in ALL CAPS (in this case `SERVICE_PLANS_1`).
@@ -617,12 +617,12 @@ of a hardcoded value.
 
 All properties supported by Ops Manager may be used. The syntax is the same
 as used by Ops Manager, except that for simplicity property blueprints for
-form fields do not need to be declared separately. Instead, the declaration
+form text boxes do not need to be declared separately. Instead, the declaration
 is included in the form itself. For a complete list of supported property
 types and syntax, see the
 [Property and Template References](./property-template-references.html).
 
-Ops Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
+Ops Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text box, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
 
 ```
 property_inputs:

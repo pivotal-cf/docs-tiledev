@@ -757,7 +757,7 @@ This is the icon that displays on the tile in the Ops Manager Installation Dashb
 * **Format:** String
 * **Type:** Optional
 
-A publicly available URL that is passed to BOSH in order to download your releases during installation. If you use this field, BOSH Director must have internet connectivity. This allows you to package your tile without releases, decreasing the tile size.
+A publicly available URL that is passed to BOSH in order to download your releases during installation. If you use this text box, BOSH Director must have internet connectivity. This allows you to package your tile without releases, decreasing the tile size.
 
 ### <a id="syslog-flag"></a> opsmanager_syslog
 
@@ -773,9 +773,9 @@ For more information about migrating an existing form to the Ops Manager provide
 
 ## <a id='form-properties'></a> Form properties
 
-Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
+Each form type you write is composed of form properties. Form properties dictate the structure of the form text box that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
 
-Form properties reference `property_blueprints`. Property blueprints define each field's data type. For a corresponding example to the `form_types` example that follows, see [property_blueprints](#property-blueprints).
+Form properties reference `property_blueprints`. Property blueprints define each text box's data type. For a corresponding example to the `form_types` example that follows, see [property_blueprints](#property-blueprints).
 
 The following is an example of the properties that appear in the `form_types` section of a product template:
 
@@ -800,7 +800,7 @@ form_types:
         description: 'Configure a property of type string'
       - reference: .web_server.example_string_with_placeholder
         label: Example string containing Placeholder text
-        description: 'Optional field. Configuration not necessary'
+        description: 'Optional text box. Configuration not necessary'
         placeholder: 'Ghost text. Spooky!'
       - reference: .web_server.example_migrated_integer
         label: Example integer
@@ -951,7 +951,7 @@ You can specify either a tile property reference or a static value for a form ve
 * **Format:** String
 * **Type:** Optional
 
-Specify placeholder text for a field. The text appears in light gray to show an example value for the user. The text disappears when the user types in the field and reappears if the user leaves the field empty.
+Specify placeholder text for a text box. The text appears in light gray to show an example value for the user. The text disappears when the user types in the text box and reappears if the user leaves the text box empty.
 
 The `placeholder` attribute displays for the following form types:
 
@@ -1212,7 +1212,7 @@ The label of the job as it is to appear in the resources page of the tile.
 * **Format:** Array of hashes
 * **Type:** Required
 
-Each element has the following fields:
+Each element has the following text boxs:
 
 * `name`
 * `release`
@@ -1295,7 +1295,7 @@ The resources you can set are:
 
 For examples of supported constraint types, see [integer](#integer).
 
-<p class="note"><strong>Note:</strong> If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk field.</p>
+<p class="note"><strong>Note:</strong> If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.</p>
 
 ### <a id='job-instance-def'></a> instance_definition
 
@@ -1349,7 +1349,7 @@ All property blueprints can have the following attributes:
 
 * `type`: Required. The type of property. Must be one of the property types listed in this topic.
 
-* `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
+* `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this text box has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
 
 * `configurable`: Optional. Default: `false`. When set to `true` for property types that support operator configuration, the operator is not allowed to configure this value. Do not set `configurable: true` for property types that do not support operator configuration. When set to `false`, Ops Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated via the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Ops Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
 
