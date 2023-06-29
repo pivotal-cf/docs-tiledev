@@ -22,7 +22,7 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
 
 1. System tests of the tile's **BOSH release**, including:
   - **Functional tests** covering the main features of the service.
-      The main features typically interact with almost all important external integration points, so these tests confirm product functionality.
+      The main features typically interact with almost all important external integration points, so these tests confirm product capability.
   - **Smoke tests** (lifecycle tests) for service instances that create and bind a service instance, call it from a test app,
       verify the logs it generates, and delete it.
       For a typical end-to-end test sequence, see [Smoke Tests](#smoke) as follows.
@@ -30,7 +30,7 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
 1. System tests of **tile** operation within Ops Manager.
   - These include:
       * **Configuration checks** that test every external configurable integration point and connection to remote servers using configured credentials
-      * **Default checks** that confirm "happy path" functionality.
+      * **Default checks** that confirm "happy path" capability.
   - Use the Ops Manager API to verify that property blueprints in the tile metadata are correct
     and that they translate correctly to the BOSH manifest that Ops Manager generates.
   - Use the [om](https://github.com/pivotal-cf/om) tool to call the Ops Manager API programmatically from Go.
