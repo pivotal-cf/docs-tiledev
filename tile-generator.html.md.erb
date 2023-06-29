@@ -410,7 +410,7 @@ package definition to include a Redis BOSH release:
 
 To include [BOSH links](https://bosh.io/docs/links.html) in your
 bosh-release package's deployment manifest, you can include the
-`consumes` and/or `provides` declarations *as strings* in the job's
+`consumes` and `provides` declarations *as strings* in the job's
 `templates` section, e.g.:
 
 ```
@@ -764,7 +764,7 @@ packages:
 `deploy` and `delete` completely replace the standard errand commands for the
 package in which you include them. If you want to keep the standard commands, but
 add additional commands to execute before or after the standard errand, use
-`pre_deploy`, `post_deploy`, `pre_delete`, and/or `post_delete` instead.
+`pre_deploy`, `post_deploy`, `pre_delete`, and `post_delete` instead.
 
 
 ## <a id="versioning"></a> Versioning
