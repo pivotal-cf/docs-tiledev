@@ -26,7 +26,7 @@ To save deployment time, operators can set [errand run rules](#run-rules) that d
 
 Instead of deploying a new VM for each errand, co-located errands run on an existing VM.
 Errands can run alongside other jobs on a VM, and multiple errands can be co-located on the same VM.
-Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
+Colocated errands run faster than traditional errands and use less resources, including disk and IP space.
 
 To configure a co-located errand, define the following properties in the `pre_delete_errands` and
 `post_deploy_errands` sections of the tile metadata:
