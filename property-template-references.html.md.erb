@@ -331,7 +331,7 @@ You must set a minimum version for upgrading to your current tile version. This 
 
 The version of the schema of the product template, the file that this documentation describes.
 
-Bumping the version number enables new properties that are not present in an older `metadata_version` but may also require restructuring of the product template to conform to the new `metadata_version`.
+Bumping the version number activates new properties that are not present in an older `metadata_version` but may also require restructuring of the product template to conform to the new `metadata_version`.
 
 The `metadata_version` corresponds to a major or minor release of Ops Manager. Ops Manager can accept a tile with a `metadata_version` that is older than the Ops Manager version, but Ops Manager cannot accept a tile with a `metadata_version` that is newer than the Ops Manager version. It is therefore best practice to set the `metadata_version` to be the same as the oldest version of Ops Manager that the tile version supports.
 
@@ -376,7 +376,7 @@ This regular expression allows Ops Manager's VMware Tanzu Network integration to
 
 Set `service_broker` to `true` for on-demand service brokers. Setting `service_broker` to `true`:
 
-* Enables the service network selector property type.
+* Activates the service network selector property type.
 
 * Requires the operator to select a service network during tile configuration. Tile authors can reference the selected service network with `(( $self.service_network ))`.
 
@@ -387,7 +387,7 @@ Set `service_broker` to `true` for on-demand service brokers. Setting `service_b
 * **Format:** Hash
 * **Type:** Required
 
-`enable_patch_security_updates` enables you to automatically use the latest patched version of a stemcell. This key is set to `true` by default. For tiles using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators might experience longer than expected upgrade times.
+`enable_patch_security_updates` you can automatically use the latest patched version of a stemcell. This key is set to `true` by default. For tiles using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators might experience longer than expected upgrade times.
 
 For example:
 
@@ -523,7 +523,7 @@ These are keys that define global deployment configurations. For more informatio
 
 Install-time verifiers confirm that properties for external services are set correctly.
 Install-time verifiers run in Ops Manager before changes are applied.
-This enables operators to correct invalid properties before deploying.
+Operators can correct invalid properties before deploying.
 
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by
 using the properties to connect to the MySQL database. If the properties are invalid,
@@ -1275,7 +1275,7 @@ A BOSH setting that controls the number of instances of this job that BOSH deplo
 
 The stemcell operating system for this job. You must set `use_stemcell` to the value of an `os` key configured in `stemcell_criteria` or `additional_stemcell_criteria`.
 
-You can configure `use_stemcell` to enable jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows. If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the tile.
+You can configure `use_stemcell` to activate jobs to run on different operating systems. For example, you can configure one job to run on Linux and configure a different job to run on Windows. If the instance count of a job is `0`, the configured stemcell operating system is not required to deploy the tile.
 
 If a job does not have a `use_stemcell` property, the job uses the stemcell operating system configured in `stemcell_criteria`. For more information, see [stemcell\_criteria](#top-stemcell-criteria) and [additional\_stemcell\_criteria](#top-additional-stemcells-criteria).
 
@@ -1284,7 +1284,7 @@ If a job does not have a `use_stemcell` property, the job uses the stemcell oper
 * **Format:** Array of hashes
 * **Type:** Required
 
-A set of resource settings for the job with maximum and minimum constraints, defaults, and enabled or disabled configurability.
+A set of resource settings for the job with maximum and minimum constraints, defaults, and configurability.
 
 The resources you can set are:
 
