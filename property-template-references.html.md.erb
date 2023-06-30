@@ -356,9 +356,7 @@ A description of the tile.
 
 The order in which a tile appears on the dashboard. The BOSH Director always appears at rank 100.
 
-For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100.
-
-<%= vars.recommended_by %> recommends that you set it to 1.
+For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100.  You should set it to 1.
 
 If all tiles have the same rank, Ops Manager sorts them alphabetically.
 
@@ -398,7 +396,7 @@ stemcell_criteria
   enable_patch_security_updates: false
 ```
 
-<%= vars.recommended_by %> recommends setting the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
+You should set the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
 
 You do not specify which IaaS the stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
 

@@ -23,8 +23,7 @@ To integrate your service at this level, you will have to learn about stemcells,
 
 ### <a id="managed-mvp"></a> Minimal viable product
 
-For a Minimal Viable Product (MVP) version of a managed service, we typically
-recommend that you aim for a single, shared service instance, and don't yet
+For a Minimal Viable Product (MVP) version of a managed service, you should aim for a single, shared service instance, and don't yet
 worry too much about High Availability of this instance. This integration level is mostly about getting the BOSH packaging, deployment, and monitoring working
 correctly.
 
@@ -48,4 +47,4 @@ your persistent storage across those as well.
 
 * The [Tile generator](./tile-generator.html) tool automatically creates the life cycle errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. Operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.platform_name %> operators control when errands run, and how to set default errand run rules in the tile.
 
-At any level of integration, <%= vars.company_name %> recommends and supports using [Concourse](./concourse.html) for continuous integration during development.
+At any level of integration, use [Concourse](./concourse.html) for continuous integration during development.
