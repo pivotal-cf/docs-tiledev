@@ -83,11 +83,11 @@ Include credentials to pass into a BOSH manifest as `salted_credentials` in your
 
 ### <a id='errands'></a> Errands
 
-Tile Generator automatically generates `deploy` and `delete` lifecycle errands for packages that deploy to <%= vars.platform_name %>. These errand scripts deploy the service and publish its plans in the Marketplace, and remove the service from <%= vars.platform_name %> and the Marketplace.
+Tile Generator automatically generates `deploy` and `delete` life cycle errands for packages that deploy to <%= vars.platform_name %>. These errand scripts deploy the service and publish its plans in the Marketplace, and remove the service from <%= vars.platform_name %> and the Marketplace.
 
 You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` that prepare Cloud Foundry to host the service or clean up before deleting it. You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
 
-For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the <%= vars.platform_name %> layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as lifecycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
+For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the <%= vars.platform_name %> layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as life cycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
 
 Tile Generator writes the `bosh-release` errands into the main BOSH release that it creates for the service, and adds `docker-bosh` errands into a separate Docker BOSH release that the main release depends on.
 
