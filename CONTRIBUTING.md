@@ -8,7 +8,7 @@ as an open-source patch.
 
 ## Contribution flow
 
-This is an outline of what a contributor's workflow looks like:
+This is an outline of what a contributor's workflow looks such as:
 
 - Create a topic branch from where you want to base your work
 - Make commits of logical units
