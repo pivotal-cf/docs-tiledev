@@ -57,8 +57,7 @@ a managed service deployment using the [Tile Generator](tile-generator.html)'s
 support for `docker-bosh` packages. You can deploy pre-existing
 Docker images into BOSH-managed VMs on the <%= vars.platform_name %> infrastructure.
 
-While this is a great, easy way to deploy your service on <%= vars.platform_name %>, we do not
-recommend this as a long-term, production-ready solution. There is really no
+While this is a great, easy way to deploy your service on <%= vars.platform_name %>, this is not a long-term, production-ready solution. There is really no
 benefit of running your service in containers on the VMs, and it does have
 a number of operational ("day 2") drawbacks:
 
@@ -75,7 +74,7 @@ images you deploy.
 After the basic BOSH release is in place, additional features for logging
 help operators run the service. For logging information, see
 [syslog-release](https://github.com/cloudfoundry/syslog-release).
-<%= vars.company_name %> recommends you expose the property `syslog.migration.disabled` using the
+Expose the property `syslog.migration.disabled` using the
 tile's forms because not all customers configure syslog draining.
 
 Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded

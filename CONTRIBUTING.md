@@ -27,7 +27,7 @@ git push origin my-new-feature
 
 ### Updating pull requests
 
-If your PR fails to pass CI or needs changes based on code review, VMware recommends squashing these changes into existing commits.
+If your PR fails to pass CI or needs changes based on code review, squashing these changes into existing commits.
 
 If your pull request contains a single commit or your changes are related to the most recent commit, you can amend the commit.
 
