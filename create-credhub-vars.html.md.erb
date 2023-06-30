@@ -22,7 +22,7 @@ You can reference these variables in the manifest snippets in their tile metadat
 ((( EXAMPLE-CREDHUB-PASSWORD )))
 ```
 
-Using triple parentheses lets Ops Manager identify CredHub variables while still supporting the BOSH double parentheses syntax. A variable referenced within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub, BOSH populates that variable value internally.
+Using triple parentheses, you can use Ops Manager to identify CredHub variables while still supporting the BOSH double parentheses syntax. A variable referenced within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub, BOSH populates that variable value internally.
 
 The benefit of this approach is that the Ops Manager YAML file does not contain sensitive credentials when the metadata manifest snippets have triple parentheses. The resulting manifest file contains variables within double parentheses, rather than unobscured credentials.
 
