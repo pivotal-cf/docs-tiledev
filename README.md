@@ -49,7 +49,7 @@ After the version that change is targeting is released, the pull request can be 
 the next time a documentation deployment occurs.
 
 If the documentation is meant to be target several released versions,
-then you will need to:
+then you must:
 
 - create a pull request for each individual minor version
 - or ask the technical writer to cherry-pick to particular branches/versions.

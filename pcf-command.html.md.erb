@@ -133,7 +133,7 @@ $ pcf install test-tile 0.0.2
 Where you would normally configure the tile settings in the UI, you can use thw `configure`
 command to pass in any user-specified properties as a .yml file. This command
 also sets the stemcell for the tile to the same one used by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>),
-to avoid the need to upload a tile-specific stemcell.
+to avoid uploading a tile-specific stemcell.
 
 ```bash
 $ pcf configure test-tile sample/missing-properties.yml
