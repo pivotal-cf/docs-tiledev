@@ -204,7 +204,7 @@ To activate your service broker to store binding credentials in runtime CredHub 
 
     Where `APP-GUID` is the GUID of the CF application being used
 
-1. Modify your service broker so that it returns a reference to the stored credentials in response to the binding request from the CC. Return the credentials as a single key `credhub-ref` with its value formatted as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`. For example, the binding response might look like the following:
+1. Edit your service broker so that it returns a reference to the stored credentials in response to the binding request from the CC. Return the credentials as a single key `credhub-ref` with its value formatted as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`. For example, the binding response might look like the following:
 
     ```
     {
