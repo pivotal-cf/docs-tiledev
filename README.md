@@ -27,7 +27,7 @@ This repo is for Tile Developer Guide content.
 
 List of terms that we want to use consistently in the doc:
 
-+ The Tile Dashboard–for the UI/product as a whole. For example, "Log in to the Tile Dashboard. [MB 2018.07.11]
++ The Tile Dashboard–for the UI/product as a whole. For example, "Log on to the Tile Dashboard. [MB 2018.07.11]
 + Tile Dashboard CI–for the subsystem of the Tile Dashboard that does the automated testing. For example, "Tile Dashboard CI runs any post-deploy errands that your tile has defined." [MB 2018.07.11]
 
 ## Releasing a New Minor Version
