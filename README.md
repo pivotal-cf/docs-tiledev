@@ -44,7 +44,7 @@ Cross-product partials for these docs are single sourced from the [Docs Partials
 ## Contributing to Documentation
 
 If there is some documentation to add for an unreleased patch version of these docs, then create a branch off of the live branch
-you intend to modify and create a pull request against that branch.
+you intend to edit and create a pull request against that branch.
 After the version that change is targeting is released, the pull request can be merged and will be live
 the next time a documentation deployment occurs.
 
