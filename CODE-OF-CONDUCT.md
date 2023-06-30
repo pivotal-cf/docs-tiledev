@@ -89,7 +89,7 @@ of actions.
 interaction with the people involved, including unsolicited interaction with
 those enforcing the Code of Conduct, for a specified period of time. This
 includes avoiding interactions in community spaces and external channels
-like social media. Violating these terms may lead to a temporary or
+such as social media. Violating these terms may lead to a temporary or
 permanent ban.
 
 ### 3. Temporary Ban
