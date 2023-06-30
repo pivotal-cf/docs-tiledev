@@ -23,7 +23,7 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
 1. System tests of the tile's **BOSH release**, including:
   - **Functional tests** covering the main features of the service.
       The main features typically interact with almost all important external integration points, so these tests confirm product capability.
-  - **Smoke tests** (lifecycle tests) for service instances that create and bind a service instance, call it from a test app,
+  - **Smoke tests** (life cycle tests) for service instances that create and bind a service instance, call it from a test app,
       verify the logs it generates, and delete it.
       For a typical end-to-end test sequence, see [Smoke Tests](#smoke) as follows.
 
@@ -42,7 +42,7 @@ For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follow
 
 ### <a id="smoke"></a> Smoke tests
 
-Smoke tests are end-to-end lifecycle tests for service instances that you can include as [post-deploy errands](./tile-errands.html#post-deploy)
+Smoke tests are end-to-end life cycle tests for service instances that you can include as [post-deploy errands](./tile-errands.html#post-deploy)
 within a tile and also automate in [Concourse](./concourse.html) or other integration platforms.
 
 A typical smoke test runs as follows:
