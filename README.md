@@ -32,7 +32,7 @@ List of terms that we want to use consistently in the doc:
 
 ## Releasing a New Minor Version
 
-Because **master** is the latest and greatest documentation, the process would be to cut a **x.x** branch
+Because **master** is the latest and greatest documentation, the process is to cut a **x.x** branch
 for the version that **master** was targeting during that time.
 
 After this point, **master** will be the target for the next version of this product.

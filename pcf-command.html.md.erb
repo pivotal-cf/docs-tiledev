@@ -115,7 +115,7 @@ $ pcf settings test-tile
 ##<a id="deploy-tiles"></a> Deploying Tiles
 
 After your software works and correctly deploys using `test-errand`, you can go
-through the real Ops Manager deployment process from the CLI, as you would
+through the real Ops Manager deployment process from the CLI, as you can
 normally do through the Ops Manager UI.
 
 Import your .pivotal file into Ops Manager:
@@ -130,7 +130,7 @@ Install the uploaded version of your product:
 $ pcf install test-tile 0.0.2
 ```
 
-Where you would normally configure the tile settings in the UI, you can use thw `configure`
+Where you can normally configure the tile settings in the UI, you can use thw `configure`
 command to pass in any user-specified properties as a .yml file. This command
 also sets the stemcell for the tile to the same one used by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>),
 to avoid uploading a tile-specific stemcell.
