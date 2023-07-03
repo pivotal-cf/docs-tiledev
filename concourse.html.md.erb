@@ -218,7 +218,7 @@ To specify the UAA users:
 
 After your tile is installed, Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
 Ideally your tile includes tests that exercise all of its capability.
-We have some ideas for expanding the Tile Dashboard testing capabilities;
+VMware has some ideas for expanding the Tile Dashboard testing capabilities;
 if you’re interested in other ways of defining tests,
 contact us on [Partners Slack](https://pivotalpartners.slack.com/).
 
@@ -264,7 +264,7 @@ A typical CI pipeline for a tile consists of the following jobs:
 
 You describe this pipeline in a `pipeline.yml` file that is uploaded to the
 Concourse server. [Tile Generator](tile-generator.html) contains a sample
-pipeline that you can clone for your own tile. We are working on automating
+pipeline that you can clone for your own tile. VMware is working on automating
 the process of generating a pipeline template for you.
 
 ### <a id="pool"></a> Set up <%= vars.platform_name %> for your CI Pipeline
@@ -275,5 +275,5 @@ instances that are managed by us and are regularly updated with the latest
 have to target your pipeline at a [<%= vars.platform_name %> instance you have setup](./environments.html).
 
 Concourse has a resource type to manage a pool of resources that are shared
-between pipelines, which is what we use to serialize <%= vars.platform_name %> access between the
+between pipelines, which is what VMware uses to serialize <%= vars.platform_name %> access between the
 partner pipelines that run on our concourse server.
