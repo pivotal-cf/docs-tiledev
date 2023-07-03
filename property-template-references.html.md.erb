@@ -440,10 +440,12 @@ The following keys are supported:
 - `name`: The name of the tile required by your tile. This is a required key.
 - `version`: The version range required by your tile. This is a required key.
 - `optional`: This is an optional key that defaults to false.
-  <p class="note warning"><strong>Warning:</strong> The <code>optional</code> key was introduced in Ops Manager v2.8.
-  It is ignored in earlier versions.
-  This means that declared dependencies are required in Ops Manager v2.7 and earlier.
-  </p>
+
+>**Caution**
+>It is ignored in earlier versions.
+This means that declared dependencies are required in Ops Manager v2.7 and earlier.
+
+
 
 For example:
 
@@ -981,7 +983,8 @@ Jobs require many different settings to function properly. That is the core of w
 
 Ops Manager does not require tile authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
-<p class="note"><strong>Note:</strong> Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Ops Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.</p>
+>**Note**
+>Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Ops Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.
 
 ```
 job_types:
@@ -1259,7 +1262,9 @@ You can give users control of balancing jobs across availability zones (AZs) by 
 
 To limit a job to a single AZ, set `single_az_only` to `true`.
 
-<p class="note warning"><strong>Warning:</strong> If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.</p>
+>**Caution** If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.
+
+
 
 ### <a id='job-max-in-flight'></a> max_in_flight
 
@@ -1295,7 +1300,8 @@ The resources you can set are:
 
 For examples of supported constraint types, see [integer](#integer).
 
-<p class="note"><strong>Note:</strong> If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.</p>
+>**Note**
+>If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.
 
 ### <a id='job-instance-def'></a> instance_definition
 
@@ -1312,7 +1318,9 @@ For example, your tile uses Amazon Relational Database Service (RDS) instead of 
 
 For examples of supported constraint types, see [integer](#integer).
 
-<p class="note"><strong>Note:</strong> If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.</p>
+>**Note**
+>If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.
+
 
 ### <a id='job-manifest'></a> Manifest
 
@@ -1417,7 +1425,8 @@ Use the `current_record` property within a collection record to refer to other p
 
 For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
 
-<p class="note"><strong>Note:</strong> The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.</p>
+>**Note**
+>If you are using the The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
 
 After defining a named manifest, you can reference it using a manifest snippet in the following format:
 

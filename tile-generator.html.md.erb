@@ -97,7 +97,8 @@ For a 7-minute introduction into what Tile Generator is and does, see
         This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
         To deactivate the virtualenv, run the command `deactivate`.
 
-        <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
+        >**Note**
+        >To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
           with the virtualenv activated.</p>
 
 
@@ -106,7 +107,8 @@ For a 7-minute introduction into what Tile Generator is and does, see
 3. From within the root directory of the project for which you want to create a tile,
 initialize the directory as a tile repository by running the following commands:
 
-    <p class="note"><strong>Note</strong>: <%= vars.company_name %> recommends that you use a git repository.</p>
+    >**Note**
+    >If you are using the  <%= vars.company_name %> recommends that you use a git repository.</p>
 
     ```
     cd YOUR-PROD-DIRECTORY
@@ -164,7 +166,8 @@ You can build this sample using the following steps:
     tile build
     ```
 
-<p class="note"><strong>Note</strong>: The sample tile includes a Python app that is re-used in several packages,
+    >**Note**
+    >The sample tile includes a Python app that is re-used in several packages,
     sometimes as an app, sometimes as a service broker. One of the deployments (app3)
     uses the sample app inside a Docker image that is modified
     by the CI pipeline. If you edit the sample app, you have to build your own
@@ -304,8 +307,8 @@ of `app` or `docker-app`:
   enable_global_access_to_plans: true  # optional
 ```
 
-  <p class="note">
-    <strong>Note</strong>: Unless you specify the <code>enable_global_access_to_plans: true</code> option, your
+  >**Note**
+  >Unless you specify the <code>enable_global_access_to_plans: true</code> option, your
     broker's services do not appear in the user's Marketplaces.
     Operators have to use the <code>cf enable-service-access</code> command to allow
     specific users, orgs, and spaces to access your services.
@@ -656,10 +659,8 @@ package.
 Service instances provisioned this way survive updates, but are deleted
 when the tile is uninstalled.
 
-<p class="note"><strong>Note</strong>:  The name is the name of the provided <em>service, not the broker</em>.
-    In many cases these are not the same, and a single broker might even offer
-    multiple services. Use <code>cf service-access</code> to see the services and plans
-    offered by installed service brokers.</p>
+  >**Note**
+  >The name is the name of the provided <em>service, not the broker</em>. In many cases these are not the same, and a single broker might even offer multiple services. Use <code>cf service-access</code> to see the services and plans offered by installed service brokers.</p>
 
 If you do not specify a plan, Tile Generator uses the first plan
 listed for the service in the broker catalog. It is a good idea to always

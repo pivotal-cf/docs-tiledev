@@ -5,10 +5,11 @@ owner: Services
 
 Here's how to handle tile migrations, which refers to changing the name and values of properties when a customer upgrades tile versions. Tile authors supply a JavaScript file to trigger chaining migrations. Chaining migrations allows for multiple migrations to run sequentially.
 
-<p class='note'><strong>Note:</strong> To use JS migrations, ensure that you are using Ops Manager v1.7 or later.</p>
+>**Note**
+> To use JS migrations, ensure that you are using Ops Manager v1.7 or later.
 
-<p class='note'><strong>Note:</strong> Changing the value of<code>single_az_only</code> for jobs started by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. To avoid this, contact <a href="https://tanzu.vmware.com/support">Support</a>.</p>
-
+>**Note**
+> Changing the value of<code>single_az_only</code> for jobs started by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. To avoid this, contact <a href="https://tanzu.vmware.com/support">Support</a>.
 
 ## <a id='import'></a> Update Values or Property Names Using JavaScript
 
@@ -235,8 +236,8 @@ Refer to the example properties below when writing your own tile migration JS fi
 }
 ```
 
- <p class='note'><strong>Note:</strong> If your product uses Ops Manager v1.6 or earlier metadata, you must write a transmogrifier content migration for customers using your product on v1.6, and a JavaScript migration for those on Ops Manager v1.7 or later. Review the transmogrifier example in the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.</p>
-
+>**Note**
+> If your product uses Ops Manager v1.6 or earlier metadata, you must write a transmogrifier content migration for customers using your product on v1.6, and a JavaScript migration for those on Ops Manager v1.7 or later. Review the transmogrifier example in the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.
 
 ## <a id='chaining'></a> Examples demonstrating chaining migrations
 
@@ -268,4 +269,5 @@ In this scenario, your customer starts with nothing installed. They perform a cl
 
 In this scenario, your customer performs a clean install of v1.7.1, with no previous versions of the product installed. Since migrations are only triggered by upgrade events, no migrations run.
 
-<p class='note'><strong>Note:</strong> Do not omit a migration from a later version of your tile. This breaks the "chaining" nature of migrations. Using the example above, if you release a v1.7.1 tile without the <code>201606010000_a.js</code> migration, the system can not detect that <code>201606010000_b.js</code> is the same migration that was present in the clean install in Scenario C.</p>
+>**Note**
+> Do not omit a migration from a later version of your tile. This breaks the "chaining" nature of migrations. Using the example above, if you release a v1.7.1 tile without the <code>201606010000_a.js</code> migration, the system can not detect that <code>201606010000_b.js</code> is the same migration that was present in the clean install in Scenario C.

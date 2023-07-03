@@ -67,7 +67,8 @@ Each form, or configuration pane, has `label` for the menu text, a `description`
 
 For each property, you can combine specifications for `name`, `type`, `default`, `configurable`, `options`, and `constraints`. For more information, see the [Form Properties](./property-template-references.html#form-properties) and [Property Blueprints](./property-template-references.html#property-blueprints) sections of the _Property and Template References_ topic.
 
-<p class="note"><strong>Note:</strong> In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.</p>
+>**Note**
+>In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.
 
 #### <a id='appearance'></a> Tile appearance
 
@@ -97,7 +98,10 @@ You can include both required and optional product dependencies for tiles.
 
 * **Required Dependencies**: Required dependencies are always required. To deploy the dependent tile, you must also deploy the dependency.
 
-* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.<p class="note"><strong>Note:</strong> After the dependency is installed, it is mandatory even if marked as optional.</p>
+* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.
+
+>**Note**
+>After the dependency is installed, it is mandatory even if marked as optionaass=l.
 
 Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` text box under `requires_product_versions`. For example:
 

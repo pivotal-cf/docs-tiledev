@@ -4,7 +4,8 @@ This repo is for Tile Developer Guide content.
 
 ## Which branch to use?
 
-**Note**: Provide instructions in your PRs to indicate which branches you want Docs to apply your commits to.
+>**Note**
+>If you are using the Provide instructions in your PRs to indicate which branches you want Docs to apply your commits to.
 
 | Branch name | Use for… |
 |-------------| ------|
