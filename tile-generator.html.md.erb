@@ -665,7 +665,7 @@ If you do not specify a plan, Tile Generator uses the first plan
 listed for the service in the broker catalog. It is a good idea to always
 specify a service plan. If you *change* the plan between versions of your
 tile, Tile Generator attempts to update the plan while preserving
-the service (thus not causing data loss during upgrade). If the service
+the service (not causing data loss during upgrade). If the service
 does not support plan changes, this causes the upgrade to fail.
 
 `configurable_persistence` is really a special case of `auto_services`,
