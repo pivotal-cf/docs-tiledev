@@ -35,7 +35,7 @@ List of terms that we want to use consistently in the doc:
 Because **master** is the latest and greatest documentation, the process would be to cut a **x.x** branch
 for the version that **master** was targeting during that time.
 
-After this point, **master** will then be the target for the next version of this product.
+After this point, **master** will be the target for the next version of this product.
 
 ## Partials
 
@@ -43,13 +43,12 @@ Cross-product partials for these docs are single sourced from the [Docs Partials
 
 ## Contributing to Documentation
 
-If there is some documentation to add for an unreleased patch version of these docs, then create a branch off of the live branch
+If there is some documentation to add for an unreleased patch version of these docs, create a branch off of the live branch
 you intend to edit and create a pull request against that branch.
 After the version that change is targeting is released, the pull request can be merged and will be live
 the next time a documentation deployment occurs.
 
-If the documentation is meant to be target several released versions,
-then you must:
+If the documentation is meant to be target several released versions, you must:
 
 - create a pull request for each individual minor version
 - or ask the technical writer to cherry-pick to particular branches/versions.
