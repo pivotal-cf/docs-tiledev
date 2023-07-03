@@ -155,7 +155,7 @@ broker de-registration. For example, VMware Tanzu SQL [MySQL] has a **Broker Der
 * Deletes the service broker from the Cloud Controller
 
 When an operator chooses to delete the VMware Tanzu SQL [MySQL] product, Ops Manager first
-runs the **Broker Deregistrar** pre-delete errand, then deletes the product.
+runs the **Broker Deregistrar** pre-delete errand, and next deletes the product.
 
 Pre-delete errands run by default. An operator can prevent a pre-delete errand from running by setting
 its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
