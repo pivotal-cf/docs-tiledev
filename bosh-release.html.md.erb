@@ -79,7 +79,7 @@ tile's forms because not all customers configure syslog draining.
 
 Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded
 to the configured syslog server by the release.
-Integrating syslog forwarding into a tile should not require code changes;
+Integrating syslog forwarding into a tile does not require code changes;
 it only requires including the release and configuration forms in the `tile.yml`.
 For an example, see [pcf-examples/tile-for-bosh-with-syslog](https://github.com/cf-platform-eng/pcf-examples/tree/master/tile-for-bosh-with-syslog).
 
