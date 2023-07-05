@@ -193,10 +193,8 @@ The table below describes the accessors you can use to retrieve information abou
 | `metrics_server_enabled` | Returns `true` if the `system-metrics-server` job is included in the manifest.<br>For information about the job, see <a href="https://bosh.io/jobs/system-metrics-server?source=github.com/cloudfoundry/bosh-system-metrics-server-release">system-metrics-server job</a> in the BOSH documentation. |
 | `bosh_metrics_forwarder_client_name` | Provides the BOSH Metrics Forwarder client name. |
 | `bosh_metrics_forwarder_client_secret` | Provides the BOSH Metrics Forwarder client secret. |
-| `metrics_server_enabled` | Exposes whether the `system-metrics-server` job of the `bosh-system-metrics-server` release is included in the BOSH Director. |
 | `system_metrics_runtime_enabled` | Exposes whether the `ops_manager_system_metrics_runtime` is added to the BOSH Director. |
-| `dns_release_present` | Exposes the BOSH Director configuration for `disable_dns_release`. |
-| `metrics_server_enabled` | Exposes the BOSH Director configuration for `metrics_server_enabled`. |
+| `dns_release_present` | Deprecated. Always returns `true`. |
 
 #### <a id='runtime'></a> $runtime
 
