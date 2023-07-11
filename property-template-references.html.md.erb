@@ -983,9 +983,10 @@ Jobs require many different settings to function properly. That is the core of w
 
 Ops Manager does not require tile authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
->**Note**
->Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Ops Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.
-
+<p class="note">
+<span class="note__title">Note</span>
+Ops Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Ops Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.
+</p>
 ```
 job_types:
   - name: web_server
@@ -1300,8 +1301,12 @@ The resources you can set are:
 
 For examples of supported constraint types, see [integer](#integer).
 
->**Note**
->If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.
+If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.
+
+<p class="note">
+<span class="note__title">Note</span>
+If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.
+</p>
 
 ### <a id='job-instance-def'></a> instance_definition
 
