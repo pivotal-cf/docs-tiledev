@@ -105,8 +105,12 @@ You can include both required and optional product dependencies for tiles.
 
 * **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.
 
->**Note**
->After the dependency is installed, it is mandatory even if marked as optionaass=l.
+After the dependency is installed, it is mandatory even if marked as optionaass=l.
+
+<p class="note">
+<span class="note__title">Note</span>
+After the dependency is installed, it is mandatory even if marked as option.
+</p>
 
 Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` text box under `requires_product_versions`. For example:
 
