@@ -5,10 +5,10 @@ owner: Services
 
 Here's how to handle tile migrations, which refers to changing the name and values of properties when a customer upgrades tile versions. Tile authors supply a JavaScript file to trigger chaining migrations. Chaining migrations allows for multiple migrations to run sequentially.
 
-<p class='note'><strong>Note:</strong> To use JS migrations, ensure that you are using Ops Manager v1.7 or later.</p>
+To use JS migrations, ensure that you are using Ops Manager v1.7 or later.
 
-<p class='note'><strong>Note:</strong> Changing the value of<code>single_az_only</code> for jobs started by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. To avoid this, contact <a href="https://tanzu.vmware.com/support">Support</a>.</p>
-
+In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.
+Changing the value of<code>single_az_only</code> for jobs started by your tile can cause data loss for customers who upgrade to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12. To avoid this, contact <a href="https://tanzu.vmware.com/support">Support</a>.
 
 ## <a id='import'></a> Update Values or Property Names Using JavaScript
 
