@@ -1323,9 +1323,12 @@ For example, your tile uses Amazon Relational Database Service (RDS) instead of 
 
 For examples of supported constraint types, see [integer](#integer).
 
->**Note**
->If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.
+If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.
 
+<p class="note">
+<span class="note__title">Note</span>
+If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.
+</p>
 
 ### <a id='job-manifest'></a> Manifest
 
@@ -1430,8 +1433,12 @@ Use the `current_record` property within a collection record to refer to other p
 
 For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
 
->**Note**
->If you are using the The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
+If you are using the The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
+
+<p class="note">
+<span class="note__title">Note</span>
+If you are using the The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
+</p>
 
 After defining a named manifest, you can reference it using a manifest snippet in the following format:
 
