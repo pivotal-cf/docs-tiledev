@@ -333,7 +333,7 @@ You must set a minimum version for upgrading to your current tile version. This 
 
 The version of the schema of the product template, the file that this documentation describes.
 
-Bumping the version number activates new properties that are not present in an older `metadata_version` but may also require restructuring of the product template to conform to the new `metadata_version`.
+Bumping the version number activates new properties that are not present in an older `metadata_version` but can also require restructuring of the product template to conform to the new `metadata_version`.
 
 The `metadata_version` corresponds to a major or minor release of Ops Manager. Ops Manager can accept a tile with a `metadata_version` that is older than the Ops Manager version, but Ops Manager cannot accept a tile with a `metadata_version` that is newer than the Ops Manager version. It is therefore best practice to set the `metadata_version` to be the same as the oldest version of Ops Manager that the tile version supports.
 
@@ -587,7 +587,7 @@ The following table lists the available install-time verifiers:
     </td>
     <td>
       the specified LDAP server exists and that the provided credentials are valid.
-      Multiple LDAP servers may be verified if the <code>url</code> property is a space-separated list of server URLs.
+      Multiple LDAP servers can be verified if the <code>url</code> property is a space-separated list of server URLs.
     <td>
       <ul>
         <li><code>url</code></li>
@@ -1263,7 +1263,7 @@ You can give users control of balancing jobs across availability zones (AZs) by 
 
 To limit a job to a single AZ, set `single_az_only` to `true`.
 
->**Caution** If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.
+>**Caution** If you change the <code>single_az_only</code> setting, your VMs can switch AZs. This change can cause an orphaned disk.
 
 
 
@@ -1323,11 +1323,11 @@ For example, your tile uses Amazon Relational Database Service (RDS) instead of 
 
 For examples of supported constraint types, see [integer](#integer).
 
-If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.
+If you are using the <code>zero_if</code> property, you should not set the <code>can_only_increase</code> constraint to <code>true</code>.
 
 <p class="note">
 <span class="note__title">Note</span>
-If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.
+If you are using the <code>zero_if</code> property, you should not set the <code>can_only_increase</code> constraint to <code>true</code>.
 </p>
 
 ### <a id='job-manifest'></a> Manifest

@@ -42,11 +42,11 @@ This holds a single integer value.
     <td> Sets the maximum value of the integer. </td>
   </tr>
   <tr>
-    <td> may_only_be_odd_or_zero </td>
+    <td> can_only_be_odd_or_zero </td>
     <td> Sets the integer to only allow odd or zero values. </td>
   </tr>
   <tr>
-    <td> may_only_increase </td>
+    <td> can_only_increase </td>
     <td> Sets the integer to only increase in value. </td>
   </tr>
   <tr>
@@ -91,8 +91,8 @@ property_blueprints:
     constraints: # the following constraints allow the values 9, 15, and 21
       min: 8
       max: 21
-      may_only_increase: true
-      may_only_be_odd_or_zero: true
+      can_only_increase: true
+      can_only_be_odd_or_zero: true
       modulo: 3
   - name: example_integer2 # the following constraints allow the values 8 and 16
     type: integer

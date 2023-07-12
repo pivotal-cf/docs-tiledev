@@ -620,7 +620,7 @@ as the property name but in ALL_CAPS). They can also be referenced in other part
 of the configuration file by using `(( .properties.<property-name> ))` instead
 of a hardcoded value.
 
-All properties supported by Ops Manager may be used. The syntax is the same
+All properties supported by Ops Manager can be used. The syntax is the same
 as used by Ops Manager, except that for simplicity property blueprints for
 form text boxes do not need to be declared separately. Instead, the declaration
 is included in the form itself. For a complete list of supported property
@@ -765,7 +765,7 @@ packages:
       cf update-buildpack my_buildpack -i 0
     fi
   delete: |
-    # Intentional no-op, as others may have a dependency on this
+    # Intentional no-op, as others can have a dependency on this
 ```
 
 `deploy` and `delete` completely replace the standard errand commands for the

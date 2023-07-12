@@ -11,7 +11,7 @@ You can use service brokers to create service instances in their development spa
 
 The service broker works by providing an API which the Cloud Controller calls to create service instances, bind them to apps, and perform other operations. Cloud Foundry service brokers are implemented as HTTP servers that conform to the [service broker API](http://docs.cloudfoundry.org/services/api.html).
 
-In addition to providing an API, a service broker publishes a service catalog that may include multiple service plans, such as a free tier and a metered tier. Brokers register their service plans with the Cloud Controller to populate the Marketplace, which developers access with `cf marketplace` or through Apps Manager.
+In addition to providing an API, a service broker publishes a service catalog that can include multiple service plans, such as a free tier and a metered tier. Brokers register their service plans with the Cloud Controller to populate the Marketplace, which developers access with `cf marketplace` or through Apps Manager.
 
 Cloud operators make software services available to developers by finding them on [VMware Tanzu Network](https://network.pivotal.io/) and installing and configuring them through a tile interface in the Ops Manager **Installation Dashboard**. Installing a service tile creates a service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. Developers can create service instances in their spaces and bind them to their apps.
 
