@@ -38,7 +38,10 @@ The sections below describe an example implementation of how to add SSI credenti
 
 To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the <%= vars.app_runtime_abbr %> tile, through a BOSH link.
 
-<p class="note"><strong>Note</strong>: BOSH Links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links">BOSH Links</a>.</p>
+<p class="note">
+<span class="note__title">Note</span>
+If you are using the BOSH Links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links">BOSH Links</a>.
+</p>
 
 ### <a id="spec"></a> Update spec file and templates
 
@@ -214,4 +217,7 @@ To activate your service broker to store binding credentials in runtime CredHub 
     }
     ```
 
-<p class="note"><strong>Note:</strong> Java Virtual Machine (JVM) apps can use <a href="https://projects.spring.io/spring-credhub">Spring CredHub</a> to access the CredHub API.</p>
+<p class="note">
+<span class="note__title">Note</span>
+If you are using the Java Virtual Machine (JVM) apps can use <a href="https://projects.spring.io/spring-credhub">Spring CredHub</a> to access the CredHub API.
+</p>
