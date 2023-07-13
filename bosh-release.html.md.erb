@@ -25,7 +25,7 @@ service components and stop or restart them
 
 ## <a id="resources"></a> BOSH resources
 
-These links provide details on BOSH and BOSH releases:
+These links provide details about BOSH and BOSH releases:
 
 - [BOSH Documentation](http://bosh.io/docs) is the top-level contents page for
 BOSH documentation.
@@ -54,14 +54,14 @@ These topics explain how to create a BOSH release:
 
 If you have already packaged your service as Docker images, you can emulate
 a managed service deployment using the [Tile Generator](tile-generator.html)'s
-support for `docker-bosh` packages. You can deploy pre-existing
+support for `docker-bosh` packages. You can deploy existing
 Docker images into BOSH-managed VMs on the <%= vars.platform_name %> infrastructure.
 
-While this is a great, easy way to deploy your service on <%= vars.platform_name %>, this is not a long-term, production-ready solution. There is really no
+While this is a great way to deploy your service on <%= vars.platform_name %>, this is not a long-term, production-ready solution. There is really no
 benefit of running your service in containers on the VMs, and it does have
 a number of operational ("day 2") drawbacks:
 
-- You introduce more software (Docker) which needs to be kept up-to-date, and
+- You introduce more software (Docker) which must be kept up-to-date, and
 has the potential for problems, downtimes, and security vulnerabilities.
 
 - You can no longer take advantage of the patching capabilities of <%= vars.platform_name %> for
@@ -75,12 +75,11 @@ After the basic BOSH release is in place, additional features for logging
 help operators run the service. For logging information, see
 [syslog-release](https://github.com/cloudfoundry/syslog-release).
 Expose the property `syslog.migration.disabled` using the
-tile's forms because not all customers configure syslog draining.
+tile's forms because not all VMware customers might not configure syslog draining.
 
 Logs written under the expected BOSH location `/var/vcap/sys/log` are forwarded
 to the configured syslog server by the release.
-Integrating syslog forwarding into a tile does not require code changes;
-it only requires including the release and configuration forms in the `tile.yml`.
+Integrating syslog forwarding into a tile does not require code changes. It only requires including the release and configuration forms in the `tile.yml`.
 For an example, see [pcf-examples/tile-for-bosh-with-syslog](https://github.com/cf-platform-eng/pcf-examples/tree/master/tile-for-bosh-with-syslog).
 
 ## <a id="backup"></a>BOSH backup and restore
