@@ -905,13 +905,13 @@ References to properties defined in the `property_blueprints` section of the pro
 ### <a id='verifiers'></a> Verifiers
 
 Verifiers confirm that properties are set correctly in forms.
-If a verifier displays a warning, the form can still be saved and the warning can be ignored.
+If a verifier displays a warning, the form can still be saved and the warning ignored.
 
 Verifiers are similar to install-time verifiers
 except that they run after a form is saved and not before **Apply Changes**.
 Verifiers do not block deployments and only inform operators that set properties are invalid.
 
-If you want to have a verifier run when a form is saved and before **Apply Changes**,
+To have a verifier run when a form is saved and before **Apply Changes**,
 add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
 For information about how operators manage and view verifiers,
