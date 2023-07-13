@@ -17,8 +17,8 @@ use the following links:
 
 - [Cloud Foundry subsystems](http://docs.pivotal.io/application-service/concepts/overview.html) provides high-level descriptions of internal functions performed by different <%= vars.app_runtime_abbr %> components.
 - [Cloud Foundry Command Line Interface (cf CLI)](http://docs.pivotal.io/application-service/cf-cli/index.html) links to topics that explain how to direct <%= vars.app_runtime_abbr %> deployment from your local command line.
-- [Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html) describes the Ops Manager and Installation Dashboard interfaces, where cloud operators see, install, configure, and deploy service tiles.
-- [Apps Manager](http://docs.pivotal.io/application-service/console/index.html) describes the Apps Manager interface, where app developers create and configure service instances and bind them to their apps.
+- [Ops Manager](http://docs.pivotal.io/pivotalcf/customizing/pcf-interface.html) describes Ops Manager and Installation Dashboard interfaces, where cloud operators see, install, configure, and deploy service tiles.
+- [Apps Manager](http://docs.pivotal.io/application-service/console/index.html) describes Apps Manager interface, where app developers create and configure service instances and bind them to their apps.
 
 ## <a id="applications"></a> Applications
 
@@ -37,7 +37,7 @@ Most value-add integrations are done by exposing your software to your customer 
 
 ## <a id="buildpacks"></a> Buildpacks
 
-When application code is deployed to Cloud Foundry, it is processed by a language-specific buildpack. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code.
+When application code is deployed to Cloud Foundry, a language-specific buildpack proccesses it. Language buildpacks provide a convenient integration hook for any service that needs to inspect or embellish application code.
 Supplying buildpacks also provides a language-agnostic way to inject your code into the application container image.
 
 - [Application Staging Process](http://docs.pivotal.io/application-service/concepts/how-applications-are-staged.html) explains how <%= vars.app_runtime_abbr %> packages and deploys apps in containers with buildpacks so that they can run on multiple VMs interchangeably.
@@ -56,7 +56,7 @@ VMware refers to these injected components as "container-embedded agents".
 
 ## <a id="nozzles"></a> Nozzles
 
-Loggregator, Cloud Foundry's logging system, has a feature named **firehose**. The firehose includes the combined stream of logs from all apps, plus metrics data from Cloud Foundry components, used by operators and administrators.
+Loggregator, Cloud Foundry's logging system, has a feature named **Firehose**. The Firehose includes the combined stream of logs from all apps, plus metrics data from Cloud Foundry components, used by operators and administrators.
 
 A nozzle takes this data and forwards it to an external logging and metrics solution.
 
