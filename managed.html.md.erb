@@ -11,15 +11,15 @@ The next level of integration is to get your service to be deployed on <%= vars.
 than externally, on the same IaaS that your particular Cloud Foundry instance
 is deployed on, and by the same orchestration tool, [BOSH](http://bosh.io).
 
-This is usually one of the more involved integrations, as you will have to change your packaging to allow your service components to be deployed by [BOSH](http://bosh.io) onto the <%= vars.platform_name %> infrastructure.
+This is usually one of the more involved integrations, as you configure your packaging to allow your service components to be deployed by [BOSH](http://bosh.io) onto the <%= vars.platform_name %> infrastructure.
 
 Offering your software as a managed service means that your <%= vars.platform_name %> customers
-will not have to learn different ways to deploy, manage, and monitor
+can not have to learn different ways to deploy, manage, and monitor
 different components of their application platform.
 
 As with the brokered service, the service has a service broker and a tile listed on VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMware Tanzu," without "Service Broker" in the name.
 
-To integrate your service at this level, you will have to learn about stemcells, BOSH releases, and manifests. You will also have to decide how your service maps to virtual machines and how persistent storage is managed.
+To integrate your service at this level, you configure to learn about stemcells, BOSH releases, and manifests. You can decide how your service maps to virtual machines and how persistent storage is managed.
 
 ### <a id="managed-mvp"></a> Minimal viable product
 

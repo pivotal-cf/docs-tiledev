@@ -73,7 +73,7 @@ job_types:
     - name: modprobe
       release: os-conf
       manifest: |
-        # the value at the 'modules' key will render as an array of strings
+        # the value at the 'modules' key renders as an array of strings
         modules: (( .properties.example_multi_select_options.value ))
 ```
 

@@ -45,7 +45,7 @@ If you are using the BOSH Links let multiple jobs share deployment-time configur
 
 ### <a id="spec"></a> Update spec file and templates
 
-The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the <%= vars.app_runtime_abbr %> tile. To activate your service tile to retrieve these CredHub-provided properties, add a `consumes:` section with the BOSH link from the <%= vars.app_runtime_abbr %>  tile to the spec file of the BOSH job that will use them and edit the job's templates to access the values in the link:
+The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the <%= vars.app_runtime_abbr %> tile. To activate your service tile to retrieve these CredHub-provided properties, add a `consumes:` section with the BOSH link from the <%= vars.app_runtime_abbr %>  tile to the spec file of the BOSH job that uses them and edit the job's templates to access the values in the link:
 
 ```
     consumes:

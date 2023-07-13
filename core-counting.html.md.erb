@@ -15,14 +15,14 @@ time with a single core license without being double counted.
 
 Tile developers can add monit jobs named `SKU-<SKU_NAME>` to their VMs to let
 Ops Manager know to count all of that VM's cores as part of a SKU. VMs with the
-same SKU will be counted together. If no matching monit jobs are present, no
-cores will be counted for those VMs. For example: if you wanted to create and
+same SKU are counted together. If no matching monit jobs are present, no
+cores are counted for those VMs. For example: if you wanted to create and
 specify a SKU of the name `TEST`, you must define a monit job with the name
 `SKU-TEST`. A simpler way for VMware tile developers to define such a monit job
 for linux and windows VMs is to use the internal count-cores-indicator-release.
 
 When workloads are being run on vSphere, if multiple VMs are being run on the
-same host, the total counted cores of a given SKU will never be more then the
+same host, the total counted cores of a given SKU are never be more then the
 number of physical cores on that host. On other infrastructures Ops Manager
 uses the values returned by the kernel for number of cores and threads per
 core.

@@ -9,7 +9,7 @@ Here's how to integrate your software as an on-demand service and service tile f
 
 Brokered service and managed service integrations assume that you have a single VM instance deployed for your software deployed, or a limited number of VMs.
 
-These VMs are multi-tenant, and you can possibly scale them manually to accommodate many concurrent applications. But for real production deployments, most of your customers will want dedicated VM instances of your service for each application.
+These VMs are multi-tenant, and you can possibly scale them manually to accommodate many concurrent applications. But for real production deployments, most of your customers want dedicated VM instances of your service for each application.
 
 On-demand (dynamic) services activates this flexibility in a scalable way. When an operator deploys the service, do not pre-allocate VM resources for service instances. Instead, they define an allowable range of VM memory and CPU sizes and create a dedicated network on the IaaS to host any required number of service instance VMs.
 

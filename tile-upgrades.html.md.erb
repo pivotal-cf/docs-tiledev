@@ -98,7 +98,7 @@ This function can be called a maximum of 100 times per `.js` file. If you need m
 abortMigration(string)
 Arguments:  string containing error message
 Return value:  none (never returns)
-Description:  Causes the migration to fail immediately. Rolls back all migrations in the current chain, i.e, no changes will be committed.
+Description:  Causes the migration to fail immediately. Rolls back all migrations in the current chain, i.e, no changes are be committed.
 Example:
   if (something > 5) {
     abortMigration("Can't upgrade tile when the value of something is more than 5")

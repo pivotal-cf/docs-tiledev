@@ -37,7 +37,7 @@ This holds multiple records of a group of custom defined properties.
   <tr>
     <td> property_blueprints </td>
     <td>
-      A group of property blueprints that each record will have. Any type and combination
+      A group of property blueprints that each record has. Any type and combination
       of property types can be used except collections and selectors which cannot be nested
       inside of collections.
     </td>
@@ -47,7 +47,7 @@ This holds multiple records of a group of custom defined properties.
     <td>
       An array of objects each containing a <code>name</code> and a <code>manifest</code>.
       The manifest specifies the YAML which can be used with <code>parsed_manifest(name)</code>
-      where the manifest will be interpolated for each record in the collection.
+      where the manifest is interpolated for each record in the collection.
       The manifest has a special property level, <code>current_record</code>, which has
       all the properties in a record of the collection.  The provided example below shows
       have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
@@ -131,7 +131,7 @@ form_types:
     property_inputs:
       - reference: .properties.users_to_add
         label: 'Users to add'
-        description: 'will added to deployed VM'
+        description: 'is added to deployed VM'
         property_inputs:
           - reference: name
             label: Username
@@ -141,7 +141,7 @@ form_types:
             description: RSA public key used to SSH onto the VM
           - reference: sudo
             label: make sudoer
-            description: if selected, user will be able to sudo
+            description: if selected, user is able to sudo
 
 job_types:
   - name: example-job
