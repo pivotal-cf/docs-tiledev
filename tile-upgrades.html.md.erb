@@ -261,9 +261,6 @@ In this scenario, your customer starts with the v1.6.0 product installed. After 
 
 In this scenario, your customer also starts with v1.6.0 installed, but they decide to upgrade directly to v1.7.1, skipping the v1.7.0 version. Both migrations run in lexicographical order.
 
-
-![alt-text="Example chain migration scenario B"](/img/chain-migration-scenarioB.png)
-
 ### Scenario C: Installing v1.7.0, Then Upgrading to v1.7.1
 
 In this scenario, your customer starts with nothing installed. They perform a clean install of version v1.7.0 of the product. On install of v1.7.0, no migrations run because migrations only run on upgrades. Later, the customer decides to upgrade to v1.7.1 of the product. Because v1.7.1 contains both migrations, and because no migrations have run on this system, only the second migration `201607010000_b.js` runs. The system recorded the fact that v1.7.0 includes `201606010000_a.js`, so that migration does not run.
