@@ -8,18 +8,17 @@ owner: Ops Manager
 Ops Manager 2.0 and later supports defining VM and disk type defaults and constraints.
 </p>
 
+Here is how tile authors can configure the drop-down menu menu items for VM types and persistent disk types in their tile.
 
-Here you find how tile authors can configure the dropdown menu items for VM types and persistent disk types in their tile.
-
-On-demand service tiles have a configuration pane for each service plan.
-Operators use dropdown menus on the plan configuration pane to set the VM type and persistent disk type for each instance of that plan.
+On-Demand service tiles have a configuration pane for each service plan.
+Operators use drop-down menus on the plan configuration pane to set the VM type and persistent disk type for each instance of that plan.
 
 Ops Manager populates the menus with options based on the VM and disk options available on the current IaaS.
 Setting default values for VMs and disk types helps operators to select the right resources for on-demand service broker (ODB) services when using on-demand plans.
 
 ## <a id="defaults"></a>VM and Persistent disk types
 
-The property that defines the VM type options is `vm_type_dropdown`, and the menu options for disk type come from the `disk_type_dropdown` property.
+The property that defines the VM type options is `vm_type_dropdown`, and the menu items for disk type come from the `disk_type_dropdown` property.
 Tile authors do not specify the menu items in the product template.
 
 Because VM and disk options differ by IaaS, Ops Manager uses a best-fit algorithm to match defaults to their closest equivalents on the IaaS, similar to how the **Resource Config** pane handles its **VM Type** and **Persistent Disk Type** options.
