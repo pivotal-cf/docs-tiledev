@@ -25,7 +25,7 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 * **Runtime configs:** Specifies the manifest for any number of global deployment configurations.
 
-Examples refer to the product template use the [<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
+Use the product template use the [<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
 
 For more information about product template configuration, see [Top-Level Properties](#top-level).
 
@@ -141,8 +141,8 @@ These are the allowed accessors:
 
 | Accessor | Description |
 | -------- | ----------- |
-| deployment_name | Provides the deployment name passed to BOSH for the tile. |
-| network_name | Provides the name of the network assigned for the tile. |
+| deployment_name | Provides the deployment name passed to BOSH for the tile |
+| network_name | Provides the name of the network assigned for the tile |
 | present? | Returns `true` when the tile is staged or deployed |
 
 ### <a id='dollar'></a> Dollar contexts
@@ -163,14 +163,14 @@ The table that follows describes the accessors you can use to retrieve informati
 
 | Accessor | Description |
 | -------- | ----------- |
-| `ca_certificate` | Provides the root CA cert that is used to sign the Director VM. |
+| `ca_certificate` | Provides the root CA certificate that signs the Director VM |
 | `trusted_certificates` | Provides a list of certificates that the Director applies to all VMs. |
-| `http_proxy` | Provides the comma-separated values (CSV) that are entered when Ops Manager traffic is directed to an HTTP Proxy. |
-| `https_proxy` | Provides the CSVs that are entered when Ops Manager traffic is directed to an HTTPS Proxy. |
-| `no_proxy` | Provides the CSVs that should not go through a proxy. |
-| `instance_types_catalog` | Provides a list of all available VM types. Includes custom VM types. |
+| `http_proxy` | Provides the comma-separated values (CSV) that are entered when Ops Manager traffic is directed to an HTTP Proxy |
+| `https_proxy` | Provides the CSVs that are entered when Ops Manager traffic is directed to an HTTPS Proxy |
+| `no_proxy` | Provides the CSVs that should not go through a proxy |
+| `instance_types_catalog` | Provides a list of all available VM types. Includes custom VM types |
 | `restricted_view_api_access_credentials` | Provides a payload for a UAA client to make read-only non-credential requests against Ops Manager. The payload includes `uaa_client_name`, `uaa_client_secret`, `hostname`, and `port`. |
-| `iaas_type` | Provides the type of the infrastructure: `google`, `aws`, `azure`, `vsphere`, or `openstack`. |
+| `iaas_type` | Provides the type of the infrastructure: `google`, `aws`, `azure`, `vsphere`, or `openstack` |
 
 #### <a id='director'></a> $director
 
@@ -178,19 +178,21 @@ The table that describes the accessors you can use to retrieve information about
 
 | Accessor | Description |
 | -------- | ----------- |
-| `guid` | Unique identifier for the BOSH Director. |
-| `deployment_ip` | Provides the IP address where the BOSH Director is deployed. |
-| `username` | Provides the user name for the BOSH Director VM. |
-| `password` | Provides the password for the BOSH Director VM. |
-| `ntp_servers` | Provides a list of Network Time Protocol (NTP) servers that the BOSH Director deploys. |
-| `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM. |
-| `hostname` | Provides the hostname for the BOSH Director VM. |
-| `tld` | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director. |
+| `guid` | Unique identifier for the BOSH Director |
+| `deployment_ip` | Provides the IP address where the BOSH Director is deployed |
+| `username` | Provides the user name for the BOSH Director VM |
+| `password` | Provides the password for the BOSH Director VM |
+| `ntp_servers` | Provides a list of Network Time Protocol (NTP) servers that the BOSH Director deploys |
+| `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM |
+| `hostname` | Provides the hostname for the BOSH Director VM |
+| `tld` | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director |
 | `metrics_server_enabled` | Returns `true` if the `system-metrics-server` job is included in the manifest.<br>For information about the job, see <a href="https://bosh.io/jobs/system-metrics-server?source=github.com/cloudfoundry/bosh-system-metrics-server-release">system-metrics-server job</a> in the BOSH documentation. |
+| `bosh_metrics_forwarder_client_name` | Provides the BOSH Metrics Forwarder client name |
+| `bosh_metrics_forwarder_client_secret` | Provides the BOSH Metrics Forwarder client secret |
 | `metrics_server_enabled` | Exposes whether the `system-metrics-server` job of the `bosh-system-metrics-server` release is included in the BOSH Director. |
 | `system_metrics_runtime_enabled` | Exposes whether the `ops_manager_system_metrics_runtime` is added to the BOSH Director. |
-| `dns_release_present` | Exposes the BOSH Director configuration for `disable_dns_release`. |
-| `metrics_server_enabled` | Exposes the BOSH Director configuration for `metrics_server_enabled`. |
+| `dns_release_present` | Exposes the BOSH Director configuration for `disable_dns_release` |
+| `metrics_server_enabled` | Exposes the BOSH Director configuration for `metrics_server_enabled` |
 
 #### <a id='runtime'></a> $runtime
 
@@ -200,12 +202,12 @@ The table that follows describes the accessors you can use to retrieve informati
 | -------- | ----------- |
 | `system_domain` | Provides domain for system-level <%= vars.app_runtime_abbr %> components, such as the API, UAA, or Apps Manager. |
 | `apps_domain` | Provides the default domain used by apps. |
-| `system_api_url` | Provides the URL to the <%= vars.app_runtime_abbr %> API component. |
-| `login_url` | Provides the URL to authenticate with the <%= vars.app_runtime_abbr %> components. |
-| `uaa_url` | Provides the URL to the <%= vars.app_runtime_abbr %> UAA component. |
-| `console_url` | Provides the URL to the <%= vars.app_runtime_abbr %> Apps Manager component. |
-| `default_reply_to` | Provides the default reply-to email address for the system domain. |
-| `default_from` | Provides the default from email address of the system domain. |
+| `system_api_url` | Provides the URL to the <%= vars.app_runtime_abbr %> API component |
+| `login_url` | Provides the URL to authenticate with the <%= vars.app_runtime_abbr %> components |
+| `uaa_url` | Provides the URL to the <%= vars.app_runtime_abbr %> UAA component |
+| `console_url` | Provides the URL to the <%= vars.app_runtime_abbr %> Apps Manager component |
+| `default_reply_to` | Provides the default reply-to email address for the system domain |
+| `default_from` | Provides the default from email address of the system domain |
 
 #### <a id='self'></a> $self
 
