@@ -13,7 +13,7 @@ uses templates and patterns that are based on years of experience integrating
 third-party services into Cloud Foundry and eliminates much of the need for
 you to have intimate knowledge of all the tools involved.
 
-![alt-text="Example of the title generator"](img/tilegenerator.png)
+![alt-text="Example of the title generator."](img/tilegenerator.png)
 
 Tile Generator takes your software components and a simple configuration file
 that provides the minimal amount of information to describe and customize your
@@ -101,7 +101,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
           with the virtualenv activated.</p>
 
 
-2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html).
+2. Install the [BOSH documentation](https://bosh.io/docs/cli-v2.html).
 
 3. From within the root directory of the project for which you want to create a tile,
 initialize the directory as a tile repository by running the following commands:
@@ -156,7 +156,7 @@ You can build this sample using the following steps:
 
 1. Download the [Redis BOSH release](https://github.com/cloudfoundry-community/redis-boshrelease/releases/tag/v13.1.2) and save it to `sample/resources/redis-13.1.2.tgz`.
 
-1. Run the following commands:
+1. Run these commands:
 
     ```bash
     cd sample
@@ -186,28 +186,28 @@ label: Brief Text for the Tile Icon
 description: Longer description of the tile's purpose
 ```
 
-- The `name` should be informative.
-  For example, you might want to use a name composed of your company and product names such as `acme-anvil`.
-  The name should also match your product slug on
+- The `name` must be informative.
+  For example, use a name composed of your company and product names such as `acme-anvil`.
+  The name must also match your product slug on
   VMware Tanzu Network, which activates update notifications for customers. Coordinate
-  with your product team to agree on a name; marketing teams often care about the
+  with your product team to agree on a name.  Marketing teams often care about the
   name because it appears in VMware Tanzu Network URLs.
 
-- The `icon_file` should be a 128 x 128 pixel image that appears on your tile in the Ops Manager UI.
-  By convention, place any resources used by the tile in the `resources` sub-directory of your repository.
+- The `icon_file` must be a 128 x 128 pixel image that appears on your tile in the Ops Manager UI.
+  By convention, place any resources used by the tile in the `resources` subdirectory of your repository.
 
-- The `label` text appears on the tile under your icon. This should
+- The `label` text appears on the tile under your icon. This must
   match your product name on VMware Tanzu Network. Coordinate with your
-  product team to agree on a product name; marketing teams often care about
+  product team to agree on a product name.  Marketing teams often care about
   the product name because it appears on VMware Tanzu Network.
 
-- The `description` should contain a description of the product. This
+- The `description` must contain a description of the product. This
   is not currently used, but might be displayed in a future version of
   Ops Manager.
 
 ### <a id="packages"></a> Packages
 
-Next you can specify the packages to be included in your tile. The format of
+Next you can specify the packages to be in your tile. The format of
 each package entry depends on the type of package you are adding.
 
 #### <a id="pushed"></a> Pushed apps
@@ -243,7 +243,7 @@ Apps (including service brokers) that are being `cf push`ed into the
 ```
 
 For apps that are normally pushed as multiple files (node.js for example)
-zip up the project files plus all dependencies into a single ZIP file, admin
+zip up the project files and all dependencies into a single ZIP file, admin
 edit <code>tile.yml</code> to point to the zipped file:
 
 ```bash
@@ -255,13 +255,13 @@ If your app is a service broker, use `app-broker` as the type instead of
 `app`. The app is automatically registered as a broker on install,
 and deleted on uninstall.
 
-`health_check` lets you configure the value of the cf cli `--health_check_type`
-option. Expect this option to move into the manifest as soon as CF supports it there.
+`health_check` lets you configure the value of the cf CLI `--health_check_type`
+option. Expect this option to move into the manifest as soon as Cloud Foundry supports it there.
 The only valid options are `none` and `port`.
 
-`configurable_persistence: true` results in the user being able to select a backing
+`configurable_persistence: true` causes the user being able to select a backing
 service for data persistence. If there is a specific broker you want to use, you can
-use the `auto-services` feature described below. If you want to bind to an already
+use the `auto-services` feature described. o bind to an already
 existing service instance, use the `services` property of the `manifest` instead.
 
 `needs_cf_credentials` causes the app to receive two additional environment
@@ -269,9 +269,9 @@ variables named `CF_ADMIN_USER` and `CF_ADMIN_PASSWORD` with the admin credentia
 for the <%= vars.app_runtime_abbr %> into which they are being deployed. This allows apps and
 services to interact with the Cloud Controller.
 
-The `auto_services` feature is described in more detail below.
+The `auto_services` feature is described in more detail in the following.
 
-`consumes` specifies the [BOSH links](https://bosh.io/docs/links.html) to
+`consumes` specifies the [BOSH documentation](https://bosh.io/docs/links.html) to
 consume and presents the hosts and properties from the links as
 environment variables on the app:
 
@@ -282,8 +282,8 @@ environment variables on the app:
 #### <a id="brokers"></a> Service brokers
 
 Most modern service brokers are pushed into <%= vars.app_runtime_abbr %> as normal
-CF apps. For these types of brokers, use the Pushed Application format
-specified above, but set the type to `app-broker` or `docker-app-broker` instead
+Cloud Foundry apps. For these types of brokers, use the Pushed Application format
+specified, but set the type to `app-broker` or `docker-app-broker` instead
 of `app` or `docker-app`:
 
 ```
@@ -408,7 +408,7 @@ package definition to include a Redis BOSH release:
     dynamic_ip: 1
 ```
 
-To include [BOSH links](https://bosh.io/docs/links.html) in your
+To include [BOSH documentation](https://bosh.io/docs/links.html) in your
 bosh-release package's deployment manifest, you can include the
 `consumes` and `provides` declarations *as strings* in the job's
 `templates` section, e.g.:
@@ -437,8 +437,8 @@ bosh-release package's deployment manifest, you can include the
 #### <a id="docker"></a> Docker images
 
 Apps packaged as Docker images can be deployed inside or outside <%= vars.app_runtime_abbr %>.
-To push a Docker image as a CF app, use the *Pushed Application*
-format specified above, but use the `docker-app` or `docker-app-broker` type instead
+To push a Docker image as a Cloud Foundry app, use the *Pushed Application*
+format, but use the `docker-app` or `docker-app-broker` type instead
 of `app` or `app-broker`. The Docker image to be used is a specified using
 the `image` property:
 
@@ -519,7 +519,7 @@ This file must be a `.tgz`.
       - "custom_variable_name=((.properties.customer_name.value))"
 ```
 
-To expose a container via the
+To expose a container through the
 [<%= vars.app_runtime_abbr %> Routing Architecture](https://docs.cloudfoundry.org/concepts/cf-routing-architecture.html),
 for example, one of the Docker containers hosts an admin webapp interface,
 use the [`routes` property of the apps manifest](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest-attributes.html#routes) to choose a port and prefix. The external URL
@@ -565,7 +565,7 @@ properties:
   value: Tile Ninja
 ```
 
-If you want the properties to be configurable by the tile installer, place them on
+To make these properties to be configurable by the tile installer, place them on
 a custom form instead:
 
 ```
@@ -618,11 +618,11 @@ of a hardcoded value.
 All properties supported by Ops Manager may be used. The syntax is the same
 as used by Ops Manager, except that for simplicity property blueprints for
 form text boxes do not need to be declared separately. Instead, the declaration
-is included in the form itself. For a complete list of supported property
+is in the form itself. For a complete list of supported property
 types and syntax, see the
 [Property and Template References](./property-template-references.html).
 
-Ops Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text box, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
+Ops Manager supports text areas for any type of multi-line credential.You can add `secret` property to use a text area instead of the default single-line text box, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
 
 ```
 property_inputs:
@@ -648,7 +648,7 @@ feature:
   - name: p-redis
 ```
 
-You can specify any number of service names, optionally specifying a specific
+You can specify any number of service names, pecifying a specific
 plan. During deployment, the generated tile creates an instance of each
 service if one does not already exist and bind that instance to your
 package.
@@ -687,7 +687,7 @@ displays a message saying
 `<your-tile> requires 'p-mysql' version '~> 1.7' as a dependency` and
 refuses to install your tile until that dependency is satisfied.
 
-When using automatic provisioning of services as described above, it is
+When using automatic provisioning of services, it is
 often appropriate to add those products as a dependency. Tile Generator can
 not do this automatically as it can't always determine which product provides
 the requested service.
@@ -720,7 +720,7 @@ apply_open_security_group: true
 
 Tile Generator defaults to a recent stemcell supported by Ops Manager.
 In most cases the default is fine, because the stemcell is only used to run
-CF command lines and/or the Docker daemon. But if you have specific stemcell
+Cloud Foundry command lines and the Docker daemon. But if you have specific stemcell
 requirements, you can override the defaults in your `tile.yml` file by including
 a `stemcell-criteria` section and replacing the appopriate values:
 
@@ -762,7 +762,7 @@ packages:
 ```
 
 `deploy` and `delete` completely replace the standard errand commands for the
-package in which you include them. If you want to keep the standard commands, but
+package in which you include them. To keep the standard commands, but
 add additional commands to run before or after the standard errand, use
 `pre_deploy`, `post_deploy`, `pre_delete`, and `post_delete` instead.
 

@@ -8,7 +8,7 @@ Here is the process and elements of how a service tile work in <%= vars.platform
 
 ## <a id='overview'></a> Overview
 
-Product tiles make it easy for cloud operators to offer new and upgraded software services to developers in an <%= vars.platform_name %> deployment. [VMware Tanzu Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
+Cloud operators can use product tiles to offer new and upgraded software services to developers in an <%= vars.platform_name %> deployment. [VMware Tanzu Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
 
 This explains what each functional element of a tile does and how you create or specify it as input to the Tile Generator tool that creates `.pivotal` files. For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
 
@@ -233,7 +233,7 @@ The `tile yml` file that you pass to Tile Generator defines these service compon
 
 * `docker-bosh`: Describes a collection of Docker images that embed in the tile and run on BOSH-managed VMs, not <%= vars.app_runtime_abbr %>.
 
-* `bosh-release`: A pre-existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.app_runtime_abbr %>. Requires you to describe all jobs (long-running processes and errands).
+* `bosh-release`: An existing BOSH release wrapped in a tile, to run on BOSH-managed VMs, not <%= vars.app_runtime_abbr %>. Requires you to describe all jobs (long-running processes and errands).
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same location.
 

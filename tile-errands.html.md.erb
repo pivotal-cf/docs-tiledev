@@ -3,7 +3,7 @@ title: Using BOSH errands with your tile
 owner: Services
 ---
 
-Lifecycle errands are BOSH errands (scripts) that run at the beginning and end of an installed
+Life cycle errands are BOSH errands (scripts) that run at the beginning and end of an installed
 product's availability time. Product teams create errands as part of a product package, and a product can only run errands it includes.
 
 For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands),
@@ -22,10 +22,13 @@ To save deployment time, operators can set [errand run rules](#run-rules) that d
 
 ## <a id="colocated"></a>Define a co-located errand
 
-<p class="note"><strong>Note</strong>: Ops Manager v2.0 and later supports co-located errands.</p>
+<p class="note">
+<span class="note__title">Note</span>
+System tests might incur costs from using third-party services, IaaS resources, and others.
+</p>
 
 Instead of deploying a new VM for each errand, co-located errands run on an existing VM.
-Errands can run alongside other jobs on a VM, and multiple errands can be co-located on the same VM.
+Errands can run alongside other jobs on a VM, and multiple errands are be co-located on the same VM.
 Colocated errands run faster than traditional errands and use less resources, including disk and IP space.
 
 To configure a co-located errand, define the following properties in the `pre_delete_errands` and
@@ -133,7 +136,7 @@ Post-deploy errands run by default. An operator can prevent a post-deploy errand
 setting its [run rule](#run-rules) to **Off** under **Pending Changes** in the Ops Manager Installation
 Dashboard or on the service's **Settings** tab **Errands** pane, before installing the product.
 
-![alt-text="Here is an example of an Errand"](img/example-errand.png)
+![alt-text="Here is an example of an Errand."](img/example-errand.png)
 
 For example, Redis has a **Broker Registrar** post-deploy errand that the <%= vars.app_runtime_full %> tile uses
 to register its service broker with the Cloud Controller and publish its service plans.
@@ -143,7 +146,7 @@ before installation, Redis's service broker is not registered with the Cloud Con
 
 ##<a id='pre-delete'></a>Pre-delete errands
 
-Pre-delete errands run after an operator chooses to delete a product, but before Ops Manager actually
+Pre-delete errands run after an operator choose to delete a product, but before Ops Manager actually
 finishes deleting it.
 
 Typical pre-delete errands include cleanup of application artifacts and service
