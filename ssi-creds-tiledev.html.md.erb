@@ -16,7 +16,7 @@ In <%= vars.app_runtime_full %>, service brokers can store binding credentials a
 * Sending credentials between components, which increases risk of disclosure.
 * Requiring users to rotate credentials through the environment, which requires container recreation.
 
-To store binding credentials in runtime CredHub, your service tile should support the following:
+To store binding credentials in runtime CredHub, your service tile must support the following:
 
 * Discover the location of runtime CredHub.
 * Provide this CredHub location to the broker app. The service broker uses the provided location to store binding credentials in CredHub.
@@ -30,20 +30,20 @@ When a service uses SSI credentials, its service broker stores the binding crede
 
 These SSI credentials are different from credentials that the tile uses internally, for example, to give the service broker access to an internal database. <%= vars.app_runtime_abbr %> generates the internal tile credentials for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
 
-For more information on the CredHub credential management component, see the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html) topic.
+For more information about the CredHub credential management component, see the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html) topic.
 
-The sections below describe an example implementation of how to add SSI credentials capability to a service tile.
+Here's an example implementation of how to add SSI credentials capability to a service tile:
 
 ## <a id="step1"></a> Step 1: Edit your BOSH release
 
-To use runtime CredHub, your service tile needs to retrieve the location of the CredHub server, which is published in the <%= vars.app_runtime_abbr %> tile, through a BOSH link.
+To use runtime CredHub, your service tile must retrieve the location of the CredHub server, which is published in the <%= vars.app_runtime_abbr %> tile, through a BOSH link.
 
 <p class="note">
 <span class="note__title">Note</span>
-If you are using the BOSH Links let multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links">BOSH Links</a>.
+If you are using the BOSH Links, you can have multiple jobs share deployment-time configuration properties. This helps to avoid redundant configurations in BOSH releases and deployment manifests. For more information about BOSH Links, see <a href="http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links">BOSH Links</a>.
 </p>
 
-### <a id="spec"></a> Update spec file and templates
+### <a id="spec"></a> Update specification file and templates
 
 The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of the <%= vars.app_runtime_abbr %> tile. To activate your service tile to retrieve these CredHub-provided properties, add a `consumes:` section with the BOSH link from the <%= vars.app_runtime_abbr %>  tile to the spec file of the BOSH job that uses them and edit the job's templates to access the values in the link:
 
@@ -53,7 +53,7 @@ The location of runtime CredHub is stored in the `credhub.internal_url` and `cre
 ```
 
 
-For information about using BOSH Links in the spec file and templates of a job and consuming shared properties provided by other jobs, see [Links in Spec Files](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-spec) and [Links in Templates](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-template).
+For information about using BOSH Links in the specifications file and templates of a job and consuming shared properties provided by other jobs, see [Links in Spec Files](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-spec) and [Links in Templates](http://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links-template).
 
 ### <a id="errand"></a> Save the runtime CredHub location
 
@@ -100,7 +100,7 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-In the example, the runtime CredHub instance can be accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.254.0.2`. This command uses the  <%= vars.app_runtime_abbr %> BOSH DNS server to do lookup.
+In the example, the runtime CredHub instance is accessed at `credhub.service.cf.internal`. If your broker runs as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent, you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address with `dig credhub.service.cf.internal @169.254.0.2`. This command uses the  <%= vars.app_runtime_abbr %> BOSH DNS server to do lookup.
 
 ## <a id="step3"></a> Step 3: Provide operators with the choice to Use CredHub
 
@@ -205,7 +205,7 @@ To activate your service broker to store binding credentials in runtime CredHub 
       -H 'content-type: application/json'
     ```
 
-    Where `APP-GUID` is the GUID of the CF application being used
+    Where `APP-GUID` is the GUID of the Cloud Foundry application being used
 
 1. Edit your service broker so that it returns a reference to the stored credentials in response to the binding request from the CC. Return the credentials as a single key `credhub-ref` with its value formatted as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`. For example, the binding response might look like the following:
 

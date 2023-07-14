@@ -11,15 +11,15 @@ A product begins development in the **Alpha** phase. The product undergoes const
 
 Your customers do not have exposure to a product during Alpha, and there are no quality requirements in this phase. Instead, developers use this stage for internal testing.
 
-## <a id='closed-beta'></a>Phase 2: Closed Beta
+## <a id='closed-beta'></a>Phase 2: Closed beta
 
 During **Closed Beta**, a limited pool of users gains access and provides feedback to a product. This feedback drives further development. A status of Closed (Private) Beta informs users that the product can be unstable and should not be used in production.
 
-A product should remain in Closed Beta while:
+A product must remain in Closed Beta while:
 
 - Changes can break product function or cause loss of data.
-- Users can experience major bugs.
-- Users can need to delete and reinstall tiles rather than upgrading them.
+- Users can experience major issues.
+- Users must to delete and reinstall tiles rather than upgrading them.
 
 Developers make products in Closed Beta available to specific groups or individual customers on [VMware Tanzu Network](http://network.pivotal.io).
 
@@ -40,7 +40,7 @@ To enter Closed Beta, a product must meet the following requirements:
 
 * The product must fulfill its promised feature set, and perform as wanted.
 
-Aa Closed Beta product should include an easy way for users to provide feedback to the product developer.
+Aa Closed Beta product must include a streamlined method for users to provide feedback to the product developer.
 
 ### Steps to Release
 To create a new Closed Beta release for your product:
@@ -49,13 +49,13 @@ To create a new Closed Beta release for your product:
 
 1. Create a new release for your product and populate all of the required text boxes.
 
-1. Check that the release version states **BETA**.
+1. Verify that the release version states **BETA**.
 
 1. Clearly state in the release description that the product cannot be upgraded, and that your users can experience data loss.
 
 1. Email your <%= vars.company_name %> contact to request product validation and Closed Beta release. Provide basic instructions on how to validate the new feature set. <%= vars.company_name %> verify that the release meets all requirements, make it accessible to invited customers.
 
-## <a id='public-beta'></a>Phase 3: Public Beta
+## <a id='public-beta'></a>Phase 3: Public beta
 
 Your product is  bmade available to the general public in **Public Beta**. The wider pool of users increases public awareness and feedback and facilitates marketing and advertising. As development continues, you can publish a series of product versions in Public (Open) Beta.
 
@@ -63,7 +63,7 @@ Your product is a good candidate for the **Public Beta** stage if:
 
 - You have high confidence that further development will not break the product or incur data loss for users.
 - The tile can be upgraded at a later date.
-- You still want user feedback to discover minor bugs and evaluate existing features.
+- You still want user feedback to discover minor issues and evaluate existing features.
 - The product does not contain the full set of features intended for the final release.
 - You feel comfortable supporting this tile for customers.
 
@@ -78,7 +78,7 @@ Products in Public Beta must meet the following requirements:
 
 * The product supports upgrade paths from any minor version or patch to the next minor version and any patches.
 
-* Tile version upgrades result in no data or configuration loss, and maintain service capability and availability.
+* Tile version upgrades cause no data or configuration loss, and maintain service capability and availability.
 
 * Where appropriate, <%= vars.app_runtime_full %> integrations work properly, including:
   * Registered routes
@@ -94,7 +94,7 @@ For more information about the security policy, see [<%= vars.platform_name %> S
 
 1. Create a new release for your product and populate all of the required text boxes.
 
-1. Check that the release version states **BETA**.
+1. Verify that the release version states **BETA**.
 
 1. Email your <%= vars.company_name %> contact to request product validation and Public Beta release. Provide basic instructions on how to validate the new feature set. <%= vars.company_name %> validates the upgrade scenario and data persistence. After verifying that the release meets all requirements, <%= vars.company_name %>  configures it visible to customers.
 
@@ -117,17 +117,17 @@ Products must meet the following requirements for **General Availability**:
 
 * You can provide customer support.
 
-* Your business team can "Go to market."
+* Your business team can "go to market."
 
 * The product can scale vertically, by increasing the amount of RAM or CPU. Vertical scaling improves performance and does not result in data loss.
 
 * If appropriate, the product can scale horizontally for high availability.
   * Scaled-out nodes (application VMs) function correctly.
-  * Removing a node does not result in downtime.
+  * Removing a node does not cause downtime.
 
 * If appropriate, the product supports zero downtime deployment.
 
-* Product installation does not require an internet connection, after initial product download.
+* Product installation does not require an Internet connection, after initial product download.
 
 ### Steps to release
 1. Log in to [VMware Tanzu network](http://network.pivotal.io).
