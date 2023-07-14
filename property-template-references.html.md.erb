@@ -180,7 +180,7 @@ The table that describes the accessors you can use to retrieve information about
 | -------- | ----------- |
 | `guid` | Unique identifier for the BOSH Director. |
 | `deployment_ip` | Provides the IP address where the BOSH Director is deployed. |
-| `username` | Provides the username for the BOSH Director VM. |
+| `username` | Provides the user name for the BOSH Director VM. |
 | `password` | Provides the password for the BOSH Director VM. |
 | `ntp_servers` | Provides a list of Network Time Protocol (NTP) servers that the BOSH Director deploys. |
 | `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM. |
@@ -731,7 +731,7 @@ install_time_verifiers:
     host: .properties.system_database.external.host
     password: .properties.system_database.external.account_password
     port: 1234
-    username: example-dbuser
+    user name: example-dbuser
 - ignorable: true
   name: Verifiers::HttpSuccessVerifier
   run_on: major_or_minor_upgrades
@@ -938,10 +938,10 @@ form_types:
           database: "static-database-name"
           host: .properties.example-database-host
           port: 1234
-          username: example-dbuser
+          user name: example-dbuser
 ```
 
-You can specify either a tile property reference or a static value for a form verifier. In the example above, `Verifiers::MysqlDatabaseVerifier` uses a tile property reference for the database host and static values for the database name, port number, and username.
+You can specify either a tile property reference or a static value for a form verifier. In the example above, `Verifiers::MysqlDatabaseVerifier` uses a tile property reference for the database host and static values for the database name, port number, and user name.
 
 ### <a id='form-placeholder'></a> Placeholder
 

@@ -143,7 +143,7 @@ see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/con
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab:
 
-1. [Log on to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile).
 
 2. Click the **Advanced - JSON Properties** tab.
 
@@ -181,18 +181,18 @@ A description of these placeholder values appears on the **Tile Configuration** 
 
 To specify the UAA users:
 
-1. [Log on to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log on to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile).
 
 1. At the bottom of the configuration page, click **+** to expand the box and view the text boxs.
 
-    ![alt-text="bottom of page shows plus button used to expand uaa properties form"](img/uaa-properties-collapsed.png)
+    ![alt-text="The bottom of page shows plus button used to expand uaa properties form."](img/uaa-properties-collapsed.png)
 
-2.  Enter username, password, and groups for UAA user.
+2.  Enter user name, password, and groups for UAA user.
 
 
 ###<a id="save-and-run"></a> Save and run
 
-1. [Log on to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. [Log on to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile).
 
 1. Click **Save and Run**.
 
@@ -216,10 +216,9 @@ To specify the UAA users:
 ### <a id="test"></a> About test configuration
 
 After your tile is installed, Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
-Ideally your tile includes tests that exercise all of its capability.
-We have some ideas for expanding the Tile Dashboard testing capabilities;
-if you’re interested in other ways of defining tests,
-contact us on [Partners Slack](https://pivotalpartners.slack.com/).
+Ideally your tile includes tests that use all of its capability.
+VMware has some ideas for expanding the Tile Dashboard testing capabilities.  If you’re interested in other ways of defining tests,
+contact Pivotal Partners on [Partners Slack](https://pivotalpartners.slack.com/).
 
 ### <a id="backing"></a> About backing services
 
@@ -227,19 +226,19 @@ Your tile might require a backing service outside of the existing <%= vars.platf
 for example, your tile might be a service broker to a SaaS offering.
 
 You are responsible for maintaining the backing service in an environment
-that the Tile Dashboard can reach, that is, it must be internet-facing.
+that the Tile Dashboard can reach, that is, it must be Internet-facing.
 
 ## <a id="concourse"></a> Set Up a Concourse pipeline and test your tile
 
 The [Tile Dashboard CI](#tile-dashboard-ci) that <%= vars.company_name %> runs for its technical partnership program members
-uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue
+uses the CI tool [Concourse](http://concourse.ci/) to verify that partner products continue
 to work with every new release of the platform.
 
-With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline
+With more effort, you can also follow the pointers as shown later to set up your own Concourse CI pipeline
 that integrates and tests your tile on your own deployment of the latest <%= vars.platform_name %>.
 
-While you are of course also free to use any other CI system you are familiar with,
-<%= vars.company_name %>'s tools and documentation are built to make Concourse CI as easy as possible.
+While you are free to use any other CI system you are familiar with,
+<%= vars.company_name %>'s tools and documentation were built to use with Concourse CI.
 
 ### <a id="server"></a> Set up a Concourse server
 
