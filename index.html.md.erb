@@ -59,23 +59,23 @@ Depending on what you build, you must install the following tools:
 
 - [Tile Generator](./tile-generator.html#-how-to-use): Used to package your software into a tile.
 
-- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/)<!--฿ Change the link name to |BOSH documentation|. ฿-->: A CLI for running BOSH commands. You need BOSH commands to run Tile Generator.
+- [BOSH Command Line Interface (CLI)](https://bosh.io/docs/cli-v2/)<: A CLI for running BOSH commands. You need BOSH commands to run Tile Generator.
 
 - [Cloud Foundry Command Line Interface (cf CLI)](https://github.com/cloudfoundry/cli#downloads): A CLI for deploying and managing apps on Cloud Foundry. If you are developing on Cloud Foundry, you use cf CLI when building your tile.
 
-- [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/)<!--฿ Change the link name to |Kubernetes documentation|. ฿--> A CLI for deploying and managing apps on Kubernetes. If you are developing on Kubernetes, you use kubectl when building your tile.
+- [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/): A CLI for deploying and managing apps on Kubernetes. If you are developing on Kubernetes, you use kubectl when building your tile.
 
 - [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional): A lightweight <%= vars.app_runtime_full %>  installation for deploying and debugging apps locally. You can use Cloud Foundry Dev to run <%= vars.app_runtime_abbr %>  on your local workstation.
 
 #### <a id="generate"></a> Step 2: Generate a tile
 
-Tile Generator simplifies building tiles. To use Tile Generator, upload your software components, such as the service broker, buildpack, and Docker image,<!--฿ If a list, maybe reformat it as bullets. If this is a rambling sentence, break it up into smaller sentences. ฿--> and the tool generates a base tile.
+Tile Generator simplifies building tiles. To use Tile Generator, upload your software components, such as the service broker, buildpack, and Docker image, and the tool generates a base tile.
 
 For information about setting up Tile Generator and building a base tile, see [Tile Generator](./tile-generator.html).
 
 #### <a id="test"></a> Step 3: Test your tile
 
-Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web<!--฿ Capitalize only when you use the term |World Wide Web|. Do not use |WWW|. Do not capitalize |the web|. ฿--> Services (AWS) or Google Cloud Platform <!--฿ Shorten to |GCP| after the first use. ฿-->(GCP). You can upload, configure, and install your tile in PIE as an operator does.
+Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and install your tile in PIE as an operator does.
 
 To gain access to your PIE, reach out to your contact at <%= vars.company_name %> or [register as a partner](https://partners.pivotal.io/).
 
@@ -124,4 +124,4 @@ Contact your <%= vars.company_name %> representative to guide you through upload
 For information about the release cycle for Partner tiles, see [Partner Software Release Cycle](./releases.html).
 
 ## <a id="contact"></a> Support
-To learn more about the VMware Tanzu ISV Partner Program or request help with your integration project, see [Contact Us](./contacts.html)<!--฿ If this file is a partial, do not use relative links. ฿-->.
+To learn more about the VMware Tanzu ISV Partner Program or request help with your integration project, see [Contact Us](./contacts.html).
