@@ -3,7 +3,7 @@ title: Testing your service tiles
 owner: Services
 ---
 
-Here's recommended testing practices for <%= vars.platform_name %> tile developers.
+Here is recommended testing practices for <%= vars.platform_name %> tile developers.
 
 ## <a id="testing"></a> Service tile testing
 
@@ -85,9 +85,9 @@ The following are general recommendations for designing and running tests on <%=
   - Timeouts, numbers of retries, and other things that must be adjusted for different environments
   - Switches to include or exclude portions of the tests such as generating metrics or backups
 
-* Re-use tests that exist already, for example in Concourse.
+* Re-use tests that exist already, for example, in Concourse.
 
-* Use an example CF app that uses your service. This app can serve for testing, demoing your tile capabilities, and as a code example.
+* Use an example Cloud Foundry app that uses your service. This app can serve for testing, demoing your tile capabilities, and as a code example.
   See the [MySQL Test App](https://github.com/cloudfoundry-incubator/cf-mysql-acceptance-tests/tree/master/assets/sinatra_app) an example.
 
 * When testing manually, using the UI is better than calling the underlying API directly.

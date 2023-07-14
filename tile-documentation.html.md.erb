@@ -18,14 +18,14 @@ The [Partner Documentation Template](https://github.com/pivotal-cf/docs-partners
 that you can clone to create documentation for your service tile that follows the standard format for partner documentation.
 The template works with the documentation publishing platform, [bookbinder](https://github.com/pivotal-cf/bookbinder).
 
-Documentation content resides in the `/docs-content` folder of the repository, as skeleton pages with embedded prompts for content that you should fill in, approximately following the [content descriptions](#content) below.
+Documentation content resides in the `/docs-content` directory of the repository, as skeleton pages with embedded prompts for content that you should fill in, approximately following the [content descriptions](#content) below.
 
 See the repository [README.md](https://github.com/pivotal-cf/docs-partners-template/blob/master/README.md) for how to use the template with bookbinder to develop your documentation.
 
 
 ## <a id="content"></a> Documentation content
 
-While the specifics of your documentation might vary depending on the product, we have provided a basic blueprint below. At minimum, documentation should include #1 (Overview) and #2 (Installing/Configuring).
+While the specifics of your documentation might vary depending on the product, VMware provided a basic blueprint. At minimum, documentation should include #1 (Overview) and #2 (Installing/Configuring).
 
 For a good example of a partner service document, see the [JFrog Artifactory documentation](https://docs.pivotal.io/jfrog/index.html).
 
@@ -43,7 +43,7 @@ Key Features
 
 #### <a id='partner-service-broker'></a> Partner service broker
 
-A Service Broker allows Cloud Foundry applications to bind to services and consume the services easily from App Manager UI or command line. The Partner Service Broker can  you to use one or more Partner accounts and is deployed as a Java Application on Cloud Foundry. The Broker exposes the Partner service on the Cloud Foundry Marketplace and allows users to directly create a service instance and bind it to their applications either from the Apps Manager Console or from the command line.
+A Service Broker allows Cloud Foundry applications to bind to services and consume the services from App Manager UI or command line. The Partner Service Broker can  you to use one or more Partner accounts and is deployed as a Java Application on Cloud Foundry. The Broker exposes the Partner service on the Cloud Foundry Marketplace and allows users to directly create a service instance and bind it to their applications either from the Apps Manager Console or from the command line.
 
 The Tile for Partner installs the Partner Service Broker as an application and registers it as a Service Broker on Cloud Foundry and exposes its service plans on the Marketplace.  This makes the installation and subsequent use of Partner on your Cloud Foundry applications simple and easy.
 
@@ -65,11 +65,11 @@ Provide any general or specific requirements here. A general requirement might b
 
 #### <a id='limitations'></a> Limitations
 
-Any known limitations.
+Any known limitation.
 
 #### <a id='feedback'></a> Feedback
 
-Please provide any bugs, feature requests, or questions to the <%= vars.platform_name %> Feedback list.
+Please provide any issues, feature requests, or questions to the <%= vars.platform_name %> Feedback list.
 
 ### <a id="install"></a> Installing/configuring the tile
 
@@ -79,7 +79,7 @@ Here's how to install and configure the tile. Typically this includes procedures
 
 - Download the product file from VMware Tanzu Network.
 - Upload the product file to your Ops Manager installation.
-- Click Add next to the uploaded product description in the Ops Manager Available Products view to add this product to your staging area.
+- Click **Add** next to the uploaded product description in the Ops Manager Available Products view to add this product to your staging area.
 - Click the newly added tile to review any configurable options.
 - Click **Review Pending Changes**, and **Apply Changes** to install the service.
 
@@ -99,7 +99,7 @@ Add snapshots for each step when possible or add details as required.
 - Configure the Partner Tile.
 - Apply your changes.
 
-On completion of Partner Tile install, verify marketplace in Apps Manager:
+On completion of Partner Tile install, verify Marketplace in Apps Manager:
 
 - View Partner Service Plans.
 - Bind the Partner Service to an Application.
