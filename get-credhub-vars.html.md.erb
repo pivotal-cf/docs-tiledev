@@ -51,7 +51,7 @@ This endpoint returns a variable's name. Use the name in the next endpoint to re
 
 ## <a id="fetch-var-values"></a> Fetching variable values
 
-This endpoint returns the value of a variable stored in CredHub. Not all variables are stored in CredHub, so if you call a variable that isn't in CredHub, the call will return an empty value.
+This endpoint returns the value of a variable stored in CredHub. Not all variables are stored in CredHub, so if you call a variable that isn't in CredHub, the call returns an empty value.
 
 <pre class="terminal">
 $ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables?name=EXAMPLE-VARIABLE-NAME" \
