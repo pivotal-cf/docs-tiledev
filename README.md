@@ -103,7 +103,7 @@ replacing the publication with the same version.
 
 6. Click "Sign off for Release"
 
-7. Wait for your username to show up in the "Signed off by" column
+7. Wait for your user name to show up in the "Signed off by" column
 
 8. Select the publication again
 
