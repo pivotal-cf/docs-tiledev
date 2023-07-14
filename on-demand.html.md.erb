@@ -11,7 +11,7 @@ Brokered service and managed service integrations assume that you have a single 
 
 These VMs are multi-tenant, and you can possibly scale them manually to accommodate many concurrent applications. But for real production deployments, most of your customers will want dedicated VM instances of your service for each application.
 
-On-demand (dynamic) services activates this flexibility in a scalable way. When an operator deploys the service, do not pre-allocate VM resources for service instances. Instead, they define an allowable range of VM memory and CPU sizes and create a dedicated network on the IaaS to host any required number of service instance VMs.
+On-Demand (dynamic) services activates this flexibility in a scalable way. When an operator deploys the service, do not pre-allocate VM resources for service instances. Instead, they define an allowable range of VM memory and CPU sizes and create a dedicated network on the IaaS to host any required number of service instance VMs.
 
 When a developer creates an instance of an on-demand service, they provision its resources within the allowed range, and BOSH dynamically creates a new, dedicated VM for the instance.
 
@@ -27,7 +27,7 @@ To create their tile, the tile author feeds their service adapter and the BOSH r
 
 * [On-demand services SDK](https://docs.pivotal.io/svc-sdk/odb/) documentation explains how to write a service adapter for an on-demand service that uses the ODB.
 
-* Once you have the individual components for your brokered service integration, you can work through [Building Your First Tile](./index.html#tile-steps) to create your tile.
+* After you have the individual components for your brokered service integration, you can work through [Building Your First Tile](./index.html#tile-steps) to create your tile.
 
 At any level of integration, you must use [Concourse](./concourse.html) for continuous integration during development.
 
