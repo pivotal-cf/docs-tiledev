@@ -159,7 +159,15 @@ To activate your service broker to store binding credentials in runtime CredHub 
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
-1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header. For more information about CredHub authentication, see the [Authentication](https://credhub-api.cfapps.io/#authentication) section of the CredHub API documentation.
+1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header. For more information about CredHub authentication, see the [CredHub API documentation](https://docs.cloudfoundry.org/api/credhub/version/2.9/).
+
+<p class="note">
+<span class="note__title">Note</span>
+Each credential type supports distinct parameters for customizing how credentials are generated.
+These include minimum password lengths, required characters, and certificate fields.
+Credentials have a maximum size of 64 KB.
+</p>
+
 
 1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint for setting the `json` credential type with a user-provided value. See the following example for how to format your API call:
 
@@ -188,7 +196,7 @@ To activate your service broker to store binding credentials in runtime CredHub 
     * `SERVICE-URL` is the URL of your service.
     * `USERNAME` and `PASSWORD` are your binding credentials.
 
-    For further reference, see the [Set Credentials](https://credhub-api.cfapps.io/#set-credentials) section of the CredHub API documentation.
+    For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
 
 1. Grant your application permission to read the credential from CredHub:
 
