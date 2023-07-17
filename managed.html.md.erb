@@ -23,7 +23,7 @@ To integrate your service at this level, you configure to learn about stemcells,
 
 ### <a id="managed-mvp"></a> Minimal viable product
 
-Minimal Viable Product (MVP) version of a managed service should aim for a single, shared service instance, and don't yet
+Minimal Viable Product (MVP) version of a managed service be a single, shared service instance, and don't yet
 worry too much about High Availability of this instance. This integration level is mostly about getting the BOSH packaging, deployment, and monitoring working
 correctly.
 
@@ -43,7 +43,7 @@ your persistent storage across those as well.
 * For BOSH to manage your service, you must create a BOSH release for it.
 [BOSH releases](./bosh-release.html) explains how to do this, and how to use your already-existing Docker image as a shortcut.
 
-* After you have created a BOSH release for your managed service integration, you can work through [Building your first tile](./index.html#tile-steps) to create your tile.
+* After you created a BOSH release for your managed service integration, you can work through [Building your first tile](./index.html#tile-steps) to create your tile.
 
 * The [Tile generator](./tile-generator.html) tool automatically creates the life cycle errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. Operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.platform_name %> operators control when errands run, and how to set default errand run rules in the tile.
 

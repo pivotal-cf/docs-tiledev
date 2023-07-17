@@ -132,7 +132,7 @@ The events channel receives the following six types of events.
 * _CounterEvent_ represents an incrementing counter, emitted by platform components. For example, a Diego cell's remaining memory capacity.
 * _Error_ represents an error in the originating process.
 * _HttpStartStop_ represents HTTP request details, including both app and platform requests.
-* _LogMessage_ represents a log message for an individual app.
+* _LogMessage_ represents a log entry for an individual app.
 * _ContainerMetric_ represents application container information. For example, memory used.
 
 For the full details on events, see
@@ -296,7 +296,7 @@ The RFC-5424 syslog protocol includes a [structured data element](https://tools.
     <td>Your Enterprise Number, as <a href="https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers">listed</a> by the Internet Assigned Numbers Authority (IANA) </td>
   </tr><tr>
     <td><code>${DIRECTOR}</code></td>
-    <td>The BOSH director managing the deployment. </td>
+    <td>The BOSH irector managing the deployment. </td>
   </tr><tr>
     <td><code>${DEPLOYMENT}</code></td>
     <td>BOSH <code>spec.deployment</code> value</td>
@@ -319,7 +319,7 @@ various metrics and how to make them useful.
 
 ## <a id="resources"></a> Other Resources
 
-* CF Summit Video [Monitoring Cloud Foundry: Learning about the Firehose](https://youtu.be/skJKvQfpKD4)
+* Cloud Foundry Summit Video [Monitoring Cloud Foundry: Learning about the Firehose](https://youtu.be/skJKvQfpKD4)
 
 * [Loggregator GitHub repository](https://github.com/cloudfoundry/loggregator/)
 
