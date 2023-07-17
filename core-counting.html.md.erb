@@ -7,10 +7,13 @@ This topic explains how to configure your tile to take advantage of Ops
 Manager's ability to count physical and virtual cores. This option is available
 starting in Ops Manager versions v3.0.10+LTS-T and v2.10.58.
 
-Warning: In the following paragraph VMware refers to SKU. While this is not technically a
-VMware SKU, this docunentation uses the concept because some tiles share a license, e.g. TAS, TASW,
+<p class="note caution">
+<span class="note__title">Caution</span>
+In the following paragraph VMware refers to SKU. While this is not technically a
+VMware SKU, this docunentation uses the concept because some tiles share a license, such as TAS, TASW,
 and IST. A core can run all three of these products at the same
 time with a single core license without being double counted.
+</p>
 
 Tile developers can add monit jobs named `SKU-<SKU_NAME>` to their VMs so
 Ops Manager can know to count all of that VM's cores as part of a SKU. VMs with the
@@ -26,7 +29,7 @@ number of physical cores on that host. On other infrastructures Ops Manager
 uses the values returned by the kernel for number of cores and threads per
 core.
 
-The Bosh Director counts all the relevant cores once per hour and stores up to
+The BOSH Director counts all the relevant cores once per hour and stores up to
 2MB of historic measurements. Click the "Download Core Consumption Data" button on Ops
 Manager, or curl the `/api/v0/download_core_consumption` API endpoint
 to retrieve a CSV of all the measurements. Each row in the CSV is formatted as

@@ -103,7 +103,7 @@ instance_groups:
 
 ## <a id='variable-namespacing'></a>  Variable namespacing
 
-Deployment manifests often use common variable names; for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name. For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
+Deployment manifests often use common variable names, for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name. For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
 
 ### <a id="other-options"></a> Other namespacing options
 
