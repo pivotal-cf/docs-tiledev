@@ -135,25 +135,25 @@ The events channel receives the following six types of events.
 * _LogMessage_ represents a log entry for an individual app.
 * _ContainerMetric_ represents application container information. For example, memory used.
 
-For the full details on events, see
+For the full details about events, see
 [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol/tree/master/events)
 in GitHub.
 
-The above events show how this data targets two different personae:
+These events show how this data targets two different personae:
 platform operators and app developers. Keep this in mind when designing an integration.
 
-The `doppler.firehose` scope gets nozzle data for *every* app and the platform.
+The `doppler.firehose` scope recieves nozzle data for *every* app and the platform.
 Any filtering based on the event payload is the nozzle implementor's responsibility.
 An advanced integration can combine a
 [service broker](service-brokers.html) with a nozzle to:
 
 * App developers can opt in to logging (implementing filtering in the nozzle)
-* Establish [SSO](https://docs.cloudfoundry.org/services/dashboard-sso.html) exchange for authentication so that developers only can access logs for their space's apps
+* Establish [Cloud Foundry documentation](https://docs.cloudfoundry.org/services/dashboard-sso.html) exchange for authentication so that developers only can access logs for their space's apps
 
 For a full working example (suitable as an integration starting point),
 see [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle).
 
-### <a id="deploy"></a> Deploy a Nozzle
+### <a id="deploy"></a> Deploy a nozzle
 
 After you have built a nozzle, you can deploy it as a managed service or as an app.
 
@@ -164,7 +164,7 @@ You can also deploy the nozzle as an app on <%= vars.app_runtime_abbr %>. Visit 
 [section on pushed apps](tile-generator.html#pushed-applications)
 for more details.
 
-### <a id="examples"></a> Example Nozzles
+### <a id="examples"></a> Example nozzles
 
 There are several open source examples you can use
 as a reference for building your nozzle.
@@ -196,19 +196,19 @@ another real world implementation.
 
 ## <a id="syslog-format-pcf"></a> Log Format for <%= vars.app_runtime_abbr %> Components
 
-The standard log format for <%= vars.app_runtime_abbr %> adheres to the [RFC-5424 syslog protocol](https://tools.ietf.org/html/rfc5424), with log messages formatted as follows:
+The standard log format for <%= vars.app_runtime_abbr %> adheres to the [RFC-5424 syslog protocol](https://tools.ietf.org/html/rfc5424), with log entriess formatted as follows:
 
 `<${PRI}>${VERSION} ${TIMESTAMP} ${HOST_IP} ${APP_NAME} ${PROD_ID} ${MSG_ID} ${SD-ELEMENT-instance} ${MESSAGE}`
 
-The [Syslog Message Elements table](#syslog-elements) immediately below describes each element of the log, and the [Structured Instance Data Format](#sd-element) table describes the contents of the structured data element that carries Cloud Foundry VM instance information.
+The [Syslog entries Elements table](#syslog-elements) describes each element of the log, and the [Structured Instance Data Format](#sd-element) table describes the contents of the structured data element that carries Cloud Foundry VM instance information.
 
-### <a id="syslog-elements"></a> Syslog Message Elements
+### <a id="syslog-elements"></a> Syslog entries Elements
 
-This table describes each element of a standard <%= vars.app_runtime_abbr %> syslog message.
+This table describes each element of a standard <%= vars.app_runtime_abbr %> syslog entries.
 
 <table id='syslog-elements-table' border="1" class="nice" >
   <tr>
-    <th>Syslog Message Element</th>
+    <th>Syslog entries Element</th>
     <th>Meaning or Value</th>
   </tr><tr>
     <td><code>${PRI}</code></td>
@@ -221,7 +221,7 @@ This table describes each element of a standard <%= vars.app_runtime_abbr %> sys
     <td><a href="https://tools.ietf.org/html/rfc5424#section-9.1"><code>1</code></a></td>
   </tr><tr>
     <td><code>${TIMESTAMP}</code></td>
-    <td><p>The <a href="https://tools.ietf.org/html/rfc5424#section-9.1">timestamp</a> of when the log message is forwarded; typically slightly after it was generated. Example: <code>2017-07-24T05:14:15.000003Z</code></p></td>
+    <td><p>The <a href="https://tools.ietf.org/html/rfc5424#section-9.1">timestamp</a> of when the log entry is forwarded (typically slightly after it was generated). Example: <code>2017-07-24T05:14:15.000003Z</code></p></td>
   </tr><tr>
     <td><code>${HOST_IP}</code></td>
     <td><a href="https://tools.ietf.org/html/rfc5424#section-6.2.4">Internal IP address</a> of origin server</td>
@@ -238,19 +238,19 @@ This table describes each element of a standard <%= vars.app_runtime_abbr %> sys
     <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.6">Process ID</a> of the syslog process doing the forwarding. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
   </tr><tr>
     <td><code>${MSG_ID}</code></td>
-    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log message. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
+    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log entries. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
   </tr><tr>
     <td><code>${SD-ELEMENT-instance}</code></td>
-    <td>Structured data (SD) relevant to <%= vars.app_runtime_abbr %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log message. See the <a href="#sd-element">Structured Instance Data Format table</a> below for content and format.</td>
+    <td>Structured data (SD) relevant to <%= vars.app_runtime_abbr %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log entries. See the <a href="#sd-element">Structured Instance Data Format table</a> below for content and format.</td>
   </tr><tr>
     <td><code>${MESSAGE}</code></td>
-    <td>The log message itself, ideally in JSON</td>
+    <td>The log entries itself, ideally in JSON</td>
   </tr>
 </table>
 
 ### <a id="severity"></a> RFC-5424 Severity Codes
 
-<%= vars.app_runtime_abbr %> components generate log messages with the following severity levels. The most common severity level is `13`.
+<%= vars.app_runtime_abbr %> components generate log entries with the following severity levels. The most common severity level is `13`.
 
 <table id='severity-table' border="1" class="nice" >
   <tr>

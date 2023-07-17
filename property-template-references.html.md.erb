@@ -165,10 +165,10 @@ The table that follows describes the accessors you can use to retrieve informati
 | Accessor | Description |
 | -------- | ----------- |
 | `ca_certificate` | Provides the root CA certificate that signs the Director VM |
-| `trusted_certificates` | Provides a list of certificates that the Director applies to all VMs. |
+| `trusted_certificates` | Provides a list of certificates that the Director applies to all VMs |
 | `http_proxy` | Provides the comma-separated values (CSV) that are entered when Ops Manager traffic is directed to an HTTP Proxy |
 | `https_proxy` | Provides the CSVs that are entered when Ops Manager traffic is directed to an HTTPS Proxy |
-| `no_proxy` | Provides the CSVs that should not go through a proxy |
+| `no_proxy` | Provides the CSVs that must not go through a proxy |
 | `instance_types_catalog` | Provides a list of all available VM types. Includes custom VM types |
 | `restricted_view_api_access_credentials` | Provides a payload for a UAA client to make read-only non-credential requests against Ops Manager. The payload includes `uaa_client_name`, `uaa_client_secret`, `hostname`, and `port`. |
 | `iaas_type` | Provides the type of the infrastructure: `google`, `aws`, `azure`, `vsphere`, or `openstack` |
@@ -185,7 +185,7 @@ The table that describes the accessors you can use to retrieve information about
 | `password` | Provides the password for the BOSH Director VM |
 | `ntp_servers` | Provides a list of Network Time Protocol (NTP) servers that the BOSH Director deploys |
 | `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM |
-| `hostname` | Provides the hostname for the BOSH Director VM |
+| `hostname` | Provides the host name for the BOSH Director VM |
 | `tld` | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director |
 | `metrics_server_enabled` | Returns `true` if the `system-metrics-server` job is included in the manifest.<br>For information about the job, see <a href="https://bosh.io/jobs/system-metrics-server?source=github.com/cloudfoundry/bosh-system-metrics-server-release">system-metrics-server job</a> in the BOSH documentation. |
 | `bosh_metrics_forwarder_client_name` | Provides the BOSH Metrics Forwarder client name |
