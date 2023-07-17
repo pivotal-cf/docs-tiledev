@@ -33,10 +33,10 @@ opsmgr:
 
 The reason for this file naming is because this is how Concourse passes
 credentials of a "claimed" <%= vars.platform_name %> pool resource to the CI pipeline scripts.
-For interactive use, this means that you will have to create a `metadata`
+For interactive use, this means that you have to create a `metadata`
 file in the directory where you run the `pcf` command.
 
-You should not create this file inside your git or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
+You must not create this file inside your GIT or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
 
 ##<a id="commands"></a> Commands
 
@@ -228,7 +228,7 @@ $ pcf cf-info
 - system_services_username: system_services
 ```
 
-To target your `cf` command line at this <%= vars.app_runtime_abbr %> environment:
+To target your `cf` command line interface at this <%= vars.app_runtime_abbr %> environment:
 
 ```bash
 $ pcf target

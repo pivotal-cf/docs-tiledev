@@ -160,17 +160,15 @@ After you have built a nozzle, you can deploy it as a managed service or as an a
 Visit [managed service](managed.html) for more details on what it means to be a
 managed service. See also this [example nozzle BOSH release](https://github.com/cloudfoundry-incubator/example-nozzle-release).
 
-You can also deploy the nozzle as an app on <%= vars.app_runtime_abbr %>. Visit the Tile Generator's
-[section on pushed apps](tile-generator.html#pushed-applications)
-for more details.
+You can also deploy the nozzle as an app on <%= vars.app_runtime_abbr %>. For more information about the Tile Generator's
+[section on pushed apps], see (tile-generator.html#pushed-applications).
 
 ### <a id="examples"></a> Example nozzles
 
 There are several open source examples you can use
 as a reference for building your nozzle.
 
-* [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle)
-simply writes to standard out. It is a useful starting point as scaffolding, tests,
+* [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle) writes to standard out. It is a useful starting point as scaffolding, tests,
 and more are already in place.
 
 * [example-nozzle](https://github.com/cloudfoundry-incubator/example-nozzle) in a
@@ -238,7 +236,7 @@ This table describes each element of a standard <%= vars.app_runtime_abbr %> sys
     <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.6">Process ID</a> of the syslog process doing the forwarding. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
   </tr><tr>
     <td><code>${MSG_ID}</code></td>
-    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log entries. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
+    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log entries. If this is not available, default to <code>-</code> (hyphen) to indicate unknown.</td>
   </tr><tr>
     <td><code>${SD-ELEMENT-instance}</code></td>
     <td>Structured data (SD) relevant to <%= vars.app_runtime_abbr %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log entries. See the <a href="#sd-element">Structured Instance Data Format table</a> below for content and format.</td>
