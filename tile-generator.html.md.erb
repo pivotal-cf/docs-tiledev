@@ -3,10 +3,8 @@ title: Tile Generator
 owner: Services
 ---
 
-
-This topic describes the Tile Generator tool, which helps tile authors develop, package, test, and deploy services and other add-ons to <%= vars.platform_name %>.
-
-## <a id="overview"></a> Overview
+You can use the Tile Generator tool, which helps tile authors develop, package, test, and deploy services and other add-ons
+to <%= vars.platform_name %>.
 
 Tiles are the
 installation package format used by Ops Manager to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
@@ -41,7 +39,7 @@ combination of the following package types:
 - Cloud Foundry Service Brokers (both inside and outside <%= vars.app_runtime_abbr %>)
 - Docker images (both inside and outside <%= vars.app_runtime_abbr %>)
 
-### <a id="legacy"></a> Legacy Tiles and OSS-Compatible Service Brokers
+## <a id="legacy"></a> Legacy Tiles and OSS-Compatible Service Brokers
 
 Many tile authors, in both <%= vars.company_name %>-internal teams and at external partner companies, built their <%= vars.platform_name %> tiles before Tile Generator existed.
 
@@ -98,7 +96,7 @@ For a 7-minute introduction into what Tile Generator is and does, see
         This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
         To deactivate the virtualenv, run the command `deactivate`.
 
-        <p class="note"><strong>Note</strong>: To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
+        <p> To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
           with the virtualenv activated.</p>
 
 
@@ -107,7 +105,9 @@ For a 7-minute introduction into what Tile Generator is and does, see
 3. From within the root directory of the project for which you want to create a tile,
 initialize the directory as a tile repository by running the following commands:
 
-    <p class="note"><strong>Note</strong>: <%= vars.company_name %> recommends that you use a git repository.</p>
+
+<p> If you are using the  <%= vars.company_name %> recommends that you use a git repository.
+</p>
 
     ```
     cd YOUR-PROD-DIRECTORY
@@ -122,8 +122,8 @@ initialize the directory as a tile repository by running the following commands:
     tile build
     ```
 
-The generator first creates a BOSH release in the `release` subdirectory,
-then wraps that release into a tile, in the `product` subdirectory.
+The generator creates a BOSH release in the `release` subdirectory,
+and wraps that release into a tile, in the `product` subdirectory.
 If required for the installation, it automatically pulls down the latest
 release version of the Cloud Foundry CLI.
 
@@ -153,6 +153,7 @@ FROM cfplatformeng/tile-generator
 ## <a id="sample"></a> Build the Sample
 
 The [tile-generator repository](https://github.com/cf-platform-eng/tile-generator) includes a [sample tile](https://github.com/cf-platform-eng/tile-generator/tree/master/sample) that exercises most of the features of Tile Generator. This sample tile is used by Tile Generator's CI pipeline to verify that things work correctly.
+
 You can build this sample using the following steps:
 
 1. Download the [Redis BOSH release](https://github.com/cloudfoundry-community/redis-boshrelease/releases/tag/v13.1.2) and save it to `sample/resources/redis-13.1.2.tgz`.
@@ -165,12 +166,10 @@ You can build this sample using the following steps:
     tile build
     ```
 
-<p class="note"><strong>Note</strong>: The sample tile includes a Python app that is re-used in several packages,
-    sometimes as an app, sometimes as a service broker. One of the deployments (app3)
-    uses the sample app inside a Docker image that is currently only modified
-    by the CI pipeline. If you modify the sample app, you have to build your own
-    Docker image using the provided <code>Dockerfile</code> and change the image name in
-    <code>sample/tile.yml</code> to include the modified code in app3.</p>
+The sample tile includes a Python app that is used again in several packages, sometimes as an app, sometimes as a service broker. One of the deployments (app3)
+muses the sample app inside a Docker image that is modified
+by the CI pipeline. If you edit the sample app, you can build your own Docker image using the provided <code>Dockerfile</code> and change the image name in
+<code>sample/tile.yml</code> to include the modified code in app3.</p>
 
 ## <a id="define"></a> Define your Tile in <code>tile.yml</code>
 
@@ -305,8 +304,7 @@ of just `app` or `docker-app`:
   enable_global_access_to_plans: true  # optional
 ```
 
-  <p class="note">
-    <strong>Note</strong>: Unless you specify the <code>enable_global_access_to_plans: true</code> option, your
+<p> Unless you specify the <code>enable_global_access_to_plans: true</code> option, your
     broker's services do not appear in the user's Marketplaces.
     Operators have to use the <code>cf enable-service-access</code> command to allow
     specific users, orgs, and spaces to access your services.
@@ -657,10 +655,10 @@ package.
 Service instances provisioned this way survive updates, but are deleted
 when the tile is uninstalled.
 
-<p class="note"><strong>Note</strong>:  The name is the name of the provided <em>service, not the broker</em>.
-    In many cases these are not the same, and a single broker might even offer
-    multiple services. Use <code>cf service-access</code> to see the services and plans
-    offered by installed service brokers.</p>
+  <p class="note important">
+  <span class="note__title"> Important</span> The name variable is the name of the provided <em>service, not the broker</em>. In many cases these are not the same, and a single broker
+  might even offer multiple services. Use <code>cf service-access</code> to see the services and plans offered by installed service brokers.</p>
+
 
 If you do not specify a plan, Tile Generator uses the first plan
 listed for the service in the broker catalog. It is a good idea to always
@@ -730,12 +728,16 @@ stemcell_criteria:
   os: 'ubuntu-trusty'
   version: '3146.5'     #NOTE: You must quote the version to force the type to be string
 ```
+<p> You must quote the version to force the type to be string
+</p>
 
 ### <a id="custom-errands"></a> Custom Errands
 
 Tile Generator supplies standard errands to deploy and delete CF type packages. You can
 replace or augment those errands by specifying errand shell commands in your tile.yml
-file. Here is an example of a custom deploy errand to install a buildpack only if a newer
+file.
+
+Here is an example of a custom deploy errand to install a buildpack only if a newer
 version of that same buildpack is not already present:
 
 ```

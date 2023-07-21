@@ -4,11 +4,12 @@ owner: CredHub
 ---
 
 
-This topic explains how CredHub manages variables in the context of a larger deployment, and how to create new variables for use in CredHub. 
+You can use CredHub to manage variables in the context of a larger deployment, and create new variables
+for use in CredHub.
 
 ## <a id='background'></a> Background
 
-When a tile author defines a top-level `variables` section in the product template, Ops Manager passes the `variables` section to the product manifest.
+When you define a top-level `variables` section in the product template, Ops Manager passes the `variables` section to the product manifest.
 tile authors can define variables in the product template as follows:
 
 ```
@@ -17,13 +18,14 @@ variables:
     type: password
 ```
 
-You can reference these variables in the manifest snippets in their tile metadata using a triple parentheses syntax: 
+You can reference these variables in the manifest snippets in their tile metadata using a triple parentheses syntax:
 
 ```
 ((( EXAMPLE-CREDHUB-PASSWORD )))
 ```
 
-Using triple parentheses lets Ops Manager identify CredHub variables while still supporting the BOSH double parentheses syntax. A variable referenced within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub, BOSH populates that variable value internally.
+Using triple parentheses, you can use Ops Manager to identify CredHub variables while still supporting the BOSH double parentheses syntax. A variable referenced
+within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub, BOSH populates that variable value internally.
 
 The benefit of this approach is that the Ops Manager YAML file does not contain sensitive credentials when the metadata manifest snippets have triple parentheses. The resulting manifest file contains variables within double parentheses, rather than unobscured credentials.
 
@@ -34,7 +36,7 @@ For example, a tile author adds credentials to a manifest snippet in the followi
   key: prefix-((( ANOTHER-CREDHUB-PASSWORD )))-suffix
 ```
 
-Ops Manager evaluates the above example to generate the following section in the product manifest:
+Ops Manager evaluates the preceding example to generate the following section in the product manifest:
 
 ```
   (( EXAMPLE-CREDHUB-PASSWORD ))
@@ -45,13 +47,15 @@ Ops Manager evaluates the above example to generate the following section in the
 
 CredHub is distributed as a BOSH release. As part of this installation, Ops Manager co-locates the CredHub release on the BOSH Director, including the CredHub job configurations, and the Director is configured to point to the CredHub API.
 
-Once CredHub has been deployed and configured on the Director, any Director deployment can use CredHub variables in place of credential values. Using variables, rather than values, provides an extra layer of security when transmitting credentials within your deployment.
+After CredHub is deployed and configured on the BOSH Director, any BOSH Director deployment can use CredHub variables in place of credential values.
+Using variables, rather than values, provides an extra layer of security when transmitting credentials within your deployment.
 
 ## <a id='change-deployment'></a> Changing Your Deployment Manifest to Include CredHub Variables
 
-The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
+The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential
+value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
 
-The manifest excerpt below includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>. 
+The manifest excerpt below includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>.
 
 When this manifest is deployed, the BOSH Director retrieves the stored variables and replaces them with the credential values associated with each variable. The <code>EXAMPLE-TLS</code> variables include property accessors, so only the `certificate` and `private_key` components are interpolated.
 
@@ -59,56 +63,58 @@ When this manifest is deployed, the BOSH Director retrieves the stored variables
 name: demo-deploy
 
 instance_groups:
-  jobs: 
-  - name: demo 
+  jobs:
+  - name: demo
     release: demo
     properties:
       demo:
         password: ((EXAMPLE-PASSWORD))
-        tls: 
+        tls:
           certificate: ((EXAMPLE-TLS.certificate))
           private_key: ((EXAMPLE-TLS.private_key))
 ```
 
-Ops Manager configures the Director to generate a credential if it does not exist. The manifest includes generation parameters that define how the credential should be generated. These generation parameters are defined in the variables section as shown below.
+Ops Manager configures the BOSH Director to generate a credential if it does not exist. The manifest includes generation parameters that define how the
+credential must be generated. These generation parameters are defined in the variables section.
 
 ```
 ---
-name: demo deploy 
+name: demo deploy
 
-variables: 
+variables:
 - name: EXAMPLE-PASSWORD
   type: password
 - name: EXAMPLE-CA
   type: certificate
-  options: 
+  options:
     is_ca: true
     common_name: 'Example Certificate Authority'
 - name: EXAMPLE-TLS
   type: certificate
-  options: 
+  options:
     ca: EXAMPLE-CA
     common_name: example.com
 
 instance_groups:
-  jobs: 
-  - name: demo 
+  jobs:
+  - name: demo
     release: demo
     properties:
       demo:
         password: (( EXAMPLE-PASSWORD ))
-        tls: 
+        tls:
           certificate: (( EXAMPLE-TLS.certificate ))
           private_key: (( EXAMPLE-TLS.private_key ))
 ```
 
 ## <a id='variable-namespacing'></a>  Variable Namespacing
 
-Deployment manifests often use common variable names; for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name. For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
+Deployment manifests often use common variable names, for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name.
+For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
 
 ### <a id="other-options"></a> Other Namespacing Options
 
-Use a BOSH link to share credentials across deployments. You can read about BOSH links in the [v1.11 Release Notice](https://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links). Alternatively, if you want to use an exact name, prefixing the variable with a forward slash (/) will cause the Director to use the exact name you type. An example of a precisely typed variable follows.
+Use a BOSH link to share credentials across deployments. Alternatively, if you want to use an exact name, prefixing the variable with a forward slash (/) configures the Director to use the exact name you type. An example of a precisely typed variable follows.
 
 ```
 ((/EXAMPLE-PASSWORD))
@@ -116,11 +122,11 @@ Use a BOSH link to share credentials across deployments. You can read about BOSH
 
 ## <a id='credhub-ca-refs'></a> Reference Existing CAs in CredHub Variables
 
-This section describes how to reference existing CAs stored in CredHub correctly in your tile's property configuration. 
+This section describes how to reference existing CAs stored in CredHub correctly in your tile's property configuration.
 
 In Ops Manager v2.9 and later, operators can perform a bulk rotation of all CAs and certificates in a foundation, which may include leaf certificates used by individual service tiles. Ops Manager invokes CredHub Maestro to perform this operation.
 
-CredHub Maestro requires that any triple parentheses references to CAs that sign leaf certificates must return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the least amount of downtime of your tile's services during certificate rotation. 
+CredHub Maestro requires that any triple parentheses references to CAs that sign leaf certificates must return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the least amount of downtime of your tile's services during certificate rotation.
 
 When referencing a CA stored in CredHub, use the format `LEAF-CERTIFICATE-NAME.ca` to ensure that a concatenated version of the CA is returned. Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
 
@@ -155,7 +161,7 @@ templates:
       <span style="font-weight: bold;background-color: #98FB98;">((( /cf/some-diego-leaf-cert.ca )))</span>
       <span style="font-weight: bold;background-color: #98FB98;">((( /cf/some-diego-leaf-2-6.ca)))</span>
       forwarded_client_cert: (( .properties.routing_tls_termination.selected_option.parsed_manifest(gorouter_forwarded_client_cert) ))
-variables: 
+variables:
  - name: /cf/diego-instance-identity-root-ca
     options:
       common_name: Diego Instance Identity Root CA
@@ -167,7 +173,7 @@ variables:
       common_name: Diego Instance Identity Root CA
       duration: 1095
       is_ca: true
-      type: certificate 
+      type: certificate
   <span style="font-weight:bold; background-color: #98FB98;">- name: /cf/some-diego-leaf-cert.ca</span>
     options:
       ca: /cf/diego-instance-identity-root-ca
@@ -191,7 +197,7 @@ templates:
       <span style="font-weight: bold;background-color: #FFCCCB;">((( /cf/diego-instance-identity-root-ca.certificate )))</span>
       <span style="font-weight: bold;background-color: #FFCCCB;">((( /cf/diego-instance-identity-root-ca-2-6.certificate )))</span>
       forwarded_client_cert: (( .properties.routing_tls_termination.selected_option.parsed_manifest(gorouter_forwarded_client_cert) ))
-variables: 
+variables:
  - name: /cf/diego-instance-identity-root-ca
    options:
      common_name: Diego Instance Identity Root CA
