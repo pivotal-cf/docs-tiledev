@@ -3,7 +3,7 @@ title: Creating new variables in CredHub
 owner: CredHub
 ---
 
-Here's how CredHub manages variables in the context of a larger deployment, and how to create new variables for use in CredHub.
+You can use CredHub to manage variables in the context of a larger deployment, and create new variables.
 
 ## <a id='background'></a> CredHub background
 
@@ -22,7 +22,8 @@ You can reference these variables in the manifest snippets in their tile metadat
 ((( EXAMPLE-CREDHUB-PASSWORD )))
 ```
 
-Using triple parentheses, you can use Ops Manager to identify CredHub variables while still supporting the BOSH double parentheses syntax. A variable referenced within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub, BOSH populates that variable value internally.
+Using triple parentheses, you can use Ops Manager to identify CredHub variables while still supporting the BOSH double parentheses syntax. A variable referenced
+within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub, BOSH populates that variable value internally.
 
 The benefit of this approach is that the Ops Manager YAML file does not contain sensitive credentials when the metadata manifest snippets have triple parentheses. The resulting manifest file contains variables within double parentheses, rather than unobscured credentials.
 
@@ -33,7 +34,7 @@ For example, a tile author adds credentials to a manifest snippet in the followi
   key: prefix-((( ANOTHER-CREDHUB-PASSWORD )))-suffix
 ```
 
-Ops Manager evaluates the above example to generate the following section in the product manifest:
+Ops Manager evaluates the preceding example to generate the following section in the product manifest:
 
 ```
   (( EXAMPLE-CREDHUB-PASSWORD ))
@@ -44,11 +45,13 @@ Ops Manager evaluates the above example to generate the following section in the
 
 CredHub is distributed as a BOSH release. As part of this installation, Ops Manager co-locates the CredHub release on the BOSH Director, including the CredHub job configurations, and the Director is configured to point to the CredHub API.
 
-After CredHub is deployed and configured on the Director, any Director deployment can use CredHub variables in place of credential values. Using variables, rather than values, provides an extra layer of security when transmitting credentials within your deployment.
+After CredHub is deployed and configured on the BOSH Director, any BOSH Director deployment can use CredHub variables in place of credential values.
+Using variables, rather than values, provides an extra layer of security when transmitting credentials within your deployment.
 
 ## <a id='change-deployment'></a> Changing your deployment manifest to include CredHub variables
 
-The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
+The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the Director encounters a variable using this syntax, it requests the credential
+value from CredHub. If the credential does not exist and the release or manifest contains generation properties, the credential value is generated automatically.
 
 The manifest excerpt includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>.
 
@@ -69,7 +72,8 @@ instance_groups:
           private_key: ((EXAMPLE-TLS.private_key))
 ```
 
-Ops Manager configures the Director to generate a credential if it does not exist. The manifest includes generation parameters that define how the credential must be generated. These generation parameters are defined in the variables section as shown below.
+Ops Manager configures the Director to generate a credential if it does not exist. The manifest includes generation parameters that define how the
+credential must be generated. These generation parameters are defined in the variables section.
 
 ```
 ---
@@ -103,11 +107,12 @@ instance_groups:
 
 ## <a id='variable-namespacing'></a>  Variable namespacing
 
-Deployment manifests often use common variable names, for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name. For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
+Deployment manifests often use common variable names, for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name.
+For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
 
 ### <a id="other-options"></a> Other namespacing options
 
-Use a BOSH link to share credentials across deployments. You can read about BOSH links in the [v1.11 Release Notice](https://docs.pivotal.io/tiledev/1-11/release-notes.html#bosh-links). Alternatively, if you want to use an exact name, prefixing the variable with a forward slash (/) configures the Director to use the exact name you type. An example of a precisely typed variable follows.
+Use a BOSH link to share credentials across deployments. Alternatively, if you want to use an exact name, prefixing the variable with a forward slash (/) configures the Director to use the exact name you type. An example of a precisely typed variable follows.
 
 ```
 ((/EXAMPLE-PASSWORD))
