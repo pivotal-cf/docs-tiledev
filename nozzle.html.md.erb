@@ -2,27 +2,29 @@
 title: How to integrate services with Cloud Foundry's logging system
 owner: Services
 ---
-Here you will find how to integrate services with Cloud Foundry's logging system, _Loggregator_, by writing to and reading from its _Firehose_ endpoint.
+You can integrate services with Cloud Foundry's logging system, _Loggregator_, by writing to and reading from its _Firehose_ endpoint.
 
-## <a id="overview"></a> Overview
 
-Cloud Foundry's Loggregator logging system collects your logs and metrics from apps and platform components and streams them to a single endpoint, Firehose. Your tile can integrate its service with Loggregator in two ways:
+Cloud Foundry's Loggregator logging system collects your logs and metrics from apps and platform components and streams them to a single endpoint, Firehose.
+
+Your tile can integrate its service with Loggregator in following ways:
 
 * By sending your service component logs and metrics to the Firehose, to be streamed with core platform component logs and metrics
 
 * By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or apps -- a built-in nozzle can activate a service to:
-  - Drain metrics to an external dashboard product for system operators
-  - Send HTTP request details to search or analysis tools
-  - Drain app logs to an external system
-  - Auto-scale itself based on Firehose metrics, as detailed in this [YouTube video](https://youtu.be/skJKvQfpKD4?t=1021)
+  - Drain metrics to an external dashboard product for system operators.
+  - Send HTTP request details to search or analysis tools.
+  - Drain app logs to an external system.
+  - Auto-scale itself based on Firehose metrics, as detailed in this [YouTube video](https://youtu.be/skJKvQfpKD4?t=1021).
 
 For a real world production example of a nozzle see [Firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog) in GitHub.
 
-## <a id="firehose"></a> Firehose Communication
+## <a id="firehose"></a> Firehose communication
 
 <%= vars.app_runtime_full %> components publish logs and metrics to the Firehose through Loggregator agent processes that run locally on the component VMs. Loggregator agents input the data to the Loggregator system through a co-located Loggregator agent. To see how logs and metrics travel from <%= vars.app_runtime_abbr %> system components to the Firehose, see the [Cloud Foundry documentation](https://docs.cloudfoundry.org/loggregator/architecture.html).
 
-Component VMs running <%= vars.app_runtime_abbr %> services can publish logs and metrics the same way, by including the same component, Loggregator Agent. Historically, components used Metron for this communication.
+Component VMs running <%= vars.app_runtime_abbr %> services can publish logs and metrics the same way, by including the same component, Loggregator Agent.
+Historically, components used Metron for this communication.
 
 ### <a id="https"></a> HTTPS Protocol
 
@@ -126,7 +128,7 @@ events, errors := consumer.Firehose(firehoseSubscriptionID, token)
 
 `Firehose` gives back two channels, one for events and one for errors.
 
-The events channel receives the following six types of events.
+The events channel receives the following types of events:
 
 * _ValueMetric_ represents some platform metric at a point in time, emitted by platform components. For example, how many `2xx` responses the router has sent out.
 * _CounterEvent_ represents an incrementing counter, emitted by platform components. For example, a Diego cell's remaining memory capacity.
@@ -164,7 +166,7 @@ You can also deploy the nozzle as an app on <%= vars.app_runtime_abbr %>. Visit 
 [section on pushed apps](tile-generator.html#pushed-applications)
 for more details.
 
-### <a id="examples"></a> Example Nozzles
+### <a id="examples"></a> Nozzle examples
 
 There are several open source examples you can use
 as a reference for building your nozzle.
@@ -194,6 +196,7 @@ has source code based on `firehose-to-syslog` and is packaged to run an app on <
 * [datadog-firehose-nozzle](https://github.com/DataDog/datadog-firehose-nozzle) is
 another real world implementation.
 
+
 ## <a id="syslog-format-pcf"></a> Log Format for <%= vars.app_runtime_abbr %> Components
 
 The standard log format for <%= vars.app_runtime_abbr %> adheres to the [RFC-5424 syslog protocol](https://tools.ietf.org/html/rfc5424), with log messages formatted as follows:
@@ -202,7 +205,7 @@ The standard log format for <%= vars.app_runtime_abbr %> adheres to the [RFC-542
 
 The [Syslog Message Elements table](#syslog-elements) immediately below describes each element of the log, and the [Structured Instance Data Format](#sd-element) table describes the contents of the structured data element that carries Cloud Foundry VM instance information.
 
-### <a id="syslog-elements"></a> Syslog Message Elements
+### <a id="syslog-elements"></a> Syslog entries elements
 
 This table describes each element of a standard <%= vars.app_runtime_abbr %> syslog message.
 
@@ -248,7 +251,7 @@ This table describes each element of a standard <%= vars.app_runtime_abbr %> sys
   </tr>
 </table>
 
-### <a id="severity"></a> RFC-5424 Severity Codes
+### <a id="severity"></a> RFC-5424 severity codes
 
 <%= vars.app_runtime_abbr %> components generate log messages with the following severity levels. The most common severity level is `13`.
 
@@ -283,7 +286,7 @@ This table describes each element of a standard <%= vars.app_runtime_abbr %> sys
  </tr>
 </table>
 
-### <a id="sd-element"></a> Structured Instance Data Format
+### <a id="sd-element"></a> Structured instance data format
 
 The RFC-5424 syslog protocol includes a [structured data element](https://tools.ietf.org/html/rfc5424#section-6.3.1) that people can use as they see fit. <%= vars.app_runtime_abbr %> uses this element to carry VM instance information as follows:
 
@@ -312,12 +315,12 @@ The RFC-5424 syslog protocol includes a [structured data element](https://tools.
  </tr>
 </table>
 
-## <a id="metrics"></a> Making Sense of Metrics
+## <a id="metrics"></a> Metrics
 
 [Monitoring <%= vars.platform_name %>](https://docs.pivotal.io/pivotalcf/monitoring/index.html) has a great rundown of the
 various metrics and how to make them useful.
 
-## <a id="resources"></a> Other Resources
+## <a id="resources"></a> Other resources
 
 * CF Summit Video [Monitoring Cloud Foundry: Learning about the Firehose](https://youtu.be/skJKvQfpKD4)
 
