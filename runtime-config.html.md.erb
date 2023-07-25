@@ -1,28 +1,32 @@
 ---
-title: Managing runtime configs for your service tiles.
+title: Managing runtime configs for your service tiles
 owner: Services
 ---
 
 
-Here you find how to define and manage named runtime configs with your service tile for <%= vars.platform_name %>.
+You can define and manage named runtime configs with your service tile
+for <%= vars.platform_name %>.
 
-Tile authors can manage runtime configs in the following ways:
+You can manage runtime configs in the following ways:
 
 + Add a new runtime config in an existing product tile. See [Add a Runtime Config](#create).
 + Delete a runtime config from a tile. See [Delete a Runtime Config](#delete).
 + Create a tile that only contains a runtime config. See [Create a Runtime Config-Only Tile](#config-only).
 
 For more information about runtime configs, see
-[Director Runtime Config](https://bosh.io/docs/runtime-config.html) in Cloud Foundry BOSH documentation.
-
-## <a id="overview"></a>Overview managing runtime configs for your service tiles
+[Director Runtime Config](https://bosh.io/docs/runtime-config.html).
 
 A runtime config is a section of the tile metadata that defines global deployment configurations.
-Tile authors can create tiles that only contain a runtime config or add a runtime config to an existing product tile. When a tile author includes a runtime config as a top-level property in the tile metadata, BOSH applies the runtime config to every VM in the deployment.
+Tile authors can create tiles that only contain a runtime config or add a runtime config to
+an existing product tile. When a tile author includes a runtime config as a top-level property in the
+tile metadata, BOSH applies the runtime config to every VM in the deployment.
 
-For more information about top-level properties, see [Top-Level Properties](./property-template-references.html#top-level).
+For more information about top-level properties, see
+[Top-Level Properties](./property-template-references.html#top-level).
 
-When operators apply changes to deployments, Ops Manager combines the runtime config information from every tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the identifier using the tile name, a generated GUID, and the runtime config name defined in the metadata.
+When you apply changes to deployments, Ops Manager combines the runtime config information from every
+tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the
+identifier using the tile name, a generated GUID, and the runtime config name defined in the metadata.
 
 The identifier follows the following format:
 
@@ -34,7 +38,9 @@ TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 
 ## <a id="create"></a>Add a runtime config
 
-Tile authors can add `runtime_configs` as a top-level property in tile metadata. In the runtime config section, the tile author defines configuration properties that Ops Manager applies to all deployments. A tile can support any number of runtime configs.
+Tile authors can add `runtime_configs` as a top-level property in tile metadata. In the runtime config
+section, you define configuration properties that Ops Manager applies to all deployments. A tile can
+support any number of runtime configs.
 
 A named runtime config, can contain any number of add-ons. Each add-on can contain any number of jobs.
 
@@ -66,17 +72,19 @@ Where:
 * `YOUR-PROPERTY` are the properties used in the job.
 
 For more information about runtime config keys, see
-[Director Runtime Config](https://bosh.io/docs/runtime-config.html) in Cloud Foundry BOSH documentation.
+[Director Runtime Config](https://bosh.io/docs/runtime-config.html).
 
-For more information about top-level properties in the tile manifest, see [Top-Level Properties](./property-template-references.html#top-level).
+For more information about top-level properties in the tile manifest, see
+[Top-Level Properties](./property-template-references.html#top-level).
 
-Append your product name or another unique identifier to each of the named items in the <code>runtime_configs</code> section.</p>
+Append your product name or another unique identifier to each of the named items in
+the <code>runtime_configs</code> section.</p>
 
 
 ## <a id="delete"></a>Delete a runtime config
 
 Tile authors can remove an existing runtime config from a tile.
-When the operator upgrades the tile, Ops Manager detects the missing reference and deletes the runtime config.
+When you upgrade the tile, Ops Manager detects the missing reference and deletes the runtime config.
 
 To delete a runtime config from a tile, remove the `runtime_configs` section from the tile metadata.
 
@@ -99,9 +107,12 @@ runtime_configs:
         ...
 ```
 
-## <a id="config-only"></a>Create a Runtime Config Tile
+## <a id="config-only"></a>Create a Runtime Config tile
 
-In Ops Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config tiles contain no stemcell, network, availability zone (AZ), or resource config information. You might create a runtime config tile if you want global deployment configurations to be applied to all VMs in deployment and do not any other capability.
+In Ops Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config
+tiles contain no stemcell, network, availability zone (AZ), or resource config information. You might create a
+runtime config tile if you want global deployment configurations to be applied to all VMs in deployment and do
+  not any other capability.
 
 For a runtime config tile, tile authors are not required to define the following top-level properties:
 
@@ -171,6 +182,8 @@ runtime_configs:
               (( .properties.example_string.value )).
 ```
 
-In the runtime config example previous, the `login-banner` job prints a banner when a user logs into any VM in the deployment. The operator can use the default value defined in the `form_types` section of the metadata or configure the banner by editing the **Example string** value in Ops Manager.
+In the previous runtime config example, the `login-banner` job prints a banner when you log in to any VM in
+the deployment. You can use the default value defined in the `form_types` section of the metadata or
+configure the banner by editing the **Example string** value in Ops Manager.
 
 ![alt-text="Runtime config tile information example"](img/runtime-config-tile.png)

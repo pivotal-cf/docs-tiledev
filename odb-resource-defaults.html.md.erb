@@ -3,33 +3,45 @@ title: Configuring disk and VM type defaults for on-demand service tiles
 owner: Ops Manager
 ---
 
-Here is how tile authors can configure the drop-down menu menu items for VM types and persistent disk types in their tile.
+You can configure the drop-down menu items for VM types and persistent disk types in your tile.
 
 On-Demand service tiles have a configuration pane for each service plan.
-Operators use drop-down menus on the plan configuration pane to set the VM type and persistent disk type for each instance of that plan.
+You can use the drop-down menus on the configuration pane to set the VM type and persistent disk type for
+each instance of that plan.
 
-Ops Manager populates the menus with options based on the VM and disk options available on the current IaaS.
-Setting default values for VMs and disk types helps operators to select the right resources for on-demand service broker (ODB) services when using on-demand plans.
+Ops Manager populates the menus with options that are based on the VM and disk options available
+on the current IaaS.
+When you set default values for VMs and disk types, it helps you to select the right
+resources for on-demand service
+broker (ODB) services when you use on-demand plans.
 
 <p class="note">
 <span class="note__title">Note</span>
-Ops Manager 2.0 and later supports defining VM and disk type defaults and constraints.
+Ops Manager 2.9 and later supports defining VM and disk type defaults and constraints.
 </p>
 
 ## <a id="defaults"></a>VM and Persistent disk types
 
-The property that defines the VM type options is `vm_type_dropdown`, and the menu items for disk type come from the `disk_type_dropdown` property.
+The property that defines the VM type options is `vm_type_dropdown` property, and the menu items for
+disk type come from the `disk_type_dropdown` property.
+
 Tile authors do not specify the menu items in the product template.
 
-Because VM and disk options differ by IaaS, Ops Manager uses a best-fit algorithm to match defaults to their closest equivalents on the IaaS, similar to how the **Resource Config** pane handles its **VM Type** and **Persistent Disk Type** options.
+Because VM and disk options differ by IaaS, Ops Manager uses a best-fit algorithm to match
+defaults to their closest equivalents on the IaaS, similar to how the **Resource Config** pane
+handles the **VM Type** and **Persistent Disk Type** options.
 
-If a tile developer does not include a default value for a VM or disk resource, and then an operator configuring the tile does not choose a value from the dropdown, Ops Manager by default sets the resource to the smallest option available on the IaaS.
+If a tile developer does not include a default value for a VM or disk resource, and then you configure the tile and do not choose a value from
+  the drop-down menu, Ops Manager by default sets the resource to the smallest option available on the IaaS.
 
 ### <a id="vm-type"></a>Set VM type defaults
 
-For `vm_type_dropdown` the resources are `ram`, `ephemeral_disk`, and `cpu`.
+For the `vm_type_dropdown` property, the resources are `ram`, `ephemeral_disk`, and `cpu`.
+
 Tile authors can also apply `constraints` to any of these resources.
+
 Constraints can include `min` or `power_of_two`.
+
 For example:
 
 ```yaml
@@ -50,9 +62,12 @@ For example:
 
 ### <a id="disk-type"></a>Set persistent disk type defaults
 
-For `disk_type_dropdown` the resource is `persistent_disk`.
+For the `disk_type_dropdown` property, the resource is `persistent_disk`.
+
 Tile authors can also apply `constraints` to this resource.
+
 Constraints can include `min` or `power_of_two`.
+
 For example:
 
 ```yaml

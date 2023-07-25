@@ -2,14 +2,13 @@
 title: Using 'pcf' Command Line utility with your services
 owner: Services
 ---
-The `pcf` utility provides a command line interface to <%= vars.platform_name %> for
-the purpose of deploying and testing tiles. Its primary reason for existence is
-to activate Ops Manager access from CI pipelines, but developers also find it
-convenient to use this CLI rather than the Ops Manager UI.
+The `pcf` utility provides a command line interface to <%= vars.platform_name %> for you to
+deploy and test tiles. The `pcf` utility activates Ops Manager access from CI pipelines, but
+you might find it convenient to use the CLI rather than the Ops Manager UI.
 
-The `pcf` utility also allows you to test your tile's BOSH errands
-directly from your CLI, without going through Ops Manager and BOSH. This greatly
-reduces the time it takes to deploy/test each iteration of your software components.
+You can use the `pcf` utility to test your tile's BOSH errands
+directly from your CLI, without going through Ops Manager and BOSH. This reduces the time it takes to
+deploy and test each iteration of your software components.
 
 ##<a id="install"></a> Installation
 
@@ -19,7 +18,7 @@ install the `pcf` utility, follow the
 
 ##<a id="auth"></a> Authentication
 
-The `pcf` utility looks for a file called `metadata` in the current directory.
+The `pcf` utility searches for a file called `metadata` in the current directory.
 This file is expected to provide the URL and credentials to connect to
 Ops Manager, in the following format:
 
@@ -33,14 +32,17 @@ opsmgr:
 
 The reason for this file naming is because this is how Concourse passes
 credentials of a "claimed" <%= vars.platform_name %> pool resource to the CI pipeline scripts.
-For interactive use, this means that you have to create a `metadata`
+For interactive use, you have to create a `metadata`
 file in the directory where you run the `pcf` command.
 
-You must not create this file inside your GIT or other version control system repository, as you do not want to accidentally commit these credentials to version control.</p>
+You must not create this file inside your GIT or other version control system repository, because you do not
+  want to accidentally commit these credentials to version control.</p>
 
 ##<a id="commands"></a> Commands
 
-The `pcf` utility implements many different commands. To see available commands:
+The `pcf` utility implements many different commands.
+
+To see available commands, run:
 
 ```bash
 $ pcf --help
@@ -69,7 +71,7 @@ Commands:
 
 ##<a id="ops-man-settings"></a> Checking Ops Manager settings
 
-To see which products are available and installed in Ops Manager:
+To see which products are available and installed in Ops Manager, run:
 
 ```bash
 $ pcf products
@@ -78,14 +80,14 @@ $ pcf products
 - test-tile 0.3.95
 ```
 
-To test if a specific product is available or installed from within a script:
+To test if a specific product is available or installed from within a script, run:
 
 ```bash
 $ pcf is-available test-tile && echo "Product test-tile is available"
 $ pcf is-installed test-tile && echo "Product test-tile is installed"
 ```
 
-You can retrieve the settings for a specific product (this will give you a *lot* of json):
+To retrieve the settings for a specific product, run:
 
 ```bash
 $ pcf settings test-tile
@@ -112,10 +114,10 @@ $ pcf settings test-tile
     ...
 ```
 
-##<a id="deploy-tiles"></a> Deploying Tiles
+##<a id="deploy-tiles"></a> Deploying tiles
 
-After your software works and correctly deploys using `test-errand`, you can go
-through the real Ops Manager deployment process from the CLI, as you can
+After your software is working correctly, deploy using `test-errand`, and you can go
+through the real Ops Manager deployment process from the CLI, just as you can
 normally do through the Ops Manager UI.
 
 Import your .pivotal file into Ops Manager:
@@ -130,7 +132,7 @@ Install the uploaded version of your product:
 $ pcf install test-tile 0.0.2
 ```
 
-Where you can normally configure the tile settings in the UI, you can use thw `configure`
+Where you normally configure the tile settings in the UI, you can use the `configure`
 command to pass in any user-specified properties as a .yml file. This command
 also sets the stemcell for the tile to the same one used by <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>),
 to avoid uploading a tile-specific stemcell.
@@ -163,11 +165,13 @@ jobs:
     job_property: property_value
 ```
 
-You must define any `secret` type property value as a hash, in curly brackets. Specifying a simple
-string value for a text box of this type results in a `500 System Error` being returned from `pcf configure`.
+You must define any `secret` type property value as a hash, in curly brackets. When you specify a simple
+string value for a text box of this type, it results in a `500 System Error` that is returned from
+`pcf configure` property.
+
 The `secret` type property values can contain special characters.
 
-To see what changes are ready to be applied:
+To see what changes are ready to be applied, run:
 
 ```bash
 $ pcf changes
@@ -175,7 +179,7 @@ install: test-tile-207b165fcb7dc8b2597b
 delete:
 ```
 
-To apply these changes:
+To apply these changes, run:
 
 ```bash
 $ pcf apply-changes
@@ -191,17 +195,17 @@ $ pcf apply-changes
     Validating deployment manifest... Finished (00:00:00)
 ```
 
-`pcf apply-changes` automatically tails the logs for the installation process
-it started. If this gets stopped for any reason, you can tail the logs
+The `pcf apply-changes` property automatically tails the logs for the installation process
+that it started. If it stops, for any reason, you can tail the logs
 of the most recent installation:
 
 ```bash
 $ pcf logs
 ```
 
-##<a id="remove"></a> Removing Tiles
+##<a id="remove"></a> Removing tiles
 
-To uninstall a tile:
+To uninstall a tile, run:
 
 ```bash
 $ pcf uninstall test-tile
@@ -214,9 +218,9 @@ up Ops Manager's available products (and disk space):
 $ pcf delete-unused-products
 ```
 
-##<a id="access-ert"></a> Accessing <%= vars.app_runtime_abbr %>
+## <a id="access-ert"></a> Accessing <%= vars.app_runtime_abbr %>
 
-To see details about the <%= vars.app_runtime_abbr %> of your <%= vars.platform_name %> environment:
+To see details about the <%= vars.app_runtime_abbr %> of your <%= vars.platform_name %> environment, run:
 
 ```bash
 $ pcf cf-info
@@ -228,7 +232,7 @@ $ pcf cf-info
 - system_services_username: system_services
 ```
 
-To target your `cf` command line interface at this <%= vars.app_runtime_abbr %> environment:
+To target your `cf` command line interface at this <%= vars.app_runtime_abbr %> environment, run:
 
 ```bash
 $ pcf target
