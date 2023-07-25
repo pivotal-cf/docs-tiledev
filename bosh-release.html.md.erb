@@ -3,25 +3,24 @@ title: BOSH Release Resources
 owner: Services
 ---
 
-Here is a list of resources for creating a BOSH release that integrates a
+You can use the resources in this topic to create a BOSH release that integrates a
 software service with <%= vars.platform_name %> at the managed service level.
 
-## <a id="overview"></a> BOSH release overview
-
-A BOSH release is a directory that contains the source code for your service with everything else that BOSH needs to deploy it reproducibly to cloud VMs
+A BOSH release is a directory that contains the source code for your service with everything else that BOSH needs to
+deploy it to cloud VMs
 running a specified operating system (stemcell). These contents include but are
-not limited to buildpacks, start up scripts, binary artifacts, and a BOSH
+not limited to, buildpacks, start up scripts, binary artifacts, and a BOSH
 manifest containing configuration and deployment properties.
 
 The BOSH manifest specifies the following major components:
 
 - **Packages** that must be installed on <%= vars.platform_name %> stemcells to create VM
-images
+images.
 
-- **Jobs** that describe how to install, run, and remove your software
+- **Jobs** that describe how to install, run, and remove your software.
 
 - A **Monitor** script, that describes how to monitor the health of your
-service components and stop or restart them
+service components and stop or restart them.
 
 ## <a id="resources"></a> BOSH resources
 
@@ -40,50 +39,53 @@ high-level steps for creating a BOSH deployment.
 
 These topics explain how to create a BOSH release:
 
-- [Creating a Release](http://bosh.io/docs/create-release.html)
+- [Creating a Release](http://bosh.io/docs/create-release.html).
 
-- [Defining your Jobs](http://bosh.io/docs/jobs.html)
+- [Defining your Jobs](http://bosh.io/docs/jobs.html).
 
-- [Defining your VMs](http://bosh.io/docs/vm-struct.html)
+- [Defining your VMs](http://bosh.io/docs/vm-struct.html).
 
-- [Defining your Runtime Configs](https://bosh.io/docs/runtime-config.html)
+- [Defining your Runtime Configs](https://bosh.io/docs/runtime-config.html).
 
-- [Monitoring the Health of your Service](http://bosh.io/docs/monitoring.html)
+- [Monitoring the Health of your Service](http://bosh.io/docs/monitoring.html).
 
-## <a id="docker"></a>Shortcut: Start with Docker Images
+## <a id="docker"></a>Shortcut: Start with Docker images
 
 If you have already packaged your service as Docker images, you can emulate
-a managed service deployment using the [Tile Generator](tile-generator.html)'s
+a managed service deployment using the [Tile Generator](tile-generator.html)
 support for `docker-bosh` packages. You can deploy existing
-Docker images into BOSH-managed VMs on the <%= vars.platform_name %> infrastructure.
+Docker images into BOSH managed VMs on the <%= vars.platform_name %> infrastructure.
 
 While this is a great way to deploy your service on <%= vars.platform_name %>, this is not a long-term, production-ready solution. There is really no
 benefit of running your service in containers on the VMs, and it does have
 a number of operational ("day 2") drawbacks:
 
-- You introduce more software (Docker) which must be kept up-to-date, and
+- You introduce more software (Docker) which must be kept up to date, and
 has the potential for problems, downtimes, and security vulnerabilities.
 
 - You can no longer take advantage of the patching capabilities of <%= vars.platform_name %> for
-stemcells and application dependencies, such as frameworks and libraries. Instead,
+stemcells and application dependencies, for example, frameworks, and libraries. Instead,
 you become directly responsible for managing all software that is in the Docker
 images you deploy.
 
 ## <a id="enhancing"></a>Enhancing the BOSH release
 
 After the basic BOSH release is in place, additional features for logging
-help operators run the service. For logging information, see
+help you run the service.
+
+For logging information, see
 [syslog-release](https://github.com/cloudfoundry/syslog-release).
+
 Expose the property `syslog.migration.disabled` using the
-tile's forms because not all VMware customers might not configure syslog draining.
+tile's forms because you might not configure syslog draining.
 
 Logs written under the BOSH location `/var/vcap/sys/log` are forwarded
 to the configured syslog server by the release.
-Integrating syslog forwarding into a tile does not require code changes. It only requires including the release and configuration forms in the `tile.yml`.
+Integrating syslog forwarding into a tile does not require code changes. It only requires including the release
+and configuration forms in the `tile.yaml file.
 For an example, see [pcf-examples/tile-for-bosh-with-syslog](https://github.com/cf-platform-eng/pcf-examples/tree/master/tile-for-bosh-with-syslog).
 
 ## <a id="backup"></a>BOSH backup and restore
 
-The [BOSH Backup and Restore Developer's Guide](https://docs.cloudfoundry.org/bbr/bbr-devguide.html)
-describes the framework for release authors to add backup and restore capability.
+The [BOSH Backup and Restore Developer's Guide](https://docs.cloudfoundry.org/bbr/bbr-devguide.html) describes the framework for release authors to add backup and restore capability.
 to their release by using BOSH Backup and Restore (BBR).
