@@ -3,30 +3,34 @@ title: Fetching Variable Names and Values
 owner: CredHub
 ---
 
-## <a id="overview"></a> Overview
-
-CredHub has two API endpoints to identify and re-use variables. Operators who want to see all the credentials associated with their product, or support engineers who want to troubleshoot issues specific to one virtual machine (VM), can use these APIs for those purposes.
+CredHub has two API endpoints to identify and reuse variables. To see all the credentials
+associated with your product, or you want to troubleshoot problems specific to one virtual machine (VM),
+you can use these APIs for those purposes.
 
 The API endpoints perform these functions:
 
-* Identifying and printing the name of a variable
-* Using the name of the variable to identify and print the value of the variable
+* Identifying and printing the name of a variable.
+* Using the name of the variable to identify and print the value of the variable.
 
-### <a id="use-api-endpoints"></a> Using the API Endpoints
+### <a id="use-api-endpoints"></a> Using the API endpoints
 
-Use these endpoints to view variables for any product in Ops Manager, except the BOSH Director. These endpoints are read-only. You cannot use them to add, remove, or rotate variables.
+You can Use endpoints to view variables for any product in Ops Manager, except the BOSH Director. These
+endpoints are read-only. You
+cannot use them to add, remove, or rotate variables.
 
 ## <a id="fetch-variables"></a> Fetching Variables
 
-This endpoint returns the list of variables associated with a product that are stored in CredHub. Not all variables are stored in CredHub. If you call a variable that is not stored in CredHub, the call returns an empty value.
+This endpoint returns the list of variables associated with a product that are stored in
+CredHub. Not all variables are stored in
+CredHub. If you call a variable that is not stored in CredHub, the call returns an empty value.
 
 <pre class="terminal">
-$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables" \ 
-    -X GET \ 
+$ curl "http<span>s</span>://OPS-MAN-FQDN/api/variables"
+    -X GET \
     -H "Authorization: Bearer EXAMPLE_UAA_ACCESS_TOKEN"
 </pre>
 
-### <a id="example-response"></a> Example Response
+### <a id="example-response"></a> Response example
 
 <pre class="terminal">
 HTTP/1.1 200 OK
@@ -36,30 +40,33 @@ HTTP/1.1 200 OK
 }
 </pre>
 
-### <a id="query-params"></a> Query Parameters
+### <a id="query-params"></a> Query parameters
 
 <table class="nice">
-	<th>Parameter</th>
-	<th>Description</th>
-	<tr>
-		<td>product_guid</td>
-		<td>The unique product identifier, formatted as a text string</td>
-	</tr>
+  <th>Parameter</th>
+  <th>Description</th>
+  <tr>
+    <td>product_guid</td>
+    <td>The unique product identifier, formatted as a text string</td>
+  </tr>
 </table>
 
-This endpoint returns a variable's name. Use the name in the next endpoint to return the variable's value.
+This endpoint returns the name of the variable. Use the name in the next endpoint to return the
+variable value.
 
-## <a id="fetch-var-values"></a> Fetching Variable Values
+## <a id="fetch-var-values"></a> Fetching variable values
 
-This endpoint returns the value of a variable stored in CredHub. Not all variables are stored in CredHub, so if you call a variable that isn't in CredHub, the call will return an empty value.
+This endpoint returns the value of a variable stored in
+CredHub. Not all variables are stored in CredHub, because if you call a
+variable that is not in CredHub, the call returns an empty value.
 
 <pre class="terminal">
-$ curl "http<span>s</span>://OPS-MAN-FQDN/api/v0/deployed/products/product-guid/variables?name=EXAMPLE-VARIABLE-NAME" \ 
-    -X GET \ 
+$ curl "http<span>s</span>://OPS-MAN-FQDN/api/variables" name=EXAMPLE-VARIABLE-NAME" \
+    -X GET \
     -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-### <a id="example-response"></a> Example Response 
+### <a id="example-response"></a> Example Response
 
 <pre class="terminal">
 HTTP/1.1 200 OK
@@ -71,14 +78,14 @@ HTTP/1.1 200 OK
 
 ### <a id="query-params-values"></a> Query Parameters
 <table>
-	<th>Parameter</th>
-	<th>Description</th>
-	<tr>
-		<td>variable_name</td>
-		<td>The name of the variable, formatted as a text string</td>
-	</tr>
-	<tr>
-		<td>product_guid</td>
-		<td>The unique product identifier, formatted as a text string</td>
-	</tr>
+  <th>Parameter</th>
+  <th>Description</th>
+  <tr>
+    <td>variable_name</td>
+    <td>The name of the variable, formatted as a text string</td>
+  </tr>
+  <tr>
+    <td>product_guid</td>
+    <td>The unique product identifier, formatted as a text string</td>
+  </tr>
 </table>

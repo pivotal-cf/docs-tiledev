@@ -3,20 +3,18 @@ title: Migrating Existing Syslog Configuration to Ops Manager
 owner: Ops Manager
 ---
 
+You can migrate existing syslog properties that are defined by a tile into a syslog form that is provided in Ops Manager v2.9 and later.
 
-This topic explains how to migrate existing syslog properties that are defined by a tile into the
-syslog form provided in Ops Manager v2.5 and later.
+When you enable the Ops Manager syslog feature, Ops Manager:
 
-By enabling the Ops Manager syslog feature, Ops Manager:
+* Provides your tile with its own syslog form.
+* Ensures that the syslog BOSH release is automatically injected into the instance groups of your product.
+* Includes syslog configuration properties when Ops Manager injects the syslog release into your product.
 
-* Provides your tile with its own syslog form
-* Ensures that the syslog BOSH release is automatically injected into the instance groups of your product
-* Includes syslog configuration properties when Ops Manager injects the syslog release into your product
+## <a id="syslog-data-model"></a>Syslog data model
 
-## <a id="syslog-data-model"></a>Syslog Data Model
-
- The following table lists the Ops Manager syslog parameters that you can migrate your existing
- configurations to.
+ The following table lists the Ops Manager syslog parameters that you can use to migrate your existing
+ configurations:
 
 <table class="nice">
   <tr>
@@ -93,13 +91,13 @@ By enabling the Ops Manager syslog feature, Ops Manager:
   </tr>
 </table>
 
-## <a id="javascript"></a> Use the JavaScript Migration Process
+## <a id="javascript"></a> Use the JavaScript migration process
 
 Tile authors can write a JavaScript migration to move their existing syslog properties into the
 syslog form provided by Ops Manager. After a successful migration, Ops Manager presents the
 migrated syslog properties in the Syslog form of the tile.
 
-1. Set the `opsmanager_syslog` property to `true` in your `metadata.yml`.
+1. Set the `opsmanager_syslog` property to `true` in your `metadata.yml` file.
 For more information, see [opsmanager_syslog](./property-template-references.html#syslog-flag).
 
 1. To write your JavaScript migration, use the following example as a template:
@@ -129,7 +127,7 @@ For more information, see [opsmanager_syslog](./property-template-references.htm
 1. Save the JavaScript file to the `PRODUCT/migrations/v1` directory of your `.pivotal` file.
 1. Remove the following:
 
-    * From your product template, `form_types` that allow operators to configure tile-specific syslog configuration
+    * From your product template, `form_types` which allow operators to configure tile specific syslog configuration
     * From your tile, the syslog BOSH release.
     * From your deployment manifest, syslog configuration properties.
 
@@ -139,15 +137,15 @@ functionality, mark all existing syslog configuration properties in your product
 1. Update the description for the deprecated properties to state that they are deprecated and are no
 longer used to configure the syslog.
 
-1. Run a test deploy of your tile by doing the procedures in [Testing Tiles](./testing.html).
+1. Run a deployment test of your tile using the procedures in [Testing Tiles](./testing.html).
 
-1. To ensure that your syslog properties were successfully migrated into the Ops Manager syslog
-configuration, do one of the following:
+1. Verify that your syslog properties are migrated into the Ops Manager syslog
+configuration:
 
     * View the configurations in the **Syslog** pane in Ops Manager **Settings** page.
     * View your syslog properties using the `syslog_configuration` Ops Manager API endpoint.
     For more information about the `syslog_configuration` API endpoint, see
     [Retrieving syslog configuration for a product](https://docs.pivotal.io/platform/2-10/opsman-api/#tag/Syslog-Configuration/paths/~1api~1v0~1staged~1products~1{product_guid}~1syslog_configuration/get).
 
-<p class="note"><strong>Note:</strong> In the next version of your product, remove
+<p> In the next version of your product, remove
   the deprecated syslog configuration properties.</p>

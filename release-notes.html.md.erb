@@ -3,33 +3,29 @@ title: Ops Manager v2.10 Partners Release Notes
 owner: Technical Program Management
 ---
 
-This topic describes the changes in <%= vars.ops_manager_first %> v2.10 that might be relevant to partner service tiles.
+You can learn about the changes in <%= vars.ops_manager_first %> <%= vars.v_major_version %> that might
+be relevant to partner service tiles.
 
-For information about changes introduced in <%= vars.ops_manager %> <%= vars.v_major_version %>,
-see [Ops Manager v2.10 Release Notes](https://docs.pivotal.io/platform/2-10/release-notes/opsmanager-rn.html).
-For information about breaking changes introduced in <%= vars.app_runtime_full %> v2.10,
-see [Breaking Changes](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html).
+For information about changes introduced in <%= vars.ops_manager %> <%= vars.v_major_version %>, and any
+breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/release-notes.html).
 
-## <a id="features"></a> Features
 
-New features and changes in this release that may affect tile development for partners:
+### <a id="log-format-change"></a> Timestamp format change and customizable <%= vars.app_runtime_abbr %> component logs
 
-### <a id="log-format-change"></a> Timestamp Format Change and Customizable <%= vars.app_runtime_abbr %> Component Logs
-
-In <%= vars.app_runtime_abbr %> v2.10, operators can modify the timestamp format of <%= vars.app_runtime_abbr %> component logs.
+In <%= vars.app_runtime_abbr %> v2.10, you can modify the timestamp format of <%= vars.app_runtime_abbr %> component logs.
 
 <%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces
 it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
 
 For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_.
 
-This feature may affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs.
+This feature might affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs.
 
 For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html#timestamps).
 
 ### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Ops Manager Bulk Rotation of Certificates
 
-Ops Manager v2.10 invokes CredHub Maestro to perform the bulk rotation of various CAs and certificates within a foundation.
+Ops Manager v2.10 runs CredHub Maestro to perform the bulk rotation of various CAs and certificates within a foundation.
 
 To ensure compatibility with Ops Manager API certificate rotation
 and CredHub Maestro, you must use the concatenated
@@ -41,9 +37,9 @@ The `.ca` accessor format returns a concatenated version of the CA, which includ
 
 For more information and configuration examples, see [Reference Existing CAs and Certificates in CredHub Variables](create-credhub-vars.html#credhub-ca-refs).
 
-## <a id="known-issues"></a> Known Issues
+## <a id="known-issues"></a> Known issues
 
-Known issues in this release that may affect tile development for partners:
+Known issues in this release that might affect tile development for partners:
 
 ### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
 

@@ -1,23 +1,25 @@
 ---
-title: Publish and Update
+title: Publish and update your service tile for <%= vars.platform_name %> products
 owner: Services
 ---
 
+Learn about the resources that can help you publish and update your service
+tile for <%= vars.platform_name %>.
 
-This topic provides resources to help you publish and update your service tile for <%= vars.platform_name %>.
-
-## <a id="publish"></a> Publish Your Tile
+## <a id="publish"></a> Publish your tile
 
 The [Partner Software Product Release Cycle](./releases.html) explains how <%= vars.company_name %> works with partners to release VMware Tanzu products,
 from the private alpha and closed beta phases, to general availability and publication on [VMware Tanzu Network](http://network.pivotal.io).
 
-After you've packaged your product's BOSH releases, stemcell, metadata, and other tile components into a single zipped download file, post it to VMware Tanzu Network in one of two ways:
+After you have packaged your product's BOSH releases, stemcell, metadata, and other tile components into a single zipped download file, post it to VMware Tanzu Network in one of two ways:
 
-  * Use the VMware Tanzu Network [API command](https://network.pivotal.io/docs/api#public/docs/api/v2/product_files.md) `POST /api/v2/products/:product_slug/product_files`.
+  * Use the VMware Tanzu Network
+  [API command](https://network.pivotal.io/docs/api#public/docs/api/v2/product_files.md) `POST /api/v2/products/:product_slug/product_files`.
   * Use the VMware Tanzu Network product upload form.
-  ![VMware Tanzu Network Upload GUI](img/pivnet-upload.png)
 
-## <a id="update"></a> Update Your Tile
+  ![alt-text="Use the VMware Tanzu Network product upload form."](img/pivnet-upload.png)
+
+## <a id="update"></a> Update your tile
 
 Most tile updates originate with the tile developer, but new releases of <%= vars.platform_name %> can also necessitate tile changes
 to maintain compatibility with the current version of the platform.
@@ -30,7 +32,4 @@ by migrating property names and values from one tile version to another.
 
 * When changes to <%= vars.platform_name %> require tile changes, VMware distributes instructions to all of its partners through the Partners Release Notice:
     * [<%= vars.ops_manager %> <%= vars.v_major_version %> Partners Release Notice](release-notes.html)
-    * [<%= vars.ops_manager %> v2.10 Partners Release Notice](http://docs.pivotal.io/tiledev/2-10/release-notes.html)
-    * [<%= vars.ops_manager %> v2.9 Partners Release Notice](http://docs.pivotal.io/tiledev/2-9/release-notes.html)
-    * [Pivotal Platform v2.8 Partners Release Notice](http://docs.pivotal.io/tiledev/2-8/release-notes.html)
-    * [Pivotal Platform v2.7 Partners Release Notice](http://docs.pivotal.io/tiledev/2-7/release-notes.html)
+    * [<%= vars.ops_manager %> v3.0 partners release notice](https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/publish.html)

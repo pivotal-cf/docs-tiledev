@@ -3,51 +3,59 @@ title: Managed Services
 owner: Services
 ---
 
-
-The topics in this subsection explain how to integrate your [brokered service](./brokered.html) more closely with <%= vars.platform_name %> to create a managed service and service tile for VMware Tanzu.
-
-## <a id="overview"></a> Overview
+You can integrate your [brokered service](./brokered.html) more closely
+with <%= vars.platform_name %> to create a managed service and service tile for VMware Tanzu.
 
 The next level of integration is to get your service to be deployed on <%= vars.platform_name %> rather
 than externally, on the same IaaS that your particular Cloud Foundry instance
 is deployed on, and by the same orchestration tool, [BOSH](http://bosh.io).
 
-This is usually one of the more involved integrations, as you will have to change your packaging to allow your service components to be deployed by [BOSH](http://bosh.io) onto the <%= vars.platform_name %> infrastructure.
+This is usually one of the more involved integrations, because you configure your packaging to allow your
+service components to deploy BOSH onto the
+<%= vars.platform_name %> infrastructure.
 
-Offering your software as a managed service means that your <%= vars.platform_name %> customers
-will not have to learn different ways to deploy, manage, and monitor
-different components of their application platform.
+When you offer your software as a managed service, it means that you do not have to learn different ways to
+deploy, manage, and monitor different components of your application platform.
 
-As with the brokered service, the service has a service broker and a tile listed on VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMware Tanzu," without "Service Broker" in the name.
+As with the brokered service, the service has a service broker and a tile listed on
+VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMware Tanzu," without
+"Service Broker" in the name.
 
-To integrate your service at this level, you will have to learn about stemcells, BOSH releases, and manifests. You will also have to decide how your service maps to virtual machines and how persistent storage is managed.
+To integrate your service at this level, you learn about stemcells, BOSH releases, and manifests. You can
+decide how your service maps to a virtual machine and how persistent storage is managed.
 
-### <a id="managed-mvp"></a> Minimal Viable Product
+### <a id="managed-mvp"></a> Minimal viable product
 
-For a Minimal Viable Product (MVP) version of a managed service, we typically
-recommend that you aim for a single, shared service instance, and don't yet
-worry too much about High Availability of this instance. This integration level is mostly about getting the BOSH packaging, deployment, and monitoring working
+The Minimal Viable Product (MVP) version of a managed service is a single, shared service instance.
+This integration level is mostly about getting the BOSH packaging, deployment, and monitoring working
 correctly.
 
-### <a id="managed-ha"></a> High Availability
+### <a id="managed-ha"></a> High availability
 
 Once you have a managed service, you may decide to prioritize either
 [on-demand provisioning](./on-demand.html) of service instances, or making your
 single shared service instance more highly available.
 
 When properly configured, BOSH monitors and restarts any failing processes
-and virtual machines that are part of your service deployment. But to
-further increase availability, you will have to think about spreading your
-resources across multiple availability zones or even regions, and replicating
+and VMs that are part of your service deployment. To further increase
+availability, consider spreading your
+resources across multiple AZs or even regions, and replicating
 your persistent storage across those as well.
 
-## <a id="create"></a> Create a Managed Service
+## <a id="create"></a> Create a managed service
 
-* For BOSH to manage your service, you need to create a BOSH release for it.
-[BOSH Releases](./bosh-release.html) explains how to do this, and how to use your already-existing Docker image as a shortcut.
+* For BOSH to manage your service, you must create a BOSH release for it.
+[BOSH releases](./bosh-release.html) explains how to do this, and how to use your already existing Docker image as a shortcut.
 
-* Once you have created a BOSH release for your managed service integration, you can work through [Building Your First Tile](./index.html#tile-steps) to create your tile.
+* After you create a BOSH release for your managed service integration, you can work through
+[Building your first tile](./index.html#tile-steps) to create your tile.
 
-* The [Tile Generator](./tile-generator.html) tool automatically creates the lifecycle errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. Operators control which errands run the next time they click **Apply Changes** to redeploy. See the [Errands](./tile-errands.html) topic for how <%= vars.platform_name %> operators control when errands run, and how to set default errand run rules in the tile.
+* The [Tile generator](./tile-generator.html) tool automatically creates the life cycle
+errands that can run after a <%= vars.platform_name %> tile is deployed or before it is removed. You
+control which errands run the next time when you click **Apply Changes** to redeploy.
+
+See the
+[Errands](./tile-errands.html) for how <%= vars.platform_name %> to control when errands run, and how
+to set default errand run rules in the tile.
 
 At any level of integration, <%= vars.company_name %> recommends and supports using [Concourse](./concourse.html) for continuous integration during development.

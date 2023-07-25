@@ -3,17 +3,12 @@ title: Property and Template References
 owner: Ops Manager
 ---
 
-This topic describes the product template of your tile and how to modify it to include different properties.
+Use these instructions to describe your product template for your tile and learn how to edit it to include different properties.
+
+The `metadata` subdirectory of a tile contains a product template file in `.yml` file format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into the deployment manifest.
 
 
-## <a id="overview"></a> Overview
-
-The `metadata` subdirectory of a tile contains a product template file in `.yml` format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into its deployment manifest.
-
-You can modify your tile's product template in many different ways. The sections below describe what the product template contains and how to modify it to include different properties.
-
-
-## <a id="product-template"></a> Product Template Contents
+## <a id="product-template"></a> Product template contents
 
 The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to:
 
@@ -29,70 +24,77 @@ The product template, a `.yml` file in the tile's `metadata` subdirectory, inclu
 
 * **Runtime configs:** Specifies the manifest for any number of global deployment configurations.
 
-Examples in this topic that refer to the product template use the [<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example), a functional tile provided by the Ops Manager engineering team that deploys the NGINX web server.
+Use the product template use the
+[<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example),
+a functional tile that is provided by the Ops Manager engineering team that deploys the NGINX web server.
 
 For more information about product template configuration, see [Top-Level Properties](#top-level).
 
 To learn how to configure your tile's forms, see [Form Properties](#form-properties).
 
 
-## <a id='property-values'></a> Modifying the Product Template
+## <a id='property-values'></a> Modifying the product template
 
 You can modify the product template to designate property values.
 
 Within the product template, there are two sections with `manifest` snippets:
 
-* `form_types`: This defines the tile interface, or how users of your tile view and interact with different tile features.
+* `form_types`: Defines the tile interface, or how users of your tile view and interact with different tile features.
 
-* `job_types`: This defines the jobs that the manifest deploys, or what the tile does in response to user input, developer input, or at set intervals.
+* `job_types`: Defines the jobs that the manifest deploys, or what the tile does in response to user input, developer input, or at set intervals.
 
-You can use special expressions in these snippets to include property values that the tile would otherwise not use, such as user-provided configurable properties or dynamically generated system properties.
+You can use special expressions in these snippets to include property values that the tile might
+otherwise not use, for example, user-provided configurable properties or dynamically generated
+system properties.
 
-These special expressions take two forms: double parentheses expressions and triple parentheses expressions.
+These special expressions take the following forms:
 
-### <a id="double-parens"></a> Double Parentheses Expressions
+* Double parentheses expressions
+* Triple parentheses expressions
 
-Double parentheses expressions, such as `(( PROPERTY-VALUE ))`, designate property values that Ops Manager fills in when it generates the deployment manifest. This occurs after the user clicks **Apply Changes**.
+### <a id="double-parens"></a> Double parentheses expressions
+
+Double parentheses expressions, such as `(( PROPERTY-VALUE ))`, designate property values that Ops Manager uses when it generates the deployment manifest. This occurs after you click **Apply Changes**.
 
 These values include configurable properties and properties supplied by Ops Manager.
 
 To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses, as shown in the following example:
 
-```
+```console
 manifest: |
   pizza_toppings:
     peppers: (( .properties.example_selector.pizza_option.peppers.value ))
 ```
 
-### <a id="triple-parens"></a> Triple Parentheses Expressions
+### <a id="triple-parens"></a> Triple parentheses expressions
 
-Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`, designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials are designated in triple parentheses.
+Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`, designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials that are designated in triple parentheses.
 
 To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation, as shown in the following example:
 
-```
+```console
 manifest: |
   credhub:
     concatenated_password: prefix-((( credhub-password )))-suffix
     password: ((( credhub-password )))
 ```
 
-When Ops Manager parses a product template and BOSH parses a manifest, they both fill in properties designated by double-parens syntax.
+When Ops Manager parses a product template and BOSH parses a manifest, they both use properties designated by double-parens syntax.
 
 Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by Ops Manager.
 
-Ops Manager strips the outer parentheses from these expressions and includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
+Ops Manager gets rid of the outer parentheses from these expressions and includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
 
 For more information about tile properties, see [Referencing Properties](#property-refs).
 
-### <a id='property-refs'></a> Referencing Properties
+### <a id='property-refs'></a> Referencing properties
 
 Each property is represented by two segments:
 
 * The location of the property.
 * The information from the property you want to access, commonly known as accessors.
 
-Using these two segments, you can write an expression as:
+When you use these two segments, you can write an expression as:
 
 ```
 (( PROPERTY-LOCATION.ACCESSOR ))
@@ -103,7 +105,7 @@ Where:
 * `PROPERTY-LOCATION` is the location of the property.
 * `ACCESSOR` is the accessor.
 
-#### <a id="property-location"></a> Referencing a Location
+#### <a id="property-location"></a> Referencing a location
 
 The method of referencing the location of the property varies. The following table describes the different methods of referencing a property:
 
@@ -115,27 +117,32 @@ The method of referencing the location of the property varies. The following tab
 | ..other_product.properties.top_level_property | The property blueprint called "top_level_property" found in the global list of properties of the tile "other_product". |
 | ..other_product.job_two.job_level_property | The property blueprint called "job_level_property" found in the list of properties of the job "job_one" of the tile "other_product". |
 
-#### <a id="accessor-location"></a> Referencing an Accessor
+#### <a id="accessor-location"></a> Referencing an accessor
 
-Accessors vary between property blueprint types. The following example uses the property blueprint type `string` with its one accessor, `value`:
+Accessors vary between property blueprint types.
 
-```
+The following example uses the property blueprint type `string` with its one accessor, `value`:
+
+```console
 (( .properties.example-string.value ))
 ```
 
-Ops Manager allows empty arrays in double-parentheses expressions. For example:
+Ops Manager allows empty arrays in double-parentheses expressions.
 
-```
+For example:
+
+```console
 (( .properties.example-string.value || [] ))
 ```
 
 For more information about the available properties and their accessors, see [Property Blueprint Reference](#property-blueprints).
 
-### <a id='product'></a> Product Context
+### <a id='product'></a> Product context
 
-Product context is useful for accessing information about a tile. It can be used in a manifest using this syntax:
+Product context is useful for accessing information about a tile.
+It can be used in a manifest using this syntax:
 
-```
+```console
 (( ..TILE-NAME.accessor ))
 ```
 
@@ -149,21 +156,21 @@ These are the allowed accessors:
 | network_name | Provides the name of the network assigned for the tile. |
 | present? | Returns `true` when the tile is staged or deployed |
 
-### <a id='dollar'></a> Dollar Contexts
+### <a id='dollar'></a> Dollar contexts
 
 Outside of properties, you can also retrieve information about various configuration details of your tile and Ops Manager.
 
-* **$ops_manager:** Any tile can use this to obtain information about specific Ops Manager deployments.
+* **$ops_manager:** Any tile uses this to obtain information about specific Ops Manager deployments.
 
-* **$director:** Any tile can use this to obtain information about the BOSH Director.
+* **$director:** Any tile uses this to obtain information about the BOSH Director.
 
-* **$runtime:** Any tile can use this to obtain information about the <%= vars.app_runtime_full %> tile.
+* **$runtime:** Any tile uses this to obtain information about the <%= vars.app_runtime_full %> tile.
 
 * **$self:** Your own tile uses this to obtain information about its configuration.
 
 #### <a id='ops-manager'></a> $ops_manager
 
-The table below describes the accessors you can use to retrieve information about an Ops Manager deployment:
+The following table describes the accessors you can use to retrieve information about an Ops Manager deployment:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -178,7 +185,7 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='director'></a> $director
 
-The table below describes the accessors you can use to retrieve information about your BOSH Director:
+The following table describes the accessors you can use to retrieve information about your BOSH Director:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -198,7 +205,7 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='runtime'></a> $runtime
 
-The table below describes the accessors you can use to retrieve information about your <%= vars.app_runtime_abbr %> tile:
+The following table describes the accessors you can use to retrieve information about your <%= vars.app_runtime_abbr %> tile:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -213,10 +220,7 @@ The table below describes the accessors you can use to retrieve information abou
 
 #### <a id='self'></a> $self
 
-<!--INSTEAD OF "PRODUCT," SHOULD WE SAY "TILE?" IT SEEMS LIKE THE USE OF
-"PRODUCT" VS. "TILE" IS ARBITRARY AND CONFUSING.-->
-
-The table below describes the accessors you can use to retrieve information about your own tile:
+The following table describes the accessors you can use to retrieve information about your own tile:
 
 | Accessor | Description |
 | -------- | ----------- |
@@ -225,31 +229,26 @@ The table below describes the accessors you can use to retrieve information abou
 | `service_network` | Provides the name of the service network assigned to your tile. |
 | `stemcell_version` | Provides the version of the stemcell your tile uses. |
 
-### <a id='complex'></a> Complex Properties: Selectors and Collections
+### <a id='complex'></a> Complex properties: selectors and collections
 
-Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Others are complex, such as selectors or collections.
+Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Others are complex, like selectors or collections.
 
-* **Selectors**: Give the user a choice of a set of inputs.
-* **Collections**: Give the user the ability to enter an array of values to create a hash.
+* **Selectors**: Give you a choice of a set of inputs.
+* **Collections**: Give you the ability to enter an array of values to create a hash.
 
 Selectors appear as follows:
 
-![Selector](img/selector.png)
-
-Collections appear as follows:
-
-![Collection](img/collection.png)
+![alt-text="Collection showing record collection."](img/collection.png)
 
 The selector and collections inputs are referenced by their selector and collection property blueprints.
 
-Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selectors and collections can exist alone, or nest within each other or within different parts of the manifest.
-
+Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selectors and collections can exist alone, or nest within each other or within different parts of the manifest.
 
 ## <a id='top-level'></a> Top-Level Properties
 
-The exerpt below is an example of the properties that appear at the top of a product template. Definitions of each property follow this example.
+The following example shows the properties that appear at the top of a product template. The definitions of each property follow this example:
 
-```
+```console
 ---
 name: example-tile
 product_version: "1.0-build.0"
@@ -319,14 +318,16 @@ The version of the tile.
 
 You can only import this version into Ops Manager once. If you want to import the same tile or version, you must delete the existing one from the `/metadata` folder and delete the installation files from Ops Manager's disk.
 
-The version number is important for migrations. For more information, see [Upgrading Tiles](./tile-upgrades.html).
+The version number is important for migrations.
+
+For more information, see [Upgrading Tiles](./tile-upgrades.html).
 
 ### <a id='top-min-version'></a> minimum\_version\_for\_upgrade
 
 * **Format:** String
 * **Type:** Required
 
-You must set a minimum version for upgrading to your current tile version. This example shows a current tile version of v1.7 that only upgrades from a v1.6.x version of the same tile:
+You must set a minimum version for upgrading to your current tile version. The following example shows a current tile version of v1.7 that only upgrades from a v1.6.x version of the same tile:
 
 ```
 - product_version:  1.7.0.0
@@ -340,16 +341,16 @@ You must set a minimum version for upgrading to your current tile version. This 
 
 The version of the schema of the product template, the file that this documentation describes.
 
-Bumping the version number enables new properties that are not present in an older `metadata_version` but may also require restructuring of the product template to conform to the new `metadata_version`.
+If you bump the version number, it activates new properties that are not present in an older `metadata_version`. It can also require you to  restructure the product template to conform to the new `metadata_version`.
 
-The `metadata_version` corresponds to a major or minor release of Ops Manager. Ops Manager can accept a tile with a `metadata_version` that is older than the Ops Manager version, but Ops Manager cannot accept a tile with a `metadata_version` that is newer than the Ops Manager version. It is therefore best practice to set the `metadata_version` to be the same as the oldest version of Ops Manager that the tile version supports.
+The `metadata_version` corresponds to a major or minor release of Ops Manager. Ops Manager can accept a tile with a `metadata_version` that is older than the Ops Manager version, but Ops Manager cannot accept a tile with a `metadata_version` that is newer than the Ops Manager version. A best practice is to set the `metadata_version` to be the same as the oldest version of Ops Manager that the tile version supports.
 
 ### <a id='top-label'></a> label
 
 * **Format:** String
 * **Type:** Optional
 
-The label that appears in the tile when it displays in the Ops Manager Dashboard.
+The label that is used in the tile when it appears in the Ops Manager Dashboard.
 
 ### <a id='top-description'></a> description
 
@@ -365,9 +366,7 @@ A description of the tile.
 
 The order in which a tile appears on the dashboard. The BOSH Director always appears at rank 100.
 
-For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100.
-
-<%= vars.recommended_by %> recommends that you set it to 1.
+For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100. Set it to 1.
 
 If all tiles have the same rank, Ops Manager sorts them alphabetically.
 
@@ -376,27 +375,27 @@ If all tiles have the same rank, Ops Manager sorts them alphabetically.
 * **Format:** String
 * **Type:** Optional
 
-This regular expression allows Ops Manager's VMware Tanzu Network integration to pull a specific tile file. You must do this when there are multiple tiles with the same product slug.
+This regular expression allows the Ops Manager  VMware Tanzu Network integration to pull a specific tile file. You must do this when there are multiple tiles with the same product slug.
 
 ### <a id='top-service-broker'></a> service_broker
 
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `service_broker` to `true` for on-demand service brokers. Setting `service_broker` to `true`:
+Set `service_broker` to `true` for on-demand service brokers. When you set `service_broker` to `true` it:
 
 * Enables the service network selector property type.
 
-* Requires the operator to select a service network during tile configuration. Tile authors can reference the selected service network with `(( $self.service_network ))`.
+* Requires you to select a service network during tile configuration. You can reference the selected service network with `(( $self.service_network ))`.
 
-* Includes a UAA client for the service to use. Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
+* Include a UAA client for the service to use. Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
 
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
 
 * **Format:** Hash
 * **Type:** Required
 
-`enable_patch_security_updates` enables you to automatically use the latest patched version of a stemcell. This key is set to `true` by default. For tiles using static compilations, you can disable this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, operators might experience longer than expected upgrade times.
+With the `enable_patch_security_updates` property, you can automatically use the latest patched version of a stemcell. This key is set to `true` by default. For tiles using static compilations, you can deactivate this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, you might experience longer than expected upgrade times.
 
 For example:
 
@@ -407,20 +406,20 @@ stemcell_criteria
   enable_patch_security_updates: false
 ```
 
-<%= vars.recommended_by %> recommends setting the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
+You must set the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
 
 You do not specify which IaaS the stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
 
 For a list of stemcells, including OS and version, see the [BOSH](https://bosh.io/) website.
 
-For more information, see [Floating Stemcells](http://docs.pivotal.io/platform/customizing/understanding-stemcells.html).
+For more information, see [Floating Stemcells](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-understanding-stemcells.html).
 
 ### <a id='top-additional-stemcells-criteria'></a> additional_stemcells_criteria
 
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of stemcell criteria that can be selected using the `stemcell_selector` property type. These stemcells are listed in addition to the stemcell configured with `stemcell_criteria`. After an operator has selected a stemcell, it becomes required.
+Stemcell criteria can be selected using the `stemcell_selector` property type. These stemcells are listed, in addition to the configured stemcell, with `stemcell_criteria`. After you select a stemcell, it becomes required.
 
 For more information about the `stemcell_selector` property type, see [stemcell_selector](#stemcell-selector).
 
@@ -448,11 +447,12 @@ The following keys are supported:
 
 - `name`: The name of the tile required by your tile. This is a required key.
 - `version`: The version range required by your tile. This is a required key.
-- `optional`: Whether or not this dependency is optional. This is an optional key that defaults to false.
-  <p class="note warning"><strong>Warning:</strong> The <code>optional</code> key was introduced in Ops Manager v2.8.
-  It is ignored in earlier versions.
-  This means that declared dependencies are required in Ops Manager v2.7 and earlier.
-  </p>
+- `optional`: This is an optional key that defaults to false.
+
+<p class="note caution">
+<span class="note__title">Caution</span>
+Declared dependencies are required in Ops Manager v2.7 and earlier.
+</p>
 
 For example:
 
@@ -531,29 +531,29 @@ These are keys that define global deployment configurations. For more informatio
 * **Type:** Optional
 
 Install-time verifiers confirm that properties for external services are set correctly.
-Install-time verifiers run in Ops Manager before changes are applied.
-This enables operators to correct invalid properties before deploying.
+Install-time verifiers run in Ops Manager before the changes are applied.
+You can correct invalid properties before you  deploy.
 
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by
 using the properties to connect to the MySQL database. If the properties are invalid,
-the install-time verifier informs the operator.
+the install-time verifier informs you.
 
 Each install-time verifier supports the following keys:
 
-* `name`: The type of verifier. The value must be one of the verifiers listed in the table below.
+* `name`: The type of verifier. The value must be one of the verifiers listed in the following table.
 
 * `properties`: A mapping of verifier inputs to either property references or static values.
 The required properties for each verifier are listed in the table below.
 
-* `ignorable`: If this key is set to `false`, an operator cannot **Apply Changes** until the verification errors are resolved.
-If this key is set to `true`, an operator can ignore the warning message and **Apply Changes**.
+* `ignorable`: If this key is set to `false`, you cannot click **Apply Changes** until the verification errors are resolved.
+If this key is set to `true`, you can ignore the warning message and click **Apply Changes**.
 This key is set to `false` by default.
 
 * `run_on`: Determines when to run the verifier. Valid values include `'always'` and `'major_or_minor_upgrades'`.
 Defaults to `'always'`.
 
-For information about how operators manage and view verifiers,
-see [Managing Ops Manager Verifiers](https://docs.pivotal.io/platform/customizing/granular-verifier-control.html).
+For information about how you can manage and view verifiers,
+see [Managing Ops Manager Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
 
 The following table lists the available install-time verifiers:
 
@@ -715,7 +715,6 @@ The following table lists the available install-time verifiers:
   </tr>
 </table>
 
-
 The following is an example of a `install_time_verifiers` section:
 
 ```
@@ -761,7 +760,7 @@ install_time_verifiers:
 * **Format:** Base64 Image
 * **Type:** Required
 
-This is the icon that displays on the tile in the Ops Manager Installation Dashboard.
+This is the icon that appears on the tile in the Ops Manager Installation Dashboard.
 
 ### <a id="top-bas-url"></a> base_releases_url
 
@@ -786,7 +785,9 @@ For more information about migrating an existing form to the Ops Manager provide
 
 Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the Ops Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
 
-Form properties reference `property_blueprints`. Property blueprints define each field's data type. For a corresponding example to the `form_types` example below, see [property_blueprints](#property-blueprints).
+Form properties reference `property_blueprints`. Property blueprints define each text box's data type.
+
+For a corresponding example to the `form_types` example that follows, see [property_blueprints](#property-blueprints).
 
 The following is an example of the properties that appear in the `form_types` section of a product template:
 
@@ -917,14 +918,14 @@ Verifiers confirm that properties are set correctly in forms.
 If a verifier displays a warning, the form can still be saved and the warning can be ignored.
 
 Verifiers are similar to install-time verifiers
-except that they run after a form is saved and not before **Apply Changes**.
-Verifiers do not block deployments and only inform operators that set properties are invalid.
+except that they run after a form is saved and not before you click **Apply Changes**.
+Verifiers do not block deployments and only inform you that the properties you set are invalid.
 
-If you want to have a verifier run when a form is saved and before **Apply Changes**,
+To have a verifier run when a form is saved and before you click **Apply Changes**,
 add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
-For information about how operators manage and view verifiers,
-see [Managing Ops Manager Verifiers](https://docs.pivotal.io/platform/customizing/granular-verifier-control.html).
+For information about how you can manage and view verifiers,
+see [Managing Ops Manager Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
 
 For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
 
@@ -955,14 +956,14 @@ form_types:
           username: example-dbuser
 ```
 
-You can specify either a tile property reference or a static value for a form verifier. In the example above, `Verifiers::MysqlDatabaseVerifier` uses a tile property reference for the database host and static values for the database name, port number, and username.
+You can specify either a tile property reference or a static value for a form verifier. In the preceding example, `Verifiers::MysqlDatabaseVerifier` uses a tile property reference for the database host and static values for the database name, port number, and user name.
 
 ### <a id='form-placeholder'></a> placeholder
 
 * **Format:** String
 * **Type:** Optional
 
-Specify placeholder text for a field. The text appears in light gray to show an example value for the user. The text disappears when the user types in the field and reappears if the user leaves the field empty.
+You can specify placeholder text for a text box. The text appears in light gray to show an example value for the user. The text disappears when you type in the text box and reappears if you leave the text box empty.
 
 The `placeholder` attribute displays for the following form types:
 
@@ -988,7 +989,7 @@ The following is an example of the `job_types` section that appears in a product
 
 This section defines the jobs that end up in a BOSH manifest. Those jobs are defined in your BOSH release.
 
-Jobs require many different settings in order to function properly. That is the core of what Ops Manager does for you: Ops Manager asks a user to designate values for those settings and generates a manifest based on what the user specifies.
+Jobs require many different settings to function properly. That is the core of what Ops Manager does for you: Ops Manager asks you to designate values for those settings and generates a manifest based on what you specify.
 
 Ops Manager does not require tile authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
@@ -1223,7 +1224,7 @@ The label of the job as it is to appear in the resources page of the tile.
 * **Format:** Array of hashes
 * **Type:** Required
 
-Each element has the following fields:
+Each element has the following text boxes:
 
 * `name`
 * `release`
@@ -1237,19 +1238,19 @@ Each element has the following fields:
 
 #### <a id='template-release'></a> release
 
-* **Format:** Name of the release the template is from
+* **Format:** Name of the release the template is from.
 * **Type:** Required
 
 #### <a id='template-consumes'></a> consumes
 
-* **Format:** YAML string defining BOSH links that this job consumes
+* **Format:** YAML string defining BOSH links that this job consumes.
 * **Type:** Optional
 
 For more information about BOSH links, see [Links](https://bosh.io/docs/links.html) in the BOSH documentation.
 
 #### <a id='template-provides'></a> provides
 
-* **Format:** YAML string defining BOSH links that this job provides
+* **Format:** YAML string that defines BOSH links that this job provides.
 * **Type:** Optional
 
 For more information about BOSH links, see [Links](https://bosh.io/docs/links.html) in the BOSH documentation.
@@ -1266,11 +1267,14 @@ The name of the BOSH release contained in your tile archive, which is the `.pivo
 * **Format:** Boolean
 * **Type:** Required
 
-You can give users control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
+You can give control of balancing jobs across availability zones (AZs) by setting `single_az_only` to `false`.
 
 To limit a job to a single AZ, set `single_az_only` to `true`.
 
-<p class="note warning"><strong>Warning:</strong> If you change the <code>single_az_only</code> setting, your VMs may switch AZs. This change can cause an orphaned disk.</p>
+<p class="note caution">
+<span class="note__title">Caution</span>
+If you change the <code>single_az_only</code> setting, your VMs can switch AZs. This change can cause an orphaned disk.
+</p>
 
 ### <a id='job-max-in-flight'></a> max_in_flight
 
@@ -1295,7 +1299,7 @@ If a job does not have a `use_stemcell` property, the job uses the stemcell oper
 * **Format:** Array of hashes
 * **Type:** Required
 
-A set of resource settings for the job along with maximum and minimum constraints, defaults, and enabled or disabled configurability.
+A set of resource settings for the job with maximum and minimum constraints, defaults, and configuration options.
 
 The resources you can set are:
 
@@ -1306,7 +1310,12 @@ The resources you can set are:
 
 For examples of supported constraint types, see [integer](#integer).
 
-<p class="note"><strong>Note:</strong> If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk field.</p>
+If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile shows <strong>None</strong> under the persistent disk text box.
+
+<p class="note">
+<span class="note__title">Note</span>
+If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Ops Manager tile displays <strong>None</strong> under the persistent disk text box.
+</p>
 
 ### <a id='job-instance-def'></a> instance_definition
 
@@ -1319,24 +1328,29 @@ If your tile uses an external service that performs the same job as a service in
 
 When `zero_if` is not active for an instance group, you cannot set the instance count to 0. You can override this by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
 
-For example, your tile uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for <%= vars.app_runtime_abbr %>. Remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
+For example, your tile uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for <%= vars.app_runtime_abbr %>. You can remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
 
 For examples of supported constraint types, see [integer](#integer).
 
-<p class="note"><strong>Note:</strong> If you are using the <code>zero_if</code> property, you should not set the <code>may_only_increase</code> constraint to <code>true</code>.</p>
+If you are using the <code>zero_if</code> property, you must not set the <code>can_only_increase</code> constraint to <code>true</code>.
 
-### <a id='job-manifest'></a> manifest
+<p class="note">
+<span class="note__title">Note</span>
+If you are using the <code>zero_if</code> property, you must not set the <code>can_only_increase</code> constraint to <code>true</code>.
+</p>
+
+### <a id='job-manifest'></a> Manifest
 
 * **Format:** Text snippet, prefaced by pipe symbol: `|`
 * **Type:** Optional
 
-Ops Manager generates a BOSH manifest that defines properties for each job the manifest deploys. Some of these properties are not set until the user clicks **Apply Changes**, because the user configures them in the tile or because Ops Manager has to generate them.
+Ops Manager generates a BOSH manifest that defines properties for each job the manifest deploys. Some of these properties are not set until you click **Apply Changes**, because you configured them in the tile or because Ops Manager had to generate them.
 
 For more information about referencing these properties, see [Referencing Properties](#property-refs).
 
 #### <a id='job-accessors'></a> Job Accessors
 
-The table below describes the double parentheses expressions Ops Manager provides to access information about the jobs that the manifest deploys:
+The following table that describes the double parentheses expressions Ops Manager provides to access information about the jobs that the manifest deploys:
 
 | Double Parentheses Expression | Description |
 | ----------------------------- | ----------- |
@@ -1362,7 +1376,7 @@ All property blueprints can have the following attributes:
 
 * `optional`: Optional. Default: `false`. When set to `true`, Ops Manager does not require this property to be set in order to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
 
-* `configurable`: Optional. Default: `false`. When set to `true` for property types that support operator configuration, the operator is not allowed to configure this value. Do not set `configurable: true` for property types that do not support operator configuration. When set to `false`, Ops Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated via the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Ops Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
+* `configurable`: Optional. Default: `false`. When set to `true` for property types that support your  configuration, you are not allowed to configure this value. Do not set `configurable: true` for property types that do not support your configuration. When set to `false`, Ops Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated via the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Ops Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
 
 * `freeze_on_deploy`: Optional. Default: `false`. When set to `true`, Ops Manager does not allow this property to be changed after the tile this property belongs to is successfully deployed.
 
@@ -1392,13 +1406,13 @@ All property blueprints can have the following attributes:
 
 ### <a id='configurable-and-auto-generated'></a> Configurable and Auto-Generated Properties
 
-When a property has `configurable: true` and is added to a `form_type`, the operator can configure the value of that property.
+When a property has `configurable: true` and is added to a `form_type`, you can configure the value of that property.
 
-Alternatively, a property with `configurable: false` gets a value auto-generated by Ops Manager. For which property types support each of these usages, see the sections below.
+Alternatively, a property with `configurable: false` gets a value auto-generated by Ops Manager. For which property types support each of these, see the sections that follow.
 
 Properties with `configurable` set to `false`:
 
-* Cannot be edited by the operator.
+* Cannot be edited by you.
 * Do not show up in forms, even if added under `form_types`.
 * Get auto-generated values filled in by Ops Manager if that specific type of property supports auto-generation of values.
 
@@ -1428,9 +1442,14 @@ Use the `current_record` property within a collection record to refer to other p
 
 For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
 
-<p class="note"><strong>Note:</strong> The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.</p>
+The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
 
-After defining a named manifest, you can reference it using a manifest snippet in the following format:
+<p class="note">
+<span class="note__title">Note</span>
+If you are using the The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
+</p>
+
+After you define a named manifest, you can reference it using a manifest snippet in the following format:
 
 ```
 routing_certificates: (( .properties.certificate_collection.parsed_manifest(for_routing) ))
@@ -1590,7 +1609,7 @@ These sections describe every property blueprint type.
 
 You can copy each example into the `metadata.yml` template below and package it together along with the [`os-conf`](https://github.com/cloudfoundry/os-conf-release/releases) release as a `.pivotal` file to make a working tile.
 
-```
+```console
 ---
 name: p-example
 label: Example Tile
