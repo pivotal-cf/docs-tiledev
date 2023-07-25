@@ -3,12 +3,14 @@ title: Ops Manager Tile Developer Guide
 owner: Services
 ---
 
-Here's information for VMware Tanzu Partners to learn the high-level process of building and publishing an Ops Manager tile on [VMware Tanzu Network](https://network.pivotal.io/).
+You can use the following VMware Tanzu Partners information to learn how to build and publish processes for an
+Ops Manager tile on [VMware Tanzu Network](https://network.pivotal.io/).
 
-For advanced developers with previous experience building tiles, see [Property and Template References](./property-template-references.html) and [Development Workflow Reference](./dev-workflow.html).
+For advanced developers with previous experience building tiles, see [Property and template references](./property-template-references.html) and [Development workflow reference](./dev-workflow.html).
 
-## <a id="tile-def"></a> What is a Tile?
-Tiles are packaged software that can be integrated into <%= vars.platform_name %>. Operators can install tiles on <%= vars.platform_name %>. Developers can use these services after they are installed.
+## <a id="tile-def"></a> What is a tile?
+You can integrate tile software into <%= vars.platform_name %>. You can install tiles on
+<%= vars.platform_name %>. Developers can use these services after they are installed.
 
 Tile developers can publish tiles on VMware Tanzu Network, where services and tiles are available for download.
 
@@ -40,19 +42,24 @@ When you package your software with Tile Generator, it generates these subdirect
 
 ## <a id="tile-value"></a> Why Build a Tile?
 
-There are multiple reasons to build and publish a tile on VMware Tanzu Network. Tiles can help you:
+There are multiple reasons to build and publish a tile on VMware Tanzu Network.
+
+Tiles can help you:
 
 * Find the widest possible audience for your service.
 * Join a expanding ecosystem that can integrate your service.
 * Operators and app developers can interact with your service in an accessible and standardized way.
 
-## <a id="tile-steps"></a> Building Your First Tile
+## <a id="tile-steps"></a> Building your first tile
+Creating a tile is a complex process. You can message the VMware Tanzu Partners Slack channel with
+questions if you [register for the VMware Tanzu Partner program](https://tanzu.vmware.com/partners/tech).
 
 There are two options for building your first tile. You can either attend partner days or develop independently. However, <%= vars.company_name %> strongly recommends attending Partner Days for hands-on guidance.
 
-If you use Tile Generator to package your software, you must verify the inputs you must build before development. Inputs for your tile also depend on the service you are providing.
+If you use the Tile Generator to package your software, you must verify the inputs you must build before
+development. Inputs for your tile also depend on the service you are providing.
 
-Before starting tile development, see [How <%= vars.app_runtime_abbr %> and <%= vars.platform_name %> Services Work](./cf-concepts.html).
+Before you start tile development, see [How <%= vars.app_runtime_abbr %> and <%= vars.platform_name %> services work](./cf-concepts.html).
 
 Depending on what you build, you might need to install the following tools:
 
@@ -68,27 +75,34 @@ Depending on what you build, you might need to install the following tools:
 
 #### <a id="generate"></a> 2. Generate a Tile
 
-Tile Generator simplifies building tiles. To use Tile Generator, upload your software components, such as the service broker, buildpack, and Docker image, and the tool generates a base tile.
+Tile Generator simplifies building tiles. To use the Tile Generator, upload your software components,
+such as the service broker, buildpack, and Docker image, and then the tool generates a base tile.
 
-For information about setting up Tile Generator and building a base tile, see [Tile Generator](./tile-generator.html).
+For information about setting up the Tile Generator and building a base tile, see [Tile Generator](./tile-generator.html).
 
 #### <a id="test"></a> 3. Test Your Tile
 
-Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions on an IaaS, such as Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and install your tile in PIE as an operator does.
+Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions
+on an IaaS, for example, Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and
+install your tile in PIE as an operator does.
 
-To gain access to your PIE, reach out to your contact at <%= vars.company_name %> or [register as a partner](https://partners.pivotal.io/).
+To gain access to your PIE, reach out to your contact at <%= vars.company_name %> or
+[register as a partner](https://tanzu.vmware.com/partners/tech).
 
-If you already have access to your PIE, for information information about how to log on, see [Development Environments](./environments.html).
+If you already have access to your PIE, for information about how to log in, see [Development Environments](./environments.html).
 
 #### <a id="document"></a> 4. Document Your Tile
 
-When you are ready to publish your tile, write documentation. Documentation is valuable for operators who use your tile.
+When you are ready to publish your tile, write documentation. Documentation is valuable for operators
+who use your tile.
 
 For more information about how to write and publish documentation for your tile, see [Tile Documentation](./tile-documentation.html).
 
 #### <a id="publish"></a> 5. Publish Your Tile on VMware Tanzu Network
 
-Contact your <%= vars.company_name %> representative who can guide you through the process of uploading your tile to VMware Tanzu Network. When you upload your tile to VMware Tanzu Network, it becomes available for operators and developers to do the following:
+Contact your <%= vars.company_name %> representative to guide you through uploading your
+tile to VMware Tanzu Network. When you upload your tile to the VMware Tanzu Network, it becomes available for
+operators and developers.
 
 <table class="nice">
 	<tr>
