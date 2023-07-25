@@ -3,7 +3,7 @@ title: Core Counting
 owner: TAS Observability
 ---
 
-This topic explains how to configure your tile to take advantage of Ops
+You can configure your tile to take advantage of Ops
 Manager's ability to count physical and virtual cores. This option is available
 starting in Ops Manager versions v3.0.10+LTS-T and v2.10.58.
 
@@ -16,23 +16,27 @@ time with a single core license without being double counted.
 </p>
 
 Tile developers can add monit jobs named `SKU-<SKU_NAME>` to their VMs so
-Ops Manager can know to count all of that VM's cores as part of a SKU. VMs with the
+Ops Manager can count all of the VMs cores as part of a SKU. VMs with the
 same SKU are counted together. If no matching monit jobs are present, no
-cores are counted for those VMs. For example: if you wanted to create and
+cores are counted for those VMs.
+
+For example: if you wanted to create and
 specify a SKU of the name `TEST`, you must define a monit job with the name
 `SKU-TEST`. A simpler way for VMware tile developers to define such a monit job
 for Linux and windows VMs is to use the internal count-cores-indicator-release.
 
 When workloads are being run on vSphere, if multiple VMs are being run on the
 same host, the total counted cores of a SKU are never be more then the
-number of physical cores on that host. On other infrastructures Ops Manager
-uses the values returned by the kernel for number of cores and threads per
+number of physical cores on that host. On other infrastructures, Ops Manager
+uses the values returned by the kernel, for number of cores, and threads per
 core.
 
 The BOSH Director counts all the relevant cores once per hour and stores up to
-2MB of historic measurements. Click the "Download Core Consumption Data" button on Ops
+2MB of historic measurements. Click the **Download Core Consumption Data** button on Ops
 Manager, or curl the `/api/v0/download_core_consumption` API endpoint
-to retrieve a CSV of all the measurements. Each row in the CSV is formatted as
+to retrieve a CSV of all the measurements.
+
+Each row in the CSV is formatted as
 follows:
 
 ```
