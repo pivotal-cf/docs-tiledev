@@ -3,12 +3,15 @@ title: Buildpacks
 owner: Services
 ---
 
+Buildpacks compile and package apps to run on Tanzu Application Service.
+You can use and deploy buildpacks with Tanzu Application Service apps, and for creating your own custom buildpack.
 
-Buildpacks compile and package apps to run on <%= vars.app_runtime_full %>. This topic lists resources for using and deploying buildpacks with <%= vars.app_runtime_abbr %> apps, and for creating your own custom buildpack.
+This topic lists resources for using and deploying buildpacks with <%= vars.app_runtime_abbr %> apps,
+and for creating your own custom buildpack.
 
 ## <a id="language"></a> Official Buildpacks
 
-- [Java buildpack](https://github.com/cloudfoundry/java-buildpack) (by far the most complicated!)
+- [Java buildpack](https://github.com/cloudfoundry/java-buildpack)
 
 - [Go buildpack](https://github.com/cloudfoundry/go-buildpack)
 
@@ -20,21 +23,19 @@ Buildpacks compile and package apps to run on <%= vars.app_runtime_full %>. This
 
 - [PHP buildpack](https://github.com/cloudfoundry/php-buildpack)
 
-- [Static file buildpack](https://github.com/cloudfoundry/staticfile-buildpack) (for static web content)
+- [Static file buildpack](https://github.com/cloudfoundry/staticfile-buildpack)
 
 - [Binary buildpack](https://github.com/cloudfoundry/binary-buildpack)
 
 ## <a id="other"></a> Other Buildpacks
 
-Buildpacks can also be used to inject additional code into the application container. 
-For more information, see the following:
+Buildpacks can inject additional code into the application container.
 
-- The <%= vars.platform_name %> documentation topic [Creating Custom Buildpacks](https://docs.pivotal.io/application-service/buildpacks/custom.html)
+For more information, see the following topics:
 
-- The github repo [Eureka Registrar Sidecar](https://github.com/cf-platform-eng/eureka-registrar-sidecar)
+- The <%= vars.platform_name %> documentation topic [Creating custom buildpacks](https://docs.pivotal.io/application-service/buildpacks/custom.html).
 
-- The github repo [Spring Config Injection](https://github.com/cf-platform-eng/spring-config-injection)
+- The github repository [Eureka Registrar Sidecar](https://github.com/cf-platform-eng/eureka-registrar-sidecar).
 
-## <a id="custom"></a> Custom Buildpacks
+- The github repository [Spring Config Injection](https://github.com/cf-platform-eng/spring-config-injection).
 
-- [Creating a Custom Buildpack](http://docs.pivotal.io/application-service/buildpacks/custom.html)

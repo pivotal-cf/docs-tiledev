@@ -3,29 +3,27 @@ title: Continuous Integration Testing
 owner: Services
 ---
 
-This topic describes how to do continuous integration (CI) testing on your tile.
+You can use continuous integration (CI) testing on your service tile.
 
 There are two ways to do CI testing on your tile:
 
 + Use the Tile Dashboard provided as a service by the <%= vars.company_name %> ISV team.<br>
-  See [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
-  This is the method recommended by <%= vars.company_name %>.
+  For more information on using the Tile Dashboard as a service, see [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
 + Set up and use your own Concourse pipeline.<br>
-  See [Set Up a Concourse Pipeline and Test Your Tile](#concourse) below.<br>
-  This method is more time consuming and not recommended for new partners
-  or partners working on only one tile.
+  For more information on setting up a Concourse pipeline, see [Set Up a concourse pipeline and test your tile](#concourse).<br>
+
+  New partners can work on only one tile at a time.
 
 ## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
 
-With your tile in our Tile Dashboard CI testing system, we all win.
-You stay on top of changes to <%= vars.platform_name %> that may require changes in your tile.
-Our field representatives gain a clear understanding of your tile’s compatibility across <%= vars.platform_name %> versions,
+With your tile in the Tile Dashboard CI testing system, you can monitor changes to <%= vars.platform_name %> that might require changes
+in your tile.
+The text box representatives gain an understanding of your tile’s compatibility across <%= vars.platform_name %> versions,
 underlying IaaS, and different flavors of environments.
-This also relieves you from maintaining your own CI system, keeping up with latest <%= vars.platform_name %> versions, etc.
+This abstains you from maintaining your own CI system and keeping up with latest <%= vars.platform_name %> versions, and others.
 
-The Tile Dashboard CI is part of our Enterprise Readiness criteria
-which is used to inform the field of the quality and capabilities of your tile,
-so it is important to get your tile performing well.
+The Tile Dashboard CI is part of the VMware Enterprise Readiness criteria,
+which monitors the text box of the quality and capabilities of your tile.
 For an introduction to our readiness criteria, see
 [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0).
 
@@ -43,22 +41,22 @@ The Tile Dashboard CI runs your tile through a series of steps, which include:
 3. Configuring, installing, testing, and uninstalling your tile in several <%= vars.platform_name %> environments:
   - A patch release of every supported
 <%= vars.app_runtime_full %> minor version.
-  - Every supported IaaS
-  - Environments with extra configuration, such as multiple availability zones and IPsec
+  - Every supported IaaS.
+  - Environments with extra configuration, such as multiple availability zones and IPsec.
 
 The Tile Dashboard reports the results of each step.
-The results reported for each step include a general pass/fail status, the execution log, and output.
-If a step fails for a reason unrelated to a tile, such as a network glitch,
+The results that are reported for each step include a pass/fail status, the run log, and output.
+If a step fails, for a reason unrelated to a tile, for example, a network glitch,
 you can retry that step from the Tile Dashboard CI.
 
 ### <a id="prereq"></a>Prerequisites
 
 Before you use the Tile Dashboard to configure and test your tile, verify the following:
 
-+ You have a Slack account on the PivotalPartners.slack.com organization.
++ You must have a Slack account on the PivotalPartners.slack.com organization.
     If you don't have an account, contact the technical program management of the ISV team.
 
-+ You belong to your company's channel in the PivotalPartners.slack.com organization.
++ You belong to your company's Slack channel in the PivotalPartners.slack.com organization.
 
 + Your tile is uploaded to the [VMware Tanzu Network](https://network.pivotal.io/).
 
@@ -68,32 +66,32 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
     | subsequent release| you can upload pre-releases to the VMware Tanzu Network.|
 
 
-### <a id="intro"></a> About Configuring a Tile on the Tile Dashboard
+### <a id="intro"></a> Configuring a tile on the Tile Dashboard
 
 After your tile has been uploaded to the VMware Tanzu Network, the Tile Dashboard starts to stage and scan it.
 For new tiles, this can take up to an hour.
 
-After the stage and scan, you need to configure your tile on the Tile Dashboard.
-Configuration specfies how the tile is installed on the test environment.
+After the stage and scan tasks, you must configure your tile on the Tile Dashboard.
+The configuration specfies how the tile is installed on the test environment.
 
 Configuring your tile through the Tile Dashboard is equivalent to configuring the tile on Ops Manager
-after downloading it from the VMware Tanzu Network.
+after you download it from the VMware Tanzu Network.
 
 There are two ways that you can configure the tile on the Tile Dashboard:
 
 |  Method | Notes and Restrictions | For more information, see&hellip;  |
 | --------| -----------------------| ----------------------------------|
-| Through the **Properties** tab | This is a form view of the installation properties. | [Configure Your Tile Using the Properties Tab](#config-with-property-tab) below.|
-| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab) below.|
+| Through the **Properties** tab | This is a form view of the installation properties. | [Configure Your Tile Using the Properties Tab](#config-with-property-tab).|
+| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).|
 
 
 ### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and Locate the Configuration Page
 
-To log in to the Tile Dashboard and navigate to the configuration page, do the following:
+To log in to the Tile Dashboard and go to the configuration page:
 
-1.  Log in to your PivotalPartners.slack.com account.
+1. Log in to your PivotalPartners.slack.com account.
 
-2. Navigate to the Tile Dashboard URL:
+2. Go to the Tile Dashboard URL:
    [tile-dashboard.cfapps.io/static/index.html#/environments](https://tile-dashboard.cfapps.io/static/index.html#/environments).
 
     ![icons named pie-20, pie-21 and so on in a list](img/pie-environments.png)
@@ -115,11 +113,19 @@ The form pulls properties from your `tile.yml` file parsing the `properties_blue
 For general information about `properties_blueprints`,
 see [Configuration Properties](./reference.html#properties).
 
-In the form, you can configure strings, integers, booleans, dropdowns, selectors,
-network addresses, ports, secrets, and simple credentials.
-To configure other types, such as nested collections, use the **Advanced - JSON Properties** tab.
-See [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).
-For a complete list of property types, see [Property and Template References](property-template-references.html).
+In the form, you can configure
+
+* strings
+* integers
+* boolean values
+* drop-down menus
+* network addresses, ports, secrets, and credentials.
+
+To configure other types, for example, nested collections, use the **Advanced - JSON Properties** tab.
+
+For more in formation about the **Advanced - JSON Properties** tab, see [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).
+
+For more information on property types, see [Property and Template References](property-template-references.html).
 
 To configure install properties for your tile using the **Properties** tab, do the following:
 
@@ -132,13 +138,13 @@ To configure install properties for your tile using the **Properties** tab, do t
 
 3. When no fields are red, click **Save** or **Save and Run**.
 
-### <a id="config-with-advanced-tab"></a> Configure Your Tile Using the Advanced - JSON Properties Tab
+
+### <a id="config-with-advanced-tab"></a> Configure your tile using the advanced - JSON Properties tab
 
 In the **Advanced - JSON Properties** tab, you configure install properties, specifying them in JSON,
 in the format used by the om tool.
-For more information about this format,
-see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
 
+For more information about this format used by the om tool, see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
 
@@ -150,7 +156,7 @@ To configure install properties for your tile using the **Advanced - JSON Proper
    If a property is required, this is indicated by `"required": true`.
    For example:
 
-    ```
+    ```console
  ".properties.syslog_selector.enabled.address": {
         "value": "",
         "type": "network_address",
@@ -161,7 +167,7 @@ To configure install properties for your tile using the **Advanced - JSON Proper
    This tells Tile Dashboard that this field is now provided.
     For example:
 
-    ```
+    ```console
  ".properties.syslog_selector.enabled.address": {
         "value": "192.0.2.1",
         "type": "network_address",
@@ -169,12 +175,11 @@ To configure install properties for your tile using the **Advanced - JSON Proper
     ```
 3.  Click **Save**.
 
-### <a id="environment-sensitive-values"></a> Environment-Sensitive Values
+### <a id="environment-sensitive-values"></a> Environment sensitive values
 
-Some property values may need to vary between test environments. An example is availability zone names.
-For these environment-sensitive properties, we provide placeholder values that are replaced
-with an appropriate value for each test environment when the test is run.
-A description of these placeholder values appears on the **Tile Configuration** tabs for easy reference.
+Some property values can vary between test environments, such as availability zone names. When the test is run, for these environment sensitive properties, VMware provides placeholder values that are replaced
+with an appropriate value for each test environment.
+A description of these placeholder values appears on the **Tile Configuration** tabs for reference.
 
 ###<a id="uaa-users"></a> Specify UAA Users
 
@@ -182,17 +187,14 @@ Include a list of UAA users for testing your tile.
 
 To specify the UAA users, do the following:
 
-1. If you are not already on the configuration page,
-   complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. At the end of the configuration page, click **+** to expand the box and view the text boxes.
 
-1. At the bottom of the configuration page, click **+** to expand the box and view the fields.
+1. At the end of the configuration page, click **+** to expand the box and view the fields.
 
-    ![bottom of page shows plus button used to expand uaa properties form](img/uaa-properties-collapsed.png)
-
-2.  Enter username, password, and groups for UAA user.
+2. Enter user name, password, and groups for the UAA user.
 
 
-###<a id="save-and-run"></a> Save and Run
+###<a id="save-and-run"></a> Save and run
 
 When the configuration is complete, the config icon shows green.
 At this point, you can test the tile on all the environments, by doing the following:
@@ -201,30 +203,26 @@ At this point, you can test the tile on all the environments, by doing the follo
 
 1. Click **Save and Run**.
 
-    This tests the tile on all the environments.
+    This action tests the tile on all the environments.
 
     ![Success Config save succeeded! Tile CI begun! message appears when the run starts.](img/save-and-run-message.png)
 
-3. Click **Tiles** in the toolbar to return to the tiles view.
+3. Click **Tiles** in the toolbar to return to the Tiles view.
 
 4. Follow the progress of the tests in the Tiles view.
 
     ![Staged, scan and config jobs followed by environment jobs.](img/kick-off-testing.png)
 
-    Staged, scan, and config are the prerequisite jobs.
-    They run in series.
-    The rest are the environment jobs.
-    They run in parallel.
-    The environment jobs do not run until the config job has completed successfully.
+    The staged, scan, and config notations are the prerequisite jobs and they run in a series.
+    The rest of the jobs are the environment jobs and they run in parallel.
+    The environment jobs do not run until the config job has finished successfully.
 
 
 ### <a id="test"></a> About Test Configuration
 
-After your tile is installed, Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
-Ideally your tile includes tests that exercise all of its functionality.
-We have some ideas for expanding the Tile Dashboard testing capabilities;
-if you’re interested in other ways of defining tests,
-contact us on [Partners Slack](https://pivotalpartners.slack.com/).
+After your tile is installed, the Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
+Ideally your tile includes tests that use all of its capability. VMware has some ideas for expanding the Tile Dashboard testing capabilities. If you’re interested in other ways of defining tests,
+contact Pivotal Partners on [Partners Slack](https://pivotalpartners.slack.com/).
 
 ### <a id="backing"></a> About Backing Services
 
@@ -234,17 +232,17 @@ for example, your tile might be a service broker to a SaaS offering.
 You are responsible for maintaining the backing service in an environment
 that the Tile Dashboard can reach, that is, it must be internet-facing.
 
-## <a id="concourse"></a> Set Up a Concourse Pipeline and Test Your Tile
+## <a id="concourse"></a> Set up a Concourse pipeline and test your tile
 
 The [Tile Dashboard CI](#tile-dashboard-ci) that <%= vars.company_name %> runs for its technical partnership program members
 uses the CI tool [Concourse](http://concourse.ci/) to make sure that partner products continue
 to work with every new release of the platform.
 
-With more effort, you can also follow the pointers below to set up your own Concourse CI pipeline
+You can also follow the pointers as shown later in this topic to set up your own Concourse CI pipeline
 that integrates and tests your tile on your own deployment of the latest <%= vars.platform_name %>.
 
-While you are of course also free to use any other CI system you are familiar with,
-<%= vars.company_name %>'s tools and documentation are built to make Concourse CI as easy as possible.
+While you are free to use any other CI systems you are familiar with,
+<%= vars.company_name %>'s tools and documentation were built to use with Concourse CI.
 
 ### <a id="server"></a> Set Up a Concourse Server
 
@@ -254,27 +252,26 @@ If you partner with <%= vars.company_name %>,
 the [Tile Dashboard CI](#tile-dashboard-ci) servers can host your pipeline
 and provide S3 storage to exchange artifacts with your own servers.
 
-If you choose to set up your own Concourse server,
-see the instructions [Concourse: Setup & Operations](https://concourse-ci.org/setup-and-operations.html).
+If you set up your own Concourse server,
+see the instructions in [Concourse: Setup & Operations](https://concourse-ci.org/setup-and-operations.html).
 
 ### <a id="pipeline"></a> Create a Concourse Pipeline for Your Tile
 
 A typical CI pipeline for a tile consists of the following jobs:
 
-- Build the tile
-- Deploy it to <%= vars.platform_name %>
-- Run a set of deployment tests to verify that it deployed and works correctly
-- Remove it from <%= vars.platform_name %>
+- Build the tile.
+- Deploy it to <%= vars.platform_name %>.
+- Run a set of deployment tests to verify that it deployed and works correctly.
+- Remove it from <%= vars.platform_name %>.
 
-You describe this pipeline in a `pipeline.yml` file that is then uploaded to the
-Concourse server. [Tile Generator](tile-generator.html) contains a sample
-pipeline that you can clone for your own tile. We are working on automating
-the process of generating a pipeline template for you.
+You define this pipeline in the `pipeline.yml` file that is uploaded to the
+Concourse server. The [Tile Generator](tile-generator.html) contains a sample
+pipeline that you can clone for your own tile.
 
 ### <a id="pool"></a> Set Up <%= vars.platform_name %> for Your CI Pipeline
 
-<%= vars.company_name %> partners who have us host their pipeline have access to a pool of <%= vars.platform_name %>
-instances that are managed by us and are regularly updated with the latest
+<%= vars.company_name %> partners who have VMware host their pipeline have access to a pool of <%= vars.platform_name %>
+instances that are managed and are regularly updated with the latest
 (pre-)release versions of <%= vars.platform_name %>. If you set up your own concourse server, you
 have to target your pipeline at a [<%= vars.platform_name %> instance you have setup](./environments.html).
 
