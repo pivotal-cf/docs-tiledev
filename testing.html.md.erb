@@ -3,14 +3,16 @@ title: Testing your service tiles
 owner: Services
 ---
 
-Here is recommended testing practices for <%= vars.platform_name %> tile developers.
+You can use the following tile testing practices for <%= vars.platform_name %>.
 
 ## <a id="testing"></a> Service tile testing
 
 Good testing assures tile developers that their product installs and runs properly on diverse platforms
-and assures platform operators that the tile they install can provide its service on their platform.
+and assures you that the tile you install can provide the service on your platform.
 
-Arrange fir a pyramid structure for testing, starting with unit tests and stepping up to successively broader and more automated levels of integration.
+Arrange for a pyramid structure for testing, starting with unit tests and moving up to successively broader and
+more automated levels of integration.
+
 Use [Concourse](./concourse.html) for creating build pipelines that follow this test structure.
 Other continuous integration tools must support a pyramid testing approach.
 
@@ -18,29 +20,29 @@ Other continuous integration tools must support a pyramid testing approach.
 
 For <%= vars.platform_name %> tiles, a typical test pyramid progresses as follows:
 
-1. Unit tests for each tile **component** (e.g. service components, broker, adapter, and metrics emitter), manual by developer and in automated pipeline.
+1. Unit tests for each tile **component**. For example, service components, broker, adapter, and
+metrics emitter, manual by developer and in an automated pipeline.
 
 1. System tests of the tile's **BOSH release**, including:
-  - **Functional tests** covering the main features of the service.
-      The main features typically interact with almost all important external integration points, so these tests confirm product capability.
-  - **Smoke tests** (life cycle tests) for service instances that create and bind a service instance, call it from a test app,
-      verify the logs it generates, and delete it.
-      For a typical end-to-end test sequence, see [Smoke Tests](#smoke) as follows.
+  - **Functional tests** that cover the main features of the service.
+      The main features typically interact with almost all important external integration points, because
+      the tests confirm product capability.
+  - **Smoke tests** or life cycle tests for service instances that create and bind a service instance.
+      You call it from a test app, verify the logs it generates, and delete it.
+      For a typical end-to-end test sequence, see [Smoke Tests](#smoke).
 
 1. System tests of **tile** operation within Ops Manager.
   - These include:
-      * **Configuration checks** that test every external configurable integration point and connection to remote servers using configured credentials
+      * **Configuration checks** that test every external configurable integration point and connection to remote servers using configured credentials.
       * **Default checks** that confirm "happy path" capability.
   - Use the Ops Manager API to verify that property blueprints in the tile metadata are correct
     and that they translate correctly to the BOSH manifest that Ops Manager generates.
   - Use the [om](https://github.com/pivotal-cf/om) tool to call the Ops Manager API programmatically from Go.
     Avoid the unsupported opsmgr gem that called the Ops Manager API from Ruby.
   - Confirm manually that the tile wires property blueprints to the expected pane and form controls in the UI.
-  - Test your environment using one of the environments described in [Development Environments](./environments.html)
+  - Test your environment using one of the environments described in [Development Environments](./environments.html).
 
-<p class="note">
-<span class="note__title">Note</span>
-System tests might incur costs from using third-party services, IaaS resources, and others.
+<p> System tests might incur costs from using third-party services, IaaS resources, and others.
 </p>
 
 ### <a id="smoke"></a> Smoke tests
@@ -56,7 +58,7 @@ A typical smoke test runs as follows:
 
 1. Activate service access for the created org.
 
-1. Iterate through all service plans (or a subset of them):
+1. Go through all service plans (or a subset of them):
   1. Create a service instance for the plan.
   1. Push a test app.
   1. Bind the service instance to the app.
@@ -71,24 +73,25 @@ A typical smoke test runs as follows:
 
 ### <a id="general-recs"></a> General recommendations
 
-The following are general recommendations for designing and running tests on <%= vars.platform_name %> tiles:
+These are general recommendations for designing and running tests on <%= vars.platform_name %> tiles:
 
-* Clean up after yourself. Leave the environment exactly as it was before the test was run.
+* Leave the environment exactly as it was before the test was run.
 
 * Generate verbose logging with lots of contextual data to make troubleshooting easier.
 
-* Design test suites for re-usability by making them highly parameterizable. Important parameters include:
+* Design test suites for re-usability by making them highly parameterizable.
+Important parameters include:
   - External settings such as domains, creds, and certificates.
   - Plans to test against.
     For example, the [Redis for <%= vars.platform_name %>](https://github.com/pivotal-cf/cf-redis-smoke-tests) smoke tests use identical code
     for two different service plans, pre-provisioned and on-demand.
-  - Timeouts, numbers of retries, and other things that must be adjusted for different environments
-  - Switches to include or exclude portions of the tests such as generating metrics or backups
+  - Timeouts, numbers of retries, and other things that must be adjusted for different environments.
+  - Switches to include or exclude portions of the tests such as generating metrics or backups.
 
 * Re-use tests that exist already, for example, in Concourse.
 
-* Use an example Cloud Foundry app that uses your service. This app can serve for testing, demoing your tile capabilities, and as a code example.
-  See the [MySQL Test App](https://github.com/cloudfoundry-incubator/cf-mysql-acceptance-tests/tree/master/assets/sinatra_app) an example.
+* Use an example Cloud Foundry app that uses your service. This app can serve for
+testing, doing a demo of your tile capabilities, and as a code example. See the [MySQL Test App](https://github.com/cloudfoundry-incubator/cf-mysql-acceptance-tests/tree/master/assets/sinatra_app) an example.
 
 * When testing manually, using the UI is better than calling the underlying API directly.
   Use UIs and APIs the way your customer does.

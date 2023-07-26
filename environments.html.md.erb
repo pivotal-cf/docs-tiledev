@@ -3,39 +3,10 @@ title: Development environments for your tile service
 owner: Services
 ---
 
-Here's how to set up tile development environments.  As you progress through the [stages](stages.html) of tile development, you might progress through these environments.
-
-
-## <a id='pcfdev'></a> <%= vars.product_dev_local %> and BOSH-Lite
-
-<%= vars.company_name %> provides a lightweight (vagrant packaged) instance of <%= vars.app_runtime_first %> with some
-basic services as a free product named <%= vars.product_dev_local %>. This is a great environment
-to develop and test everything that runs in <%= vars.app_runtime_abbr %>.
-
-Either of these environments allow you to develop the first three levels of service for <%= vars.app_runtime_abbr %>: a [User-Provided Service](user-provided.html), [Creating a brokered service and service tile](brokered.html), and a [Managed Service](managed.html).
-
-If your integration includes managed services, you need an instance
-of BOSH that can manage virtual machines and BOSH releases for you.
-[BOSH-Lite](https://github.com/cloudfoundry/bosh-lite) works well for that
-purpose.
-
-Between these two components, you have everything you must develop
-tiles, except for Ops Manager. But if you followed the workflow in [Building Your First Tile](index.html#tile-steps) you do not need an actual full
-<%= vars.platform_name %> environment until the later phases of your development.
-
-### <a id='setup-boshlite'></a> Setting up BOSH-Lite
-
-- [Install BOSH-Lite](https://github.com/cloudfoundry/bosh-lite)
-
-<p class="note">
-<span class="note__title">Note</span>
-For this type of development environment, you only need BOSH-Lite itself to deploy managed service releases. You do not need to follow the instructions to Deploy Cloud Foundry in BOSH-Lite, as Cloud Foundry is provided by the <%= vars.product_dev_local %> installation above.
-</p>
-
-### <a id='setup-pcfdev'></a> Setting up <%= vars.product_dev_local %>
-
-- [Try <%= vars.app_runtime_abbr %> on your Local Workstation](http://pivotal.io/platform/pcf-tutorials/getting-started-with-pivotal-cloud-foundry-dev/introduction)
-
+Learn how to set up a tile development environment, from simple standalone tools to a full Ops Manager
+development environment.
+As you progress through the [stages](stages.html) of
+tile development, you might progress through this environment.
 
 ## <a id='pcf'></a> <%= vars.app_runtime_abbr %> with Ops Manager
 
@@ -62,10 +33,11 @@ If you are not in the PTPP or cannot access the Partners Slack, email isv@pivota
 
 If you need an isolated or dedicated <%= vars.app_runtime_abbr %> development environment, or you must work offline, you can install your own environment that includes Ops Manager:
 
-- [Installing <%= vars.platform_name %>](http://docs.pivotal.io/pivotalcf/installing/index.html)
+- [Installing <%= vars.platform_name %>](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-install-index.html)
 <a name='operations'></a>
-- [Operating <%= vars.platform_name %>](http://docs.pivotal.io/ops-manager/opsguide/index.html)
+- [Operating <%= vars.platform_name %>](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/index.html)
 <a name='upgrade'></a>
-- [Upgrading <%= vars.platform_name %>](http://docs.pivotal.io/pivotalcf/customizing/upgrading-pcf.html)
+- [Upgrading <%= vars.platform_name %>](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/upgrade-index.html)
 
-The PTPP program does not troubleshoot partner installations of <%= vars.platform_name %> development environments.
+The PTPP program does not troubleshoot partner installations of <%= vars.platform_name %> development
+environments.
