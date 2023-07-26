@@ -14,7 +14,7 @@ You can integrate tile software into <%= vars.platform_name %>. You can install 
 
 Tile developers can publish tiles on VMware Tanzu Network, where services and tiles are available for download.
 
-###Tile Structure
+### Tile structure
 
 Tiles are packaged as compressed files with a `.pivotal` file extension.
 These compressed files require three subdirectories: `metadata`, `migrations`, and `releases`.
@@ -54,7 +54,7 @@ Tiles can help you:
 Creating a tile is a complex process. You can message the VMware Tanzu Partners Slack channel with
 questions if you [register for the VMware Tanzu Partner program](https://tanzu.vmware.com/partners/tech).
 
-There are two options for building your first tile. You can either attend partner days or develop independently. However, <%= vars.company_name %> strongly recommends attending Partner Days for hands-on guidance.
+#### <a id="tools"></a> Step 1: Decide what to build
 
 If you use the Tile Generator to package your software, you must verify the inputs you must build before
 development. Inputs for your tile also depend on the service you are providing.
@@ -71,7 +71,8 @@ Depending on what you build, you might need to install the following tools:
 
 - [Kubernetes Command Line Tool (kubectl)](https://kubernetes.io/docs/tasks/tools/install-kubectl/): A CLI for deploying and managing apps on Kubernetes. If you are developing on Kubernetes, you use kubectl when building your tile.
 
-- [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional): A lightweight <%= vars.app_runtime_full %>  installation for deploying and debugging apps locally. You can use CF Dev if you want to run <%= vars.app_runtime_abbr %>  on your local workstation.
+- [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional): A lightweight <%= vars.app_runtime_full %>  installation for deploying and debugging apps locally. You can use Cloud Foundry Dev to run <%= vars.app_runtime_abbr %>
+on your local workstation.
 
 #### <a id="generate"></a> 2. Generate a Tile
 

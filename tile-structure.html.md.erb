@@ -3,23 +3,30 @@ title: A summary of the operation of service tiles
 owner: Services
 ---
 
-Here is the process and elements of how a service tile work in <%= vars.platform_name %>.
+Learn about the process and elements of how a service tile works in <%= vars.platform_name %>.
 
+You can use product tiles to offer new and upgraded software services to
+developers in an <%= vars.platform_name %> deployment.
+[VMware Tanzu Network](https://network.pivotal.io) distributes these tiles as zipped code
+directories, with the `.pivotal` filename extension, that contain or point to all of the software
+elements that use the tile's functions.
 
-## <a id='overview'></a> Overview
+It explains what each functional element of a tile does and how you create or specify it as
+input to the Tile Generator tool that creates `.pivotal` files.
 
-Cloud operators can use product tiles to offer new and upgraded software services to developers in an <%= vars.platform_name %> deployment. [VMware Tanzu Network](https://network.pivotal.io) distributes these tiles as zipped code directories, with filename extension `.pivotal`, that contain or point to all of the software elements that perform the tile's functions.
+For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
 
-This explains what each functional element of a tile does and how you create or specify it as input to the Tile Generator tool that creates `.pivotal` files. For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
-
-It also describes the typical structure of a tile directory. This is useful information for editing generated tiles or legacy tiles that were created without the Tile Generator.
+It also describes the typical structure of a tile directory. This helps in editing generated tiles or
+legacy tiles that were created without the Tile Generator.
 
 
 ## <a id='functions'></a> Tile functions
 
-<%= vars.platform_name %> service tiles perform multiple functions that streamline the use of software services, including:
+The <%= vars.platform_name %> service tiles perform multiple functions that
+streamline the use of software services, including:
 
-* Deploy a service broker that interfaces between the Cloud Controller, <%= vars.app_runtime_full %>'s main executive component, and the service. For more information, see [Service Broker](#broker).
+* Deploy a service broker that interfaces between the Cloud Controller, <%= vars.app_runtime_full %>'s
+main executive component, and the service. For more information, see [Service Broker](#broker).
 
 * Publish a catalog of available service plans to the **Services Marketplace**. For more information, see [Catalog](#catalog).
 
@@ -33,33 +40,52 @@ It also describes the typical structure of a tile directory. This is useful info
 
 * Support one-click installation and upgrading from previous versions. For more information, see [Update Rules](#update).
 
-These functions are described in more detail as follows.
+
+These functions are described in more detail here:
 
 ### <a id='broker'></a> Service broker
 
-Service brokers integrate services with <%= vars.app_runtime_abbr %> by providing an API for the Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API](http://docs.pivotal.io/application-service/services/api.html).
+Service brokers integrate services with <%= vars.app_runtime_abbr %> by providing an API for the
+Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API](http://docs.pivotal.io/application-service/services/api.html).
 
-Each service tile acts as a wrapper for a service broker. Installing the tile creates its service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
+Each service tile acts as a wrapper for a service broker. Installing the tile creates the
+service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
 
-You can write a service broker in any language, and it can run anywhere, inside your <%= vars.app_runtime_abbr %> installation or external. For sample code in Ruby, Java, and Go, see [Example Service Brokers](http://docs.pivotal.io/application-service/services/examples.html).
+You can write a service broker in any language, and it can run anywhere, inside
+your <%= vars.app_runtime_abbr %> installation or external.
+For sample code in Ruby, Java, and Go, see [Example Service Brokers](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/examples.html).
 
-Specify the service broker for a tile in the tile directory's `tile.yml` file, as a package with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`. The `external-broker` type requires a `uri` value, for the service broker location. For more information, see [Packages](#packages).
+Specify the service broker for a tile in the tile directory's `tile.yml` file, as a package
+with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`.
+The `external-broker` type requires a `uri` value, for the service broker location.
+For more information, see [Packages](#packages).
 
 #### <a id='catalog'></a> Catalog
 
-Service brokers include catalog metadata that list their service plans. This information publishes to the Marketplace that app developers use to browse and select services.
+Service brokers include catalog metadata that list their service plans. This information publishes to
+the Marketplace that app developers use to browse and select services.
 
-Developers on either <%= vars.app_runtime_abbr %> or open-source Cloud Foundry see a plain-text version of the Marketplace by running `cf marketplace`. But <%= vars.app_runtime_abbr %> also features a graphical Marketplace, and service brokers support this Marketplace with additional catalog metadata text boxs for display names, logo images, and links to more information and documentation.
+Developers on either <%= vars.app_runtime_abbr %> or open-source Cloud Foundry can see a plain-text version
+of the Marketplace by running `cf marketplace`.
+But <%= vars.app_runtime_abbr %> also features a graphical Marketplace, and service brokers support
+this Marketplace with additional catalog metadata text boxes for display names, logo images, and
+links to more information and documentation.
 
-Define this catalog metadata for your service by writing your service broker to return the API calls listed in the [Service Metadata](https://github.com/openservicebrokerapi/servicebroker/blob/v2.15/profile.md#service-metadata) section of _Open Service Broker API Profile (v2.15)_ in the Open Service Broker API repository on GitHub.
+Define this catalog metadata for your service by writing your service broker to return the API calls
+listed in the [Service Metadata](https://github.com/openservicebrokerapi/servicebroker/blob/v2.15/profile.md#service-metadata) section of _Open Service Broker API Profile (v2.15)_ in the Open Service Broker API repository on GitHub.
 
 ### <a id='configure'></a> Configuration
 
-In the Ops Manager Installation Dashboard, service tiles present a form-based interface that cloud operators use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name %> uses to deploy instances of the service.
+In the Ops Manager Installation Dashboard, service tiles present a form-based interface that you can use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name %> uses to deploy instances of the service.
 
-You define this configuration interface in the `forms:` section of the `tile.yml` configuration file that you pass to the Tile Generator. Each named form element defines a configuration pane accessible under the tile's **Settings** tab.
+You define this configuration interface in the `forms:` section of the `tile.yml` configuration file
+that you pass to the Tile Generator. Each named form element defines a configuration pane accessible
+under the tile's **Settings** tab.
 
-A left drop-down menu lists all configuration panes and indicates with check marks which ones have been configured. The drop-down menu lists service-specific panes, defined by the tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config** that all <%= vars.platform_name %> products and services use.
+A left drop-down menu lists all configuration panes and indicates with check marks which ones
+have been configured. The drop-down menu lists service-specific panes, defined by the
+tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config**
+that all <%= vars.platform_name %> products and services use.
 
 ![alt-text="Example form Layout"](img/form-layout.png)
 
@@ -67,39 +93,76 @@ Each form, or configuration pane, has `label` for the menu text, a `description`
 
 For each property, you can combine specifications for `name`, `type`, `default`, `configurable`, `options`, and `constraints`. For more information, see the [Form Properties](./property-template-references.html#form-properties) and [Property Blueprints](./property-template-references.html#property-blueprints) sections of the _Property and Template References_ topic.
 
-<p class="note"><strong>Note:</strong> In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.</p>
+In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.
+
+<p class="note">
+<span class="note__title">Note</span>
+In the tile installer <code>.yml</code> file that Tile Generator creates, form properties appear
+in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.
+</p>
 
 #### <a id='appearance'></a> Tile appearance
 
-In the Ops Manager Installation Dashboard, your service tile bears an identifying label, description, and logo icon. Specify these at the top of your `tile.yml` configuration file as `label`, `description`, and `icon_file`. The value of `icon_file` should be the name of a 128×128 pixel PNG image.
+In the Ops Manager Installation Dashboard, your service tile has an identifying label,
+description, and logo icon. Specify these at the top of your `tile.yml` configuration file as
+`label`, `description`, and `icon_file`. The value of `icon_file` can be the name of a 128×128 pixel PNG image.
 
-### <a id='fixed'></a> Fixed Properties
+### <a id='fixed'></a> Fixed properties
 
-A tile also writes fixed, unconfigurable properties into the BOSH manifest that it creates. You specify these properties in your `tile.yml` configuration file using double parentheses expressions format. For more information, see the [Double Parenthesis Expressions](./property-template-references.html#double-parens) section of the _Property and Template References_ topic.
+A tile also writes fixed, unconfigurable properties into the BOSH manifest that it creates. You can
+specify these properties in your `tile.yml` configuration file using double parentheses
+expressions format.
+
+For more information, see the [Double Parenthesis Expressions](./property-template-references.html#double-parens) section of the _Property and Template References_ topic.
 
 #### <a id='credentials'></a> Credentials
 
-Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But you do not need to include credentials that already exist in other tiles, such as TAS for VMs. BOSH automatically generates these for any packages that require them.
+Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But
+you do not need to include credentials that already exist in other tiles, such as TAS for VMs.
+BOSH automatically generates these for any packages that require them.
 
 ### <a id='errands'></a> Errands
 
-Tile Generator automatically generates `deploy` and `delete` life cycle errands for packages that deploy to <%= vars.platform_name %>. These errand scripts deploy the service and publish its plans in the Marketplace, and remove the service from <%= vars.platform_name %> and the Marketplace.
+Tile Generator automatically generates `deploy` and `delete` life cycle errands
+for packages that deploy to <%= vars.platform_name %>. These errand scripts deploy the service and
+  publish the plans in the Marketplace, and remove the service from <%= vars.platform_name %> and the Marketplace.
 
-You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` that prepare Cloud Foundry to host the service or clean up before deleting it. You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
+You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` file
+that prepare Cloud Foundry to host the service or clean up before deleting it.
+You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
 
-For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on the <%= vars.platform_name %> layer, you need to include `post_deploy` and `pre_delete` errands with their package definitions in `tile.yml`. Label them as life cycle errands using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
+For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on
+the <%= vars.platform_name %> layer, you need to include `post_deploy` and `pre_delete` errands
+with their package definitions in `tile.yml` file. Label them as life cycle errands
+using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
 
-Tile Generator writes the `bosh-release` errands into the main BOSH release that it creates for the service, and adds `docker-bosh` errands into a separate Docker BOSH release that the main release depends on.
+Tile Generator writes the `bosh-release` errands into the main BOSH release that it creates for the service,
+and adds `docker-bosh` errands into a separate Docker BOSH release that the main release depends on.
 
 ### <a id='dependencies'></a> Dependencies
 
 You can include both required and optional product dependencies for tiles.
 
-* **Required Dependencies**: Required dependencies are always required. To deploy the dependent tile, you must also deploy the dependency.
+* **Required Dependencies**: Required dependencies are always required.
+To deploy the dependent tile, you must also deploy the dependency.
 
-* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent tile and the optional dependency to your environment. For example, a tile may be dependent on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>). If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.<p class="note"><strong>Note:</strong> After the dependency is installed, it is mandatory even if marked as optional.</p>
+* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent
+tile and the optional dependency to your environment. For example, a tile can be dependent
+on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>).
+If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.
 
-Include product dependencies under `requires_product_versions` at the top of the `tile.yml` file. To add an optional dependency, use an `optional` text box under `requires_product_versions`. For example:
+After the dependency is installed, it is mandatory even if marked as optionaass=l.
+
+<p class="note">
+<span class="note__title">Note</span>
+After the dependency is installed, it is mandatory even if marked as option.
+</p>
+
+Include product dependencies under `requires_product_versions` at the top of
+the `tile.yml` file. To add an optional dependency, use an `optional` text box
+under `requires_product_versions`.
+
+For example:
 
 ```
 requires_product_versions:
@@ -113,11 +176,15 @@ requires_product_versions:
 
 ### <a id='update'></a> Update rules
 
-Tile Generator automatically generates the JavaScript migration file that allows one-click updates from Ops Manager. This file describes how to change existing tile property names and values to match the new version of the tile.
+Tile Generator automatically generates the JavaScript migration file that allows one-click updates
+from Ops Manager. This file describes how to change existing tile property names and
+values to match the new version of the tile.
 
-A mature tile may contain several of these `.js` files, from previous versions and the current one, to allow tile updates to automatically chain together in sequence.
+A tile can contain several of these `.js` files, from previous versions
+and the current one, to allow tile updates to automatically chain together in sequence.
 
-You can add custom update code in the `tile.yml` Tile Generator configuration file, following the properties documented in the [Update Values or Property Names Using JavaScript](./tile-upgrades.html#import) section of the _Upgrading Tiles_ topic.
+You can add custom update code in the `tile.yml` Tile Generator configuration file,
+following the properties documented in the [Update Values or Property Names Using JavaScript](./tile-upgrades.html#import) section of the _Upgrading Tiles_ topic.
 
 
 ## <a id='structure'></a> Tile file format and structure
@@ -161,7 +228,7 @@ The tile manifest template defines these subdirectory locations, so they can res
 │       └── example-release-18.tgz
 ```
 
-### <a id='dot-pivotal'></a> .pivotal File Format
+### <a id='dot-pivotal'></a> .pivotal file format
 
 The entire tile directory is a ZIP file, with the `.zip` extension renamed to `.pivotal`.
 
@@ -177,7 +244,7 @@ Where:
 
 You can use any ZIP utility to create a `.pivotal` file. Ensure that the top-level subfolders as seen above in the `example-product` folder remain.
 
-Within the tile's `releases` subfolder, the BOSH release exists as a gzipped tarfile.
+In the tile's `releases` subfolder, the BOSH release exists as a gzipped tarfile.
 
 ### <a id='example-workflow'></a> Example workflow
 
@@ -201,9 +268,11 @@ Archive:  example-product.pivotal
 
 ### <a id='repo'></a> GitHub repository structure
 
-Tile developers typically develop and archive their code on GitHub, and their Concourse build pipeline pulls from GitHub to perform continuous integration.
+Tile developers typically develop and archive their code on GitHub, and their
+Concourse build pipeline pulls from GitHub to perform continuous integration.
 
-Tile Generator does not dictate any directory structure for a GitHub repository, but by convention your tile repository might look like this:
+Tile Generator does not dictate any directory structure for a GitHub repository, but by
+convention your tile repository might look like this:
 
 ```
 /tile.yml
@@ -215,9 +284,16 @@ Tile Generator does not dictate any directory structure for a GitHub repository,
 
 ### <a id='packages'></a> Packages
 
-<%= vars.app_runtime_abbr %> services typically require multiple component job processes to run concurrently, such as a main app, a helper app, and a service broker. They also require buildpacks that run as one-time compilation tasks. Services also require components such as external brokers or storage, which do not run as jobs, but nevertheless must remain available.
+<%= vars.app_runtime_abbr %> services typically require multiple component job processes to run
+concurrently, such as a main app, a helper app, and a service broker. They also require
+buildpacks that run as one-time compilation tasks. Services also require
+components, for example, external brokers or storage, which do not run as jobs, but must remain available.
 
-The `tile yml` file that you pass to Tile Generator defines these service components in its `packages:` section. Each package has a name and a package type. The list of possible package types to pass to Tile Generator is in the [Tile Generator code](https://github.com/cf-platform-eng/tile-generator/blob/master/tile_generator/config.py#L59-L70) on GitHub. It includes:
+The `tile yml` file that you pass to Tile Generator defines these service components in the `packages:`
+section. Each package has a name and a package type.
+The list of possible package types to pass to Tile Generator is in the [Tile Generator code](https://github.com/cf-platform-eng/tile-generator/blob/master/tile_generator/config.py#L59-L70) on GitHub.
+
+It includes:
 
 * `app`: Pushed to <%= vars.app_runtime_abbr %>
 
@@ -237,7 +313,7 @@ The `tile yml` file that you pass to Tile Generator defines these service compon
 
 Packages typically contain a single process, but can include more than one, packaged to run in the same location.
 
-#### <a id='where'></a> Where Package processes Run
+#### <a id='where'></a> Where Package processes run
 
 Where packaged processes run depends on their package type, as follows:
 
@@ -249,6 +325,8 @@ Where packaged processes run depends on their package type, as follows:
 
 #### <a id='process'></a> Package VM resources
 
-Operator can also use the service tile's **Resource Config** pane to configure resources individually for each package. Operators can also provision resources for VMs that handle one-time tasks, with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
+You can also use the service tile's **Resource Config** pane to configure resources
+individually for each package. You can also provision resources for VMs that handle one-time tasks,
+with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
 
 ![alt-text="Here is an example service tile resource config.](img/service-resource-config.png)
