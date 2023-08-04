@@ -1,5 +1,5 @@
 ---
-title: Using the tile generator
+title: Using the Tile Generator
 owner: Services
 ---
 
@@ -42,7 +42,7 @@ combination of the following package types:
 - Cloud Foundry Service Brokers (both inside and outside <%= vars.app_runtime_abbr %>)
 - Docker images (both inside and outside <%= vars.app_runtime_abbr %>)
 
-## <a id="legacy"></a> Legacy tiles and OSS-Compatible Service Brokers
+## <a id="legacy"></a> Legacy tiles and OSS-Compatible service brokers
 
 Many tile authors, in both <%= vars.company_name %>-internal teams and at external partner companies,
 built <%= vars.platform_name %> tiles before Tile Generator existed.
@@ -54,11 +54,6 @@ corresponding <%= vars.platform_name %> tile for <%= vars.app_runtime_abbr %> us
 All of these tile authors now use Tile Generator to simplify and speed up their development.
 Tile Generator generates an OSS-compatible BOSH release service broker BOSH release in
 addition to a VMware Tanzu-ready <%= vars.platform_name %> tile.
-
-## <a id="screencast"></a> Screencast
-
-For a 7-minute introduction into what Tile Generator is and does, see
-[this screencast](https://www.youtube.com/watch?v=_WeJbqNJWzQ).
 
 
 ## <a id="how-to"></a> Use the Tile Generator
@@ -854,9 +849,3 @@ tile init [<tile-name>]
 tile build [patch|minor|major|<version>]
 ```
 
-
-## <a id="credits"></a> Credits
-
-- [sparameswaran](https://github.com/sparameswaran) supplied most of the actual template content, originally built as part of [cf-platform-eng/bosh-generic-sb-release](https://github.com/cf-platform-eng/bosh-generic-sb-release.git)
-- [frodenas](https://github.com/frodenas) contributed most of the Docker content through [cloudfoundry-community/docker-boshrelease](https://github.com/cloudfoundry-community/docker-boshrelease.git)
-- [joshuamckenty](https://github.com/joshuamckenty) suggested the jinja template approach he employed in [opencontrol](https://github.com/opencontrol)
