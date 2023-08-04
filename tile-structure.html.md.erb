@@ -53,7 +53,7 @@ service broker, registers it with the Cloud Controller, and publishes the servic
 
 You can write a service broker in any language, and it can run anywhere, inside
 your <%= vars.app_runtime_abbr %> installation or external.
-For sample code in Ruby, Java, and Go, see [Example Service Brokers](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/examples.html).
+For sample code in Ruby, Java, and Go, see [Example Service Brokers](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/examples.html).
 
 Specify the service broker for a tile in the tile directory's `tile.yml` file, as a package
 with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`.
@@ -82,7 +82,7 @@ You define this configuration interface in the `forms:` section of the `tile.yml
 that you pass to the Tile Generator. Each named form element defines a configuration pane accessible
 under the tile's **Settings** tab.
 
-A left drop-down menu lists all configuration panes and indicates with check marks which ones
+A drop-down menu lists all configuration panes and indicates with check marks which ones
 have been configured. The drop-down menu lists service-specific panes, defined by the
 tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config**
 that all <%= vars.platform_name %> products and services use.
@@ -149,9 +149,8 @@ To deploy the dependent tile, you must also deploy the dependency.
 * **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent
 tile and the optional dependency to your environment. For example, a tile can be dependent
 on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>).
-If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully deploy the dependent tile.
-
-After the dependency is installed, it is mandatory even if marked as optionaass=l.
+If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully
+deploy the dependent tile.
 
 <p class="note">
 <span class="note__title">Note</span>

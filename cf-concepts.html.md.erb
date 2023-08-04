@@ -14,17 +14,19 @@ concepts.
 For a general overview of <%= vars.app_runtime_abbr %>, and the various ways to interact with it,
 use the following links:
 
-- [Cloud Foundry subsystems](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/concepts-overview.html) provides high-level descriptions of internal functions performed by different <%= vars.app_runtime_abbr %> components.
-- [Cloud Foundry Command Line Interface (cf CLI)](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/getting-started.html) links to topics that explain how to direct <%= vars.app_runtime_abbr %> deployment from your local command line.
-- [Ops Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.current_major_version %>/vmware-tanzu-ops-manager/pcf-interface.html) describes Ops Manager and Installation Dashboard interfaces, where cloud operators view, install, configure, and deploy service tiles.
-- [Apps Manager](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/toc-manage-apps-index.html) describes Apps Manager interface, where app developers create and configure service instances and bind them to their apps.
+- [Cloud Foundry subsystems](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/concepts-overview.html) provides high-level descriptions of internal functions performed by different <%= vars.app_runtime_abbr %> components.
+- [Cloud Foundry Command Line Interface (cf CLI)](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/cf-cli-index.html) links to topics that explain how to direct <%= vars.app_runtime_abbr %> deployment from your local command line.
+- [Ops Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/pcf-interface.html) describes Ops Manager and Installation Dashboard interfaces, where cloud operators view, install, configure, and deploy service tiles.
+- [Apps Manager](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/dev-console.html) describes Apps Manager interface, where app developers create and configure service instances and bind them to their apps.
 
 ## <a id="applications"></a> Applications
 
-Cloud Foundry is primarily a cloud-native application platform. To understand how to integrate your services with Cloud Foundry, you must understand how your customers are using the platform to develop, deploy, and operate their applications.
+Cloud Foundry is primarily a cloud-native application platform. To understand how to integrate your
+services with Cloud Foundry, you must understand how your customers are using the platform to develop, deploy, and
+operate their applications.
 
-- [Developer guide](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/deploy-apps-deploy-app.html) explains how to push an app to run on <%= vars.platform_name %> and use services.
-- [Overview of logging and metrics](https://docs.vmware.com/en/Tile-Developer-Guide/<%= vars.current_major_version %>/tile-dev-guide/cf-concepts.html) describes how <%= vars.app_runtime_abbr %> aggregates and streams logs and metrics from the apps it hosts and from internal system components.
+- [Developer guide](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/deploy-apps-deploy-app.html) explains how to push an app to run on <%= vars.platform_name %> and use services.
+- [Overview of logging and metrics](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/data-sources.html) describes how <%= vars.app_runtime_abbr %> aggregates and streams logs and metrics from the apps it hosts and from internal system components.
 
 ## <a id="services"></a> Services
 
@@ -41,9 +43,9 @@ When application code is deployed to Cloud Foundry, a language-specific buildpac
 convenient integration hook for any service that needs to inspect or embellish application code.
 Supplying buildpacks also provides a language-agnostic way to inject your code into the application container image.
 
-- [Application Staging Process](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/how-applications-are-staged.html) explains how <%= vars.app_runtime_abbr %> packages and deploys apps in containers with buildpacks so that they can run on multiple VMs interchangeably.
-- [Language Buildpacks](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/buildpacks-index.html) describes the language-specific buildpacks support <%= vars.app_runtime_abbr %> apps.
-- [Custom Buildpacks](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/custom.html) describes how to use supply buildpacks to add dependencies or code without having to change (multiple) language-sepcific buildpacks.
+- [Application Staging Process](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/how-applications-are-staged.html) explains how <%= vars.app_runtime_abbr %> packages and deploys apps in containers with buildpacks so that they can run on multiple VMs interchangeably.
+- [Language Buildpacks](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/buildpacks-index.html) describes the language-specific buildpacks support <%= vars.app_runtime_abbr %> apps.
+- [Custom Buildpacks](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/custom.html) describes how to use supply buildpacks to add dependencies or code without having to change (multiple) language-sepcific buildpacks.
 
 ## <a id="agents"></a> Embedded agents
 
@@ -51,8 +53,8 @@ Some integrations can inject code into the application container.
 VMware refers to these injected components as "container-embedded agents".
 [Buildpacks](./buildpacks.html#other) provide a mechanism to inject components into the application container image, and the `.profile.d` directory provides a way to start agents before or alongside the customer application.
 
-- [Agent Injection with a supply buildpack](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/custom.html)
-- [Using .profile](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/deploy-apps-deploy-app.html#profile)
+- [Agent Injection with a supply buildpack](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/custom.html)
+- [Using .profile](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/deploy-apps-deploy-app.html#profile)
 
 
 ## <a id="nozzles"></a> Nozzles
@@ -62,4 +64,4 @@ combined stream of logs from all apps, plus metrics data components, used by ope
 
 A nozzle takes this data and forwards it to an external logging and metrics solution.
 
-- [Loggregator system](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/log-ops-guide.html)
+- [Loggregator system](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/log-ops-guide.html)
