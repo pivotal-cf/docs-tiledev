@@ -16,7 +16,8 @@
 </table>
 
 <% if additional_property_blueprint_attributes.present? || allows_default_to_be_specified %>
-#### Property Blueprint Attributes
+
+#### Property blueprint attributes
 
 <table class="nice">
   <% if allows_default_to_be_specified %>
@@ -33,7 +34,7 @@
       </td>
     </tr>
   <% end %>
-      
+
   <% additional_property_blueprint_attributes.each do |property| %>
     <tr>
       <td> <%= property[:name] %> </td>
@@ -66,7 +67,7 @@
       <td><%= accessor[:description] %></td>
     </tr>
   <% end %>
-        
+
   <% if value_accessor_description %>
     <tr>
       <td>value</td>

@@ -9,9 +9,9 @@ for <%= vars.platform_name %>.
 
 You can manage runtime configs in the following ways:
 
-+ Add a new runtime config in an existing product tile. See [Add a Runtime Config](#create).
-+ Delete a runtime config from a tile. See [Delete a Runtime Config](#delete).
-+ Create a tile that only contains a runtime config. See [Create a Runtime Config-Only Tile](#config-only).
++ [Add a Runtime Config](#create) in an existing product tile.
++ [Delete a Runtime Config](#delete) from a tile.
++ [Create a Runtime Config-Only tile](#config-only) that only contains a runtime config.
 
 For more information about runtime configs, see
 [Director Runtime Config](https://bosh.io/docs/runtime-config.html).
@@ -30,11 +30,11 @@ identifier using the tile name, a generated GUID, and the runtime config name de
 
 The identifier follows the following format:
 
-```
+```console
 TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 ```
 
-![Runtime Config Unique ID](img/runtime-config-id.png)
+![alt-text="Runtime Config Unique ID."](./img/runtime-config-id.png)
 
 ## <a id="create"></a>Add a Runtime Config
 
