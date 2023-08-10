@@ -1,5 +1,5 @@
 ---
-title: Upgrading Tiles
+title: Upgrading tiles
 owner: Services
 ---
 
@@ -18,7 +18,7 @@ interface.
 constraints.
 
 Changing the value of<code>single_az_only</code> for jobs started by your tile can cause data loss
-for  upgrades to Ops Manager v1.7 versions older than v1.7.20, or v1.8 versions older than v1.8.12.
+for  upgrades to Ops Manager v1.7 versions later than v1.7.20, or v1.8 versions later than v1.8.12.
 To avoid this, contact <a href="https://tanzu.vmware.com/support">Support</a>.
 
 ## <a id='import'></a> Update values or property names using JavaScript
@@ -268,7 +268,7 @@ is performed that skips an intermediate version. For example, suppose you have t
 product: v1.6.0, v1.7.0, and v1.7.1. The v1.6.0 product contains v1.6 metadata, so it does not contain
 any JavaScript migrations.
 
-<%= image_tag("img/chain-migration-scenario.png") %>
+![alt-text="Example of a chain migration scenario."](img/chain-migration-scenario.png)
 
 The following upgrade scenarios illustrate chaining migrations in more detail, and
 use the example product versions previously described.
@@ -298,7 +298,7 @@ In this scenario, you start with nothing installed. You do a clean installation 
   only the second migration `201607010000_b.js` runs. The system recorded the fact that v1.7.0
   includes `201606010000_a.js`, so that migration does not run.
 
-<%= image_tag("img/chain-migration-scenarioC.png") %>
+![alt-text="Example of a chain migration scenario C."](img/chain-migration-scenarioC.png)
 
 ### Scenario D: Installing v1.7.1
 

@@ -1,5 +1,5 @@
 ---
-title: Continuous Integration Testing
+title: Continuous integration testing on your service tile
 owner: Services
 ---
 
@@ -106,7 +106,7 @@ To log in to the Tile Dashboard and go to the configuration page:
 
      ![The configure link is in the top left corner under the logo](img/configurelink.png)
 
-### <a id="config-with-property-tab"></a> Configure Your Tile Using the Properties Tab
+### <a id="config-with-property-tab"></a> Configure your tile using the Properties tab
 
 The **Properties** tab view allows you to configure installation properties through a form.
 The form pulls properties from your `tile.yml` file parsing the `properties_blueprints`.
@@ -139,7 +139,7 @@ To configure install properties for your tile using the **Properties** tab, do t
 3. When no fields are red, click **Save** or **Save and Run**.
 
 
-### <a id="config-with-advanced-tab"></a> Configure your tile using the advanced - JSON Properties tab
+### <a id="config-with-advanced-tab"></a> Configure your tile using the advanced - JSON properties tab
 
 In the **Advanced - JSON Properties** tab, you configure install properties, specifying them in JSON,
 in the format used by the om tool.
@@ -268,7 +268,7 @@ You define this pipeline in the `pipeline.yml` file that is uploaded to the
 Concourse server. The [Tile Generator](tile-generator.html) contains a sample
 pipeline that you can clone for your own tile.
 
-### <a id="pool"></a> Set Up <%= vars.platform_name %> for Your CI Pipeline
+### <a id="pool"></a> Set up <%= vars.platform_name %> for your CI pipeline
 
 <%= vars.company_name %> partners who have VMware host their pipeline have access to a pool of <%= vars.platform_name %>
 instances that are managed and are regularly updated with the latest

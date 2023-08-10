@@ -81,12 +81,12 @@ You define this configuration interface in the `forms:` section of the `tile.yml
 that you pass to the Tile Generator. Each named form element defines a configuration pane accessible
 under the tile's **Settings** tab.
 
-A drop-down menu lists all configuration panes and indicates with check marks which ones
+The drop-down menu lists all configuration panes and indicates with check marks which ones
 have been configured. The drop-down menu lists service-specific panes, defined by the
 tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config**
 that all <%= vars.platform_name %> products and services use.
 
-![Form Layout](img/form-layout.png)
+![alt-text="Example of a form layout."](img/form-layout.png)
 
 Each form, or configuration pane, has `label` for the menu text, a `description` to appear up top, and `property_inputs` that define the configuration fields themselves. To construct your `forms`, see [Property and Template References](./property-template-references.html).
 
@@ -172,7 +172,7 @@ requires_product_versions:
     optional: true
 ```
 
-### <a id='update'></a> Update Rules
+### <a id='update'></a> Update rules
 
 Tile Generator automatically generates the JavaScript migration file that allows one-click updates
 from Ops Manager. This file describes how to change existing tile property names and
@@ -182,7 +182,7 @@ A tile can contain several of these `.js` files, from previous versions
 and the current one, to allow tile updates to automatically chain together in sequence.
 
 You can add custom update code in the `tile.yml` Tile Generator configuration file,
-following the properties documented in the [Update Values or Property Names Using JavaScript](./tile-upgrades.html#import) section of the _Upgrading Tiles_ topic.
+following the properties documented in the [Update values or property names using JavaScript](./tile-upgrades.html#import) section of the _Upgrading Tiles_ topic.
 
 
 ## <a id='structure'></a> Tile file format and structure
@@ -327,4 +327,4 @@ You can also use the service tile's **Resource Config** pane to configure resour
 individually for each package. You can also provision resources for VMs that handle one-time tasks,
 with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
 
-![Service Tile Resource Config](img/service-resource-config.png)
+![alt-text="Here is an example of a service tile resource config.](img/service-resource-config.png)
