@@ -13,7 +13,7 @@ Co-located errands can run alongside other jobs or errands on existing VMs in an
 
 For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands),
 and for more information about errands in <%= vars.platform_name %>,
-see [Managing Errands in Ops Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
+see [Managing errands in Ops Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
 
 Products can have two kinds of errands.
 [Post-deploy errands](#post-deploy) run after a product
@@ -177,7 +177,7 @@ Some errands do not always need to run. For example, installing a minor patch to
 might not require re-registering its broker. Ops Manager lets you save installation time by
 turning errands off or on.
 
-They set these errand run rules in two places:
+Errand run rules are set in two places:
 
 * **One-Time Rules** under **Pending Changes** in the Ops Manager Installation Dashboard. These rules
 only apply to the next time you run **Apply Changes** and do not persist after the next successful installation.
