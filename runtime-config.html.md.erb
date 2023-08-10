@@ -3,7 +3,6 @@ title: Managing runtime configs for your service tiles
 owner: Services
 ---
 
-
 You can define and manage named runtime configs with your service tile
 for <%= vars.platform_name %>.
 
@@ -22,7 +21,7 @@ an existing product tile. When a tile author includes a runtime config as a top-
 tile metadata, BOSH applies the runtime config to every VM in the deployment.
 
 For more information about top-level properties, see
-[Top-Level Properties](./property-template-references.html#top-level).
+[Top-Level properties](./property-template-references.html#top-level).
 
 When you apply changes to deployments, Ops Manager combines the runtime config information from every
 tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the
@@ -122,7 +121,7 @@ For a runtime config tile, tile authors are not required to define the following
 
 ![alt-text="Example runtime config tile on the Ops Manager installation dashboard"](img/runtime-config-dashboard.png)
 
-### <a id="example"></a>Example runtime config-Only tile
+### <a id="example"></a>Example Runtime Config-Only tile
 
 The following example shows a runtime config tile with minimal configuration:
 
@@ -186,4 +185,4 @@ In the previous runtime config example, the `login-banner` job prints a banner w
 the deployment. You can use the default value defined in the `form_types` section of the metadata or
 configure the banner by editing the **Example string** value in Ops Manager.
 
-![alt-text="Runtime config tile information example"](img/runtime-config-tile.png)
+![alt-text="Runtime config tile information example."](img/runtime-config-tile.png)

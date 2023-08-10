@@ -1,12 +1,12 @@
 ---
-title: Securing your service credentials with runtime CredHub
+title: Securing your service credentials with Runtime CredHub
 owner: Services
 ---
 
 You can develop your <%= vars.platform_name %> service tile to support secure service instance (SSI)
-credentials using runtime CredHub.
+credentials using Runtime CredHub.
 
-For more information about runtime CredHub, see [Runtime CredHub](https://docs.cloudfoundry.org/credhub/).
+For more information about Runtime CredHub, see [Runtime CredHub](https://docs.cloudfoundry.org/credhub/).
 
 ## <a id="background"></a> Background required for securing your service credentials
 
@@ -14,7 +14,7 @@ When developers bind an app to a service instance, the binding typically
 includes _binding credentials_ required to access the service.
 
 In <%= vars.app_runtime_full %>, service brokers can store binding credentials as SSI credentials
-in runtime CredHub and apps can retrieve these credentials from CredHub.
+in Runtime CredHub and apps can retrieve these credentials from CredHub.
 
 This secures service instance credential management by avoiding the following:
 
@@ -22,9 +22,9 @@ This secures service instance credential management by avoiding the following:
 * Sending credentials between components, which increases risk of disclosure.
 * Requiring users to rotate credentials through the environment, which requires container recreation.
 
-To store binding credentials in runtime CredHub, your service tile should support the following:
+To store binding credentials in Runtime CredHub, your service tile should support the following:
 
-* Discover the location of runtime CredHub.
+* Discover the location of Runtime CredHub.
 * Provide this CredHub location to the broker app. The service broker uses the provided location to store binding credentials in CredHub.
 * You can select the SSI credentials option in the tile UI.
 
@@ -35,7 +35,7 @@ which are distinct from the credentials that service tiles store in [BOSH CredHu
 
 When a service uses SSI credentials, the service broker stores the binding credentials in runtime CredHub.
 When <%= vars.app_runtime_abbr %> binds an app to an instance of the service, the broker retrieves the
-credentials from runtime CredHub and delivers them to the Cloud Controller (CC) to activate the app to
+credentials from Runtime CredHub and delivers them to the Cloud Controller (CC) to activate the app to
 access the service.
 
 These SSI credentials are different from credentials that the tile uses internally, for example,
@@ -48,7 +48,7 @@ See the following example implementation of how to add SSI credentials capabilit
 
 ## <a id="step1"></a> Step 1: Edit your BOSH release
 
-To use runtime CredHub, your service tile must retrieve the location of the CredHub server, which is
+To use Runtime CredHub, your service tile must retrieve the location of the CredHub server, which is
 published in the <%= vars.app_runtime_abbr %> tile, through a BOSH link.
 
 <p class="note">
@@ -59,7 +59,7 @@ This helps to avoid redundant configurations in BOSH releases and deployment man
 
 ### <a id="spec"></a> Update spec file and templates
 
-The location of runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of
+The location of Runtime CredHub is stored in the `credhub.internal_url` and `credhub.port` properties of
 the <%= vars.app_runtime_abbr %> tile. To activate your service tile to retrieve these CredHub-provided
 properties, add a `consumes:` section with the BOSH link from the <%= vars.app_runtime_abbr %>  tile to the
 spec file of the BOSH job that uses them and edit the job's templates to access the values in the link:
@@ -72,9 +72,9 @@ For information about using BOSH Links in the specifications file and templates 
 consuming shared properties provided by other jobs, see [Links in Spec Files](https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/ssi-creds-tiledev.html) and
 [Links in Templates](https://bosh.io/docs/job-templates/).
 
-### <a id="errand"></a> Save the runtime CredHub location
+### <a id="errand"></a> Save the Runtime CredHub location
 
-To use the runtime CredHub location retrieved from the <%= vars.app_runtime_abbr %> tile, you must
+To use the Runtime CredHub location retrieved from the <%= vars.app_runtime_abbr %> tile, you must
 write a `post_deploy` [tile errand](tile-structure.html#errands) that saves the value out and activates the
 service broker to access it.
 
@@ -100,9 +100,9 @@ contains the BOSH link to CredHub:
 
 For more information about using BOSH links in deployment manifests, see [Links in deployments](https://tiewei.github.io/posts/bosh-terms-and-working-steps)
 
-## <a id="step2"></a> Step 2: Activate your tile to find runtime CredHub
+## <a id="step2"></a> Step 2: Activate your tile to find Runtime CredHub
 
-To activate your service tile to discover runtime CredHub, edit your product template so that it consumes the location of CredHub.
+To activate your service tile to discover Runtime CredHub, edit your product template so that it consumes the location of CredHub.
 See the following example:
 
 ```
@@ -128,7 +128,7 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-In the example, the runtime CredHub instance is accessed at `credhub.service.cf.internal`. If your broker runs
+In the example, the Runtime CredHub instance is accessed at `credhub.service.cf.internal`. If your broker runs
 as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent,
 you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address
 with `dig credhub.service.cf.internal @169.254.0.2`. This command uses
@@ -185,13 +185,13 @@ job_types:
     default: false
 ```
 
-## <a id="step4"></a> Step 4: Store binding credentials in runtime CredHub
+## <a id="step4"></a> Step 4: Store binding credentials in Runtime CredHub
 
 When the Cloud Controller (CC) receives a request to bind a service instance to an app, it forwards the
 request to the service broker. The service broker returns the binding credentials that allow access to the
 service.
 
-To activate your service broker to store binding credentials in runtime CredHub and make them SSI credentials,
+To activate your service broker to store binding credentials in Runtime CredHub and make them SSI credentials,
 do the following:
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.

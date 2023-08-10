@@ -1,9 +1,9 @@
 ---
-title: How to integrate your software as an on-demand service
+title: How to integrate your software as an On-Demand service
 owner: Services
 ---
 
-You can integrate your software as an on-demand service and service tile for <%= vars.platform_name %>.
+You can integrate your software as an On-Demand service and service tile for <%= vars.platform_name %>.
 
 Brokered service and managed service integrations assume that you have a single VM instance
 deployed for your software, or a limited number of VMs.
@@ -15,29 +15,29 @@ On-Demand (dynamic) services activates this flexibility in a scalable way. When 
     not pre-allocate VM resources for service instances. Instead, define an allowable range of VM memory and
     CPU sizes and create a dedicated network on the IaaS to host any required number of service instance VMs.
 
-When a developer creates an instance of an on-demand service, they provision the resources within the
+When a developer creates an instance of an On-Demand service, they provision the resources within the
 allowed range, and BOSH dynamically creates a new, dedicated VM for the instance.
 
-## <a id="create"></a> Create an on-demand service
+## <a id="create"></a> Create an On-Demand service
 
 The best way to create an on-demand service is to use the
 [On-Demand Services SDK](https://docs.vmware.com/en/On-Demand-Services-SDK-for-VMware-Tanzu/0.43/on-demand-services-sdk/GUID-about.html).
 
-The on-demand services SDK provides a generic on-demand service broker (ODB) that
+The On-Demand services SDK provides a generic On-Demand service broker (ODB) that
 the Tile Generator can consume like any other service broker.
 
-The on-demand service author does not write a service broker. Instead, it writes a service adapter
+The On-Demand service author does not write a service broker. Instead, it writes a service adapter
 component that takes requests from the ODB and interfaces with the service software to fulfill requests
 from the ODB.
 
 To create the tile, you need to feed the service adapter and the BOSH release of the ODB to
 [Tile Generator](./tile-generator.html):
 
-* [On-demand services SDK](https://docs.vmware.com/en/On-Demand-Services-SDK-for-VMware-Tanzu/0.43/on-demand-services-sdk/GUID-index.html) documentation explains how to write a service
+* [On-Demand services SDK](https://docs.vmware.com/en/On-Demand-Services-SDK-for-VMware-Tanzu/0.43/on-demand-services-sdk/GUID-index.html) documentation explains how to write a service
 adapter for an on-demand service that uses the ODB.
 
 * After you have the individual components for your brokered service integration, you can work
-through [Building Your First Tile](./index.html#tile-steps) to create your tile.
+through [Building your first tile](./index.html#tile-steps) to create your tile.
 
 At any level of integration, you must use [Concourse](./concourse.html) for continuous integration
 during development.

@@ -7,8 +7,6 @@ Use these instructions to describe your product template for your tile and learn
 
 The `metadata` subdirectory of a tile contains a product template file in `.yml` file format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into the deployment manifest.
 
-The `metadata` subdirectory of a tile contains a product template file in `.yml` file format. The product template file specifies how the tile interface collects configurable properties from the user, and how Ops Manager incorporates these properties into the deployment manifest.
-
 ## <a id="product-template"></a> Product template contents
 
 The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to:
@@ -31,7 +29,7 @@ a functional tile that is provided by the Ops Manager engineering team that depl
 
 For more information about product template configuration, see [Top-Level Properties](#top-level).
 
-To learn how to configure your tile's forms, see [Form Properties](#form-properties).
+To learn how to configure your tile's forms, see [Form properties](#form-properties).
 
 
 ## <a id='property-values'></a> Editing the product template
@@ -86,7 +84,7 @@ Some property values in a product template, such as CredHub credentials, must be
 
 Ops Manager gets rid of the outer parentheses from these expressions and includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
 
-For more information about tile properties, see [Referencing Properties](#property-refs).
+For more information about tile properties, see [Referencing properties](#property-refs).
 
 ### <a id='property-refs'></a> Referencing properties
 
@@ -108,7 +106,8 @@ Where:
 
 #### <a id="property-location"></a> Referencing a location
 
-The method of referencing the location of the property varies. The following table describes the different methods of referencing a property:
+The method of referencing the location of the property varies.
+The following table describes the different methods of referencing a property:
 
 | Method Name | Description |
 | ----------- | ----------- |
@@ -120,7 +119,8 @@ The method of referencing the location of the property varies. The following tab
 
 #### <a id="accessor-location"></a> Referencing an accessor
 
-Accessors vary between property blueprint types. The following example uses the property blueprint type `string` with its one accessor, `value`:
+Accessors vary between property blueprint types.
+The following example uses the property blueprint type `string` with its one accessor, `value`:
 
 ```console
 (( .properties.example-string.value ))
@@ -134,7 +134,7 @@ For example:
 (( .properties.example-string.value || [] ))
 ```
 
-For more information about the available properties and their accessors, see [Property Blueprint Reference](#property-blueprints).
+For more information about the available properties and their accessors, see [Property Blueprint reference](#property-blueprints).
 
 ### <a id='product'></a> Product context
 
