@@ -8,8 +8,6 @@ credentials using Runtime CredHub.
 
 For more information about Runtime CredHub, see [Runtime CredHub](https://docs.cloudfoundry.org/credhub/).
 
-## <a id="background"></a> Background
-
 When you bind an app to a service instance, the binding typically
 includes _binding credentials_ required to access the service.
 
@@ -22,7 +20,7 @@ This secures service instance credential management by avoiding the following:
 * Sending credentials between components, which increases risk of disclosure.
 * Requiring users to rotate credentials through the environment, which requires container recreation.
 
-To store binding credentials in Runtime CredHub, your service tile should support the following:
+To store binding credentials in Runtime CredHub, your service tile must support the following:
 
 * Discover the location of Runtime CredHub.
 * Provide this CredHub location to the broker app. The service broker uses the provided location to store binding credentials in CredHub.

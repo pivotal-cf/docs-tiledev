@@ -5,16 +5,16 @@ owner: Services
 
 You can use continuous integration (CI) testing on your service tile.
 
-There are two ways to do CI testing on your tile:
+These are the following methods to do CI testing on your tile:
 
 + Use the Tile Dashboard provided as a service by the <%= vars.company_name %> ISV team.<br>
-  For more information on using the Tile Dashboard as a service, see [Use Tile Dashboard CI to Test Your Tile](#dashboard) below.<br>
+  For more information on using the Tile Dashboard as a service, see [Use Tile Dashboard CI to test your tile](#dashboard) below.<br>
 + Set up and use your own Concourse pipeline.<br>
   For more information on setting up a Concourse pipeline, see [Set Up a concourse pipeline and test your tile](#concourse).<br>
 
   New partners can work on only one tile at a time.
 
-## <a id="dashboard"></a>Use Tile Dashboard CI to Test Your Tile
+## <a id="dashboard"></a>Use Tile Dashboard CI to test your tile
 
 With your tile in the Tile Dashboard CI testing system, you can monitor changes to <%= vars.platform_name %> that might require changes
 in your tile.
@@ -85,7 +85,7 @@ There are two ways that you can configure the tile on the Tile Dashboard:
 | Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).|
 
 
-### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and Locate the Configuration Page
+### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and locate the Configuration page
 
 To log in to the Tile Dashboard and go to the configuration page:
 
@@ -122,13 +122,13 @@ In the form, you can configure
 
 To configure other types, for example, nested collections, use the **Advanced - JSON Properties** tab.
 
-For more in formation about the **Advanced - JSON Properties** tab, see [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).
+For more in formation about the **Advanced - JSON Properties** tab, see [Configure your tile using the Advanced - JSON Properties tab](#config-with-advanced-tab).
 
-For more information on property types, see [Property and Template References](property-template-references.html).
+For more information on property types, see [Property and Template references](property-template-references.html).
 
 To configure install properties for your tile using the **Properties** tab, do the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration page](#navigate-to-tile) above.
 
 2. Click the **Properties** tab.
 
@@ -147,7 +147,7 @@ For more information about this format used by the om tool, see [om configure-pr
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile) above.
 
 2. Click the **Advanced - JSON Properties** tab.
 
@@ -176,11 +176,12 @@ To configure install properties for your tile using the **Advanced - JSON Proper
 
 ### <a id="environment-sensitive-values"></a> Environment sensitive values
 
-Some property values can vary between test environments, such as availability zone names. When the test is run, for these environment sensitive properties, VMware provides placeholder values that are replaced
+Some property values can vary between test environments, such as availability zone names. When the
+test is run, for these environment sensitive properties, VMware provides placeholder values that are replaced
 with an appropriate value for each test environment.
 A description of these placeholder values appears on the **Tile Configuration** tabs for reference.
 
-###<a id="uaa-users"></a> Specify UAA Users
+###<a id="uaa-users"></a> Specify UAA users
 
 Include a list of UAA users for testing your tile.
 
@@ -195,10 +196,10 @@ To specify the UAA users, do the following:
 
 ###<a id="save-and-run"></a> Save and run
 
-When the configuration is complete, the config icon shows green.
+When your configuration is complete, the config icon shows green.
 At this point, you can test the tile on all the environments, by doing the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration Page](#navigate-to-tile) above.
+1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile) above.
 
 1. Click **Save and Run**.
 
@@ -217,13 +218,13 @@ At this point, you can test the tile on all the environments, by doing the follo
     The environment jobs do not run until the config job has finished successfully.
 
 
-### <a id="test"></a> About Test Configuration
+### <a id="test"></a> About test configuration
 
 After your tile is installed, the Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
 Ideally your tile includes tests that use all of its capability. VMware has some ideas for expanding the Tile Dashboard testing capabilities. If you’re interested in other ways of defining tests,
 contact Pivotal Partners on [Partners Slack](https://pivotalpartners.slack.com/).
 
-### <a id="backing"></a> About Backing Services
+### <a id="backing"></a> About backing services
 
 Your tile might require a backing service outside of the existing <%= vars.platform_name %> environment,
 for example, your tile might be a service broker to a SaaS offering.
@@ -243,7 +244,7 @@ that integrates and tests your tile on your own deployment of the latest <%= var
 While you are free to use any other CI systems you are familiar with,
 <%= vars.company_name %>'s tools and documentation were built to use with Concourse CI.
 
-### <a id="server"></a> Set Up a Concourse Server
+### <a id="server"></a> Setting up a Concourse server
 
 You need a Concourse server to host your pipeline.
 
@@ -254,7 +255,7 @@ and provide S3 storage to exchange artifacts with your own servers.
 If you set up your own Concourse server,
 see the instructions in [Concourse: Setup & Operations](https://concourse-ci.org/index.html).
 
-### <a id="pipeline"></a> Create a Concourse Pipeline for Your Tile
+### <a id="pipeline"></a> Create a Concourse pipeline for your tile
 
 A typical CI pipeline for a tile consists of the following jobs:
 

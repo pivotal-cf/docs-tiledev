@@ -27,15 +27,15 @@ To update a product tile:
 
 1. In a single `.js` file, write JavaScript functions which return a hash of the tile's properties.
 
-1. Name the file in the format `TIMESTAMP_NAME.js`. `TIMESTAMP` must be in the form "YYYYMMDDHHMM" to indicate when the author created the migration. `NAME` is a human-readable name for the migration, for example, `201606150900_example-product.js`.
+1. Name the file in the format `TIMESTAMP_NAME.js`. `TIMESTAMP` must be in the form "YYYYMMDDHHMM" to indicate when the author created the migration. The `NAME` variable is a human-readable name for the migration, for example, `201606150900_example-product.js`.
 
 1. Copy the `TIMESTAMP_NAME.js` file to the `PRODUCT/migrations/v1` directory.
 
-### <a id='js-example'></a> Example JavaScript Migration File
+### <a id='js-example'></a> Example JavaScript migration file
 
 The following functions display an example migration file:
 
-```
+```console
 exports.migrate = function(input) {
     // Append text to a string
 
@@ -60,9 +60,9 @@ exports.migrate = function(input) {
 ```
 
 The properties object passed to your anonymous JavaScript migration functions are composed of
-properties at the [job-level](property-template-references.html#job-types) and [product-level](property-template-references.html#property-blueprints). Review the property names in the example metadata file in [Tutorial Tile V3](https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v3) for more information about job-level and product-level properties. The tile author must update migrations to match the corresponding product metadata file.
+properties at the [job-level](property-template-references.html#job-types) and [product-level](property-template-references.html#property-blueprints). Review the property names in the example metadata file in [Tutorial Tile V3](https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v3) for more information about job-level and product-level properties. You must update the migrations to match the corresponding product metadata file.
 
-Each property's key in the properties object is the property reference from the metadata file.
+Each properties key in the properties object is the property reference from the metadata file.
 
 Property references use one of the following forms:
 
@@ -74,7 +74,6 @@ The object accessed through the property reference contains a value key whose st
 specific to the type of the property.
 Objects can be a string, an array, or a hash. Review the following reference for the structure of each
 type of property.
-
 
 ## <a id='js-api'></a> JavaScript Migrations API
 
@@ -260,7 +259,6 @@ on Ops Manager v1.7 or later. Review the transmogrifier example in
 the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.
 </p>
 
-
 ## <a id='chaining'></a> Examples demonstrating chaining migrations
 
 You can use migration chaining for multiple migrations to run sequentially when an upgrade
@@ -281,14 +279,14 @@ Several weeks later, you decide to upgrade from v1.7.0 to v1.7.1. Now the `20160
 migration runs. Even though the v1.7.1 product includes both migrations, Ops Manager does
 not run `201606010000_a.js` again, because it maintains a record of migrations.
 
-<%= image_tag("img/chain-migration-scenarioA.png") %>
+![alt-text=""](img/chain-migration-scenarioA.png)
 
 ### Scenario B: Upgrading Directly from v1.6.0 -> v1.7.1
 
 In this scenario, you also start with v1.6.0 installed, but you decide to upgrade directly to v1.7.1,
 skipping the v1.7.0 version. Both migrations run in lexicographical order.
 
-<%= image_tag("img/chain-migration-scenarioB.png") %>
+![alt-text=""](img/chain-migration-scenarioB.png)
 
 ### Scenario C: Installing v1.7.0, Then Upgrading to v1.7.1
 
