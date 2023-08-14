@@ -5,12 +5,11 @@ owner: CredHub
 
 You can use CredHub to manage variables in the context of a larger deployment, and create new variables.
 
-## <a id='background'></a> CredHub background
-
-When a tile author defines a top-level `variables` section in the product template, Ops Manager passes the `variables` section to the
+When a tile author defines a top-level `variables` section in the product template, Ops Manager passes
+the `variables` section to the
 product manifest.
 
-Tile authors can define variables in the product template as follows:
+You can define variables in the product template as follows:
 
 ```
 variables:
@@ -68,7 +67,7 @@ The manifest excerpt includes references to two credentials, <code>EXAMPLE-PASSW
 
 When this manifest is deployed, the BOSH Director retrieves the stored variables and replaces them with the
 credential values associated with each variable. The <code>EXAMPLE-TLS</code> variables include
-property accessors, so only the `certificate` and `private_key` components are interpolated.
+property accessors, because only the `certificate` and `private_key` components are interpolated.
 
 ```
 name: demo-deploy
