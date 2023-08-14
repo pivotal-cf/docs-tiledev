@@ -196,7 +196,8 @@ do the following:
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
-1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header. For more information about CredHub authentication, see the [CredHub API documentation](https://docs.cloudfoundry.org/api/credhub/version/2.9/).
+1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header. For more information about
+CredHub authentication, see the [Authentication](https://docs.cloudfoundry.org/api/credhub/version/2.9/#_authentication) section of the CredHub API documentation.
 
 <p class="note">
 <span class="note__title">Note</span>
@@ -226,17 +227,17 @@ See the following example for how to format your API call:
     -H 'Content-type: application/json'
     ```
 
-    Where:
+Where:
+  * `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub.
 
-    * `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub.
-    * `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
-    * `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
-    * `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
-    * `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
-    * `SERVICE-URL` is the URL of your service.
-    * `USERNAME` and `PASSWORD` are your binding credentials.
+  * `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
+  * `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
+  * `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
+  * `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
+  * `SERVICE-URL` is the URL of your service.
+  * `USERNAME` and `PASSWORD` are your binding credentials.
 
-    For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_version %>/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
+  For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
 
 1. Grant your application permission to read the credential from CredHub:
 
@@ -255,7 +256,7 @@ See the following example for how to format your API call:
 
     Where `APP-GUID` is the GUID of the Cloud Foundry application being used
 
-1. Edit your service broker so that it returns a reference to the stored credentials in response to the
+2. Edit your service broker so that it returns a reference to the stored credentials in response to the
 binding request from the CC. Return the credentials as a single key `credhub-ref` with thee value formatted
 as `/c/CLIENT-IDENTIFIER/SERVICE-IDENTIFIER/BINDING-GUID/CREDENTIAL-NAME`.
 
