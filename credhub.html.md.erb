@@ -16,9 +16,10 @@ See the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html
 
 Many <%= vars.platform_name %> components use credentials to authenticate connections, and <%= vars.platform_name %> installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
 
-In <%= vars.platform_name %> v1.11.0 and later, CredHub runs on the BOSH VM, alongside the BOSH Director and UAA. Ops Manager v1.11 stores its credentials in CredHub,
-and users can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
-Tile developers can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.app_runtime_abbr %> apps can retrieve credentials using the CredHub API.
+In <%= vars.platform_name %> v1.11.0 and later, CredHub runs on the BOSH VM, alongside the
+BOSH Director and UAA. Ops Manager v1.11 and later stores its credentials in CredHub,
+and you can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
+You can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.app_runtime_abbr %> apps can retrieve credentials using the CredHub API.ile developers
 
 For more information about variable names and values, see [Fetching variable names and values](./get-credhub-vars.html) for how to fetch variable names and values using the CredHub API.
 
@@ -52,7 +53,7 @@ use the JavaScript migration process. After a successful migration, Ops Manager 
 
 For more information about migrating Credhub credentials, see [Migrating existing credentials to CredHub](./migrating-credhub-credentials.html).
 
-For more information about the Credhub API, see [CredHub API](https://docs.cloudfoundry.org/api/credhub/version/2.9/), the [CredHub CLI GitHub repository](https://github.com/cloudfoundry-incubator/credhub-cli), and the [CredHub Release GitHub repository](https://github.com/pivotal-cf/credhub-release).
+For more information about the Credhub API, see the [CredHub CLI GitHub repository](https://github.com/cloudfoundry-incubator/credhub-cli), and the [CredHub Release GitHub repository](https://github.com/pivotal-cf/credhub-release).
 
 ## <a id="api-variables"></a>Fetching variable names and values
 
@@ -62,7 +63,7 @@ For more information about variable names and values, see <a href="./get-credhub
 
 ## <a id="snippets"></a> CredHub in manifest snippets
 
-Tile developers can embed CredHub in product template and job template manifest snippets using
+You can embed CredHub in product template and job template manifest snippets using
 [triple-parenthesis notation](./property-template-references.html#job-manifest):
 
 ```
@@ -82,7 +83,7 @@ Tile developers can embed CredHub in product template and job template manifest 
 
 * Using CredHub to generate new credentials.
 
-Tile authors may choose to wait until <%= vars.platform_name %> supports some or all of these features before incorporating CredHub into their service.
+You can choose to wait until <%= vars.platform_name %> supports some or all of these features before incorporating CredHub into their service.
 
 ## <a id="resources"></a> CredHub Resources
 
