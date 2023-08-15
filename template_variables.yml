@@ -25,7 +25,7 @@ template_variables:
   gtm_account_id: GTM-MM86KCJ
 
   # Tanzu product variables
-  platform_name: Ops Manager
+  platform_name: Tanzu Operations Manager
   platform_old: Pivotal Cloud Foundry
   platform_code: PCF
   product_name_lc: pcf
@@ -38,9 +38,9 @@ template_variables:
   k8s_runtime_abbr: TKGI
   windows_runtime_full: VMware Tanzu Application Service for VMs &#91;Windows&#93;
   windows_runtime_abbr: TAS for VMs &#91;Windows&#93;
-  ops_manager_first: VMware Tanzu Operations Manager (Ops Manager)
+  ops_manager_first: VMware Tanzu Operations Manager
   ops_manager_full: VMware Tanzu Operations Manager
-  ops_manager: Ops Manager
+  ops_manager: Tanzu Operations Manager
   company_name: VMware
 
 # TAS version

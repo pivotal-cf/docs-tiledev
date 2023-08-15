@@ -30,13 +30,13 @@ main executive component, and the service. For more information, see [Service Br
 
 * Publish a catalog of available service plans to the **Services Marketplace**. For more information, see [Catalog](#catalog).
 
-* Define an interface for configuring service properties in Ops Manager. For more information, see [Configuration](#configure).
+* Define an interface for configuring service properties in Tanzu Operations Manager. For more information, see [Configuration](#configure).
 
 * Generate a BOSH manifest for deploying instances of the service, populating it with both user-configured and fixed properties. For more information, see [Fixed Properties](#fixed).
 
 * Run BOSH errands: deploy errands that set <%= vars.app_runtime_abbr %> up to run the service when an operator first deploys the service, and delete errands that clean up when an operator deletes the service. For more information, see [Errands](#errands).
 
-* Define dependencies for the tile, to prevent Ops Manager from installing the service when its dependencies are missing. For more information, see [Dependencies](#dependencies).
+* Define dependencies for the tile, to prevent Tanzu Operations Manager from installing the service when its dependencies are missing. For more information, see [Dependencies](#dependencies).
 
 * Support one-click installation and upgrading from previous versions. For more information, see [Update Rules](#update).
 
@@ -76,7 +76,7 @@ listed in the [Service Metadata](https://github.com/openservicebrokerapi/service
 
 ### <a id='configure'></a> Configuration
 
-In the Ops Manager Installation Dashboard, service tiles present a form-based interface that you can use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name %> uses to deploy instances of the service.
+In the Tanzu Operations Manager Installation Dashboard, service tiles present a form-based interface that you can use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name %> uses to deploy instances of the service.
 
 You define this configuration interface in the `forms:` section of the `tile.yml` configuration file
 that you pass to the Tile Generator. Each named form element defines a configuration pane accessible
@@ -103,7 +103,7 @@ in two locations: a <code>form_types</code> section that defines the contents an
 
 #### <a id='appearance'></a> Tile appearance
 
-In the Ops Manager Installation Dashboard, your service tile has an identifying label,
+In the Tanzu Operations Manager Installation Dashboard, your service tile has an identifying label,
 description, and logo icon. Specify these at the top of your `tile.yml` configuration file as
 `label`, `description`, and `icon_file`. The value of `icon_file` can be the name of a 128×128 pixel PNG image.
 
@@ -154,7 +154,7 @@ deploy the dependent tile.
 
 <p class="note">
 <span class="note__title">Note</span>
-After the dependency is installed, it is mandatory even if marked as option.
+After the dependency is installed, it's mandatory even if marked as option.
 </p>
 
 Include product dependencies under `requires_product_versions` at the top of
@@ -176,7 +176,7 @@ requires_product_versions:
 ### <a id='update'></a> Update rules
 
 Tile Generator automatically generates the JavaScript migration file that allows one-click updates
-from Ops Manager. This file describes how to change existing tile property names and
+from Tanzu Operations Manager. This file describes how to change existing tile property names and
 values to match the new version of the tile.
 
 A tile can contain several of these `.js` files, from previous versions
@@ -296,7 +296,7 @@ It includes:
 
 * `app`: Pushed to <%= vars.app_runtime_abbr %>
 
-* `docker-app`: Pushed to <%= vars.app_runtime_abbr %> (image will not be embedded so requires Docker registry access).
+* `docker-app`: Pushed to <%= vars.app_runtime_abbr %> (image is not embedded so requires Docker registry access).
 
 * `app-broker`: Pushed to <%= vars.app_runtime_abbr %> and registered as a broker.
 
