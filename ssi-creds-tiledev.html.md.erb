@@ -6,7 +6,7 @@ owner: Services
 You can develop your <%= vars.platform_name %> service tile to support secure service instance (SSI)
 credentials using Runtime CredHub.
 
-For more information about Runtime CredHub, see [Runtime CredHub](https://docs.cloudfoundry.org/credhub/).
+For more information about Runtime CredHub, see [Runtime CredHub](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/secure-si-creds.html).
 
 ## <a id="background"></a> Background required for securing your service credentials
 
@@ -42,7 +42,7 @@ These SSI credentials are different from credentials that the tile uses internal
 to give the service broker access to an internal database. <%= vars.app_runtime_abbr %> generates the internal tile credentials
 for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
 
-For more information about the CredHub credential management component, see the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html).
+For more information about the CredHub credential management component, see the [CredHub documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/credhub-index.html).
 
 See the following example implementation of how to add SSI credentials capability to a service tile:
 
@@ -197,7 +197,7 @@ do the following:
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
 1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header. For more information about
-CredHub authentication, see the [Authentication](https://docs.cloudfoundry.org/api/credhub/version/2.9/#_authentication) section of the CredHub API documentation.
+CredHub authentication, see the [Authentication](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/credhub-index.html) section of the CredHub API documentation.
 
 1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint
 for setting the `json` credential type with a user-provided value.
