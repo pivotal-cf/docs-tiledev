@@ -1,20 +1,20 @@
 ---
-title: Migrating existing syslog configuration to Ops Manager
+title: Migrating existing Syslog configuration to Tanzu Operations Manager
 owner: Ops Manager
 ---
 
 You can migrate existing syslog properties that are defined by a tile into a syslog form that
-is provided in Ops Manager v2.9 and later.
+is provided in Tanzu Operations Manager v2.9 and later.
 
-When you enable the Ops Manager syslog feature, Ops Manager:
+When you enable the Tanzu Operations Manager syslog feature, Tanzu Operations Manager:
 
 * Provides your tile with its own syslog form.
 * Ensures that the syslog BOSH release is automatically injected into the instance groups of your product.
-* Includes syslog configuration properties when Ops Manager injects the syslog release into your product.
+* Includes syslog configuration properties when Tanzu Operations Manager injects the syslog release into your product.
 
 ## <a id="syslog-data-model"></a>Syslog data model
 
- The following table lists the Ops Manager syslog parameters that you can use to migrate your existing
+ The following table lists the Tanzu Operations Manager syslog parameters that you can use to migrate your existing
  configurations:
 
 <table class="nice">
@@ -95,8 +95,8 @@ When you enable the Ops Manager syslog feature, Ops Manager:
 ## <a id="javascript"></a> Use the JavaScript migration process
 
 Tile authors can write a JavaScript migration to move their existing syslog properties into the
-syslog form provided by Ops Manager. After a successful migration, Ops Manager presents the
-migrated syslog properties in the syslog form of the tile.
+syslog form provided by Tanzu Operations Manager. After a successful migration, Tanzu Operations Manager presents the
+migrated syslog properties in the Syslog form of the tile.
 
 1. Set the `opsmanager_syslog` property to `true` in your `metadata.yml` file.
 For more information, see [opsmanager_syslog](./property-template-references.html#syslog-flag).
@@ -140,11 +140,12 @@ longer used to configure the syslog.
 
 1. Run a deployment test of your tile using the procedures in [Testing Tiles](./testing.html).
 
-1. Verify that your syslog properties are migrated into the Ops Manager syslog
+1. Verify that your syslog properties are migrated into the Tanzu Operations Manager syslog
 configuration:
 
-    * View the configurations in the **Syslog** pane in Ops Manager **Settings** page.
-    * View your syslog properties using the `syslog_configuration` Ops Manager API endpoint.
+    * View the configurations in the **Syslog** pane in Tanzu Operations Manager **Settings** page.
+    * View your syslog properties using the `syslog_configuration` Tanzu Operations Manager API endpoint.
+
     For more information about the `syslog_configuration` API endpoint, see
     [Retrieving syslog configuration for a product](https://docs.pivotal.io/platform/2-10/opsman-api/#tag/Syslog-Configuration/paths/~1api~1v0~1staged~1products~1{product_guid}~1syslog_configuration/get).
 

@@ -23,8 +23,8 @@ tile metadata, BOSH applies the runtime config to every VM in the deployment.
 For more information about top-level properties, see
 [Top-Level properties](./property-template-references.html#top-level).
 
-When you apply changes to deployments, Ops Manager combines the runtime config information from every
-tile in the deployment and assigns each named runtime config a unique identifier. Ops Manager creates the
+When you apply changes to deployments, Tanzu Operations Manager combines the runtime config information from every
+tile in the deployment and assigns each named runtime config a unique identifier. Tanzu Operations Manager creates the
 identifier using the tile name, a generated GUID, and the runtime config name defined in the metadata.
 
 The identifier follows the following format:
@@ -38,7 +38,7 @@ TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 ## <a id="create"></a>Add a runtime config
 
 Tile authors can add `runtime_configs` as a top-level property in tile metadata. In the runtime config
-section, you define configuration properties that Ops Manager applies to all deployments. A tile can
+section, you define configuration properties that Tanzu Operations Manager applies to all deployments. A tile can
 support any number of runtime configs.
 
 A named runtime config, can contain any number of add-ons. Each add-on can contain any number of jobs.
@@ -80,10 +80,8 @@ Append your product name or another unique identifier to each of the named items
 the <code>runtime_configs</code> section.</p>
 
 
-## <a id="delete"></a>Delete a runtime config
-
-Tile authors can remove an existing runtime config from a tile.
-When you upgrade the tile, Ops Manager detects the missing reference and deletes the runtime config.
+You can remove an existing runtime config from a tile.
+When you upgrade the tile, Tanzu Operations Manager detects the missing reference and deletes the runtime config.
 
 To delete a runtime config from a tile, remove the `runtime_configs` section from the tile metadata.
 
@@ -108,7 +106,7 @@ runtime_configs:
 
 ## <a id="config-only"></a>Create a Runtime Config tile
 
-In Ops Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config
+In Tanzu Operations Manager, a runtime config tile appears as a tile with minimal configuration options. Runtime config
 tiles contain no stemcell, network, availability zone (AZ), or resource config information. You might create a
 runtime config tile if you want global deployment configurations to be applied to all VMs in deployment and do
   not any other capability.
@@ -119,7 +117,7 @@ For a runtime config tile, tile authors are not required to define the following
 * `pre_delete_errands`
 * `job_types`
 
-![alt-text="Example runtime config tile on the Ops Manager installation dashboard"](img/runtime-config-dashboard.png)
+![Runtime Config Tile on the Tanzu Operations Manager Installation Dashboard](img/runtime-config-dashboard.png)
 
 ### <a id="example"></a>Example Runtime Config-Only tile
 
@@ -183,6 +181,6 @@ runtime_configs:
 
 In the previous runtime config example, the `login-banner` job prints a banner when you log in to any VM in
 the deployment. You can use the default value defined in the `form_types` section of the metadata or
-configure the banner by editing the **Example string** value in Ops Manager.
+configure the banner by editing the **Example string** value in Tanzu Operations Manager.
 
 ![alt-text="Runtime config tile information example."](img/runtime-config-tile.png)

@@ -5,7 +5,7 @@ owner: CredHub
 
 You can use CredHub to manage variables in the context of a larger deployment, and create new variables.
 
-When a tile author defines a top-level `variables` section in the product template, Ops Manager passes
+When a tile author defines a top-level `variables` section in the product template, Tanzu Operations Manager passes
 the `variables` section to the
 product manifest.
 
@@ -23,12 +23,12 @@ You can reference these variables in the manifest snippets in their tile metadat
 ((( EXAMPLE-CREDHUB-PASSWORD )))
 ```
 
-When you use triple parentheses, use Ops Manager to identify CredHub variables while still supporting the BOSH double
+When you use triple parentheses, use Tanzu Operations Manager to identify CredHub variables while still supporting the BOSH double
 parentheses syntax. A variable that is referenced
 within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub,
 BOSH populates that variable value internally.
 
-The benefit of this approach is that the Ops Manager YAML file does not contain sensitive credentials when the metadata
+The benefit of this approach is that the Tanzu Operations Manager YAML file does not contain sensitive credentials when the metadata
 manifest snippets have triple parentheses. The resulting manifest file contains variables within double
 parentheses, rather than unobscured credentials.
 
@@ -39,7 +39,7 @@ For example, a tile author adds credentials to a manifest snippet in the followi
   key: prefix-((( ANOTHER-CREDHUB-PASSWORD )))-suffix
 ```
 
-Ops Manager then evaluates the preceding example to generate the following section in the product manifest:
+Tanzu Operations Manager then evaluates the preceding example to generate the following section in the product manifest:
 
 ```
   (( EXAMPLE-CREDHUB-PASSWORD ))
@@ -48,7 +48,7 @@ Ops Manager then evaluates the preceding example to generate the following secti
 
 ## <a id='how-it-works'></a> How CredHub works within a deployment
 
-CredHub is distributed as a BOSH release. As part of this installation, Ops Manager co-locates the
+CredHub is distributed as a BOSH release. As part of this installation, Tanzu Operations Manager co-locates the
 CredHub release on the BOSH Director, including the CredHub job configurations, and the BOSH Director is configured to point
 to the CredHub API.
 
@@ -84,7 +84,7 @@ instance_groups:
           private_key: ((EXAMPLE-TLS.private_key))
 ```
 
-Ops Manager configures the BOSH Director to generate a credential if it does not exist. The manifest includes generation
+Tanzu Opertions Manager configures the BOSH Director to generate a credential if it does not exist. The manifest includes generation
 parameters that define how the
 credential must be generated. These generation parameters are defined in the variables section.
 
@@ -135,3 +135,96 @@ Here is an example of a precisely typed variable:
 ```
 ((/EXAMPLE-PASSWORD))
 ```
+
+## <a id='credhub-ca-refs'></a> Reference existing CAs in CredHub variables
+
+This section describes how to reference existing CAs stored in CredHub correctly in your tile's property configuration.
+
+In Tanzu Operations Manager v2.9 and later, you can perform a bulk rotation of all CAs and certificates in a foundation, which might include leaf certificates used by individual service tiles. Tanzu Operations Manager invokes CredHub Maestro to perform this operation.
+
+CredHub Maestro requires that any triple parentheses references to CAs that sign leaf certificates must return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the least amount of downtime of your tile's services during certificate rotation.
+
+When referencing a CA stored in CredHub, use the format `LEAF-CERTIFICATE-NAME.ca` to ensure that a concatenated version of the CA is returned. Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
+
+The following table presents examples of the correct and incorrect way to reference CAs and leaf certificates in order to support certificate rotation by CredHub Maestro.
+
+<div>
+  <table class="nice">
+    <style>
+      main table {
+        table-layout: fixed;
+      }
+    </style>
+  <col width="50%">
+  <col width="50%">
+  <tr>
+    <th> Correct Format </th>
+    <th> Incorrect Format </th>
+  </tr>
+  <tr>
+    <td>
+     <pre>
+templates:
+ - name: bpm
+   release: bpm
+ - manifest: |
+...
+.properties.routing_backends_client_cert_with_san.cert_pem ))
+    private_key: (( .properties.routing_backends_client_cert_with_san.private_key_pem ))
+    ca_certs: |
+      (( .properties.routing_custom_ca_certificates.value ))
+      (( $ops_manager.ca_certificate ))
+      <span style="font-weight: bold;background-color: #98FB98;">((( /cf/some-diego-leaf-cert.ca )))</span>
+      <span style="font-weight: bold;background-color: #98FB98;">((( /cf/some-diego-leaf-2-6.ca)))</span>
+      forwarded_client_cert: (( .properties.routing_tls_termination.selected_option.parsed_manifest(gorouter_forwarded_client_cert) ))
+variables:
+ - name: /cf/diego-instance-identity-root-ca
+    options:
+      common_name: Diego Instance Identity Root CA
+      duration: 1095
+      is_ca: true
+      type: certificate
+ - name: /cf/diego-instance-identity-root-ca-2-6
+    options:
+      common_name: Diego Instance Identity Root CA
+      duration: 1095
+      is_ca: true
+      type: certificate
+  <span style="font-weight:bold; background-color: #98FB98;">- name: /cf/some-diego-leaf-cert.ca</span>
+    options:
+      ca: /cf/diego-instance-identity-root-ca
+      type: certificate
+  <span style="font-weight:bold; background-color: #98FB98;">- name: /cf/some-diego-leaf-2-6.ca</span>
+    options:
+      ca: /cf/diego-instance-identity-root-ca-2-6
+      type: certificate </pre></td>
+<td valign="top">
+      <pre>
+templates:
+ - name: bpm
+   release: bpm
+ - manifest: |
+...
+.properties.routing_backends_client_cert_with_san.cert_pem ))
+    private_key: (( .properties.routing_backends_client_cert_with_san.private_key_pem ))
+    ca_certs: |
+      (( .properties.routing_custom_ca_certificates.value ))
+      (( $ops_manager.ca_certificate ))
+      <span style="font-weight: bold;background-color: #FFCCCB;">((( /cf/diego-instance-identity-root-ca.certificate )))</span>
+      <span style="font-weight: bold;background-color: #FFCCCB;">((( /cf/diego-instance-identity-root-ca-2-6.certificate )))</span>
+      forwarded_client_cert: (( .properties.routing_tls_termination.selected_option.parsed_manifest(gorouter_forwarded_client_cert) ))
+variables:
+ - name: /cf/diego-instance-identity-root-ca
+   options:
+     common_name: Diego Instance Identity Root CA
+     duration: 1095
+     is_ca: true
+     type: certificate
+- name: /cf/diego-instance-identity-root-ca-2-6
+  options:
+     common_name: Diego Instance Identity Root CA
+     duration: 1095
+     is_ca: true
+     type: certificate</pre></td>
+  </tr>
+</table>

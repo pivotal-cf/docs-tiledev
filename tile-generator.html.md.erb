@@ -7,7 +7,7 @@ You can use the Tile Generator tool to develop, package, test, and deploy servic
 to <%= vars.platform_name %>.
 
 Tiles are the
-installation package format used by Ops Manager to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
+installation package format used by Tanzu Operations Manager to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
 uses templates and patterns that are based on years of experience integrating
 third-party services into Cloud Foundry and eliminates much of the need for
 you to have intimate knowledge of all the tools involved.
@@ -25,7 +25,7 @@ It creates everything that is required to deploy your software into
   deployments for zero-downtime upgrades.
 - A **BOSH release** suitable for deploying your software to
 <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) or open-source Cloud Foundry.
-- An **Ops Manager Tile** that can be imported into Ops Manager, installed,
+- An **Tanzu Operations Manager Tile** that can be imported into Tanzu Operations Manager, installed,
   configured, and deployed, including UI forms and automatic upgrades from
   previous versions.
 - A **Concourse pipeline configuration** to activates Continuous Integration of
@@ -200,8 +200,8 @@ description: Longer description of the tile's purpose
   with your product team to agree on a name.  Marketing teams often care about the
   name because it appears in VMware Tanzu Network URLs.
 
-- The `icon_file` must be a 128 x 128 pixel image that appears on your tile in the Ops Manager UI.
-  By convention, place any resources used by the tile in the `resources` subdirectory of your repository.
+- The `icon_file` must be a 128 x 128 pixel image that appears on your tile in the Tanzu Operations Manager UI.
+  By convention, place any resources used by the tile in the `resources` sub-directory of your repository.
 
 - The `label` text appears on the tile under your icon. This must
   match your product name on VMware Tanzu Network. Coordinate with your
@@ -210,7 +210,7 @@ description: Longer description of the tile's purpose
 
 - The `description` must contain a description of the product. This
   is not currently used, but might be displayed in a future version of
-  Ops Manager.
+  Tanzu Operations Manager.
 
 ### <a id="packages"></a> Packages
 
@@ -626,14 +626,14 @@ as the property name but in ALL_CAPS). They can also be referenced in other part
 of the configuration file by using `(( .properties.<property-name> ))` instead
 of a hardcoded value.
 
-All properties supported by Ops Manager can be used. The syntax is the same
-as used by Ops Manager, except that for simplicity property blueprints for
-form text boxes do not need to be declared separately. Instead, the declaration
-is in the form itself. For a complete list of supported property
+All properties supported by Tanzu Operations Manager can be used. The syntax is the same
+as used by Tanzu Operations Manager, except that for simplicity property blueprints for
+form fields do not need to be declared separately. Instead, the declaration
+is included in the form itself. For a complete list of supported property
 types and syntax, see the
-[Property and Template References](./property-template-references.html).
+[Property and template references](./property-template-references.html).
 
-Ops Manager supports text areas for any type of multi-line credential.You can add `secret` property to use a text area instead of the default single-line text box, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
+Tanzu Operations Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
 
 ```
 property_inputs:
@@ -684,7 +684,7 @@ letting the user choose between some standard brokers.
 
 ### <a id='declare-dependencies'></a> Declaring product dependencies
 
-When your product has dependencies on others, you can have Ops Manager
+When your product has dependencies on others, you can have Tanzu Operations Manager
 enforce that dependency by declaring it in your `tile.yml` file as follows:
 
 ```
@@ -693,7 +693,7 @@ requires_product_versions:
   version: '~> 1.7'
 ```
 
-If the required product is not present in the <%= vars.platform_name %> installation, Ops Manager
+If the required product is not present in the <%= vars.platform_name %> installation, Tanzu Operations Manager
 displays a message saying
 `<your-tile> requires 'p-mysql' version '~> 1.7' as a dependency` and
 refuses to install your tile until that dependency is satisfied.
@@ -732,9 +732,9 @@ apply_open_security_group: true
 
 ### <a id="stemcells"></a> Stemcells
 
-Tile Generator defaults to a recent stemcell supported by Ops Manager.
-In most cases the default is fine, because the stemcell is only used to run
-Cloud Foundry command lines and the Docker daemon. But if you have specific stemcell
+Tile Generator defaults to a recent stemcell supported by Tanzu Operations Manager.
+In most cases the default is fine, because the stemcell is only used to execute
+CF command lines and/or the Docker daemon. But if you have specific stemcell
 requirements, you can override the defaults in your `tile.yml` file by including
 a `stemcell-criteria` section and replacing the appopriate values:
 
@@ -794,7 +794,7 @@ override the version number completely, specify a valid semver version on
 the build command, e.g. `tile build 3.4.5`.
 
 No-op content migration rules are generated for every prior release to the
-current release, so that Ops Manager allows tile upgrades from any
+current release, so that Tanzu Operations Manager allows tile upgrades from any
 version to any newer version. This depends on the existence of the `tile-history.yml` file.
 
 If you need to be able to upgrade from a
@@ -814,7 +814,7 @@ By default, Tile Generator produces all code necessary to do a blue/green,
 zero-downtime deployment of all tile components when installing a newer version
 over an older one. For most tile versions this is all that is needed.
 
-Ops Manager has support for performing upgrade actions, such as database migrations,
+Tanzu Operations Manager has support for performing upgrade actions, like database migrations,
 during a tile upgrade, but this capability is not yet exposed through tile
 generator.
 
