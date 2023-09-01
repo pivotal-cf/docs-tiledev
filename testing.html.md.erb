@@ -31,14 +31,14 @@ metrics emitter, manual by developer and in an automated pipeline.
       You call it from a test app, verify the logs it generates, and delete it.
       For a typical end-to-end test sequence, see [Smoke Tests](#smoke).
 
-1. System tests of **tile** operation within Ops Manager.
+1. System tests of **tile** operation within Tanzu Operations Manager.
   - These include:
       * **Configuration checks** that test every external configurable integration point and connection to remote servers using configured credentials.
       * **Default checks** that confirm "happy path" capability.
-  - Use the Ops Manager API to verify that property blueprints in the tile metadata are correct
-    and that they translate correctly to the BOSH manifest that Ops Manager generates.
-  - Use the [om](https://github.com/pivotal-cf/om) tool to call the Ops Manager API programmatically from Go.
-    Avoid the unsupported opsmgr gem that called the Ops Manager API from Ruby.
+  - Use the Tanzu Operations Manager API to verify that property blueprints in the tile metadata are correct
+    and that they translate correctly to the BOSH manifest that Tanzu Operations Manager generates.
+  - Use the [om](https://github.com/pivotal-cf/om) tool to call the Tanzu Operations Manager API programmatically from Go.
+    Avoid the unsupported opsmgr gem that called the Tanzu Operations Manager API from Ruby.
   - Confirm manually that the tile wires property blueprints to the expected pane and form controls in the UI.
   - Test your environment using one of the environments described in [Development Environments](./environments.html).
 

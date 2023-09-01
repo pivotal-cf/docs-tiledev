@@ -5,7 +5,7 @@ owner: Services
 
 You can document your service tile for <%= vars.platform_name %>.
 
-When a VMware Tanzu service tile starts on [VMware Tanzu Network](https://network.pivotal.io), <%= vars.company_name %> publishes
+When a VMware Tanzu service tile starts on [VMware Tanzu Network](https://network.tanzu.vmware.com/), <%= vars.company_name %> publishes
 corresponding documentation under [Partner Services for VMware Tanzu](https://docs.pivotal.io).
 
 This documentation is formatted in [Markdown](https://daringfireball.net/projects/markdown/), stored in a GitHub repository that <%= vars.company_name %> creates, and is published with the [bookbinder](https://github.com/pivotal-cf/bookbinder) platform.
@@ -63,7 +63,7 @@ Current Partner Tile for VMware Tanzu Details:
 - Version:
 - Release Date:
 - Software components versions: Partner product version
-- Compatible Ops Manager Version(s): 3.0.x and 2.10.x
+- Compatible Tanzu Operations Manager Version(s): 3.0.x and 2.10.x
 - Compatible TAS for VMs Version(s): 4.0.x and 3.0.x
 
 #### <a id='requirements'></a> Requirements (or prerequisites, packaging dependencies for offline buildpacks, ans others.)
@@ -84,15 +84,17 @@ the <%= vars.platform_name %> Feedback list.
 ### <a id="install"></a> Installing and configuring the tile
 
 You can install and configure the tile. Typically this includes procedures for
-how to download the tile from VMware Tanzu Network, install it on Ops Manager,
+how to download the tile from VMware Tanzu Network, install it on Tanzu Operations Manager,
 configure the tile, and do any required third-party configuration. Images can be provided
     where necessary.
 
-#### <a id='install-with-om'></a> Installing the tile using Ops Manager
+#### <a id='install-with-om'></a> Installing the tile using Tanzu Operations Manager
+
+#### <a id='install-with-om'></a> Install using Tanzu Operations Manager
 
 - Download the product file from VMware Tanzu Network.
-- Upload the product file to your Ops Manager installation.
-- Click **Add** next to the uploaded product description in the Ops Manager Available Products view to add this product to your staging area.
+- Upload the product file to your Tanzu Operations Manager installation.
+- Click Add next to the uploaded product description in the Tanzu Operations Manager Available Products view to add this product to your staging area.
 - Click the newly added tile to review any configurable options.
 - Click **Review Pending Changes**, and **Apply Changes** to install the service.
 
@@ -105,7 +107,7 @@ If the procedures are complicated, create a new Upgrading topic.
 
 Add snapshots for each step when possible or add details as required.
 
-- Log on to Ops Manager.
+- Log in to Tanzu Operations Manager.
 - Click **Import a Product** and import the Partner Tile.
 - Select the Partner option.
 - Click **Add** on the Partner Tile.

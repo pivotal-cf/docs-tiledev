@@ -7,7 +7,7 @@ Learn how to do tile migrations, which refers to changing the name and values of
 when a customer upgrades tile versions. Tile authors supply a JavaScript file to trigger chaining migrations.
   Chaining migrations allows for multiple migrations to run sequentially.
 
-To use JS migrations, ensure that you are using Ops Manager v1.7 or higher.
+To use JS migrations, ensure that you are using Tanzu Operations Manager v1.7 or higher.
 
 In the tile installer <code>.yml</code> file that Tile Generator creates, form properties appear in
 two locations:
@@ -18,7 +18,7 @@ interface.
 constraints.
 
 Changing the value of<code>single_az_only</code> for jobs started by your tile can cause data loss
-for  upgrades to Ops Manager v1.7 versions later than v1.7.20, or v1.8 versions later than v1.8.12.
+for  upgrades to Tanzu Operations Manager v1.7 versions later than v1.7.20, or v1.8 versions later than v1.8.12.
 To avoid this, contact [VMware Support](https://tanzu.vmware.com/support.html).
 
 ## <a id='import'></a> Update Values or Property Names Using JavaScript
@@ -254,9 +254,9 @@ Refer to the following example properties when you write your own tile migration
 
 <p class="note">
 <span class="note__title">Note</span>
-If your product uses Ops Manager v1.6 or earlier metadata, you must write a transmogrifier
+If your product uses Tanzu Operations Manager v1.6 or earlier metadata, you must write a transmogrifier
 content migration for customers using your product on v1.6, and a JavaScript migration for those
-on Ops Manager v1.7 or later. Review the transmogrifier example in
+on Tanzu Operations Manager v1.7 or later. Review the transmogrifier example in
 the <a href="https://github.com/pivotal-cf-experimental/ops-manager-example/releases/tag/tutorial-v1">Tile Tutorial V1</a>.
 </p>
 
@@ -274,10 +274,10 @@ use the example product versions previously described.
 
 ### Scenario A: Upgrading from v1.6.0 -> v1.7.0 -> v1.7.1
 
-In this scenario, you start with the v1.6.0 product installed. After you upgrade to Ops Manager v1.7 or
+In this scenario, you start with the v1.6.0 product installed. After you upgrade to Tanzu Operations Manager v1.7 or
 later, you decide to upgrade the product to v1.7.0. This causes the `migration 201606010000_a.js` to run.
 Several weeks later, you decide to upgrade from v1.7.0 to v1.7.1. Now the `201607010000_b.js`
-migration runs. Even though the v1.7.1 product includes both migrations, Ops Manager does
+migration runs. Even though the v1.7.1 product includes both migrations, Tanzu Operations Manager does
 not run `201606010000_a.js` again, because it maintains a record of migrations.
 
 ![alt-text="Example chain migration scenario A"](img/chain-migration-scenarioA.png)
