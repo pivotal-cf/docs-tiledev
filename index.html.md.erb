@@ -4,7 +4,7 @@ owner: Services
 ---
 
 You can use the following VMware Tanzu Partners information to learn how to build and publish processes for an
-Tanzu Operations Manager tile on [VMware Tanzu Network](https://network.pivotal.io/).
+Tanzu Operations Manager tile on [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
 For advanced developers with previous experience building tiles, see [Property and template references](./property-template-references.html) and [Development workflow reference](./dev-workflow.html).
 
@@ -74,14 +74,14 @@ Depending on what you build, you might need to install the following tools:
 - [CF Dev](https://github.com/cloudfoundry-incubator/cfdev) (optional): A lightweight <%= vars.app_runtime_full %>  installation for deploying and debugging apps locally. You can use Cloud Foundry Dev to run <%= vars.app_runtime_abbr %>
 on your local workstation.
 
-#### <a id="generate"></a> 2. Generate a tile
+#### <a id="generate"></a> Step 2. Generate a tile
 
 Tile Generator simplifies building tiles. To use the Tile Generator, upload your software components,
 such as the service broker, buildpack, and Docker image, and then the tool generates a base tile.
 
 For information about setting up the Tile Generator and building a base tile, see [Tile Generator](./tile-generator.html).
 
-#### <a id="test"></a> 3. Test your tile
+#### <a id="test"></a> Step 3. Test your tile
 
 Before you publish your tile, you can test it manually using a Partner Integration Environment (PIE). In PIE you can see how the tile functions
 on an IaaS, for example, Amazon Web Services (AWS) or Google Cloud Platform (GCP). You can upload, configure, and
@@ -92,14 +92,14 @@ To gain access to your PIE, reach out to your contact at <%= vars.company_name %
 
 If you already have access to your PIE, for information about how to log in, see [Development Environments](./environments.html).
 
-#### <a id="document"></a> 4. Document your tile
+#### <a id="document"></a> Step 4. Document your tile
 
 When you are ready to publish your tile, write documentation. Documentation is valuable for operators
 who use your tile.
 
 For more information about how to write and publish documentation for your tile, see [Tile Documentation](./tile-documentation.html).
 
-#### <a id="publish"></a> 5. Publish your tile on VMware Tanzu Network
+#### <a id="publish"></a> Step 5. Publish your tile on VMware Tanzu Network
 
 Contact your <%= vars.company_name %> representative to guide you through uploading your
 tile to VMware Tanzu Network. When you upload your tile to the VMware Tanzu Network, it becomes available for
