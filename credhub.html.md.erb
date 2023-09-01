@@ -17,7 +17,7 @@ See the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html
 Many <%= vars.platform_name %> components use credentials to authenticate connections, and <%= vars.platform_name %> installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
 
 In <%= vars.platform_name %> v1.11.0 and later, CredHub runs on the BOSH VM, alongside the
-BOSH Director and UAA. Ops Manager v1.11 and later stores its credentials in CredHub,
+BOSH Director and UAA. Tanzu Operations Manager v1.11 and later stores its credentials in CredHub,
 and you can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
 You can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.app_runtime_abbr %> apps can retrieve credentials using the CredHub API.ile developers
 
@@ -49,7 +49,7 @@ For more information on how to create new varaiables in Credhub, see <a href="./
 ## <a id="migrate-creds"></a>Migrating credentials
 
 To migrate existing non-configurable credentials to CredHub, such as blobstore secrets and backup encryption keys,
-use the JavaScript migration process. After a successful migration, Ops Manager deletes the migrated credentials from installation.yml file.
+use the JavaScript migration process. After a successful migration, Tanzu Operations Manager deletes the migrated credentials from installation.yml file.
 
 For more information about migrating Credhub credentials, see [Migrating existing credentials to CredHub](./migrating-credhub-credentials.html).
 

@@ -3,11 +3,11 @@ title: pcf Command Line Utility
 owner: Services
 ---
 The `pcf` utility provides a command line interface to <%= vars.platform_name %> for you to
-deploy and test tiles. The `pcf` utility activates Ops Manager access from CI pipelines, but
-you might find it convenient to use the CLI rather than the Ops Manager UI.
+deploy and test tiles. The `pcf` utility activates Tanzu Operations Manager access from CI pipelines, but
+you might find it convenient to use the CLI rather than the Tanzu Operations Manager UI.
 
 You can use the `pcf` utility to test your tile's BOSH errands
-directly from your CLI, without going through Ops Manager and BOSH. This reduces the time it takes to
+directly from your CLI, without going through Tanzu Operations Manager and BOSH. This reduces the time it takes to
 deploy and test each iteration of your software components.
 
 ##<a id="install"></a> Installation
@@ -20,7 +20,7 @@ install the `pcf` utility, follow the
 
 The `pcf` utility searches for a file called `metadata` in the current directory.
 This file is expected to provide the URL and credentials to connect to
-Ops Manager, in the following format:
+Tanzu Operations Manager, in the following format:
 
 ```yaml
 ---
@@ -68,9 +68,9 @@ Commands:
   uninstall
 ```
 
-##<a id="ops-man-settings"></a> Verifying Ops Manager settings
+##<a id="ops-man-settings"></a> Verifying Tanzu Operations Manager settings
 
-To see which products are available and installed in Ops Manager, run:
+To see which products are available and installed in Tanzu Operations Manager, run:
 
 ```bash
 $ pcf products
@@ -116,10 +116,10 @@ $ pcf settings test-tile
 ##<a id="deploy-tiles"></a> Deploying tiles
 
 After your software is working correctly, deploy using `test-errand`, and you can go
-through the real Ops Manager deployment process from the CLI, just as you can
-normally do through the Ops Manager UI.
+through the real Tanzu Operations Manager deployment process from the CLI, just as you can
+normally do through the Tanzu Operations Manager UI.
 
-Import your .pivotal file into Ops Manager:
+Import your .pivotal file into Tanzu Operations Manager:
 
 ```bash
 $ pcf import sample/product/test-tile-0.0.2.pivotal
@@ -211,7 +211,7 @@ $ pcf uninstall test-tile
 ```
 
 If you accumulate a lot of uninstalled tiles or old versions, you can clean
-up Ops Manager's available products (and disk space):
+up Tanzu Operations Manager's available products (and disk space):
 
 ```bash
 $ pcf delete-unused-products

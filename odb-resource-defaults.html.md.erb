@@ -9,7 +9,7 @@ On-Demand service tiles have a configuration pane for each service plan.
 You can use the drop-down menu on the configuration pane to set the VM type and persistent disk type for
 each instance of that plan.
 
-Ops Manager populates the menu with options that are based on the VM and disk options available
+Tanzu Operations Manager populates the menu with options that are based on the VM and disk options available
 on the current IaaS.
 When you set default values for VMs and disk types, it helps you to select the right
 resources for on-demand service
@@ -17,7 +17,7 @@ broker (ODB) services when you use on-demand plans.
 
 <p class="note">
 <span class="note__title">Note</span>
-Ops Manager 2.9 and later supports defining VM and disk type defaults and constraints.
+Tanzu Operations Manager 2.9 and later supports defining VM and disk type defaults and constraints.
 </p>
 
 ## <a id="defaults"></a>VM and Persistent disk types
@@ -27,12 +27,12 @@ disk type come from the `disk_type_dropdown` property.
 
 Tile authors do not specify the menu items in the product template.
 
-Because VM and disk options differ by IaaS, Ops Manager uses a best-fit algorithm to match
+Because VM and disk options differ by IaaS, Tanzu Operations Manager uses a best-fit algorithm to match
 defaults to their closest equivalents on the IaaS, similar to how the **Resource Config** pane
 handles the **VM Type** and **Persistent Disk Type** options.
 
 If a tile developer does not include a default value for a VM or disk resource, and then you configure the tile and do not choose a value from
-  the drop-down menu, Ops Manager by default sets the resource to the smallest option available on the IaaS.
+  the drop-down menu, Tanzu Operations Manager by default sets the resource to the smallest option available on the IaaS.
 
 ### <a id="vm-type"></a>Set VM Type defaults
 
