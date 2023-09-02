@@ -58,7 +58,7 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
 
 + You belong to your company's Slack channel in the PivotalPartners.slack.com organization.
 
-+ Your tile is uploaded to the [VMware Tanzu Network](https://network.pivotal.io/).
++ Your tile is uploaded to the [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
     | If you are uploading a&hellip; | Then&hellip; |
     |------------------------------------|--------------|
@@ -110,7 +110,7 @@ To log in to the Tile Dashboard and go to the configuration page:
 The **Properties** tab view allows you to configure installation properties through a form.
 The form pulls properties from your `tile.yml` file parsing the `properties_blueprints`.
 For general information about `properties_blueprints`,
-see [Configuration Properties](./reference.html#properties).
+see [Configuration properties](./reference.html#properties).
 
 In the form, you can configure
 
@@ -124,7 +124,7 @@ To configure other types, for example, nested collections, use the **Advanced - 
 
 For more in formation about the **Advanced - JSON Properties** tab, see [Configure your tile using the Advanced - JSON Properties tab](#config-with-advanced-tab).
 
-For more information on property types, see [Property and Template references](property-template-references.html).
+For more information on property types, see [Property and template references](property-template-references.html).
 
 To configure install properties for your tile using the **Properties** tab, do the following:
 
@@ -143,7 +143,8 @@ To configure install properties for your tile using the **Properties** tab, do t
 In the **Advanced - JSON Properties** tab, you configure install properties, specifying them in JSON,
 in the format used by the om tool.
 
-For more information about this format used by the om tool, see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
+For more information about this format used by the om tool,
+see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
 
@@ -221,8 +222,7 @@ At this point, you can test the tile on all the environments, by doing the follo
 ### <a id="test"></a> About test configuration
 
 After your tile is installed, the Tile Dashboard runs any post-deploy errands your tile has defined, including tests.
-Ideally your tile includes tests that use all of its capability. VMware has some ideas for expanding the Tile Dashboard testing capabilities. If you’re interested in other ways of defining tests,
-contact Pivotal Partners on [Partners Slack](https://pivotalpartners.slack.com/).
+Ideally your tile includes tests that use all of its capability.
 
 ### <a id="backing"></a> About backing services
 
