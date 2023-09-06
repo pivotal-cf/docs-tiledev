@@ -66,9 +66,10 @@ spec file of the BOSH job that uses them and edit the job's templates to access 
     consumes:
     - {name: credhub, type: credhub}
 ```
+
 For information about using BOSH Links in the specifications file and templates of a job and
-consuming shared properties provided by other jobs, see [Links in Spec Files](https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/ssi-creds-tiledev.html) and
-[Links in Templates](https://bosh.io/docs/job-templates/).
+consuming shared properties provided by other jobs, see [Links in spec files](https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/ssi-creds-tiledev.html) and
+[Links in templates](https://bosh.io/docs/job-templates/).
 
 ### <a id="errand"></a> Save the Runtime CredHub location
 
@@ -126,7 +127,7 @@ properties:
         - '*.credhub.(( ..cf.credhub.network )).(( ..cf.deployment_name )).bosh'
 ```
 
-In the example, the Runtime CredHub instance is accessed at `credhub.service.cf.internal`. If your broker runs
+In the previous example, the Runtime CredHub instance is accessed at `credhub.service.cf.internal`. If your broker runs
 as an app, you can resolve this address with BOSH DNS. If your broker runs on a VM with a Consul agent,
 you can resolve the address with Consul. Alternatively, from a VM, you can resolve the address
 with `dig credhub.service.cf.internal @169.254.0.2`. This command uses
@@ -134,8 +135,8 @@ the  <%= vars.app_runtime_abbr %> BOSH DNS server to do lookup.
 
 ## <a id="step3"></a> Step 3: Provide you with the choice to use CredHub
 
-To provide you with the choice to select the SSI credentials option, edit your product template. See
-the following example:
+To provide you with the choice to select the SSI credentials option, edit your product template.
+For example:
 
 ```
 form_types:
@@ -205,8 +206,7 @@ These include minimum password lengths, required characters, and certificate fie
 Credentials have a maximum size of 64 KB.
 </p>
 
-
-1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint
+3. Update your code to store your binding credentials in CredHub using the CredHub API endpoint
 for setting the `json` credential type with a user-provided value.
 
 See the following example for how to format your API call:
@@ -227,20 +227,21 @@ See the following example for how to format your API call:
     ```
 
 Where:
-  * `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub.
 
-  * `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
-  * `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
-  * `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
-  * `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
-  * `SERVICE-URL` is the URL of your service.
-  * `USERNAME` and `PASSWORD` are your binding credentials.
+* `CREDHUB.INTERNAL_URL` and `CREDHUB.PORT` are the address and port of CredHub.
+
+* `CLIENT-IDENTIFIER` is a value provided by the service broker to uniquely identify the broker.
+* `SERVICE-IDENTIFIER` is the name of the service offering as shown in the services catalog.
+* `BINDING-GUID` is the GUID created by the CC and passed to the service broker in the service binding request.
+* `CREDENTIAL-NAME` is a value provided by the service broker to name the credential.
+* `SERVICE-URL` is the URL of your service.
+* `USERNAME` and `PASSWORD` are your binding credentials.
 
   For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
 
 1. Grant your application permission to read the credential from CredHub:
 
-    ```
+    ```console
     curl "https://CREDHUB.INTERNAL_URL:CREDHUB.PORT/api/v2/permissions" \
       -X POST \
       -d '

@@ -8,9 +8,9 @@ You can use continuous integration (CI) testing on your service tile.
 These are the following methods to do CI testing on your tile:
 
 + Use the Tile Dashboard provided as a service by the <%= vars.company_name %> ISV team.<br>
-  For more information on using the Tile Dashboard as a service, see [Use Tile Dashboard CI to test your tile](#dashboard) below.<br>
+  For more information on using the Tile Dashboard as a service, see [Use Tile Dashboard CI to test your tile](#dashboard).<br>
 + Set up and use your own Concourse pipeline.<br>
-  For more information on setting up a Concourse pipeline, see [Set Up a concourse pipeline and test your tile](#concourse).<br>
+  For more information on setting up a Concourse pipeline, see [Set Up a Concourse pipeline and test your tile](#concourse).<br>
 
   New partners can work on only one tile at a time.
 
@@ -27,7 +27,7 @@ which monitors the text box of the quality and capabilities of your tile.
 For an introduction to our readiness criteria, see
 [Enterprise Readiness criteria](https://docs.google.com/presentation/d/1Z05EuIB11cLejldShVTffprzBulZxiL8MTVxrfPbvT0).
 
-### <a id="tile-dashboard-ci"></a> The Tile Dashboard CI Test Process
+### <a id="tile-dashboard-ci"></a> The Tile Dashboard CI test process
 
 The Tile Dashboard CI runs your tile through a series of steps, which include:
 
@@ -62,9 +62,8 @@ Before you use the Tile Dashboard to configure and test your tile, verify the fo
 
     | If you are uploading a&hellip; | Then&hellip; |
     |------------------------------------|--------------|
-    | first release     | contact the technical program management of the ISV team. |
-    | subsequent release| you can upload pre-releases to the VMware Tanzu Network.|
-
+    | First release     | Contact the technical program management of the ISV team. |
+    | Subsequent release| You can upload pre-releases to the VMware Tanzu Network.|
 
 ### <a id="intro"></a> Configuring a tile on the Tile Dashboard
 
@@ -72,18 +71,17 @@ After your tile has been uploaded to the VMware Tanzu Network, the Tile Dashboar
 For new tiles, this can take up to an hour.
 
 After the stage and scan tasks, you must configure your tile on the Tile Dashboard.
-The configuration specfies how the tile is installed on the test environment.
+The configuration specifies how the tile is installed on the test environment.
 
 Configuring your tile through the Tile Dashboard is equivalent to configuring the tile on Tanzu Operations Manager
 after you download it from the VMware Tanzu Network.
 
-There are two ways that you can configure the tile on the Tile Dashboard:
+These are the ways to configure the tile on the Tile Dashboard:
 
 |  Method | Notes and Restrictions | For more information, see&hellip;  |
 | --------| -----------------------| ----------------------------------|
-| Through the **Properties** tab | This is a form view of the installation properties. | [Configure Your Tile Using the Properties Tab](#config-with-property-tab).|
-| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure Your Tile Using the Advanced - JSON Properties Tab](#config-with-advanced-tab).|
-
+| Through the **Properties** tab | This is a form view of the installation properties. | [Configure your Tile using the Properties tab](#config-with-property-tab).|
+| Through the **Advanced - JSON Properties** tab | This is the list of properties displayed in JSON. | [Configure your Tile using the Advanced - JSON Properties tab](#config-with-advanced-tab).|
 
 ### <a id="navigate-to-tile"></a> Log in to the Tile Dashboard and locate the Configuration page
 
@@ -95,15 +93,13 @@ To log in to the Tile Dashboard and go to the configuration page:
 
     ![icons named pie-20, pie-21 and so on in a list](img/pie-environments.png)
 
-4. Click **Tiles** in the menu bar.
+3. Click **Tiles** in the menu bar.
 
-5. Click the row where your tile is listed.
+4. Click the row where your tile is listed.
 
-6. If your tile has more than one version, click the one you want to configure.
+5. If your tile has more than one version, click the one you want to configure.
 
-7. Click **Configure**.
-
-     ![The configure link is in the top left corner under the logo](img/configurelink.png)
+6. Click **Configure**.
 
 ### <a id="config-with-property-tab"></a> Configure your tile using the Properties tab
 
@@ -128,15 +124,14 @@ For more information on property types, see [Property and template references](p
 
 To configure install properties for your tile using the **Properties** tab, do the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and Locate the Configuration page](#navigate-to-tile) above.
+1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile).
 
 2. Click the **Properties** tab.
 
 3. Review or specify the value for each property.
    If a property is required and is missing valid values, the field displays in red.
 
-3. When no fields are red, click **Save** or **Save and Run**.
-
+4. When no fields are red, click **Save** or **Save and Run**.
 
 ### <a id="config-with-advanced-tab"></a> Configure your tile using the advanced - JSON properties tab
 
@@ -148,31 +143,29 @@ see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/con
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab, do the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile) above.
+1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile).
 
 2. Click the **Advanced - JSON Properties** tab.
 
 3. Enter values for all required properties.
    If a property is required, this is indicated by `"required": true`.
+
    For example:
 
-    ```console
- ".properties.syslog_selector.enabled.address": {
+       ```".properties.syslog_selector.enabled.address": {
         "value": "",
         "type": "network_address",
         "required": true
-    },
-    ```
+
 4. After entering values for properties, delete the required attribute.
    This tells Tile Dashboard that this field is now provided.
-    For example:
 
-    ```console
- ".properties.syslog_selector.enabled.address": {
+  For example:
+
+    ".properties.syslog_selector.enabled.address": {
         "value": "192.0.2.1",
         "type": "network_address",
-    },
-    ```
+
 3.  Click **Save**.
 
 ### <a id="environment-sensitive-values"></a> Environment sensitive values
@@ -182,7 +175,7 @@ test is run, for these environment sensitive properties, VMware provides placeho
 with an appropriate value for each test environment.
 A description of these placeholder values appears on the **Tile Configuration** tabs for reference.
 
-###<a id="uaa-users"></a> Specify UAA users
+###  <a id="uaa-users"></a> Specify UAA users
 
 Include a list of UAA users for testing your tile.
 
@@ -194,13 +187,12 @@ To specify the UAA users, do the following:
 
 2. Enter user name, password, and groups for the UAA user.
 
-
-###<a id="save-and-run"></a> Save and run
+###  <a id="save-and-run"></a> Save and run
 
 When your configuration is complete, the config icon shows green.
 At this point, you can test the tile on all the environments, by doing the following:
 
-1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile) above.
+1. Complete the steps in [Log in to the Tile Dashboard and locate the Configuration page](#navigate-to-tile).
 
 1. Click **Save and Run**.
 
@@ -217,7 +209,6 @@ At this point, you can test the tile on all the environments, by doing the follo
     The staged, scan, and config notations are the prerequisite jobs and they run in a series.
     The rest of the jobs are the environment jobs and they run in parallel.
     The environment jobs do not run until the config job has finished successfully.
-
 
 ### <a id="test"></a> About test configuration
 
@@ -265,7 +256,7 @@ A typical CI pipeline for a tile consists of the following jobs:
 - Remove it from <%= vars.platform_name %>.
 
 You define this pipeline in the `pipeline.yml` file that is uploaded to the
-Concourse server. The [Tile Generator](tile-generator.html) contains a sample
+Concourse server. [Tile Generator](tile-generator.html) contains a sample
 pipeline that you can clone for your own tile.
 
 ### <a id="pool"></a> Set up <%= vars.platform_name %> for your CI pipeline
@@ -277,4 +268,4 @@ have to target your pipeline at a [<%= vars.platform_name %> instance you have s
 
 Concourse has a resource type to manage a pool of resources that are shared
 between pipelines, which is what we use to serialize <%= vars.platform_name %> access between the
-partner pipelines that run on our concourse server.
+partner pipelines that run on our Chttps://tanzu.vmware.com/productsoncourse server.
