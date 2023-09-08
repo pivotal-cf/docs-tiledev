@@ -197,8 +197,7 @@ do the following:
 
 1. In your service broker code, locate where your broker handles binding requests from the CC.
 
-1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header. For more information about
-CredHub authentication, see the [Authentication](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/credhub-index.html) section of the CredHub API documentation.
+1. Add code that authenticates your service broker to CredHub using OAuth2 tokens from UAA. Each call to the CredHub API must include an authorization header.
 
 1. Update your code to store your binding credentials in CredHub using the CredHub API endpoint
 for setting the `json` credential type with a user-provided value.
