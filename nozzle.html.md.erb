@@ -104,7 +104,7 @@ Draining the logs consists of:
 1. Establishing a connection to the logging system
 1. Forwarding events on to their ultimate destination
 
-Authenticate against the API (https://github.com/cloudfoundry-community/go-cfclient)
+Authenticate against the [API](https://github.com/cloudfoundry-community/go-cfclient)
 with a user in the `doppler.firehose` group:
 
 ```go
@@ -219,7 +219,7 @@ The standard log format for <%= vars.app_runtime_abbr %> adheres to the
 
 `<${PRI}>${VERSION} ${TIMESTAMP} ${HOST_IP} ${APP_NAME} ${PROD_ID} ${MSG_ID} ${SD-ELEMENT-instance} ${MESSAGE}`
 
-The [Syslog Message Elements table](#syslog-elements) immediately below describes each element of the log, and the [Structured Instance Data Format](#sd-element) table describes the contents of the structured data element that carries Cloud Foundry VM instance information.
+The [Syslog Message Elements table](#syslog-elements) immediately describes each element of the log, and the [Structured Instance Data Format](#sd-element) table describes the contents of the structured data element that carries Cloud Foundry VM instance information.
 
 ### <a id="syslog-elements"></a> Syslog message elements
 
@@ -232,7 +232,8 @@ The following table describes each element of a standard <%= vars.app_runtime_ab
   </tr><tr>
     <td><code>${PRI}</code></td>
     <td><p><a href="https://tools.ietf.org/html/rfc5424#section-6.2.1">Priority value (PRI)</a>, calculated as <code>8 × Facility Code + Severity Code</code></p>
-    <p><%= vars.app_runtime_abbr %> uses a Facility Code value of <code>1</code>, indicating a user-level facility. This adds <code>8</code> to the RFC-5424 Severity Codes, resulting in the numbers listed in the <a href="#severity-codes">table below</a>.</p>
+    <p><%= vars.app_runtime_abbr %> uses a Facility Code value of <code>1</code>, indicating a user-level facility. This adds <code>8</code> to the RFC-5424 Severity Codes, resulting in the
+    numbers listed in the following <a href="#severity-codes">table</a>.</p>
     <p>If in doubt, default to <code>13</code>, to indicate Notice-level severity.</p>
 </td>
   </tr><tr>
@@ -260,7 +261,7 @@ The following table describes each element of a standard <%= vars.app_runtime_ab
     <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log message. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
   </tr><tr>
     <td><code>${SD-ELEMENT-instance}</code></td>
-    <td>Structured data (SD) relevant to <%= vars.app_runtime_abbr %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log message. See the <a href="#sd-element">Structured Instance Data Format table</a> below for content and format.</td>
+    <td>Structured data (SD) relevant to <%= vars.app_runtime_abbr %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log message. See the <a href="#sd-element">Structured Instance Data Format table</a> for content and format.</td>
   </tr><tr>
     <td><code>${MESSAGE}</code></td>
     <td>The log message itself, ideally in JSON</td>
