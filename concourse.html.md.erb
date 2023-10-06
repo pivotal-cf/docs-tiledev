@@ -112,7 +112,7 @@ The form pulls properties from your `tile.yml` file parsing the `properties_blue
 For general information about `properties_blueprints`,
 see [Configuration properties](./reference.html#properties).
 
-In the form, you can configure
+In the form, you can configure:
 
 * strings
 * integers
@@ -144,7 +144,8 @@ In the **Advanced - JSON Properties** tab, you configure install properties, spe
 in the format used by the om tool.
 
 For more information about this format used by the om tool,
-see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties).
+see [om configure-product](https://github.com/pivotal-cf/om/blob/master/docs/configure-product/README.md#configuring-the---product-properties)
+and [Using the Tanzu Operations Manager CLI](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-cli.html).
 
 To configure install properties for your tile using the **Advanced - JSON Properties** tab:
 
@@ -268,9 +269,9 @@ pipeline that you can clone for your own tile.
 
 <%= vars.company_name %> partners who have VMware host their pipeline have access to a pool of <%= vars.platform_name %>
 instances that are managed and are regularly updated with the latest
-(pre-)release versions of <%= vars.platform_name %>. If you set up your own concourse server, you
+(pre-)release versions of <%= vars.platform_name %>. If you set up your own Concourse server, you
 have to target your pipeline at a [<%= vars.platform_name %> instance you have setup](./environments.html).
 
 Concourse has a resource type to manage a pool of resources that are shared
-between pipelines, which is what VMware uses to serialize <%= vars.platform_name %> access between the
-partner pipelines that run on our concourse server.
+between pipelines, which is what we use to serialize <%= vars.platform_name %> access between the
+partner pipelines that run on the Concourse server.
