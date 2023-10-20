@@ -1,5 +1,5 @@
 ---
-title: Tanzu Operations Manager v2.10 Partners Release Notes
+title: Ops Manager v3.0 partners release notes
 owner: Technical Program Management
 ---
 
@@ -14,34 +14,7 @@ breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Relea
 
 Known issues in this release that can affect tile development for partners:
 
-<%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces
-it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
-
-For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/3.0/tas-for-vms/runtime-rn.html) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_.
-
-This feature might affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs.
-
-For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/release-notes.html).
-
-### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Tanzu Operations Manager Bulk Rotation of Certificates
-
-Tanzu Operations Manager v2.10 runs CredHub Maestro to perform the bulk rotation of various CAs and certificates within a foundation.
-
-To ensure compatibility with Tanzu Operations Manager API certificate rotation
-and CredHub Maestro, you must use the concatenated
-`LEAF-CERTIFICATE-NAME.ca` format when referencing CAs
-that sign leaf certificates in your tile's property configuration.
-Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
-
-The `.ca` accessor format returns a concatenated version of the CA, which includes the older and newer CA. The concatenated version ensures that jobs using leaf certificates do not lose trusted state during CA rotation and results in the least amount of downtime for your tile's services during certificate rotation.
-
-For more information and configuration examples, see [Reference Existing CAs and Certificates in CredHub Variables](create-credhub-vars.html#credhub-ca-refs).
-
-## <a id="known-issues"></a> Known issues
-
-Known issues in this release that might affect tile development for partners:
-
-### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
+### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
 
 An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
 
