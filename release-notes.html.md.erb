@@ -64,29 +64,10 @@ For more information and configuration examples, see [Reference Existing CAs and
 
 Known issues in this release that might affect tile development for partners:
 
-### <a id="non-configurable-certs"></a> Non-Configurable Certificates Are Invalid Within a Selector
+### <a id="removed-accessors"></a> Removed accessors
 
-An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
+The following accessors have been removed. If you reference them, invalid data is returned, but does not
+cause an error:
 
-The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
-
-```
-{
-  "pre_deploy_check": {
-    ...
-    "properties": [
-      {
-        "name": ".properties.EXAMPLE-CERT-PROPERTY",
-        "type": "rsa_cert_credentials",
-        "errors": [
-          "can't be blank",
-          "can't be blank"
-        ]
-      }
-    ],
-    ...
-  }
-}
-```
-
-Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
+- `bosh_metrics_forwarder_client_name`
+- `bosh_metrics_forwarder_client_secret`
