@@ -1,5 +1,5 @@
 ---
-title: Tanzu Operations Manager v2.10 Partners Release Notes
+title: Tanzu Operations Manager v2.10 partners release notes
 owner: Technical Program Management
 ---
 
@@ -9,6 +9,29 @@ be relevant to partner service tiles.
 For information about changes introduced in <%= vars.ops_manager %> <%= vars.v_major_version %>, and any
 breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/release-notes.html).
 
+## <a id="Releases"></a> Releases
+
+### <a id="2.10.0"></a> Metadata version 2.10.3
+
+Shipped in <%= vars.ops_manager %> v2.10.62
+
+* **[Bug Fix]** Using the `$director` dollar context within manifest snippets for collections and selectors no longer causes <%= vars.ops_manager %> to crash.
+
+### <a id="2.10.0"></a> Metadata version 2.10.2
+
+Shipped in <%= vars.ops_manager %> v2.10.33
+
+* **[Feature]** `ubuntu-jammy` can now be specified as a stemcell OS required by a tile
+
+### <a id="2.10.0"></a> Metadata version 2.10.1
+
+Shipped in <%= vars.ops_manager %> v2.10.21
+
+* **[Feature]** The `BlobstoreVerifier` now takes an optional `ca_cert` property. When specified, the certificate presented by the S3 blobstore endpoint will be verified against the provided CA or self-signed certificate.
+
+### <a id="2.10.0"></a> Metadata version 2.10.0
+
+Shipped in <%= vars.ops_manager %> v2.10.0
 
 ### <a id="log-format-change"></a> Timestamp format change and customizable <%= vars.app_runtime_abbr %> component logs
 
