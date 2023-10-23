@@ -230,7 +230,7 @@ The following table describes the accessors you can use to retrieve information 
 | `service_network` | Provides the name of the service network assigned to your tile. |
 | `stemcell_version` | Provides the version of the stemcell your tile uses. |
 
-### <a id='complex'></a> Complex properties: selectors and collections
+## <a id='complex'></a> Complex properties: selectors and collections
 
 Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Others are complex, like selectors or collections.
 
@@ -245,6 +245,32 @@ The selector and collections inputs are referenced by their selector and collect
 
 Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selectors and collections can exist alone, or nest within each other or within different parts of the manifest.
 
+### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
+
+The  `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
+
+The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
+
+```
+{
+  "pre_deploy_check": {
+    ...
+    "properties": [
+      {
+        "name": ".properties.EXAMPLE-CERT-PROPERTY",
+        "type": "rsa_cert_credentials",
+        "errors": [
+          "can't be blank",
+          "can't be blank"
+        ]
+      }
+    ],
+    ...
+  }
+}
+```
+
+Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
 ## <a id='top-level'></a> Top-level properties
 
 The following example shows the properties that appear at the top of a product template. The definitions of each property follow this example:

@@ -23,33 +23,6 @@ No new features since <%= vars.ops_manager %> 2.10
 
 Known issues in this release that can affect tile development for partners:
 
-### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
-
-The  `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
-
-The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
-
-```
-{
-  "pre_deploy_check": {
-    ...
-    "properties": [
-      {
-        "name": ".properties.EXAMPLE-CERT-PROPERTY",
-        "type": "rsa_cert_credentials",
-        "errors": [
-          "can't be blank",
-          "can't be blank"
-        ]
-      }
-    ],
-    ...
-  }
-}
-```
-
-Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
-
 ### <a id="removed-accessors"></a> Removed accessors
 
 The following accessors have been removed. If you reference them, invalid data is returned, but does not
