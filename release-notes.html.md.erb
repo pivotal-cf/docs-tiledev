@@ -9,14 +9,23 @@ be relevant to partner service tiles.
 For information about changes introduced in <%= vars.ops_manager %> <%= vars.v_major_version %>, and any
 breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/release-notes.html).
 
+## <a id="Releases"></a> Releases
 
-## <a id="known-issues"></a> Known problems
+### <a id="3.0.1"></a> Metadata version 3.0.1
+
+* **[Bug Fix]** Using the `$director` dollar context within manifest snippets for collections and selectors no longer causes <%= vars.ops_manager %> to crash.
+
+### <a id="3.0.0"></a> Metadata version 3.0.0
+
+No new features since <%= vars.ops_manager %> 2.10
+
+## <a id="known-issues"></a> Known issues
 
 Known issues in this release that can affect tile development for partners:
 
 ### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
 
-An `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
+The  `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
 
 The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
 
