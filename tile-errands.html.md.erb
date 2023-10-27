@@ -36,11 +36,14 @@ Colocated errands run faster than traditional errands and use less resources, in
 To configure a co-located errand, define the following properties in the `pre_delete_errands` and
 `post_deploy_errands` sections of the tile metadata:
 
-<table>
+<table class=“table”>
+<thead>
   <tr>
     <th>Property</th>
     <th>Description</th>
-  </tr><tr>
+  </tr>
+  <thead>
+  <tr>
     <td width="28%"><code>name: MY-ERRAND</code></td>
     <td>Provide the name of the errand job. The example manifest in the following section uses
       <code>example_colocated_errand</code>.</td>

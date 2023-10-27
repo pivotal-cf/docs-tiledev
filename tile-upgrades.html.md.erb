@@ -7,7 +7,7 @@ Learn how to do tile migrations, which refers to changing the name and values of
 when a customer upgrades tile versions. Tile authors supply a JavaScript file to trigger chaining migrations.
   Chaining migrations allows for multiple migrations to run sequentially.
 
-To use JS migrations, ensure that you are using Tanzu Operations Manager v1.7 or higher.
+To use JS migrations, ensure that you are using Tanzu Operations Manager v1.7 or later.
 
 In the tile installer <code>.yml</code> file that Tile Generator creates, form properties appear in
 two locations:
@@ -75,7 +75,6 @@ specific to the type of the property.
 Objects can be a string, an array, or a hash. Review the following reference for the structure of each
 type of property.
 
-
 ## <a id='js-api'></a> JavaScript migrations API
 
 Inside a JavaScript migration function, the system provides the following functions for your code:
@@ -106,9 +105,7 @@ Description:  Returns a globally unique identifier (GUID) that can be used as th
 Example:
   console.log("Here's a GUID:  "+generateGuid())
 ```
-<p class="note">
-<span class="note__title">Note</span>
-This function can be called a maximum of 100 times per `.js` file. If you need more than 100 GUIDs, break your migration into two `.js` files.
+<p> This function can be called a maximum of 100 times per `.js` file. If you need more than 100 GUIDs, break your migration into two `.js` files.
 </p>
 
 ```
@@ -124,12 +121,14 @@ Example:
 
 ```
 
-  <table border="1" class="nice">
+  <table border="1" class="table">
+  <thead>
     <tr>
         <th><strong>Property Type</strong></th>
         <th><strong>Value Structure</strong></th>
         <th><strong>Example</strong></th>
     </tr>
+    </thead>
     <tr>
         <td><code>single-value properties</code></td>
         <td>Single value, but type-specific</td>

@@ -11,7 +11,7 @@ template_variables:
   product_url: https://network.pivotal.io/products/pivotal-cf
   support_link: <a href="https://pivotal.io/support" target="_blank">Support</a>
   support_call_to_action: <a href="https://pivotal.io/support" target="_blank">Need Support?</a>
-  support_url: https://pivotal.io/support
+  support_url: https://tanzu.vmware.com/support
   path_to_partials: /pcf
   use_global_header: true
   global_header_product_href: https://network.pivotal.io/
@@ -73,7 +73,7 @@ template_variables:
   recommended_by: VMware
   oss_docs_ref: " in the Cloud Foundry documentation"
   route_services_config: <h2><a id='enabling-route-services'></a>Enabling Route Services in PAS</h2>You configure route services for your deployment in the **Networking** pane of the PAS tile. For more information, see [Configuring PAS](https://docs.pivotal.io/application-service/customizing/configure-pas.html).
-  route_services_appsman1: <p class="note"><strong>Note</strong>&#58; The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="http://docs.pivotal.io/application-service/console/manage-apps.html#manage-route-services">Manage Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
+  route_services_appsman1: <p> The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="http://docs.pivotal.io/application-service/console/manage-apps.html#manage-route-services">Manage Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
   route_services_apps_manager: <p>The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/route-services.html">Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
   route_services_link: <a href="https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/route-services.html">Route Services</a>
   route_services_require_diego:
