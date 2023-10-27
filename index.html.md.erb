@@ -21,23 +21,25 @@ These compressed files require three subdirectories: `metadata`, `migrations`, a
 
 When you package your software with Tile Generator, it generates these subdirectories for you. You can perform different actions within each subdirectory:
 
-<table class="nice">
-	<tr>
-		<th style="width: 20%">Directory</th>
-		<th>Description</th>
-	</tr>
-	<tr>
-		<td><code>metadata</code></td>
-		<td>Configure settings for your software in a YAML file.
-	</tr>
-	<tr>
-		<td><code>migrations</code></td>
-		<td>Track changes across different releases in a <code>.js</code> file. Only tiles with multiple releases use this subdirectory. Do not modify the files in this subdirectory during your first tile release. </td>
-	</tr>
-	<tr>
-		<td><code>releases</code></td>
-		<td>Deploy your service source code and other inputs for your build, such as a BOSH release. </td>
-	</tr>
+<table class=“table”>
+<thead>
+  <tr>
+    <th style="width: 20%">Directory</th>
+    <th>Description</th>
+  </tr>
+  </thead>
+  <tr>
+    <td><code>metadata</code></td>
+    <td>Configure settings for your software in a YAML file.
+  </tr>
+  <tr>
+    <td><code>migrations</code></td>
+    <td>Track changes across different releases in a <code>.js</code> file. Only tiles with multiple releases use this subdirectory. Do not edit the files in this subdirectory during your first tile release. </td>
+  </tr>
+  <tr>
+    <td><code>releases</code></td>
+    <td>Deploy your service source code and other inputs for your build, such as a BOSH release. </td>
+  </tr>
 </table>
 
 ## <a id="tile-value"></a> Why build a tile?
@@ -103,34 +105,36 @@ tile to VMware Tanzu Network. When you upload your tile to the VMware Tanzu Netw
 available for
 operators and developers.
 
-<table class="nice">
-	<tr>
-		<th>Audience</th>
-		<th>Benefits</th>
-	</tr>
-	<tr>
-		<td>Operators</td>
-		<td>
-			<ul>
-			<br>
-			<li>Download and install your service as a tile.</li>
-			<li>Configure your service using a UI.</li>
-			<li>Update your service with a single click.</li>
-			</ul>
-		</td>
-	</tr>
-	<tr>
-		<td>Developers</td>
-		<td>
-			<ul>
-			<br>
-			<li>See your service on VMware Tanzu Network.</li>
-			<li>Select service plans to which they would like to subscribe.</li>
-			<li>Create instances of your service and call them from their apps.</li>
-			<li>Support a continuous and fast development cycle.</li>
-		</ul>
-		</td>
-	</tr>
+<table class=“table”>
+<thead>
+  <tr>
+    <th>Audience</th>
+    <th>Benefits</th>
+  </tr>
+  </thead>
+  <tr>
+    <td>Operators</td>
+    <td>
+      <ul>
+      <br>
+      <li>Download and install your service as a tile.</li>
+      <li>Configure your service using a UI.</li>
+      <li>Update your service with a single click.</li>
+      </ul>
+    </td>
+  </tr>
+  <tr>
+    <td>Developers</td>
+    <td>
+      <ul>
+      <br>
+      <li>See your service on VMware Tanzu Network.</li>
+      <li>Subscribe to the service plans you want.</li>
+      <li>Create instances of your service and call them from their apps.</li>
+      <li>Support a continuous and fast development cycle.</li>
+    </ul>
+    </td>
+  </tr>
 </table>
 
 For information about the release cycle for Partner tiles, see [Partner Software Release Cycle](./releases.html).
