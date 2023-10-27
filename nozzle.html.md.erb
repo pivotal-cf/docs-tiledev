@@ -225,11 +225,14 @@ The [Syslog Message Elements table](#syslog-elements) immediately describes each
 
 The following table describes each element of a standard <%= vars.app_runtime_abbr %> syslog entries:
 
-<table id='syslog-elements-table' border="1" class="nice" >
+<table id='syslog-elements-table' border="1" class="table" >
+<thead>
   <tr>
     <th>Syslog Message Element</th>
     <th>Meaning or Value</th>
-  </tr><tr>
+  </tr>
+  <thead>
+  <tr>
     <td><code>${PRI}</code></td>
     <td><p><a href="https://tools.ietf.org/html/rfc5424#section-6.2.1">Priority value (PRI)</a>, calculated as <code>8 × Facility Code + Severity Code</code></p>
     <p><%= vars.app_runtime_abbr %> uses a Facility Code value of <code>1</code>, indicating a user-level facility. This adds <code>8</code> to the RFC-5424 Severity Codes, resulting in the
@@ -273,11 +276,14 @@ The following table describes each element of a standard <%= vars.app_runtime_ab
 <%= vars.app_runtime_abbr %> components generate log entries with the following severity levels.
 The most common severity level is `13`.
 
-<table id='severity-table' border="1" class="nice" >
+<table id='severity-table' border="1" class="table" >
+<thead>
   <tr>
     <th>Severity Code</th>
     <th>Meaning</th>
-  </tr><tr>
+  </tr>
+  </thead>
+  <tr>
     <td><code>8</code></td>
     <td>Emergency: system is unusable</td>
   </tr><tr>
@@ -309,11 +315,14 @@ The most common severity level is `13`.
 The RFC-5424 syslog protocol includes a [structured data element](https://tools.ietf.org/html/rfc5424#section-6.3.1) that you can use. <%= vars.app_runtime_abbr %> uses this
 element to carry VM instance information as follows:
 
-<table id='sd-element-table' border="1" class="nice" >
+<table id='sd-element-table' border="1" class="table" >
+<thead>
   <tr>
     <th><code>SD-ELEMENT-instance</code> element</th>
     <th>Meaning</th>
-  </tr><tr>
+  </tr>
+  </thead>
+  <tr>
     <td><code>${ENTERPRISE_ID}</code></td>
     <td>Your Enterprise Number, as <a href="https://www.iana.org/assignments/enterprise-numbers/enterprise-numbers">listed</a> by the Internet Assigned Numbers Authority (IANA) </td>
   </tr><tr>
