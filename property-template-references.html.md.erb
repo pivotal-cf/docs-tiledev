@@ -715,7 +715,10 @@ The following table lists the available install-time verifiers:
       <code>Verifiers::VsphereConfigurationVerifier</code>
     </td>
     <td>
-      the vSphere configuration is valid.
+    the vSphere configuration is valid. When <code>vcenter_ca_certificate</code> is provided, the vCenter server certificate is validated against
+    the provided CA or certificate chain.<br />
+    <br />
+    <code>vcenter_ca_certificate</code> was introduced in metadata version <code>3.0.2</code>
     </td>
     <td>
       <ul>

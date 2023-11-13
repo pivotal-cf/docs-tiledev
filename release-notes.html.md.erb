@@ -11,13 +11,21 @@ breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Relea
 
 ## <a id="Releases"></a> Releases
 
+### <a id="3.0.2"></a> Metadata version 3.0.2
+
+* **[Feature]** `vcenter_ca_certificate` added to `VsphereConfigurationVerifier`.
+When <code>vcenter_ca_certificate</code> is provided, the vCenter server certificate are validated
+against the provided CA or certificate chain. If it's not provided or a blank value is configured,
+TLS connections are established but the certificate for the
+vCenter server is not validated.
+
 ### <a id="3.0.1"></a> Metadata version 3.0.1
 
 * **[Bug Fix]** Using the `$director` dollar context within manifest snippets for collections and selectors no longer causes <%= vars.ops_manager %> to crash.
 
 ### <a id="3.0.0"></a> Metadata version 3.0.0
 
-No new features since <%= vars.ops_manager %> 2.10
+No new features since <%= vars.ops_manager %> v2.10.
 
 ## <a id="known-issues"></a> Known issues
 
