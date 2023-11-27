@@ -2,7 +2,7 @@
 template_variables:
   book_title: VMware Tanzu Documentation
   book_title_short: VMware Tanzu Docs
-  url_path: https://docs.pivotal.io/tiledev
+  url_path: https://docs.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html
   title: <span class="title-deemph">VMware Tanzu</span> Documentation
   title_image: images/icon-p-green.jpg
   hero_text: "Detailed documentation to help you install, understand, and succeed with VMware's enterprise-grade software."
@@ -77,9 +77,6 @@ template_variables:
   cli_install_link: <a href="https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/install-go-cli.html">Installing the cf CLI</a>
   recommended_by: VMware
   oss_docs_ref: " in the Cloud Foundry documentation"
-  route_services_config: <h2><a id='enabling-route-services'></a>Enabling Route Services in PAS</h2>You configure route services for your deployment in the **Networking** pane of the PAS tile. For more information, see [Configuring PAS](https://docs.pivotal.io/application-service/customizing/configure-pas.html).
-  route_services_appsman1: <p> The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="http://docs.pivotal.io/application-service/console/manage-apps.html#manage-route-services">Manage Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
-  route_services_apps_manager: <p>The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/route-services.html">Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
-  route_services_link: <a href="https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/route-services.html">Route Services</a>
-  route_services_require_diego:
+  route_services_config: <h2><a id='enabling-route-services'></a>Enabling Route Services in PAS</h2>You configure route services for your deployment in the **Networking** pane of the PAS tile. For more information, see [Configuring TAS for VMs](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/prerequisites.html).
+  route_services_appsman1: <p class="note"><strong>Note</strong>&#58; The procedures in this topic use the Cloud Foundry Command Line Interface (cf CLI). You can also manage route services using Apps Manager. For more information, see the <a href="https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/manage-apps.html#manage-route-services">Manage Route Services</a> section of the <em>Managing Apps and Service Instances Using Apps Manager</em> topic.</p>
   tiledev_link:
