@@ -6,22 +6,12 @@ This repo is for Tile Developer Guide content.
 
 **Note**: Provide instructions in your PRs to indicate which branches you want Docs to apply your commits to.
 
-| Branch name | Use for… |
-|-------------| ------|
-| master      | This is the "edge" build, for Ops Manager v3.1. It publishes to https://docs-staging.vmware.com/en/draft/Tile-Developer-Guide/3.1/tile-dev-guide/index.html |
-| 3.0       | Ops Manager Tile Dev Guide v3.0 publishes to https://docs-staging.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html and https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html |
-| 2.10      | Ops Manager Tile Dev Guide v2.10 publishes to https://docs-staging.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html and https://docs.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html |
-| 2.9       | Ops Manager Tile Dev Guide v2.9 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-9/  and https://docs.pivotal.io/tiledev/2-9 |
-| 2.8       | v2.8 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-8/ and https://docs.pivotal.io/tiledev/2-8 |
-| 2.7       | v2.7 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-7/ and https://docs.pivotal.io/tiledev/2-7 |
-| 2.6       | v2.6 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-6/ and https://docs.pivotal.io/tiledev/2-6 |
-| 2.5       | v2.5 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-5/ and https://docs.pivotal.io/tiledev/2-5 |
-| 2.4         | v2.4 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-4/ and https://docs.pivotal.io/tiledev/2-4 |
-| 2.3         | v2.3 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-3/ and https://docs.pivotal.io/tiledev/2-3 |
-| 2.2         | v2.2 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-2/ and https://docs.pivotal.io/tiledev/2-2 |
-| 2.1         | v2.1 publishes to https://docs-pcf-staging.cfapps.io/tiledev/2-1/ and https://docs.pivotal.io/tiledev/2-1 |
-| 2.0         | NOT IN USE (PDF available at https://docs.pivotal.io/archives/tiledev-guide-2.0.pdf) |
-| 1.12        | NOT IN USE (PDF available at https://docs.pivotal.io/archives/tiledev-guide-1.12.pdf) |
+| Branch name | Use for… | URL |
+|-------------| ---------|-----|
+| master      | This is the "edge" build, for Ops Manager v3.1. | https://docs-staging.vmware.com/en/draft/Tile-Developer-Guide/3.1/tile-dev-guide/index.html |
+| 3.0       | Ops Manager Tile Dev Guide v3.0  | https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html |
+| 2.10      | Ops Manager Tile Dev Guide v2.10 | https://docs.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html |
+
 
 ## Terminology List
 
