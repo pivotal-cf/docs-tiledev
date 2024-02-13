@@ -312,3 +312,39 @@ Do not omit a migration from a later version of your tile. This breaks the
 the <code>201606010000_a.js</code> migration, the system can not detect
 that <code>201606010000_b.js</code> is the same migration that was present in the clean installation in
 Scenario C.
+
+
+## <a id='migrated-from'></a> Update deployed job names using the `migrated_from` job property
+
+To rename a deploy job (instance group), you can use the `migrated_from` property.
+This uses the BOSH `migrated_from` feature. For more information, see the [BOSH documentation](https://bosh.io/docs/migrated-from/#rename).
+
+To rename the job:
+
+1. Change the `name` property of the job to the new name.
+2. Add the `migrated_from` property to the job. This property contains an array of hashes, where each hash has a single key,
+  `name`, that represents the old name of the job.
+
+  For example:
+
+  ```
+    migrated_from:
+    - name: old-name
+  ```
+3. Change the `resource_label` property of the job to reflect the new `name`.
+4. Update any co-located errands to reference the new job `name`.
+5. Update any references to job-level properties with the new job `name`.
+6. Write a migration that migrates each job-level property.
+
+  For example:
+
+  ```
+  input.properties['.{new-name}.{property}'] = input.properties['.{old-name}.{property}']
+  ```
+
+<p class="note">
+<span class="note__title">Note</span>
+Using <code>migrated_from</code> creates duplicate entries in CredHub. CredHub contains an entry for each property, with
+a path referencing both the old and new job names. These are not automatically cleaned up, and are only 
+deleted when the tile itself is deleted.
+</p>
