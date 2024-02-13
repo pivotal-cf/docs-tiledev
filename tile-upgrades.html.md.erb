@@ -316,25 +316,32 @@ Scenario C.
 
 ## <a id='migrated-from'></a> Update deployed job names using the `migrated_from` job property
 
-To rename a deploy job (instance group), you can use the `migrated_from` property of a job.
-This uses the [`migrated_from`](https://bosh.io/docs/migrated-from/#rename) feature of BOSH.
+To rename a deploy job (instance group), you can use the `migrated_from` property.
+This uses the BOSH `migrated_from` feature. For more information, see the [BOSH documentation](https://bosh.io/docs/migrated-from/#rename).
 
-Steps to follow:
+To rename the job:
+
 1. Change the `name` property of the job to the new name.
-2. Add the `migrated_from` property to the job, which takes the form of an array of hashes, where each has has a single key,
-   `name`, that represents the old name of the job.
+2. Add the `migrated_from` property to the job. This property contains an array of hashes, where each hash has a single key,
+  `name`, that represents the old name of the job.
+
+  For example:
+
   ```
     migrated_from:
     - name: old-name
   ```
-3. Change the `resource_label` property of the job to something that reflects the new `name`.
-4. Update any colocated errands to reference the new job `name`.
+3. Change the `resource_label` property of the job to reflect the new `name`.
+4. Update any co-located errands to reference the new job `name`.
 5. Update any references to job-level properties with the new job `name`.
-6. Write a migration that migrates each job-level property like:
+6. Write a migration that migrates each job-level property.
+
+  For example:
+
   ```
   input.properties['.{new-name}.{property}'] = input.properties['.{old-name}.{property}']
   ```
 
-Note: Using `migrated_from` will result in duplicated entries in CredHub - there will be an entry for each property with
-a path referencing both the old and new names of the job.  These are _not_ automatically cleaned up, and will only be
+Note: Using `migrated_from` creates duplicate entries in CredHub. CredHub contains an entry for each property, with
+a path referencing both the old and new job names. These are not automatically cleaned up, and are only 
 deleted when the tile itself is deleted.
