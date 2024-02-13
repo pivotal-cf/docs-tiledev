@@ -342,6 +342,9 @@ To rename the job:
   input.properties['.{new-name}.{property}'] = input.properties['.{old-name}.{property}']
   ```
 
-Note: Using `migrated_from` creates duplicate entries in CredHub. CredHub contains an entry for each property, with
+<p class="note">
+<span class="note__title">Note</span>
+Using <code>migrated_from</code> creates duplicate entries in CredHub. CredHub contains an entry for each property, with
 a path referencing both the old and new job names. These are not automatically cleaned up, and are only 
 deleted when the tile itself is deleted.
+</p>
