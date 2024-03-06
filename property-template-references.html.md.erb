@@ -243,7 +243,7 @@ Most properties are simple values, for example,  strings, integers, URL addresse
 
 The selector and collections inputs are referenced by their selector and collection property blueprints.
 
-Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selectors and collections can exist alone, or nest within each other or within different parts of the manifest.
+Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties because they contain manifest snippets, which are further referenced in other manifest snippets. Selector and collection properties can only exist as top-level properties; you cannot nest selector properties inside of collections properties, vice-versa, or nest them inside themselves (e.g. a selector nested inside of a selector).
 
 ### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
 
