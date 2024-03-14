@@ -142,7 +142,7 @@ Post-deploy errands run by default. You can prevent a post-deploy errand from ru
 setting the [run rule](#run-rules) to **Off** under **Pending Changes** in the Tanzu Operations Manager Installation
 Dashboard or on the service's **Settings** tab **Errands** pane, before you install the product.
 
-![alt-text="Here is an example of an Errand."](img/example-errand.png)
+![Here is an example of an Errand.](img/example-errand.png)
 
 For example, Redis has a **Broker Registrar** post-deploy errand that
 the <%= vars.app_runtime_full %> tile uses
@@ -185,7 +185,7 @@ Errand run rules are set in two places:
 * **One-Time Rules** under **Pending Changes** in the Tanzu Operations Manager Installation Dashboard. These rules
 only apply to the next time you run **Apply Changes** and do not persist after the next successful installation.
 
-    ![alt-text="Example of Pending Changes"](img/pending_changes.png)
+    ![Example of Pending Changes](img/pending_changes.png)
 
 * **Persistent Rules** in the tile's **Errands** pane. These rules persist through subsequent
 installations, until changed in the **Errands** pane.
