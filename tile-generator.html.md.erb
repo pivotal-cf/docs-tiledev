@@ -97,17 +97,15 @@ addition to a VMware Tanzu-ready <%= vars.platform_name %> tile.
         This puts the `tile` and `pcf` commands in your `PATH` when the virtualenv is active.
         To deactivate the virtualenv, run the command `deactivate`.
 
-        <p> To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
-          with the virtualenv activated.</p>
+        To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
+        with the virtualenv activated.
 
 
 2. Install the [BOSH CLI](https://bosh.io/docs/cli-v2.html).
 
 3. From within the root directory of the project for which you want to create a tile,
-initialize the directory as a tile repository by running the following commands:
-
-<p> If you are using the  <%= vars.company_name %> recommends that you use a git repository.
-</p>
+initialize the directory as a tile repository by running the following commands.
+If you are using the  <%= vars.company_name %> recommends that you use a git repository.
 
     ```
     cd YOUR-PROD-DIRECTORY
@@ -171,7 +169,7 @@ You can build this sample using the following steps:
 The sample tile includes a Python app that is used again in several packages, sometimes as an app, sometimes as a service broker. One of the deployments (app3)
 muses the sample app inside a Docker image that is modified
 by the CI pipeline. If you edit the sample app, you can build your own Docker image using the provided <code>Dockerfile</code> and change the image name in
-<code>sample/tile.yml</code> to include the modified code in app3.</p>
+<code>sample/tile.yml</code> to include the modified code in app3.
 
 ## <a id="define"></a> Define your tile in <code>tile.yml</code> file
 
@@ -738,8 +736,8 @@ stemcell_criteria:
   os: 'ubuntu-trusty'
   version: '3146.5'     #NOTE: You must quote the version to force the type to be string
 ```
-<p> You must quote the version to force the type to be a string.
-</p>
+
+You must quote the version to force the type to be a string.
 
 ### <a id="custom-errands"></a> Custom Errands
 
