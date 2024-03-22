@@ -11,9 +11,9 @@ If you are using the Provide instructions in your PRs, indicate which branches y
 
 | Branch name | Use for… | URL |
 |-------------| ---------|-----|
-| master      | This is the "edge" build, for Ops Manager v3.1. | https://docs-staging.vmware.com/en/draft/Tile-Developer-Guide/3.1/tile-dev-guide/index.html |
-| 3.0       | Ops Manager Tile Dev Guide v3.0  | https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html |
-| 2.10      | Ops Manager Tile Dev Guide v2.10 | https://docs.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html |
+| master      | This is the "edge" build, for Tanzu Operations Manager v3.1. | https://docs-staging.vmware.com/en/draft/Tile-Developer-Guide/3.1/tile-dev-guide/index.html |
+| 3.0       | Tanzu Operations Manager Tile Dev Guide v3.0  | https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/index.html |
+| 2.10      | Tanzu Operations Manager Tile Dev Guide v2.10 | https://docs.vmware.com/en/Tile-Developer-Guide/2.10/tile-dev-guide/index.html |
 
 
 ## Terminology List

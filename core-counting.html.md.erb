@@ -7,18 +7,18 @@ You can configure your tile to take advantage of Ops
 Manager's ability to count physical and virtual cores.
 
 This option is available
-starting in Ops Manager v3.0.10+LTS-T and v2.10.58.
+starting in Tanzu Operations Manager v3.0.10+LTS-T and v2.10.58.
 
 <p class="note caution">
 <span class="note__title">Caution</span>
 In the following paragraph VMware refers to SKU. While this is not technically a
-VMware SKU, this documentation uses the concept because some tiles share a license, such as TAS, TASW,
+VMware SKU, this documentation uses the concept because some tiles share a license, such as TAS for VMs, TAS for VMs [Windows],
 and IST. A core can run all three of these products at the same
 time with a single core license without being double counted.
 </p>
 
 You can add monit jobs named `SKU-<SKU_NAME>` to their VMs so
-Ops Manager can count all of the VMs cores as part of a SKU. VMs with the
+Operations Manager can count all of the VMs cores as part of a SKU. VMs with the
 same SKU are counted together. If no matching monit jobs are present, no
 cores are counted for those VMs.
 
@@ -29,7 +29,7 @@ for Linux and Windows VMs is to use the internal count-cores-indicator-release.
 
 When workloads are being run on vSphere, if multiple VMs are being run on the
 same host, the total counted cores of a SKU can never be more than the
-number of physical cores on that host. On other infrastructures, Ops Manager
+number of physical cores on that host. On other infrastructures, Operations Manager
 uses the values returned by the kernel, for number of cores, and threads per
 core.
 
