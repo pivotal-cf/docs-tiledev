@@ -34,6 +34,8 @@ Known issues in this release that can affect tile development for partners:
 
 ### <a id="removed-accessors"></a> Removed accessors
 
+The `metrics_server_enabled` accessor has been deprecated due to the removal of the BOSH System Metrics Server release in <%= vars.ops_manager %> 3.0. The accessor now always returns `false`.
+
 The following accessors have been removed. If you reference them, invalid data is returned, but does not
 cause an error:
 
