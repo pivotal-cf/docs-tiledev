@@ -13,10 +13,10 @@ You can manage runtime configs in the following ways:
 + Create a tile that only contains a runtime config. See [Create a Runtime Config-Only Tile](#config-only).
 
 For more information about runtime configs, see
-[Director Runtime Config](https://bosh.io/docs/runtime-config.html).
+[Director Runtime Config](https://bosh.io/docs/runtime-config.html) in the BOSH documentation.
 
 A runtime config is a section of the tile metadata that defines global deployment configurations.
-Tile authors can create tiles that only contain a runtime config or add a runtime config to
+Tile authors can create tiles that contain only a runtime config or they can add a runtime config to
 an existing product tile. When a tile author includes a runtime config as a top-level property in the
 tile metadata, BOSH applies the runtime config to every VM in the deployment.
 
@@ -32,6 +32,7 @@ The identifier follows the following format:
 ```
 TILE_NAME-GUID-RUNTIME_CONFIG_NAME
 ```
+
 ## <a id="create"></a>Add a runtime config
 
 Tile authors can add `runtime_configs` as a top-level property in tile metadata. In the runtime config
