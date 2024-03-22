@@ -17,11 +17,7 @@ Known issues in this release that can affect tile development for partners:
 <%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces
 it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
 
-For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.pivotal.io/platform/2-10/release-notes/runtime-rn.html#timestamps) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_.
-
 This feature might affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs.
-
-For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.pivotal.io/platform/2-10/release-notes/breaking-changes.html#timestamps).
 
 ### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Tanzu Operations Manager Bulk Rotation of Certificates
 
