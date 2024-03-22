@@ -21,7 +21,7 @@ staged integration approach is often possible and desirable.
 
 ![Examples of service integration stages.](img/integration-stages.png)
 
-## <a id="ups"></a> Level 1: User-provided service
+## <a id="ups"></a> Level 1: User-Provided Service
 
 The service runs external to <%= vars.app_runtime_abbr %> and has no service broker or tile. To use a service
 with an app, the developer creates a service broker by running
@@ -31,7 +31,7 @@ with an app, the developer creates a service broker by running
 Configuring, running, upgrading, and paying for a user-provided service are all
 up to the developer.
 
-## <a id="broker"></a> Level 2: Brokered service
+## <a id="broker"></a> Level 2: Service Broker Only
 
 A brokered service runs external to <%= vars.app_runtime_abbr %>, but has a tile on
 [VMware Tanzu Network](https://network.tanzu.vmware.com/).
@@ -46,7 +46,7 @@ service instances in Apps Manager, or by running the `cf marketplace` and
 [Brokered Service](./brokered.html) has more information about brokered
 service tiles and how to create them.
 
-## <a id="managed"></a> Level 3: Managed service
+## <a id="managed"></a> Level 3: Managed Service
 
 With a managed service, both the service broker and the service itself run within
 <%= vars.app_runtime_abbr %>. <%= vars.app_runtime_abbr %> activates to manage, monitor, and
@@ -62,7 +62,7 @@ instances and provisions for CPU and memory resources.
 [Managed Service](./managed.html) has more information about managed
 service tiles and how to create them.
 
-## <a id="dynamic"></a>  Level 4. On-Demand (dynamic) service
+## <a id="dynamic"></a>  Level 4. On-Demand (dynamic) Service
 
 Just as with a managed service, an on-demand service and broker both run within
 <%= vars.app_runtime_abbr %>,
