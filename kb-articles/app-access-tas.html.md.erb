@@ -1,0 +1,203 @@
+---
+title: How to troubleshoot app access issues in VMware Tanzu Application Service
+owner: Services
+---
+
+The access from your client to the app in the container involves multiple components and multiple points where the failure could occur: 
+
+client (app or browser) > **Load Balancer (LB)** > **Gorouter** > **Diego Cell** > **Envoy Proxy** > app in container
+
+The error messages you might see: While accessing apps on the Tanzu Application Service (TAS) platform, the client (other app or browser) receives the HTTP status code 401, 403, 500, 502, etc.
+
+This article covers how to troubleshoot and narrow down the problem scope.
+
+## Narrow Down the Scope
+
+To start, access the app from the nearest place (inside of container), then move outward from the container step by step, until you identify at which stage the problem is introduced.
+
+For example, in the example in this topic, the problematic app is named `test` and deployed with route `test.mydomain.com`.
+
+## Test from the App Container
+
+Access the app inside of the container. This step helps to break down the problem and identify whether it is an app issue or platform issue. The test cases in this article are with `curl` GET request at `/PATH`, please replace HTTP method / path, and add necessary header / data accordingly for your own app.
+
+1. Use ssh to get into the app container:
+
+    ```
+    $ cf ssh test
+    ```
+
+1. Access the app port directly in the app container:
+
+    ```
+    $ curl -v http://localhost:8080/PATH
+    ```
+
+1. Access the app using Envoy in the app container:
+
+    ```
+    $ curl -v -k  https://localhost:61001/PATH
+    ```
+
+If both fail, then the application is having problems. If just step #3 fails, then there is an issue with Envoy.
+
+If these commands all succeed, then the app is working and the problem is elsewhere. Continue troubleshooting.
+
+## Test from the Diego Cell
+
+The next step outward is the Diego Cell. We'll continue by testing access to the app from the Diego Cell.
+
+1. Fetch the Diego Cell IP:
+
+    ```
+    $ cf curl /v2/apps/$(cf app test --guid)/stats
+    {
+    "0": {
+        "state": "RUNNING",
+        "isolation_segment": null,
+        "stats": {
+            "name": "test",
+            "uris": [
+                "test.mydomain.com"
+            ],
+            "host": "10.197.2.25",
+            "port": 61072,
+            ...
+            }
+        }
+    }
+    ```
+
+1. Fetch the app port. In this example, `61072/61078/61074` are `HTTP/HTTPS/SSH` external ports, `8080/61001/61002` are `app/envoy/sshd` ports on the container network. You will use the HTTP and HTTPS external ports in a future step.
+
+    ```
+    $ cf ssh test -c 'echo $CF_INSTANCE_PORTS'
+    [{"external":61072,"internal":8080,"external_tls_proxy":61078,"internal_tls_proxy":61001},{"external":61074,"internal":2222,"external_tls_proxy":61080,"internal_tls_proxy":61002}]
+    ```
+
+    If `cf ssh` is being disabled on the platform, locate the Diego Cell (with IP 10.197.2.25) and check its NAT rules. In the example below, export port 61078 maps container app HTTP port 8080, and external port 61080 maps container Envoy HTTPS port.
+
+    ```
+    $ bosh -d DEPLOYMENT ssh diego_cell/<INDEX> -c "sudo iptables -L -t nat"
+    ...
+    DNAT	tcp  --  anywhere	b649d48b-97f7-4ba4-8b25-d18d33d9fec9.diego-cell.infra.cf-f611e346a9cfc876c06f.bosh  tcp dpt:61072 to:10.255.128.38:8080
+    DNAT	tcp  --  anywhere	b649d48b-97f7-4ba4-8b25-d18d33d9fec9.diego-cell.infra.cf-f611e346a9cfc876c06f.bosh  tcp dpt:61074 to:10.255.128.38:2222
+    DNAT	tcp  --  anywhere	b649d48b-97f7-4ba4-8b25-d18d33d9fec9.diego-cell.infra.cf-f611e346a9cfc876c06f.bosh  tcp dpt:61078 to:10.255.128.38:61001
+    DNAT	tcp  --  anywhere	b649d48b-97f7-4ba4-8b25-d18d33d9fec9.diego-cell.infra.cf-f611e346a9cfc876c06f.bosh  tcp dpt:61080 to:10.255.128.38:61002
+    ...
+    ```
+
+1. Then `bosh ssh` into the Diego Cell that hosts the container:
+
+    ```
+    $ curl http://localhost:61072/PATH
+    $ curl -k -v https://localhost:61078/PATH
+    ```
+
+1. Run the following to access the Diego Cell from Gorouter VM. Use the IP and port found from step #1 and #2 above.
+
+    ```
+    $ curl -v http://10.197.2.25:61072/PATH
+    $ curl -k -v https://10.197.2.25:61078/PATH
+    ```
+
+If these commands all succeed, then port forwarding on the Cell is working and the problem is elsewhere. Continue troubleshooting.
+
+If the first command fails, there is an issue forwarding plain HTTP traffic to the app.
+If the second command fails, there is an issue forwarding HTTPS traffic on to Envoy.
+
+
+## Test against Gorouter
+
+If the app can be accessed successfully with the previous steps, then the problem is not with app container and not with Diego Cell. The next step is to test against the Gorouter endpoint with the Host attribute.
+
+Use `bosh ssh` to access one of your Gorouter instance. It doesn't matter which one. Then run this command:
+
+```
+$ curl -k -v -H “Host: test.mydomain.com” https://GOROUTER_IP/PATH
+```
+
+If this command fails, then there is an issue with Gorouter or its routing tables. See the section below on how to dump the Gorouter routing tables and how to review the Gorouter logs.
+
+## Check Load Balancer
+
+If there are no problems with the steps so far, the problem could be with load balancer or something else. These are outside of the platform's scope and you need to talk with your Network or Load Balancer Admin to get assistance with testing from these additional hops in the request path.
+
+## HTTP Status Code
+
+* 502 Bad Gateway usually occurs in two scenarios
+
+    * when the backend app is too slow to respond to requests. The Gorouter couldn’t get response until its backend timeout (configurable at network settings with default as 900s), and Gorouter returns 502 to the client.
+    * Diego Instance Identity Root CA or Intermediate CA expired. In this case, 502 is returned immediately. Find the CAs at `ca_certs` in `/var/vcap/jobs/gorouter/config/gorouter.yml`, and check if they are expired.
+
+* 503 Service Unavailable one scenario is due to time gap between Gorouter and Diego cell.
+
+    * When either Gorouter or Diego cell fail to synchronize system clock. Gorouter will fail to complete TLS handshake with Diego container due to error in `gorouter.stderr.log` "http: proxy error: x509: certificate has expired or is not yet valid: current time YYYY-MM-DDTHH:MM:SSZ is before YYYY-MM-DDTHH:MM:SSZ".
+
+* 404 Not Found: There are two types of "not found" responses:
+
+  1. Hostname doesn't exist in Gorouter routing table. In this case, Gorouter returns 404 with response body "404 Not Found: Requested route (`mydomain.com`) does not exist."
+
+  2. Otherwise, the app receives the request but no handler for handling the requested path.
+
+* 500 Internal Server Error
+    * The platform itself doesn't generate 500 response code, it is returned by apps, thus as next steps, it's recommended to review app status and logs.
+
+## Tips with Gorouter
+
+1. Fetch the routing table, on any Gorouter VM.
+
+    ```
+    $ /var/vcap/jobs/gorouter/bin/retrieve-local-routes | jq . 
+    ...
+    "test.mydomain.com": [
+        {
+        "address": "10.197.2.25:61078",
+        "tls": true,
+        "ttl": 120,
+        "tags": {
+            "component": "route-emitter",
+            "instance_id": "0",
+            "process_id": "6b817f74-98d2-4602-a695-7fe5290ffb61",
+            "process_instance_id": "b57df7c3-9b4c-4e01-7cd7-14b1",
+            "process_type": "web",
+            "source_id": "6b817f74-98d2-4602-a695-7fe5290ffb61"
+        },
+        "private_instance_id": "b57df7c3-9b4c-4e01-7cd7-14b1",
+        "server_cert_domain_san": "b57df7c3-9b4c-4e01-7cd7-14b1"
+        }
+    ],
+    ...
+    ```
+
+1. Test connection from Gorouter to container:
+
+    ```
+    # copy ca_certs content from /var/vcap/jobs/gorouter/config/gorouter.yml, format it into /tmp/ca.pem
+
+    # this will fail because certificate subject name doesn't match, but it can tell if server certificate verification succeeds or not
+    $ curl -v https://10.197.2.25:61078 --cacert /tmp/ca.pem
+    ...
+    *      server certificate verification OK
+    ...
+    curl: (51) SSL: certificate subject name (1f20ff49-0d5e-4694-6d7c-4667) does not match target host name '10.213.60.22'
+
+    # test with -k to skip SSL validation, this should succeed
+    $ curl -v -k https://10.197.2.25:61078
+    ```
+
+1. Read the Gorouter Logs:
+
+    ```
+    2020/03/18 12:37:12 http: proxy error: x509: certificate is not valid for any names, but wanted to match a8a190e7-01c7-419d-4386-a1fb
+    ```
+
+    The Gorouter connects to the backend container and talks to the Envoy proxy over TLS. To avoid connecting to wrong containers, Gorouter verifies that the envoy certificate SAN matches the SAN in the routing table. If it doesn’t match, Gorouter will delete the route from its routing table because the backend container is for a different app.
+
+    ```
+    test.mydomain.com - [2020-03-31T23:41:35.633829784Z] "GET /xxxx?xxxxxx=5000 HTTP/1.1" 200 0 107 "-" "Typhoeus - https://github.com/typhoeus/typhoeus" "10.197.2.250:41198" "10.197.2.18:9024" x_forwarded_for:"10.197.2.25, 10.197.2.250" x_forwarded_proto:"https" vcap_request_id:"e9550647-11aa-4c79-592a-5fb12d9eddf5" response_time:0.010781 gorouter_time:0.000211 app_id:"-" app_index:"-" x_b3_traceid:"2e7cbc3649835a0c" x_b3_spanid:"2e7cbc3649835a0c" x_b3_parentspanid:"-" b3:"2e7cbc3649835a0c-2e7cbc3649835a0c"
+    ```
+
+    The response_time in Gorouter access logs is the app response time, it's vital information to troubleshoot app slowness, if the slowness is only with certain apps, the problem is mostly caused by the app itself rather than the platform.
+
+    The `gorouter_time` is identical to round-trip time, `app response_time`, which is the time consumed on Gorouter itself. See also [Troubleshooting slow requests](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/6.0/tas-for-vms/troubleshooting_slow_requests.html).
