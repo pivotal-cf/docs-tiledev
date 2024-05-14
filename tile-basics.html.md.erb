@@ -5,17 +5,15 @@ owner: Services
 
 Here is a high-level overview of how <%= vars.platform_name %> tiles and <%= vars.app_runtime_full %> service brokers work together.
 
-## <a id="cf-broker"></a>Cloud Foundry Service Brokers and <%= vars.platform_name %> tiles
+You can use service brokers to create service instances in their development spaces that they can call from their code. To do this, the brokers provide an interface between the Cloud Controller and the add-on software service they represent. The service can run internal or external to a Cloud Foundry deployment, but the service broker always runs inside the cloud.
 
-You can use service brokers to create service instances in their development spaces that they can call from their code. To do this, the brokers provide an interface between the Cloud Controller and the add-on software service that they represent. The service can run internal or external to a CF deployment, but the service broker always runs inside the cloud.
+The service broker works by providing an API that the Cloud Controller calls to create service instances, bind them to apps, and perform other operations. Cloud Foundry service brokers are implemented as HTTP servers that conform to the [service broker API](http://docs.cloudfoundry.org/services/api.html).
 
-The service broker works by providing an API which the Cloud Controller calls to create service instances, bind them to apps, and perform other operations. Cloud Foundry service brokers are implemented as HTTP servers that conform to the [service broker API](http://docs.cloudfoundry.org/services/api.html).
-
-In addition to providing an API, a service broker publishes a service catalog that might include multiple service plans, such as a free tier and a metered tier. Brokers register their service plans with the Cloud Controller to populate the Marketplace, which developers access with `cf marketplace` or through Apps Manager.
+In addition to providing an API, a service broker publishes a service catalog that might include multiple service plans, such as a free tier and a metered tier. Brokers register their service plans with the Cloud Controller to populate the Marketplace, which developers access with `cf marketplace` or through Apps Manager in Tanzu Application Service (TAS for VMs).
 
 Cloud operators make software services available to developers by finding them on [VMware Tanzu Network](https://network.tanzu.vmware.com/) and then installing and configuring them through a tile interface in the Tanzu Operations Manager **Installation Dashboard**. Installing a service tile creates a service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. Developers can then create service instances in their spaces and bind them to their apps.
 
 See the following:
 
-* [How <%= vars.app_runtime_abbr %> and <%= vars.platform_name %> services work](cf-concepts.html).
-* [How tiles work](tile-structure.html).
+* [How <%= vars.app_runtime_abbr %> and <%= vars.platform_name %> services work](cf-concepts.html)
+* [How tiles work](tile-structure.html)
