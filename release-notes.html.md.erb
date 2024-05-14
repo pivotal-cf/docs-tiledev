@@ -1,5 +1,5 @@
 ---
-title: Tanzu Operations Manager v2.10 partners release notes
+title: Tanzu Operations Manager v2.10 Partners Release Notes
 owner: Technical Program Management
 ---
 
@@ -7,7 +7,7 @@ You can learn about the changes in <%= vars.ops_manager_first %> <%= vars.v_majo
 be relevant to partner service tiles.
 
 For information about changes introduced in <%= vars.ops_manager %> <%= vars.v_major_version %>, and any
-breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/release-notes.html).
+breaking changes, see [<%= vars.ops_manager %> <%= vars.v_major_version %> Release Notes](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/2.10/vmware-tanzu-ops-manager/release-notes.html).
 
 ## <a id="Releases"></a> Releases
 
@@ -21,7 +21,7 @@ Shipped in <%= vars.ops_manager %> v2.10.62
 
 Shipped in <%= vars.ops_manager %> v2.10.33
 
-* **[Feature]** `ubuntu-jammy` can now be specified as a stemcell OS required by a tile
+* **[Feature]** `ubuntu-jammy` can now be specified as a stemcell OS required by a tile.
 
 ### <a id="2.10.0"></a> Metadata version 2.10.1
 
@@ -30,24 +30,24 @@ Shipped in <%= vars.ops_manager %> v2.10.21
 * **[Feature]** The `BlobstoreVerifier` now takes an optional `ca_cert` property. When specified,
 the certificate presented by the S3 blobstore endpoint is verified against the provided CA or self-signed certificate.
 
-### <a id="2.10.0"></a> Metadata version 2.10.0
+#### <a id="2.10.0"></a> Metadata version 2.10.0
 
 Shipped in <%= vars.ops_manager %> v2.10.0
 
-### <a id="log-format-change"></a> Timestamp format change and customizable <%= vars.app_runtime_abbr %> component logs
+#### <a id="log-format-change"></a> Timestamp format change and customizable <%= vars.app_runtime_abbr %> component logs
 
 In <%= vars.app_runtime_abbr %> v2.10, you can modify the timestamp format of <%= vars.app_runtime_abbr %> component logs.
 
 <%= vars.app_runtime_abbr %> v2.10 removes the `diego_log_timestamp_format` tile property and replaces
 it with the `logging_timestamp_format` property, which allows operators to configure human-readable timestamps across <%= vars.app_runtime_abbr %> components. Most, but not all, <%= vars.app_runtime_abbr %> components can support the RFC3339 timestamp format.
 
-For a list of components that use the RFC3339 timestamp format in <%= vars.app_runtime_abbr %> v2.10 , see [Optionally Use Human-Readable Timestamps for Component Logs](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/deploy-apps-streaming-logs.html#log-types-and-their-messages-2) in the _VMware Tanzu Application Service for VMs v2.10 Release Notes_.
+For more information about the RFC3339 timestamp format in <%= vars.app_runtime_abbr %>, see [VMware Tanzu Application Service Documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/deploy-apps-streaming-logs.html#contents-of-a-log-line).
 
 This feature might affect any partner tiles that parse or consume <%= vars.app_runtime_abbr %> component logs.
 
-For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/2.10/vmware-tanzu-ops-manager/release-notes.html#breaking-changes-in-tanzu-operations-manager-v210-71).
+For more information, see [Timestamp Format for Component Logs Replaces Timestamp Format for Diego Logs](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/2.10/vmware-tanzu-ops-manager/release-notes.html#v21071).
 
-### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Tanzu Operations Manager Bulk Rotation of Certificates
+#### <a id="credhub-maestro-support"></a> Support for CredHub Maestro and Tanzu Operations Manager Bulk Rotation of Certificates
 
 Tanzu Operations Manager v2.10 runs CredHub Maestro to perform the bulk rotation of various CAs and certificates within a foundation.
 
@@ -57,13 +57,13 @@ and CredHub Maestro, you must use the concatenated
 that sign leaf certificates in your tile's property configuration.
 Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
 
-The `.ca` accessor format returns a concatenated version of the CA, which includes the older and newer CA. The concatenated version ensures that jobs using leaf certificates do not lose trusted state during CA rotation and results in the least amount of downtime for your tile's services during certificate rotation.
+The `.ca` accessor format returns a concatenated version of the CA, which includes the older and newer CA. The concatenated version ensures that jobs using leaf certificates do not lose trusted state during CA rotation, and results in the lowest amount of downtime for your tile's services during certificate rotation.
 
 For more information and configuration examples, see [Reference Existing CAs and Certificates in CredHub Variables](create-credhub-vars.html#credhub-ca-refs).
 
 ## <a id="known-issues"></a> Known issues
 
-Known issues in this release that might affect tile development for partners:
+Here are the known issues in this release that might affect tile development for partners.
 
 ### <a id="removed-accessors"></a> Removed accessors
 
