@@ -17,7 +17,7 @@ broker (ODB) services when you use on-demand plans.
 
 <p class="note">
 <span class="note__title">Note</span>
-Tanzu Operations Manager 2.9 and later supports defining VM and disk type defaults and constraints.
+Tanzu Operations Manager versions 2.9 and later support defining VM and disk type defaults and constraints.
 </p>
 
 ## <a id="defaults"></a>VM and Persistent disk types
@@ -28,17 +28,17 @@ disk type come from the `disk_type_dropdown` property.
 Tile authors do not specify the menu items in the product template.
 
 Because VM and disk options differ by IaaS, Tanzu Operations Manager uses a best-fit algorithm to match
-defaults to their closest equivalents on the IaaS, similar to how the **Resource Config** pane
+defaults to their closest equivalents on the IaaS, similar to the way the **Resource Config** pane
 handles the **VM Type** and **Persistent Disk Type** options.
 
-If a tile developer does not include a default value for a VM or disk resource, and then you configure the tile and do not choose a value from
-  the drop-down menu, Tanzu Operations Manager by default sets the resource to the smallest option available on the IaaS.
+If a tile developer does not include a default value for a VM or disk resource, and then you configure the tile. You do not choose a value from
+the drop-down menu. Tanzu Operations Manager, by default, sets the resource to the smallest option available on the IaaS.
 
 ### <a id="vm-type"></a>Set VM type defaults
 
 For the `vm_type_dropdown` property, the resources are `ram`, `ephemeral_disk`, and `cpu`.
 
-Tile authors can also apply `constraints` to any of these resources.
+Tile developers can apply `constraints` to any of these resources.
 
 Constraints can include `min` or `power_of_two`.
 
@@ -64,7 +64,7 @@ For example:
 
 For the `disk_type_dropdown` property, the resource is `persistent_disk`.
 
-Tile authors can also apply `constraints` to this resource.
+Tile developers can apply `constraints` to this resource.
 
 Constraints can include `min` or `power_of_two`.
 
@@ -81,5 +81,3 @@ For example:
           min: 50
           power_of_two: false
 ```
-
-
