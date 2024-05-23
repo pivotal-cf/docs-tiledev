@@ -3,21 +3,19 @@ title: How tiles work
 owner: Services
 ---
 
-Learn about the process and elements of how your service tile works in <%= vars.platform_name %>.
+Learn about how a service tile works in <%= vars.platform_name %>.
 
 You can use product tiles to offer new and upgraded software services to
-developers in an <%= vars.platform_name %> deployment.
-[VMware Tanzu Network](https://network.tanzu.vmware.com/) distributes these tiles as zipped code
-directories, with the `.pivotal` filename extension, that contain or point to all of the software
+developers in a <%= vars.platform_name %> deployment.
+[Tanzu Network](https://network.tanzu.vmware.com/) distributes these tiles as zipped code
+directories, with the `.pivotal` filename extension. They contain or point to all of the software
 elements that use the tile's functions.
 
-It explains what each functional element of a tile does and how you create or specify it as
-input to the Tile Generator tool that creates `.pivotal` files.
+This topic explains what each functional element of a tile does and how you create or specify it as
+input to the Tile Generator tool that creates `.pivotal` files. It also describes the typical structure of a tile directory. This helps in editing generated tiles or
+legacy tiles that were created without the Tile Generator.
 
 For more information about the Tile Generator, see [Tile Generator](./tile-generator.html).
-
-It also describes the typical structure of a tile directory. This helps in editing generated tiles or
-legacy tiles that were created without the Tile Generator.
 
 
 ## <a id='functions'></a> Tile functions
@@ -34,34 +32,32 @@ main executive component, and the service. For more information, see [Service Br
 
 * Generate a BOSH manifest for deploying instances of the service, populating it with both user-configured and fixed properties. For more information, see [Fixed Properties](#fixed).
 
-* Run BOSH errands: deploy errands that set <%= vars.app_runtime_abbr %> up to run the service when an operator first deploys the service, and delete errands that clean up when an operator deletes the service. For more information, see [Errands](#errands).
+* Run BOSH errands: Deploy errands that set up <%= vars.app_runtime_abbr %> to run the service when an operator first deploys the service, and then delete errands that clean up when an operator deletes the service. For more information, see [Errands](#errands).
 
-* Define dependencies for the tile, to prevent Tanzu Operations Manager from installing the service when its dependencies are missing. For more information, see [Dependencies](#dependencies).
+* Define dependencies for the tile to prevent Tanzu Operations Manager from installing the service when its dependencies are missing. For more information, see [Dependencies](#dependencies).
 
 * Support one-click installation and upgrading from previous versions. For more information, see [Update Rules](#update).
-
-These functions are described in more detail in the following topics.
 
 ### <a id='broker'></a> Service Broker
 
 Service brokers integrate services with <%= vars.app_runtime_abbr %> by providing an API for the
-Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API](https://github.com/openservicebrokerapi/servicebroker).
+Cloud Controller to create service instances, bind them to apps, and perform other operations. For more information about requirements for this API, see [Service Broker API](https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/spec.md).
 
 Each service tile acts as a wrapper for a service broker. Installing the tile creates the
 service broker, registers it with the Cloud Controller, and publishes the service plans that the broker offers. For more information, see [Catalog](#catalog).
 
 You can write a service broker in any language, and it can run anywhere, inside
 your <%= vars.app_runtime_abbr %> installation or external.
-For sample code in Ruby, Java, and Go, see [Example Service Brokers](https://docs.vmware.com/en/Tile-Developer-Guide/3.0/tile-dev-guide/examples.html).
+For sample code in Ruby, Java, and Go, see [Example Service Brokers](/docs-services/examples.html).
 
 Specify the service broker for a tile in the tile directory's `tile.yml` file, as a package
-with `type:` set to `app-broker`, `docker-app-broker`, or `external-broker`.
-The `external-broker` type requires a `uri` value, for the service broker location.
+with `type` set to `app-broker`, `docker-app-broker`, or `external-broker`.
+The `external-broker` type requires a `uri` value for the service broker location.
 For more information, see [Packages](#packages).
 
 #### <a id='catalog'></a> Catalog
 
-Service brokers include catalog metadata that list their service plans. This information publishes to
+Service brokers include catalog metadata that lists their service plans. This information publishes to
 the Marketplace that app developers use to browse and select services.
 
 Developers on either <%= vars.app_runtime_abbr %> or open-source Cloud Foundry can see a plain-text version
@@ -71,30 +67,28 @@ this Marketplace with additional catalog metadata text boxes for display names, 
 links to more information and documentation.
 
 Define this catalog metadata for your service by writing your service broker to return the API calls
-listed in the [Service Metadata](https://github.com/openservicebrokerapi/servicebroker/blob/v2.15/profile.md#service-metadata) section of _Open Service Broker API Profile (v2.15)_ in the Open Service Broker API repository on GitHub.
+listed in the [Service Metadata](https://github.com/openservicebrokerapi/servicebroker/blob/v2.16/profile.md#service-metadata) section of _Open Service Broker API Profile (v2.16)_ in the Open Service Broker API repository on GitHub.
 
 ### <a id='configure'></a> Configuration
 
 In the Tanzu Operations Manager Installation Dashboard, service tiles present a form-based interface that you can use to configure the service. These configured properties become part of the BOSH manifest that <%= vars.platform_name %> uses to deploy instances of the service.
 
-You define this configuration interface in the `forms:` section of the `tile.yml` configuration file
+You define this configuration interface in the `forms` section of the `tile.yml` configuration file
 that you pass to the Tile Generator. Each named form element defines a configuration pane accessible
-under the tile's **Settings** tab.
+under the **Settings** tab of the tile.
 
-The drop-down menu lists all configuration panes and indicates with check marks which ones
-have been configured. The drop-down menu lists service-specific panes, defined by the
+The pull-down menu lists all configuration panes and indicates with check marks which
+have been configured. The pull-down menu includes service-specific panes, defined by the
 tile developer, between system-level panes like **Assign AZs and Networks** and **Resource Config**
 that all <%= vars.platform_name %> products and services use.
 
-Each form, or configuration pane, has `label` for the menu text, a `description` to appear up top, and `property_inputs` that define the configuration fields themselves. To construct your `forms`, see [Property and Template References](./property-template-references.html).
+Each form, or configuration pane, uses `label` for the menu text, a `description` to appear at the top, and `property_inputs` that define the configuration text boxes themselves. To construct your `forms`, see [Property and Template References](./property-template-references.html).
 
 For each property, you can combine specifications for `name`, `type`, `default`, `configurable`, `options`, and `constraints`. For more information, see the [Form Properties](./property-template-references.html#form-properties) and [Property Blueprints](./property-template-references.html#property-blueprints) sections of the _Property and Template References_ topic.
 
-<p> In the tile installer <code>.yml</code> that Tile Generator creates, form properties appear in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding field value types and constraints.</p>
-
 <p class="note">
 <span class="note__title">Note</span>
-In the tile installer <code>.yml</code> file that Tile Generator creates, form properties appear
+In the tile installer YAML file that Tile Generator creates, form properties appear
 in two locations: a <code>form_types</code> section that defines the contents and layout of the configuration interface, and a <code>property_blueprints</code> section that defines the corresponding text box value types and constraints.
 </p>
 
@@ -102,35 +96,35 @@ in two locations: a <code>form_types</code> section that defines the contents an
 
 In the Tanzu Operations Manager Installation Dashboard, your service tile has an identifying label,
 description, and logo icon. Specify these at the top of your `tile.yml` configuration file as
-`label`, `description`, and `icon_file`. The value of `icon_file` can be the name of a 128×128 pixel PNG image.
+`label`, `description`, and `icon_file`. The value of `icon_file` can be the name of a 128×128 pixel PNG image file.
 
 ### <a id='fixed'></a> Fixed properties
 
-A tile also writes fixed, unconfigurable properties into the BOSH manifest that it creates. You can
+A tile writes fixed, unconfigurable properties into the BOSH manifest that it creates. You can
 specify these properties in your `tile.yml` configuration file using double parentheses
 expressions format.
 
-For more information, see the [Double Parenthesis Expressions](./property-template-references.html#double-parens) section of the _Property and Template References_ topic.
+For more information, see the [Double Parentheses Expressions](./property-template-references.html#double-parens) section of the _Property and Template References_ topic.
 
 #### <a id='credentials'></a> Credentials
 
-Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file. But
-you do not need to include credentials that already exist in other tiles, such as TAS for VMs.
-BOSH automatically generates these for any packages that require them.
+Include credentials to pass into a BOSH manifest as `salted_credentials` in your `tile.yml` file.
+You do not need to include credentials that already exist in other tiles, such as the TAS for VMs tile.
+BOSH automatically generates credentials for any packages that require them.
 
 ### <a id='errands'></a> Errands
 
 Tile Generator automatically generates `deploy` and `delete` life cycle errands
 for packages that deploy to <%= vars.platform_name %>. These errand scripts deploy the service and
-  publish the plans in the Marketplace, and remove the service from <%= vars.platform_name %> and the Marketplace.
+publish the plans in the Marketplace, and they are also used to remove the service from <%= vars.platform_name %> and the Marketplace.
 
-You can also define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` file
+You can define additional `post_deploy` and `pre_delete` errand scripts in `tile.yml` file
 that prepare Cloud Foundry to host the service or clean up before deleting it.
-You can configure these errands to run on their own dedicated VMs or co-locate them on existing errand VMs.
+You can configure these errands to run on their own dedicated VMs or you can co-locate them on existing errand VMs.
 
 For `bosh-release` and `docker-bosh` packages, which run jobs directly on BOSH rather than on
 the <%= vars.platform_name %> layer, you need to include `post_deploy` and `pre_delete` errands
-with their package definitions in `tile.yml` file. Label them as life cycle errands
+with their package definitions in the `tile.yml` file. Label them as life cycle errands
 using `lifecycle: errand` and either `post_deploy: true` or `pre_delete: true`.
 
 Tile Generator writes the `bosh-release` errands into the main BOSH release that it creates for the service,
@@ -140,18 +134,18 @@ and adds `docker-bosh` errands into a separate Docker BOSH release that the main
 
 You can include both required and optional product dependencies for tiles.
 
-* **Required Dependencies**: Required dependencies are always required.
+* **Required dependencies**: Required dependencies are always required.
 To deploy the dependent tile, you must also deploy the dependency.
 
-* **Optional Dependencies**: Optional dependencies are only required if you upload both the dependent
+* **Optional dependencies**: Optional dependencies are required only if you upload both the dependent
 tile and the optional dependency to your environment. For example, a tile can be dependent
 on either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_full %> (<%= vars.k8s_runtime_abbr %>).
-If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependecies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully
+If you define <%= vars.app_runtime_abbr %> and <%= vars.k8s_runtime_abbr %> as optional dependencies, you can upload either <%= vars.app_runtime_abbr %> or <%= vars.k8s_runtime_abbr %> to successfully
 deploy the dependent tile.
 
 <p class="note">
 <span class="note__title">Note</span>
-After the dependency is installed, it is mandatory even if marked as option.
+After the dependency is installed, it is mandatory even if it is marked as optional.
 </p>
 
 Include product dependencies under `requires_product_versions` at the top of
@@ -166,7 +160,7 @@ requires_product_versions:
     version: 2
     optional: false
   - name: pks
-    versions: 1.5
+    version: 1.5
     optional: true
 ```
 
@@ -176,16 +170,16 @@ Tile Generator automatically generates the JavaScript migration file that allows
 from Tanzu Operations Manager. This file describes how to change existing tile property names and
 values to match the new version of the tile.
 
-A tile can contain several of these `.js` files, from previous versions
+A tile can contain several of `.js` files, from previous versions
 and the current one, to allow tile updates to automatically chain together in sequence.
 
 You can add custom update code in the `tile.yml` Tile Generator configuration file,
-following the properties documented in the [Update values or property names using JavaScript](./tile-upgrades.html#import) section of the _Upgrading Tiles_ topic.
+following the properties documented in [Update values or property names using JavaScript](./tile-upgrades.html#import) in _Upgrading Tiles_.
 
 
 ## <a id='structure'></a> Tile file format and structure
 
-Tile directories contain the following components, which include each other as shown:
+Tile directories contain the following components, with sub-components as shown:
 
 * BOSH release
     * Service source code
@@ -195,11 +189,9 @@ Tile directories contain the following components, which include each other as s
     * BOSH manifest (deployment properties for service)
         * Packages
         * Dependencies
-
 * Tile manifest template (adds properties into BOSH manifest)
     * Configuration forms and properties
     * Catalog metadata (for the Marketplace)
-
 * Migrations
 
 The required top-level subdirectories in a `.pivotal` tile directory are:
@@ -239,9 +231,9 @@ Where:
 * `TILE-NAME` is the name of the tile.
 * `TILE-VERSION` is the version of the tile.
 
-You can use any ZIP utility to create a `.pivotal` file. Ensure that the top-level subfolders as seen above in the `example-product` folder remain.
+You can use any ZIP utility to create a `.pivotal` file. Ensure that the top-level subfolders, as seen above in the `example-product` folder, remain.
 
-In the tile's `releases` subfolder, the BOSH release exists as a gzipped tarfile.
+In the `releases` subfolder for the file, the BOSH release exists as a gzipped tar file.
 
 ### <a id='example-workflow'></a> Example workflow
 
@@ -284,7 +276,7 @@ convention your tile repository might look like this:
 <%= vars.app_runtime_abbr %> services typically require multiple component job processes to run
 concurrently, such as a main app, a helper app, and a service broker. They also require
 buildpacks that run as one-time compilation tasks. Services also require
-components, for example, external brokers or storage, which do not run as jobs, but must remain available.
+components, such as external brokers or storage, that do not run as jobs but must remain available.
 
 The `tile yml` file that you pass to Tile Generator defines these service components in the `packages:`
 section. Each package has a name and a package type.
@@ -294,7 +286,7 @@ It includes:
 
 * `app`: Pushed to <%= vars.app_runtime_abbr %>
 
-* `docker-app`: Pushed to <%= vars.app_runtime_abbr %> (image is not embedded so requires Docker registry access).
+* `docker-app`: Pushed to <%= vars.app_runtime_abbr %> (image is not embedded, so this package type requires Docker registry access).
 
 * `app-broker`: Pushed to <%= vars.app_runtime_abbr %> and registered as a broker.
 
@@ -318,11 +310,11 @@ Where packaged processes run depends on their package type, as follows:
 
 * `docker-bosh` and `bosh-release` packages run their processes on VMs in the underlying BOSH layer.
 
-* `external-broker` and `buildpack` packages run one-time tasks, not long-running processes, on Diego Cells.
+* `external-broker` and `buildpack` packages run one-time tasks (not long-running processes) on Diego Cells.
 
 #### <a id='process'></a> Package VM resources
 
-You can also use the service tile's **Resource Config** pane to configure resources
+You can use the service tile's **Resource Config** pane to configure resources
 individually for each package. You can also provision resources for VMs that handle one-time tasks,
 with the `acceptance-tests`, `deploy-all`, and `delete-all` rows.
 
