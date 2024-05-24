@@ -8,15 +8,13 @@ integration. In general, your user-experience and production-readiness improves 
 integration level increases. But none of the higher levels is required.
 
 You can stop service
-integration and declare it finished (enough) after any of these:
+integration and declare it finished (sufficient) after any of these integration levels.
 
-When you integrate third-party software with Cloud Foundry, the effort
-typically progresses through increasing levels of integration.
 This staged approach allows early feedback on the value and the
 design of the integration, which helps make better decisions about future
 stages.
 
-For non-service integrations,such as applications or buildpacks, a similar
+For non-service integrations, such as applications or buildpacks, a similar
 staged integration approach is often possible and desirable.
 
 ![Examples of service integration stages.](img/integration-stages.png)
@@ -43,32 +41,29 @@ Installation Dashboard. Developers can see your service plans and create
 service instances in Apps Manager, or by running the `cf marketplace` and
 `cf create-service` commands.
 
-The [Brokered Service](./brokered.html) topic has more information about brokered
-service tiles and how to create them.
+For more information about brokered service tiles and how to create them, see [Brokered Service](./brokered.html).
 
 ## <a id="managed"></a> Level 3. Managed service
 
-With a managed service, both the service broker and the service itself run within
-<%= vars.app_runtime_abbr %>. <%= vars.app_runtime_abbr %> activates to manage, monitor, and
+In a managed service, both the service broker and the service itself run within
+<%= vars.app_runtime_abbr %>. <%= vars.app_runtime_abbr %> is activated to manage, monitor, and
 increase service performance.
 
 As with the brokered service, the service has a service broker and a tile listed
-on VMware Tanzu Network. VMware Tanzu Network lists managed services as "for VMware Tanzu," without
-"Service Broker" in the name.
+on VMware Tanzu Network. VMware Tanzu Network lists managed services as "<YourApp> for VMware Tanzu."
 
 When you install the tile, you allocate a block of VMs to run service
 instances and provisions for CPU and memory resources.
 
-The [Managed Service](./managed.html) topic has more information about managed
-service tiles and how to create them.
+For more information about managed service tiles and how to create them, see [Managed Service](./managed.html).
 
-## <a id="dynamic"></a>  Level 4. On-Demand (dynamic) service
+## <a id="dynamic"></a>  Level 4: On-Demand (dynamic) service
 
 Just as with a managed service, an on-demand service and broker both run within
 <%= vars.app_runtime_abbr %>,
-and VMware Tanzu Network lists the service tile without "Service Broker" in the name.
+and VMware Tanzu Network lists the service tile.
 But unlike a managed service, an on-demand service does not limit the number of
-service instance VMs.
+service instance VMs available for use.
 You do not have to pre-allocate and provision VM resources for the
 service.
 
@@ -76,5 +71,4 @@ When you create an instance for an on-demand service, they provision the
 resources (within an allowed range) and BOSH dynamically creates a new, dedicated
 VM for the instance.
 
-[On-Demand service](./on-demand.html) has more information about
-On-Demand service tiles and how to create them.
+For more information about On-Demand service tiles and how to create them, see [On-Demand service](./on-demand.html).
