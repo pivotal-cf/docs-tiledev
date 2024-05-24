@@ -5,8 +5,7 @@ owner: Services
 
 You can integrate your software service with <%= vars.platform_name %> to create a brokered service and
 service tile for <%= vars.platform_name %>.
-
-You can achieve the first real improvement in your <%= vars.platform_name %> customers user experience by creating a [Service Broker](service-brokers.html) for your service.
+You can achieve the first real improvement in your <%= vars.platform_name %> customers' user experience by creating a [Service Broker](service-brokers.html) for your service.
 
 A brokered service runs external to <%= vars.platform_name %>, but it has a tile
 on [VMware Tanzu Network](https://network.tanzu.vmware.com/). You install, configure, and upgrade the tile through the
@@ -14,15 +13,10 @@ Tanzu Operations Manager Installation Dashboard.
 
 The service broker eliminates the need for you to know the URLs and
 credentials for your services. They are managed automatically by the broker.
-
-Building a broker for a (still) externally deployed service is generally
+Building a broker for an externally deployed service is generally
 a good way to publish a first tile that adds real value for you, your software, and <%= vars.platform_name %>.
 
-## <a id="create"></a> Create a brokered service
-
-* A brokered service requires a service broker, which publishes an API to the Cloud Controller.
-
-For more information about how to create a service broker, see [Service Brokers](./service-brokers.html).
+See [Service Brokers](./service-brokers.html) for more information about how to create a service broker. The following details are available:
 
 * [Route Services](./service-brokers.html#route) explains how to create a route service, for use in the routing layer of <%= vars.platform_name %> rather than by hosted <%= vars.platform_name %>
 apps.
