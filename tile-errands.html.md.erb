@@ -5,35 +5,48 @@ owner: Services
 
 Life cycle errands are BOSH errands (scripts) that run at the beginning and end of an installed
 product's availability time. Product teams create errands as part of a product package,
-and a product can only run errands it includes.
+and a product can only run errands the package includes.
 
-In Tanzu Operations Manager v2.0 and later, you can select [co-locate errands](#colocated) on existing VMs.
+## <a id="about-bosh-errands"></a>About BOSH errands
+
+In Tanzu Operations Manager v2.0 and later, you can select [co-located errands](#colocated) on existing VMs.
 When errands are not co-located, BOSH deploys a new VM for each errand defined in the tile metadata.
 Co-located errands can run alongside other jobs or errands on existing VMs in an operator's deployment.
 
-For more information about BOSH errands, see [BOSH documentation](https://bosh.io/docs/errands),
-and for more information about errands in <%= vars.platform_name %>,
-see [Managing errands in Tanzu Operations Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
+Products can have two kinds of errands:
 
-Products can have two kinds of errands.
-[Post-deploy errands](#post-deploy) run after a product
+* [Post-deploy errands](#post-deploy) run after a product
 installs but before Tanzu Operations Manager makes it available for use.
-[Pre-delete errands](#pre-delete) run after you delete a product, but before
+* [Pre-delete errands](#pre-delete) run after you delete a product, but before
 Tanzu Operations Manager finishes removing it from use.
 
-To save deployment time, you can set [errand run rules](#run-rules) that dictate if errands run.
+To save deployment time, you can set [errand run rules](#run-rules) that dictate whether errands run.
 Tile authors can [set defaults](./property-template-references.html#top-level) for these run rules.
+
+For more information about:
+
+* BOSH errands, see the [BOSH documentation](https://bosh.io/docs/errands).
+* Errands in <%= vars.platform_name %>,
+see [Managing errands in Tanzu Operations Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
+
+
+For more information about:
+
+* BOSH errands, see the [BOSH documentation](https://bosh.io/docs/errands).
+* Errands in <%= vars.platform_name %>,
+see [Managing errands in Tanzu Operations Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
+
 
 ## <a id="colocated"></a>Define a colocated errand
 
 System tests might incur costs from using third-party services, IaaS resources, and others.
 
-Instead of deploying a new VM for each errand, colocated errands run on an existing VM.
-Errands can run alongside other jobs on a VM, and multiple errands can be colocated on the same VM.
-Colocated errands run faster than traditional errands and use fewer resources, including disk and IP space.
+Rather than deploying a new VM for each errand, co-located errands run on an existing VM.
+Errands can run alongside other jobs on a VM, and multiple errands can be co-located on the same VM.
+Co-located errands run faster than traditional errands and use less disk and IP space.
 
-To configure a colocated errand, define the following properties in the `pre_delete_errands` and
-`post_deploy_errands` sections of the tile metadata:
+To configure a co-located errand, define the following properties in the `pre_delete_errands` and
+`post_deploy_errands` sections of the tile metadata.
 
 <table class=“table”>
 <thead>
@@ -45,10 +58,10 @@ To configure a colocated errand, define the following properties in the `pre_del
   <tr>
     <td width="28%"><code>name: MY-ERRAND</code></td>
     <td>Provide the name of the errand job. The example manifest in the following section uses
-      <code>example_colocated_errand</code>.</td>
+      "<code>example_colocated_errand</code>."</td>
   </tr><tr>
     <td><code>colocated: true</code></td>
-    <td>Set this value to <code>true</code> to enable colocated errands. If you do not set this value,
+    <td>Set this value to <code>true</code> to enable co-located errands. If you do not set this value,
       Tanzu Operations Manager ignores all other errand attributes in this section.</td>
   </tr><tr>
     <td><code>run_default: on</code></td>
@@ -68,25 +81,25 @@ To configure a colocated errand, define the following properties in the `pre_del
     <td><code>label: ERRAND-LABEL</code></td>
     <td>Define the errand name to be shown in the tile's <strong>Errand Config</strong> tab and
       above <strong>Apply Changes</strong>.
-    The example manifest in the following section uses <code>colocated errand on web_server</code>.</td>
+    The example manifest in the following section uses "<code>colocated errand on web_server</code>."</td>
   </tr><tr>
     <td><code>description: TEXT</code></td>
-    <td>(Optional) Provide a description for the errand that appears in the tile's
+    <td>(Optional) Provide a description for the errand. The description you set appears in the tile's
       <strong>Errand Config</strong> tab.</td>
   </tr><tr>
     <td width="30%"><code>impact_warning: TEXT</code></td>
-    <td>(Optional) Provide an impact warning that appears in the
+    <td>(Optional) Provide an impact warning to appear in the
       <b>Review Pending Changes</b> tab before running the errand.</td>
   </tr>
 </table>
 
-After you define the errand in the sections previous, add the errand to the job properties in the
+After you define the errand as described, add the errand to the job properties in the
 `job_types` section.
 
-## <a id="colocated-example"></a>Colocated errand example manifest
+## <a id="colocated-example"></a>Co-located errand example manifest
 
-The following example shows colocated `post_deploy_errands` and `pre_delete_errands` sections
-in the tile metadata:
+The following example shows co-located `post_deploy_errands` and `pre_delete_errands` sections
+in the tile metadata.
 
 ```yaml
 post_deploy_errands:
@@ -99,14 +112,14 @@ post_deploy_errands:
     instances:
       - web_server/first
     label: colocated errand on web_server
-    description: This errand does little more than print a message to prove colocated errands work.
+    description: This errand prints a message to prove co-located errands work.
 
 pre_delete_errands:
   - name: example-errand
     impact_warning: "This is an impact warning for your pre-delete errand."
   ```
 
-The following example shows the colocated errands referenced within the `job_type`:
+The following example shows the co-located errands referenced in the `job_type`:
 
 ```yaml
 job_types:
@@ -129,51 +142,50 @@ job_types:
     max_in_flight: 1
 ```
 
-##<a id='post-deploy'></a>Post-deploy errands
+## <a id='post-deploy'></a>Post-deploy errands
 
 Post-deploy errands run after a product is installed, but before Tanzu Operations Manager makes it
 available for use.
 
-Typical post-installation errands include smoke or acceptance tests, database initialization or database
+Typical post-deploy errands include smoke tests or acceptance tests, database initialization or database
 migration, and service broker registration.
 
 Post-deploy errands run by default. You can prevent a post-deploy errand from running by
 setting the [run rule](#run-rules) to **Off** under **Pending Changes** in the Tanzu Operations Manager Installation
 Dashboard or on the service's **Settings** tab **Errands** pane, before you install the product.
 
-![Example Errand](img/example-errand.png)
+![This is an example of an Errand in the Settings tab of a MySQL for VMs service.](img/example-errand.png)
 
 For example, Redis has a **Broker Registrar** post-deploy errand that
 the <%= vars.app_runtime_full %> tile uses
-to register its service broker with the Cloud Controller and publish the service plans.
+to register its service broker with the Cloud Controller. It also publishes the service plans.
 
 If you select **Off** from the drop-down menu for Redis's **Broker Registrar** errand
 before installation, the Redis service broker is not registered with the Cloud Controller and the
 service plans are not made public.
 
-##<a id='pre-delete'></a>Pre-delete errands
+## <a id='pre-delete'></a>Pre-delete errands
 
-Pre-delete errands run after you choose to delete a product, but before Tanzu Operations Manager actually
-finishes deleting it.
+Pre-delete errands run after you choose to delete a product, but before Tanzu Operations Manager finishes deleting it.
 
 Typical pre-delete errands include cleanup of application artifacts and service
 broker de-registration.
 
-For example, VMware Tanzu SQL [MySQL] has a **Broker Deregistrar** pre-delete errand that:
+For example, VMware Tanzu SQL [MySQL] has a **Broker Deregister** pre-delete errand that:
 
-* Purges the service offering.
-* Purges all service instances.
-* Purges all application bindings.
-* Deletes the service broker from the Cloud Controller.
+* Purges the service offering
+* Purges all service instances
+* Purges all application bindings
+* Deletes the service broker from the Cloud Controller
 
 When you choose to delete the VMware Tanzu SQL [MySQL] product, Tanzu Operations Manager first
-runs the **Broker Deregistrar** pre-delete errand, and then deletes the product.
+runs the **Broker Deregister** pre-delete errand, and then deletes the product.
 
 Pre-delete errands run by default. You can prevent a pre-delete errand from running by setting
 the [run rule](#run-rules) to **Off** under **Pending Changes** in the Tanzu Operations Manager Installation
-Dashboard or on the product tile's **Settings** tab **Errands** pane, before installing the product.
+Dashboard or on the product tile's **Settings** tab, **Errands** pane, before installing the product.
 
-##<a id='run-rules'></a>Errand run rules
+## <a id='run-rules'></a>Errand run rules
 
 Some errands do not always need to run. For example, installing a minor patch to a existing service
 might not require re-registering its broker. Tanzu Operations Manager lets you save installation time by
@@ -190,4 +202,4 @@ only apply to the next time you run **Apply Changes** and do not persist after t
 installations, until changed in the **Errands** pane.
 
 For more information,
-see [Configure Run Rules in Tanzu Operations Manager](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
+see [Managing errands in your Tanzu Operations Manager deployment](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/install-managing_errands.html).
