@@ -3,26 +3,30 @@ title: Fetching variable names and values with CredHub
 owner: CredHub
 ---
 
-CredHub has two API endpoints to identify and reuse variables. To see all the credentials
-associated with your product, or you want to troubleshoot problems specific to one virtual machine (VM),
-you can use these APIs for those purposes.
+CredHub has two API endpoints for identifying and reusing variables. To see all the credentials
+associated with your product, or to troubleshoot problems specific to one virtual machine (VM),
+you can use these API endpoints.
 
 The API endpoints perform these functions:
 
-* Identifying and printing the name of a variable.
-* Using the name of the variable to identify and print the value of the variable.
+* Identifying and printing the name of a variable
+* Using the name of the variable to identify and print the value of the variable
 
-### <a id="use-api-endpoints"></a> Using the API endpoints
+## <a id="use-api-endpoints"></a>Using the API endpoints
 
-You can Use endpoints to view variables for any product in Tanzu Operations Manager, except the BOSH Director. These
+You can use the API endpoints to view variables for any product in <%= vars.platform_name %> except the BOSH Director. These
 endpoints are read-only. You
 cannot use them to add, remove, or rotate variables.
 
-## <a id="fetch-variables"></a> Fetching variables
 
-This endpoint returns the list of variables associated with a product that are stored in
-CredHub. Not all variables are stored in
+## <a id="fetch-variables"></a>Fetching Variables
+
+This endpoint returns the list of variables associated with a product that is stored in
 CredHub. If you call a variable that is not stored in CredHub, the call returns an empty value.
+
+You can use the variable name in the next endpoint call to return the variable value.
+
+**Example query:**
 
 <pre class="terminal">
 $ curl "http<span>s</span>://OPS-MAN-FQDN/api/variables"
@@ -30,7 +34,7 @@ $ curl "http<span>s</span>://OPS-MAN-FQDN/api/variables"
     -H "Authorization: Bearer EXAMPLE_UAA_ACCESS_TOKEN"
 </pre>
 
-### <a id="example-response"></a> Example response
+**Example response:**
 
 <pre class="terminal">
 HTTP/1.1 200 OK
@@ -40,7 +44,8 @@ HTTP/1.1 200 OK
 }
 </pre>
 
-### <a id="query-params"></a> Query parameters
+**Query parameters:**
+
 <table class=“table”>
 <thead>
   <th>Parameter</th>
@@ -52,14 +57,14 @@ HTTP/1.1 200 OK
   </tr>
 </table>
 
-This endpoint returns the name of the variable. Use the name in the next endpoint to return the
-variable value.
 
-## <a id="fetch-var-values"></a> Fetching variable values
+## <a id="fetch-var-values"></a>Fetching variable values
 
 This endpoint returns the value of a variable stored in
-CredHub. Not all variables are stored in CredHub, because if you call a
+CredHub. If you call a
 variable that is not in CredHub, the call returns an empty value.
+
+**Example query:**
 
 <pre class="terminal">
 $ curl "http<span>s</span>://OPS-MAN-FQDN/api/variables" name=EXAMPLE-VARIABLE-NAME" \
@@ -67,7 +72,7 @@ $ curl "http<span>s</span>://OPS-MAN-FQDN/api/variables" name=EXAMPLE-VARIABLE-N
     -H "Authorization: Bearer UAA_ACCESS_TOKEN"
 </pre>
 
-### <a id="example-response"></a> Example response
+**Example Response:**
 
 <pre class="terminal">
 HTTP/1.1 200 OK
@@ -77,7 +82,8 @@ HTTP/1.1 200 OK
 }
 </pre>
 
-### <a id="query-params-values"></a> Query parameters
+**Query parameters:**
+
 <table class=“table”>
 <thead>
   <th>Parameter</th>
