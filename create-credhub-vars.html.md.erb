@@ -3,9 +3,9 @@ title: Creating new variables in CredHub
 owner: CredHub
 ---
 
-You can use CredHub to manage variables in the context of a larger deployment, and create new variables.
+You can use CredHub to create new variables and manage variables in the context of a larger deployment.
 
-When a tile author defines a top-level `variables` section in the product template, Tanzu Operations Manager passes
+When a tile author defines a top-level `variables` section in the product template, <%= vars.platform_name %> passes
 the `variables` section to the
 product manifest.
 
@@ -17,18 +17,18 @@ variables:
     type: password
 ```
 
-You can reference these variables in the manifest snippets in their tile metadata using a triple parentheses syntax:
+You can reference these variables in the manifest snippets in their tile metadata using triple parentheses syntax:
 
 ```
 ((( EXAMPLE-CREDHUB-PASSWORD )))
 ```
 
-When you use triple parentheses, use Tanzu Operations Manager to identify CredHub variables while still supporting the BOSH double
+When you use triple parentheses, use <%= vars.platform_name %> to identify CredHub variables, while still supporting the BOSH double
 parentheses syntax. A variable that is referenced
-within triple parentheses is replaced by double parentheses in the generated manifest. After contacting CredHub,
+within triple parentheses is added with double parentheses in the generated manifest. After contacting CredHub,
 BOSH populates that variable value internally.
 
-The benefit of this approach is that the Tanzu Operations Manager YAML file does not contain sensitive credentials when the metadata
+The benefit of this approach is that the <%= vars.platform_name %> YAML file does not contain sensitive credentials when the metadata
 manifest snippets have triple parentheses. The resulting manifest file contains variables within double
 parentheses, rather than unobscured credentials.
 
@@ -39,16 +39,16 @@ For example, a tile author adds credentials to a manifest snippet in the followi
   key: prefix-((( ANOTHER-CREDHUB-PASSWORD )))-suffix
 ```
 
-Tanzu Operations Manager then evaluates the preceding example to generate the following section in the product manifest:
+<%= vars.platform_name %> then evaluates the preceding example to generate the following section in the product manifest:
 
 ```
   (( EXAMPLE-CREDHUB-PASSWORD ))
   prefix-(( ANOTHER-CREDHUB-PASSWORD ))-suffix
 ```
 
-## <a id='how-it-works'></a> How CredHub works within a deployment
+## <a id='how-it-works'></a> How CredHub works in a deployment
 
-CredHub is distributed as a BOSH release. As part of this installation, Tanzu Operations Manager co-locates the
+CredHub is distributed as a BOSH release. As part of this installation, <%= vars.platform_name %> co-locates the
 CredHub release on the BOSH Director, including the CredHub job configurations, and the BOSH Director is configured to point
 to the CredHub API.
 
@@ -58,15 +58,15 @@ When you use variables, rather than values, it provides an extra layer of securi
 
 ## <a id='change-deployment'></a> Changing your deployment manifest to include CredHub variables
 
-The BOSH Director interpolates credential values into manifests that use the <code>((variables))</code> syntax. When the BOSH Director
+The BOSH Director interpolates credential values into manifests that use the `((variables))` syntax. When the BOSH Director
 encounters a variable using this syntax, it requests the credential
 value from CredHub. If the credential does not exist and the release or
 manifest contains generation properties, the credential value is generated automatically.
 
-The manifest excerpt includes references to two credentials, <code>EXAMPLE-PASSWORD</code> and <code>EXAMPLE-TLS</code>.
+The following manifest excerpt includes references to two credentials, `EXAMPLE-PASSWORD` and `EXAMPLE-TLS`.
 
 When this manifest is deployed, the BOSH Director retrieves the stored variables and replaces them with the
-credential values associated with each variable. The <code>EXAMPLE-TLS</code> variables include
+credential values associated with each variable. The `EXAMPLE-TLS` variables include
 property accessors, because only the `certificate` and `private_key` components are interpolated.
 
 ```
@@ -84,7 +84,7 @@ instance_groups:
           private_key: ((EXAMPLE-TLS.private_key))
 ```
 
-Tanzu Opertions Manager configures the BOSH Director to generate a credential if it does not exist. The manifest includes generation
+<%= vars.platform_name %> configures the BOSH Director to generate a credential if it does not exist. The manifest includes generation
 parameters that define how the
 credential must be generated. These generation parameters are defined in the variables section.
 
@@ -120,15 +120,15 @@ instance_groups:
 
 ## <a id='variable-namespacing'></a>  Variable namespacing
 
-Deployment manifests often use common variable names, for example, <code>(( PASSWORD ))</code>. To avoid variable name collisions
+Deployment manifests often use common variable names, for example, `(( PASSWORD ))`. To avoid variable name collisions
 between deployments, the BOSH Director automatically stores variables with the BOSH Director name and deployment name.
 
-For example, the variable <code>(( EXAMPLE-PASSWORD ))</code> is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
+For example, the variable `(( EXAMPLE-PASSWORD ))` is stored in CredHub as `/BOSH-Director-name/deployment-name/example-password`.
 
 ### <a id="other-options"></a> Other namespacing options
 
 Use a BOSH link to share credentials across deployments. Alternatively, if you want to use an exact name, prefixing the variable
-with a forward slash (/) configures the BOSH Director to use the exact name you type.
+with a forward slash (`/`) configures the BOSH Director to use the exact name you type.
 
 Here is an example of a precisely typed variable:
 
@@ -138,15 +138,15 @@ Here is an example of a precisely typed variable:
 
 ## <a id='credhub-ca-refs'></a> Reference existing CAs in CredHub variables
 
-This section describes how to reference existing CAs stored in CredHub correctly in your tile's property configuration.
+This section describes how to correctly reference existing CAs stored in CredHub in your tile's property configuration.
 
-In Tanzu Operations Manager v2.9 and later, you can perform a bulk rotation of all CAs and certificates in a foundation, which might include leaf certificates used by individual service tiles. Tanzu Operations Manager invokes CredHub Maestro to perform this operation.
+In <%= vars.platform_name %> v2.9 and later, you can perform a bulk rotation of all CAs and certificates in a foundation, which might include leaf certificates used by individual service tiles. <%= vars.platform_name %> invokes CredHub Maestro to perform this operation.
 
-CredHub Maestro requires that any triple parentheses references to CAs that sign leaf certificates must return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the least amount of downtime of your tile's services during certificate rotation.
+CredHub Maestro requires that any triple parentheses references to CAs that sign leaf certificates must return a concatenated version of the CA. The concatenated version, which includes the older and newer CA, ensures that jobs using leaf certificates do not lose trusted state during CA rotation. This translates to the shortest possible downtime of your tile's services during certificate rotation.
 
 When referencing a CA stored in CredHub, use the format `LEAF-CERTIFICATE-NAME.ca` to ensure that a concatenated version of the CA is returned. Do not reference the CA directly with the format `CA-CERTIFICATE-NAME.certificate`.
 
-The following table presents examples of the correct and incorrect way to reference CAs and leaf certificates to support certificate rotation by CredHub Maestro.
+The following table presents examples of the correct and incorrect way to reference CAs and leaf certificates to support certificate rotation using CredHub Maestro.
 
 <div>
   <table class="nice">
@@ -159,8 +159,8 @@ The following table presents examples of the correct and incorrect way to refere
   <col width="50%">
   <tr>
   <thead>
-    <th> Correct Format </th>
-    <th> Incorrect Format </th>
+    <th>Correct Format</th>
+    <th>Incorrect Format</th>
   </tr>
   </thead>
   <tr>
