@@ -6,7 +6,7 @@ owner: Services
 You can develop your <%= vars.platform_name %> service tile to support secure service instance (SSI)
 credentials using Runtime CredHub.
 
-For more information about Runtime CredHub, see [Runtime CredHub](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/6.0/tas-for-vms/secure-si-creds.html).
+For more information about Runtime CredHub, see [Runtime CredHub](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/secure-si-creds.html).
 
 ## <a id="background"></a> Background required for securing your service credentials
 
@@ -42,7 +42,7 @@ These SSI credentials are different from credentials that the tile uses internal
 to give the service broker access to an internal database. <%= vars.app_runtime_abbr %> generates the internal tile credentials
 for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
 
-For more information about the CredHub credential management component, see the [CredHub documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/6.0/tas-for-vms/credhub-index.html).
+For more information about the CredHub credential management component, see the [CredHub topics](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/credhub-index.html) in the <%= vars.app_runtime_abbr %> documentation.
 
 See the following example implementation of how to add SSI credentials capability to a service tile:
 
@@ -233,7 +233,7 @@ Where:
 * `SERVICE-URL` is the URL of your service.
 * `USERNAME` and `PASSWORD` are your binding credentials.
 
-  For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/6.0/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
+  For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
 
 1. Grant your application permission to read the credential from CredHub:
 
