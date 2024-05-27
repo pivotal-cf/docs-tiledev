@@ -2,40 +2,42 @@
 title: Logs, metrics, and nozzles
 owner: Services
 ---
+
 You can integrate services with Cloud Foundry's logging system, _Loggregator_, by writing to and
-reading from its _Firehose_ endpoint.
+reading from its Firehose endpoint.
 
 The Loggregator logging system collects your logs and metrics from apps and platform components
 and streams them to a single endpoint, Firehose.
 
-Your tile can integrate its service with Loggregator in following ways:
+Your tile can integrate its service with Loggregator by:
 
-* By sending your service component logs and metrics to the Firehose, to be streamed with core platform
-component logs and metrics.
+* Sending your service component logs and metrics to the Firehose, to be streamed with core platform
+component logs and metrics
 
-* By installing a _nozzle_ on Firehose that directs Firehose data to be consumed by external services or
-apps -- a built-in nozzle can activate a service to:
+* Installing a nozzle on Firehose that directs Firehose data to be consumed by external services or
+apps. A built-in nozzle can activate a service to:
+
   - Drain metrics to an external dashboard product for system operators.
   - Send HTTP request details to search or analysis tools.
   - Drain app logs to an external system.
-  - Auto scale itself based on Firehose metrics, as detailed in this [YouTube video](https://youtu.be/skJKvQfpKD4?t=1021).
+  - Auto scale itself based on Firehose metrics, as detailed in this [YouTube video](https://youtu.be/skJKvQfpKD4?t=1021). (Note that this video is several years old, and while the overview is correct, the technical details may have changed.)
 
 For a real world production example of a nozzle,
 see [Firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog).
 
-## <a id="firehose"></a> Firehose communication
+## <a id="firehose"></a>Firehose communication
 
 <%= vars.app_runtime_full %> components publish logs and metrics to the Firehose through
 Loggregator agent processes that run locally on the component VMs. Loggregator agents input the data to the
 Loggregator system through a co-located Loggregator agent. To see how logs and metrics travel
 from <%= vars.app_runtime_abbr %> system components to the Firehose,
-see the [Cloud Foundry documentation](https://docs.cloudfoundry.org/loggregator/architecture.html).
+see the [<%= vars.app_runtime_abbr %> documentation](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/loggregator-architecture.html).
 
 Component VMs running <%= vars.app_runtime_abbr %> services can publish logs and metrics the same way, by
 including the same component, Loggregator Agent.
 Historically, components use Metron for this communication.
 
-### <a id="https"></a> HTTPS protocol
+### <a id="https"></a>HTTPS protocol
 
 To enable a service component to supply logs and metrics to the Firehose through encrypted communications,
 do the following:
@@ -71,7 +73,7 @@ do the following:
 
     Where `CERTIFICATE` and `KEY` are the values used for mutual TLS communication. For example, `.properties.agent_certificate.cert_pem` and `.properties.agent_certificate.private_key_pem`.
 
-1. Generate the Tanzu Operations Manager CA certificate and sign the certificate that is needed for mutual TLS communication,
+1. Generate the <%= vars.platform_name %> CA certificate and sign the certificate that is needed for mutual TLS communication
 with the following properties:
 
     ```
@@ -85,24 +87,28 @@ with the following properties:
       description: mTLS Certificate for Agent
     ```
 
-## <a id="nozzle"></a> Nozzles
+## <a id="nozzle"></a>Nozzles
 
 A nozzle is a component that is dedicated to reading and processing data that streams from the Firehose.
-A service tile installs a nozzle as either a managed service, with package type `bosh-release`, or as an
-app that is pushed to <%= vars.app_runtime_abbr %>, with the package type `app`.
+A service tile installs a nozzle in one of two ways:
 
-### <a id="develop"></a> Develop a Nozzle
+* As a managed service, with package type `bosh-release`
+* As an app that is pushed to <%= vars.app_runtime_abbr %>, with the package type `app`
+
+### <a id="develop"></a>Develop a Nozzle
 
 <%= vars.company_name %> recommends developing a nozzle in Go to leverage the
 [NOAA library](https://github.com/cloudfoundry/noaa).
 NOAA establishes an authenticated websocket connection to the logging system and de-serializes the
 protocol buffers.
 
-Draining the logs consists of:
+The steps for draining the logs are:
 
-1. Authenticating
-1. Establishing a connection to the logging system
-1. Forwarding events on to their ultimate destination
+1. authenticating
+1. establishing a connection to the logging system
+1. forwarding events on to their ultimate destination
+
+#### <a id="authenticating"></a>Authenticating
 
 Authenticate against the [API](https://github.com/cloudfoundry-community/go-cfclient)
 with a user in the `doppler.firehose` group:
@@ -122,10 +128,10 @@ config := &cfclient.Config{
 client, err := cfclient.NewClient(config)
 ```
 
-Use the client's token,to create a consumer and connect to Firehose with a subscription ID.
-The ID is important because Firehose looks for connections with the same ID and only
-sends an event to one of those connections. A nozzle developer can run two or more
-instances to prevent message loss during upgrades an other deployments.
+Use the client's token to create a consumer and connect to Firehose with a subscription ID.
+The subscription ID is important because Firehose looks for connections with the same ID and
+sends an event only to one of those connections. A nozzle developer can run two or more
+instances to prevent message loss during upgrades and other deployments.
 
 ```go
 token, err := client.GetToken()
@@ -140,90 +146,90 @@ events, errors := consumer.Firehose(firehoseSubscriptionID, token)
 
 The events channel receives the following types of events:
 
-* _ValueMetric_ represents some platform metric at a point in time, emitted by platform components. For example, how many `2xx` responses the router has sent out.
-* _CounterEvent_ represents an incrementing counter, emitted by platform components. For example, a Diego cell's remaining memory capacity.
+* _ValueMetric_ represents some platform metric, emitted by platform components, at a point in time. For example, how many `2xx` responses the router has sent out.
+* _CounterEvent_ represents an incrementing counter, emitted by platform components. For example, the remaining memory capacity of a Diego cell.
 * _Error_ represents an error in the originating process.
 * _HttpStartStop_ represents HTTP request details, including both app and platform requests.
 * _LogMessage_ represents a log message for an individual app.
-* _ContainerMetric_ represents application container information. For example, memory used.
+* _ContainerMetric_ represents application container information, such as memory used.
 
 For the full details about events, see
 [dropsonde protocol](https://github.com/cloudfoundry/dropsonde-protocol/tree/master/events).
 
 These events show how the data targets two different personas:
 
-*Platform operators
-*App developers
+* Platform operators
+* App developers
 
-The `doppler.firehose` scope recieves nozzle data for *every* app and the platform.
+The `doppler.firehose` scope receives nozzle data for *every* app and the platform.
 Any filtering that is based on the event payload is the nozzle implementor's responsibility.
 
 An advanced integration can combine a
-[service broker](service-brokers.html) with a nozzle to:
+[service broker](service-brokers.html) with a nozzle:
 
 * App developers can opt into logging (implementing filtering in the nozzle).
-* Establish [Cloud Foundry documentation](https://docs.cloudfoundry.org/services/dashboard-sso.html) exchange for authentication so
-that developers only can access logs for their space's apps.
+* You can establish [Dashboard Single Sign-on](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/dashboard-sso.html) exchange for authentication so
+that developers can access only logs for their space's apps.
 
 For a full working example (suitable as an integration starting point),
 see [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle).
 
-### <a id="deploy"></a> Deploy a Nozzle
+### <a id="deploy"></a>Deploy a Nozzle
 
 Once you have built a nozzle, you can deploy it as a managed service or as an app.
 
-For more information, see [managed service](managed.html) and what it means to be a
+For more information, see [managed service](managed.html) for what it means to be a
 managed service.
 
 Also, see this [example nozzle BOSH release](https://github.com/cloudfoundry-incubator/example-nozzle-release).
 
 You can deploy the nozzle as an app on <%= vars.app_runtime_abbr %>.
-For more information about the Tile Generator's
-[section on pushed apps], see (tile-generator.html#pushed-applications).
+For more information about the Tile Generator, see [Tile Generator](tile-generator.html#pushed-applications).
 
-### <a id="examples"></a> Nozzle examples
+### <a id="examples"></a>Nozzle examples
 
-There are several open source examples you could use
+Here are some open source examples you can use
 as a reference for building your nozzle.
 
 * [firehose-nozzle](https://github.com/cf-platform-eng/firehose-nozzle) writes to standard out. It's a useful
-starting point as scaffolding, tests,
-and more are already in place.
+starting point as scaffolding, tests, and more are already in place.
 
-* [example-nozzle](https://github.com/cloudfoundry-incubator/example-nozzle) in a
+* [example-nozzle](https://github.com/cloudfoundry-incubator/example-nozzle) is a
 single file implementation with no tests.
 
 * [gcp-tools-release](https://github.com/cloudfoundry-community/gcp-tools-release)
 drains component syslogs and health data in addition to nozzle data. It shows how
-to work with a BOSH add-on for additional data outside a nozzle. The nozzle is
+to work with a BOSH add-on for data outside a nozzle. The nozzle is
 managed through BOSH. Raw logs and metrics data take different paths in the source.
 
 * [firehose-to-syslog](https://github.com/cloudfoundry-community/firehose-to-syslog)
-includes implementation code that adds additional metadata, which might be needed
+includes implementation code that adds metadata that might be needed
 for the access control list (ACL) app name, space UUID and name, and org UUID and name.
 
 * [logsearch-for-cloudfoundry](https://github.com/cloudfoundry-community/logsearch-for-cloudfoundry)
  packages this nozzle as a BOSH release.
 
 * [splunk-firehose-nozzle](https://github.com/cf-platform-eng/splunk-firehose-nozzle)
-has source code based on `firehose-to-syslog` and is packaged to run an app on <%= vars.app_runtime_abbr %>.
+has source code based on `firehose-to-syslog` and is packaged to run as an app on <%= vars.app_runtime_abbr %>.
 
 * [datadog-firehose-nozzle](https://github.com/DataDog/datadog-firehose-nozzle) is
-another real world implementation.
+real world implementation.
 
 
-## <a id="syslog-format-pcf"></a> Log Format for <%= vars.app_runtime_abbr %> components
+## <a id="syslog-format-pcf"></a>Log Format for <%= vars.app_runtime_abbr %> components
 
 The standard log format for <%= vars.app_runtime_abbr %> adheres to the
-[RFC-5424 syslog protocol](https://tools.ietf.org/html/rfc5424), with log entriess formatted as follows:
+[RFC-5424 syslog protocol](https://tools.ietf.org/html/rfc5424), with log entries formatted as follows:
 
-`<${PRI}>${VERSION} ${TIMESTAMP} ${HOST_IP} ${APP_NAME} ${PROD_ID} ${MSG_ID} ${SD-ELEMENT-instance} ${MESSAGE}`
+```
+<${PRI}>${VERSION} ${TIMESTAMP} ${HOST_IP} ${APP_NAME} ${PROD_ID} ${MSG_ID} ${SD-ELEMENT-instance} ${MESSAGE}
+```
 
 The [Syslog Message Elements table](#syslog-elements) immediately describes each element of the log, and the [Structured Instance Data Format](#sd-element) table describes the contents of the structured data element that carries Cloud Foundry VM instance information.
 
 ### <a id="syslog-elements"></a> Syslog message elements
 
-The following table describes each element of a standard <%= vars.app_runtime_abbr %> syslog entries:
+The following table describes each element of a standard <%= vars.app_runtime_abbr %> syslog entry:
 
 <table id='syslog-elements-table' border="1" class="table" >
 <thead>
@@ -237,7 +243,7 @@ The following table describes each element of a standard <%= vars.app_runtime_ab
     <td><p><a href="https://tools.ietf.org/html/rfc5424#section-6.2.1">Priority value (PRI)</a>, calculated as <code>8 × Facility Code + Severity Code</code></p>
     <p><%= vars.app_runtime_abbr %> uses a Facility Code value of <code>1</code>, indicating a user-level facility. This adds <code>8</code> to the RFC-5424 Severity Codes, resulting in the
     numbers listed in the following <a href="#severity-codes">table</a>.</p>
-    <p>If in doubt, default to <code>13</code>, to indicate Notice-level severity.</p>
+    <p>If in doubt, default to <code>13</code> to indicate Notice-level severity.</p>
 </td>
   </tr><tr>
     <td><code>${VERSION}</code></td>
@@ -250,18 +256,18 @@ The following table describes each element of a standard <%= vars.app_runtime_ab
     <td><a href="https://tools.ietf.org/html/rfc5424#section-6.2.4">Internal IP address</a> of origin server</td>
   </tr><tr>
     <td><code>${APP_NAME}</code></td>
-    <td><p><a href="https://tools.ietf.org/html/rfc5424#section-6.2.5">Process name</a>  of the program the generated the message.  Prefixed with <code>vcap</code>. For example:</p>
-    <ul><li><code>vcap.rep</code></li>
-    <li><code>vcap.garden</code></li>
-    <li><code>vcap.cloud_controller_ng</code></li></ul>
+    <td><p><a href="https://tools.ietf.org/html/rfc5424#section-6.2.5">Process name</a> of the program that generated the message. Prefixed with <code>vcap</code>. For example:</p>
+      <ul><li><code>vcap.rep</code></li>
+      <li><code>vcap.garden</code></li>
+      <li><code>vcap.cloud_controller_ng</code></li></ul>
     <p>
-    You can derive this process name from either the program name configured for the local Metron agent or the <code>:progname</code>that blackbox derives from the directory that syslog-release forwards logs into.</p></td>
+    You can derive this process name from either the program name configured for the local Metron agent or the <code>:progname</code> that blackbox derives from the directory that syslog-release forwards logs into.</p></td>
   </tr><tr>
     <td><code>${PROD_ID}</code></td>
-    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.6">Process ID</a> of the syslog process doing the forwarding. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
+    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.6">Process ID</a> of the syslog process doing the forwarding. If this is not easily available, default to hyphen (<code>-</code>) to indicate that it is unknown.</td>
   </tr><tr>
     <td><code>${MSG_ID}</code></td>
-    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log message. If this is not easily available, default to <code>-</code> (hyphen) to indicate unknown.</td>
+    <td>The <a href="https://tools.ietf.org/html/rfc5424#section-6.2.7">type</a> of log message. If this is not easily available, default to hyphen (<code>-</code>) to indicate that it is unknown.</td>
   </tr><tr>
     <td><code>${SD-ELEMENT-instance}</code></td>
     <td>Structured data (SD) relevant to <%= vars.app_runtime_abbr %> about the <a href="https://tools.ietf.org/html/rfc5424#section-6.3.1">source instance (VM)</a> that originates the log message. See the <a href="#sd-element">Structured Instance Data Format table</a> for content and format.</td>
@@ -291,22 +297,22 @@ The most common severity level is `13`.
     <td>Alert: action must be taken immediately</td>
   </tr><tr>
     <td><code>10</code></td>
-    <td>Critical: critical conditions</td>
+    <td>Critical: critical condition</td>
   </tr><tr>
     <td><code>11</code></td>
-    <td>Error: error conditions</td>
+    <td>Error: error condition</td>
   </tr><tr>
     <td><code>12</code></td>
-    <td>Warning: warning conditions</td>
+    <td>Warning: warning condition</td>
   </tr><tr>
     <td><code>13</code></td>
     <td>Notice: normal but significant condition</td>
   </tr><tr>
     <td><code>14</code></td>
-    <td>Informational: informational messages</td>
+    <td>Information: informational message</td>
   </tr><tr>
     <td><code>15</code></td>
-    <td>Debug: debug-level messages</td>
+    <td>Debug: debug-level message</td>
  </tr>
 </table>
 
@@ -318,7 +324,7 @@ element to carry VM instance information as follows:
 <table id='sd-element-table' border="1" class="table" >
 <thead>
   <tr>
-    <th><code>SD-ELEMENT-instance</code> element</th>
+    <th>SD-ELEMENT-instance element</th>
     <th>Meaning</th>
   </tr>
   </thead>
@@ -352,10 +358,10 @@ various metrics and how to make them useful.
 
 ## <a id="resources"></a> Other resources
 
-* Cloud Foundry Summit Video [Monitoring Cloud Foundry: Learning about the Firehose](https://youtu.be/skJKvQfpKD4).
+* Cloud Foundry Summit Video [Monitoring Cloud Foundry: Learning about the Firehose](https://youtu.be/skJKvQfpKD4) (Note that this video is several years old, so the technical details may be out of date.)
 
-* [Loggregator GitHub repository](https://github.com/cloudfoundry/loggregator/).
+* [Loggregator GitHub repository](https://github.com/cloudfoundry/loggregator/)
 
-* [Overview of the Loggregator System](https://docs.cloudfoundry.org/loggregator/architecture.html).
+* [Overview of the Loggregator System](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/loggregator-architecture.html)
 
-* [Loggregator's Slack Channel](https://cloudfoundry.slack.com/messages/loggregator/).
+* [Loggregator Slack Channel](https://cloudfoundry.slack.com/messages/loggregator/)
