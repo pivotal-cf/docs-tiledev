@@ -5,23 +5,20 @@ owner: Services
 You can configure service tiles to store internal credentials in BOSH CredHub instead of
 encoding them in product template and job template files.
 
-BOSH CredHub is a secure credential management component that runs on the BOSH VM to minimize the surface area where
-credentials can be compromised.
+BOSH CredHub is a secure credential management component that runs on the BOSH VM to minimize compromising credentials.
 
 Credentials that service tiles store in BOSH CredHub for their own internal use are
 distinct from [secure service instance credentials](./ssi-creds-tiledev.html) that <%= vars.app_runtime_full %> stores in runtime CredHub to activate apps to securely access services.
 
 Both BOSH CredHub and runtime CredHub are instances of the CredHub credential management component.
-See the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html) for more information.
+See the [CredHub topics](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/toc-credhub-index.html) in the <%= vars.app_runtime_abbr %> documentation for more information.
 
 Many <%= vars.platform_name %> components use credentials to authenticate connections, and <%= vars.platform_name %> installations often have hundreds of active credentials. Secure credential management is essential to prevent data and security breaches.
 
-In <%= vars.platform_name %> v1.11.0 and later, CredHub runs on the BOSH VM, alongside the
-BOSH Director and UAA. Tanzu Operations Manager v1.11 and later stores its credentials in CredHub,
+CredHub runs on the BOSH VM alongside the BOSH Director and UAA.
+Tanzu Operations Manager stores its credentials in CredHub,
 and you can retrieve them using the CredHub API or the **Credentials** tab of the BOSH Director tile.
-You can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.app_runtime_abbr %> apps can retrieve credentials using the CredHub API.ile developers
-
-For more information about variable names and values, see [Fetching variable names and values](./get-credhub-vars.html) for how to fetch variable names and values using the CredHub API.
+You can embed CredHub calls in [manifest snippets](#snippets) and <%= vars.app_runtime_abbr %> apps can retrieve credentials using the CredHub API.
 
 ## <a id="types"></a> CredHub credential types
 
@@ -29,13 +26,13 @@ CredHub stores and retrieves the following types of credentials:
 
 * `value` — single string value
 * `json` — arbitrary JSON object
-* `user` - username
+* `user` — user name
 * `password` — password string
 * `certificate` — object containing certificate authority (CA), certificate, and private key
 * `ssh` — object containing SSH public key and private key
 * `rsa` — object containing RSA public key and private key
 
-For more information about Credhub credential types, see <a href="https://docs.cloudfoundry.org/credhub/credential-types.html">CredHub Credential Types</a>.
+For more information about CredHub credential types, see [CredHub credential types](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/credential-types.html).
 
 For more information about BOSH variable types, see <a href="https://bosh.io/docs/variable-types.html">BOSH Variable Types</a>.
 
@@ -44,27 +41,27 @@ For more information about BOSH variable types, see <a href="https://bosh.io/doc
 To use CredHub in your deployment, you must create new variables and store them in CredHub. By default, variable namespaces are
 written to prevent collision across deployments, but you can type variable names precisely if you want.
 
-For more information on how to create new varaiables in Credhub, see <a href="./create-credhub-vars.html">Creating new variables in CredHub</a>.
+For more information about how to create new variables in CredHub, see [Creating new variables in CredHub](./create-credhub-vars.html).
 
 ## <a id="migrate-creds"></a>Migrating credentials
 
 To migrate existing non-configurable credentials to CredHub, such as blobstore secrets and backup encryption keys,
-use the JavaScript migration process. After a successful migration, Tanzu Operations Manager deletes the migrated credentials from installation.yml file.
+use the JavaScript migration process. After a successful migration, Tanzu Operations Manager deletes the migrated credentials from the `installation.yml` file.
 
-For more information about migrating Credhub credentials, see [Migrating existing credentials to CredHub](./migrating-credhub-credentials.html).
+For more information about migrating CredHub credentials, see [Migrating existing credentials to CredHub](./migrating-credhub-credentials.html).
 
-For more information about the Credhub API, see the [CredHub CLI GitHub repository](https://github.com/cloudfoundry-incubator/credhub-cli), and the [CredHub Release GitHub repository](https://github.com/pivotal-cf/credhub-release).
+For more information about the CredHub API, see the [CredHub CLI GitHub repository](https://github.com/cloudfoundry-incubator/credhub-cli) and the [CredHub Release GitHub repository](https://github.com/pivotal-cf/credhub-release).
 
 ## <a id="api-variables"></a>Fetching variable names and values
 
 API endpoints are available to help you find variable names and values for products that are known to the BOSH Director.
 
-For more information about variable names and values, see <a href="./get-credhub-vars.html" class="subnav">Fetching variable names and values</a>.
+For more information about variable names and values, see [Fetching variable names and values](./get-credhub-vars.html).
 
 ## <a id="snippets"></a> CredHub in manifest snippets
 
 You can embed CredHub in product template and job template manifest snippets using
-[triple-parenthesis notation](./property-template-references.html#job-manifest):
+[triple-parentheses notation](./property-template-references.html#job-manifest):
 
 ```
   manifest: |
@@ -83,12 +80,13 @@ You can embed CredHub in product template and job template manifest snippets usi
 
 * Using CredHub to generate new credentials.
 
-You can choose to wait until <%= vars.platform_name %> supports some or all of these features before incorporating CredHub into their service.
+You can choose to wait until <%= vars.platform_name %> supports some or all of these features before incorporating CredHub into the service.
 
 ## <a id="resources"></a> CredHub Resources
 
 The following resources can be helpful:
 
 * [CredHub basics](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/credhub-index.html)
-* The [CredHub repository](https://github.com/cloudfoundry-incubator/credhub)
+* The [CredHub repository](https://github.com/cloudfoundry/credhub)
 * A recent Cloud Foundry Summit talk: [CredHub and Secure Credential Management](https://www.youtube.com/watch?v=6Hqq5avmwig)
+(Note that this video was created several years ago, so technical details may have changed, but the video may still be useful for some background.)
