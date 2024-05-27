@@ -6,7 +6,7 @@ owner: Services
 You can develop your <%= vars.platform_name %> service tile to support secure service instance (SSI)
 credentials using Runtime CredHub.
 
-For more information about Runtime CredHub, see [Runtime CredHub](https://docs.cloudfoundry.org/credhub/).
+For more information about Runtime CredHub, see [Runtime CredHub](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/secure-si-creds.html).
 
 When you bind an app to a service instance, the binding typically
 includes _binding credentials_ required to access the service.
@@ -40,7 +40,7 @@ These SSI credentials are different from credentials that the tile uses internal
 to give the service broker access to an internal database. <%= vars.app_runtime_abbr %> generates the internal tile credentials
 for a service when the service is first installed and stores them in BOSH CredHub, not runtime CredHub.
 
-For more information about the CredHub credential management component, see the [CredHub documentation](https://docs.cloudfoundry.org/credhub/index.html).
+For more information about the CredHub credential management component, see the [CredHub topics](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/credhub-index.html) in the <%= vars.app_runtime_abbr %> documentation.
 
 See the following example implementation of how to add SSI credentials capability to a service tile:
 
@@ -236,7 +236,7 @@ Where:
 * `SERVICE-URL` is the URL of your service.
 * `USERNAME` and `PASSWORD` are your binding credentials.
 
-  For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/4.0/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
+  For further reference, see the [Set Credentials](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/<%= vars.current_major_tas_version %>/tas-for-vms/secure-si-creds.html) section of the CredHub API documentation.
 
 1. Grant your application permission to read the credential from CredHub:
 
