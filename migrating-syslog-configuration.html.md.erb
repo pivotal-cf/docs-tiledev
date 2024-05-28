@@ -4,17 +4,17 @@ owner: Ops Manager
 ---
 
 You can migrate existing syslog properties that are defined by a tile into a syslog form that
-is provided in Tanzu Operations Manager v2.9 and later.
+is provided in <%= vars.platform_name %> v2.9 and later.
 
-When you enable the Tanzu Operations Manager syslog feature, Tanzu Operations Manager:
+When you enable the syslog feature, <%= vars.platform_name %>:
 
-* Provides your tile with its own syslog form.
-* Ensures that the syslog BOSH release is automatically injected into the instance groups of your product.
-* Includes syslog configuration properties when Tanzu Operations Manager injects the syslog release into your product.
+* Provides your tile with its own syslog form
+* Ensures that the syslog BOSH release is automatically injected into the instance groups of your product
+* Includes syslog configuration properties when <%= vars.platform_name %> injects the syslog release into your product
 
 ## <a id="syslog-data-model"></a>Syslog data model
 
- The following table lists the Tanzu Operations Manager syslog parameters that you can use to migrate your existing
+ The following table lists the <%= vars.platform_name %> syslog parameters that you can use to migrate your existing
  configurations:
 
  <table class=“table”>
@@ -74,7 +74,7 @@ When you enable the Tanzu Operations Manager syslog feature, Tanzu Operations Ma
   <td><code>environment</code></td>
   <td>string</td>
   <td>No</td>
-  <td>Human-readable identifier that is included in each log line.</td>
+  <td>Human-readable identifier that is included in each log line</td>
 </tr>
   <tr>
     <td><code>queue_size</code></td>
@@ -94,16 +94,16 @@ When you enable the Tanzu Operations Manager syslog feature, Tanzu Operations Ma
     <td>text</td>
     <td>No</td>
     <td>Additional configuration for rsyslog written in the rainerscript syntax.
-        For example, <code>if ($app-name startswith "exampleComponent") then stop</code>
-        can be used to drop all traffic from a particular component.
-        The entered configuration is applied before the forwarding rule.</td>
+        For example, <code>if ($app-name startswith "exampleComponent") then stop</code>.
+        <br>can be used to drop all traffic from a particular component.
+        The configuration is applied before the forwarding rule.</td>
   </tr>
 </table>
 
 ## <a id="javascript"></a> Use the JavaScript migration process
 
 Tile authors can write a JavaScript migration to move their existing syslog properties into the
-syslog form provided by Tanzu Operations Manager. After a successful migration, Tanzu Operations Manager presents the
+syslog form provided by <%= vars.platform_name %>. After a successful migration, <%= vars.platform_name %> presents the
 migrated syslog properties in the Syslog form of the tile.
 
 1. Set the `opsmanager_syslog` property to `true` in your `metadata.yml` file.
@@ -136,9 +136,9 @@ For more information, see [opsmanager_syslog](./property-template-references.htm
 1. Save the JavaScript file to the `PRODUCT/migrations/v1` directory of your `.pivotal` file.
 1. Remove the following:
 
-    * From your product template, `form_types` which allow operators to configure tile specific syslog configuration
-    * From your tile, the syslog BOSH release.
-    * From your deployment manifest, syslog configuration properties.
+    * From your product template, `form_types` that allow operators to configure tile-specific syslog configuration
+    * From your tile, the syslog BOSH release
+    * From your deployment manifest, syslog configuration properties
 
 1. To ensure that operators do not try to update syslog configuration properties with no outward
 functionality, mark all existing syslog configuration properties in your product as non-configurable.
@@ -148,14 +148,14 @@ longer used to configure the syslog.
 
 1. Run a deployment test of your tile using the procedures in [Testing Tiles](./testing.html).
 
-1. Verify that your syslog properties are migrated into the Tanzu Operations Manager syslog
+1. Verify that your syslog properties are migrated into the <%= vars.platform_name %> syslog
 configuration:
 
-    * View the configurations in the **Syslog** pane in Tanzu Operations Manager **Settings** page.
-    * View your syslog properties using the `syslog_configuration` Tanzu Operations Manager API endpoint.
+    * View the configurations in the **Syslog** pane in <%= vars.platform_name %> **Settings** page.
+    * View your syslog properties using the `syslog_configuration` <%= vars.platform_name %> API endpoint.
 
     For more information about the `syslog_configuration` API endpoint, see
-    [Retrieving syslog configuration for a product](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/5.0/tas-for-vms/logging-config-opsman.html).
+    [Using the <%= vars.platform_name %> API](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-ops-man-api.html).
 
-In the next version of your product, remove
+1. In the next version of your product, remove
 the deprecated syslog configuration properties.
