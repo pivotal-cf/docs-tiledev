@@ -220,12 +220,14 @@ The following table describes the accessors you can use to retrieve information 
 
 The following table describes the accessors you can use to retrieve information about your own tile:
 
-| Accessor | Description |
-| -------- | ----------- |
-| `uaa_client_name` | Provides the UAA client name created for your tile to communicate with the BOSH Director. |
-| `uaa_client_secret` | Provides the UAA client secret created for your tile to communicate with the BOSH Director. |
-| `service_network` | Provides the name of the service network assigned to your tile. |
-| `stemcell_version` | Provides the version of the stemcell your tile uses. |
+| Accessor                 | Description                                                                                           |
+|--------------------------|-------------------------------------------------------------------------------------------------------|
+| `uaa_client_name`        | Provides the UAA client name created for your tile to communicate with the BOSH Director.             |
+| `uaa_client_secret`      | Provides the UAA client secret created for your tile to communicate with the BOSH Director.           |
+| `bosh_read_creds_name`   | Provides the read-only UAA client name created for your tile to access BOSH Director.                 |
+| `bosh_read_creds_secret` | Provides the read-only UAA client secret created for your tile to communicate with the BOSH Director. |
+| `service_network`        | Provides the name of the service network assigned to your tile.                                       |
+| `stemcell_version`       | Provides the version of the stemcell your tile uses.                                                  |
 
 ## <a id='complex'></a> Complex properties: selectors and collections
 
@@ -415,6 +417,13 @@ Set `service_broker` to `true` for on-demand service brokers. When you set `serv
 * Requires you to select a service network during tile configuration. You can reference the selected service network with `(( $self.service_network ))`.
 
 * Include a UAA client for the service to use. Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
+
+### <a id='top-bosh-read-creds'></a> bosh_read_creds
+
+* **Format:** Boolean
+* **Type:** Optional, default `false`
+
+Set `bosh_read_creds` to `true` for tiles that wish to have read-only access to the BOSH director. Tile authors can reference these read-only UAA client credentials with `(( $self.bosh_read_creds_name ))` and `(( $self.bosh_read_creds_secret ))`.
 
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
 
