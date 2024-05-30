@@ -7,28 +7,28 @@ You can use the Tile Generator tool to develop, package, test, and deploy servic
 to <%= vars.platform_name %>.
 
 Tiles are the
-installation package format used by Tanzu Operations Manager to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
+installation package format used by <%= vars.platform_name %> to deploy services and other add-ons to both public and private cloud deployments. Tile Generator
 uses templates and patterns that are based on years of experience integrating
 third-party services into Cloud Foundry and eliminates much of the need for
 you to have intimate knowledge of all the tools involved.
 
 ![Example of the Tile Generator tool.](img/tilegenerator.png)
 
-Tile Generator takes your software components and a simple configuration file
-that provides the minimal amount of information to describe and customize your
+Tile Generator uses your software components and a simple configuration file
+that provides the minimum amount of information needed to describe and customize your
 tile.
 
-It creates everything that is required to deploy your software into
+Tile Generator creates everything that is required to deploy your software into
 <%= vars.platform_name %>:
 
 - **BOSH errands** to deploy and delete your software, including blue/green
   deployments for zero-downtime upgrades.
 - **BOSH release** suitable for deploying your software to
 <%= vars.app_runtime_full %> (<%= vars.app_runtime_abbr %>) or open-source Cloud Foundry.
-- **Tanzu Operations Manager Tile** that can be imported into Tanzu Operations Manager, installed,
+- **<%= vars.platform_name %> Tile** that can be imported into <%= vars.platform_name %>, installed,
   configured, and deployed, including UI forms and automatic upgrades from
   previous versions.
-- **Concourse pipeline configuration** to activates Continuous Integration of
+- **Concourse pipeline configuration** to activate Continuous Integration (CI) of
   your software with the latest versions of <%= vars.platform_name %>.
 
 Use Tile Generator in combination with the [pcf utility](pcf-command.html)
@@ -81,12 +81,12 @@ addition to a VMware Tanzu-ready <%= vars.platform_name %> tile.
     - Use Python 2 and [Virtualenv](https://virtualenv.pypa.io/en/stable/).
       <%= vars.company_name %> recommends using a Virtualenv environment
       to avoid conflicts with other Python packages.
-      <br><br>
+      <br>
       A virtualenv is a directory containing dependencies for a project.
       When a virtual environment is active, packages install into the
-      virtualenv instead of the system-wide Python installation.
-      <br><br>
-      To use this method run the following commands:
+      virtualenv instead of into the system-wide Python installation.
+      <br>
+      To use this method, run the following commands:
 
         ```
         virtualenv -p python2 tile-generator-env
@@ -100,28 +100,27 @@ addition to a VMware Tanzu-ready <%= vars.platform_name %> tile.
         To upgrade Tile Generator, run <code>pip install tile-generator --upgrade</code>
         with the virtualenv activated.
 
-
 2. Install the [BOSH documentation](https://bosh.io/docs/cli-v2.html).
 
 3. From within the root directory of the project for which you want to create a tile,
 initialize the directory as a tile repository by running the following commands.
-If you are using the  <%= vars.company_name %> recommends that you use a git repository.
+<%= vars.company_name %> recommends that you use a git repository.
 
     ```
     cd YOUR-PROD-DIRECTORY
     tile init
     ```
 
-4. Edit the generated `tile.yml` file to define your tile.
+1. Edit the generated `tile.yml` file to define your tile.
 
-5. Build your tile by running:
+2. Build your tile by running:
 
     ```
     tile build
     ```
 
 The generator creates a BOSH release in the `release` subdirectory,
-and wraps that release into a tile, in the `product` subdirectory.
+and wraps that release into a tile in the `product` subdirectory.
 If required for the installation, it automatically gets the latest
 release version of the Cloud Foundry CLI.
 
@@ -129,7 +128,7 @@ Tile Generator is also available pre-installed in a Docker image on
 [Docker Hub](https://hub.docker.com/r/cfplatformeng/tile-generator/).
 
 This image contains the tile-generator `tile` and `pcf` commands, the
-necessary Python dependencies and the BOSH CLI.
+necessary Python dependencies, and the BOSH CLI.
 
 You can use this in Concourse pipelines by specifying it as the base image
 for your tasks:
@@ -166,16 +165,17 @@ You can build this sample using the following steps:
     ```
 
 The sample tile includes a Python app that is used again in several packages, sometimes as an app, sometimes as a service broker. One of the deployments (app3)
-muses the sample app inside a Docker image that is modified
-by the CI pipeline. If you edit the sample app, you can build your own Docker image using the provided <code>Dockerfile</code> and change the image name in
-<code>sample/tile.yml</code> to include the modified code in app3.
+uses the sample app inside a Docker image that is modified
+by the CI pipeline. If you edit the sample app, you can build your own Docker image using the provided `Dockerfile`, and change the image name in
+`sample/tile.yml` to include the modified code in app3.
 
-## <a id="define"></a> Define your tile in <code>tile.yml</code> file
+## <a id="define"></a> Define your tile in a <code>tile.yml</code> file
 
 All required configuration for your tile is in the file called `tile.yml`.
-`tile init` creates an initial version for you that can serve as a template.
+The `tile init` command creates an initial version for you that can serve as a template.
 
 ### <a id="branding"></a> Branding
+
 The first section in the file describes the branding of your tile:
 
 ```yaml
@@ -189,10 +189,10 @@ description: Longer description of the tile's purpose
   For example, use a name composed of your company and product names such as `acme-anvil`.
   The name must also match your product slug on
   VMware Tanzu Network, which activates update notifications for customers. Coordinate
-  with your product team to agree on a name.  Marketing teams often care about the
+  with your product team to agree on a name. Marketing teams often care about the
   name because it appears in VMware Tanzu Network URLs.
 
-- The `icon_file` must be a 128 x 128 pixel image that appears on your tile in the Tanzu Operations Manager UI.
+- The `icon_file` must be a 128 x 128 pixel image that appears on your tile in the <%= vars.platform_name %> UI.
   By convention, place any resources used by the tile in the `resources` sub-directory of your repository.
 
 - The `label` text appears on the tile under your icon. This must
@@ -202,11 +202,11 @@ description: Longer description of the tile's purpose
 
 - The `description` must contain a description of the product. This
   is not currently used, but might be displayed in a future version of
-  Tanzu Operations Manager.
+  <%= vars.platform_name %>.
 
 ### <a id="packages"></a> Packages
 
-Next you can specify the packages to be in your tile. The format of
+Next, you can specify the packages to be in your tile. The format of
 each package entry depends on the type of package you are adding.
 
 #### <a id="pushed"></a> Pushed apps
@@ -241,40 +241,42 @@ Apps (including service brokers) that are being `cf push`ed into the
       from: redis
 ```
 
-For apps that are normally pushed as multiple files (node.js for example)
-zip up the project files and all dependencies into a single ZIP file, admin
-edit <code>tile.yml</code> to point to the zipped file:
+For apps that are normally pushed as multiple files (node.js for example),
+zip up the project files and all dependencies into a single ZIP file, and
+edit `tile.yml` to point to the zipped file:
 
 ```bash
 cd <your project dir>
 zip -r resources/<your project name>.zip <list of file and dirs to include in the zip>
 ```
 
-If your app is a service broker, use `app-broker` as the type instead of
+You can specify your app type:
+
+* If your app is a service broker, use `app-broker` as the type instead of
 `app`. The app is automatically registered as a broker on install,
 and deleted on uninstall.
 
-The `health_check` type lets you configure the value of the cf CLI `--health_check_type`
+* The `health_check` type lets you configure the value of the cf CLI `--health_check_type`
 option. Expect this option to move into the manifest as soon as Cloud Foundry supports it there.
 The only valid options are `none` and `port`.
 
-The `configurable_persistence: true` variable lets you select a backing
+* The `configurable_persistence: true` variable lets you select a backing
 service for data persistence. If there is a specific broker you want to use, you can
-use the `auto-services` feature, o bind to an already
+use the `auto-services` feature to bind to an already
 existing service instance, and use the `services` property of the `manifest` instead.
 
-The `needs_cf_credentials` type causes the app to receive two additional environment
+* The `needs_cf_credentials` type causes the app to receive two additional environment
 variables named `CF_ADMIN_USER` and `CF_ADMIN_PASSWORD` with the admin credentials
 for the <%= vars.app_runtime_abbr %> into which they are being deployed. This allows apps and
 services to interact with the Cloud Controller.
 
-The `consumes` type specifies the [BOSH documentation](https://bosh.io/docs/links.html) to
-consume and presents the hosts and properties from the links as
+* The `consumes` type specifies the [BOSH documentation](https://bosh.io/docs/links.html) to
+consume, and presents the hosts and properties from the links as
 environment variables on the app:
 
-- `<LINK>_HOST`: The address of the first instance of the link.
-- `<LINK>_HOSTS`: A JSON array of the addresses of all instances of the link.
-- `<LINK>_PROPERTIES`: A JSON object of the properties on the link.
+    - `<LINK>_HOST`: The address of the first instance of the link
+    - `<LINK>_HOSTS`: A JSON array of the addresses of all instances of the link
+    - `<LINK>_PROPERTIES`: A JSON object of the properties on the link
 
 #### <a id="brokers"></a> Service brokers
 
@@ -301,10 +303,12 @@ of `app` or `docker-app`:
   enable_global_access_to_plans: true  # optional
 ```
 
-Unless you specify the <code>enable_global_access_to_plans: true</code> option, your
-    broker's services do not appear in the user's Marketplaces.
-    You have to use the <code>cf enable-service-access</code> command to allow
-    specific users, orgs, and spaces to access your services.
+<p class="note important">
+<span class="note__title">Important</span>
+You must specify the <code>enable_global_access_to_plans: true</code> option; if you don't, your
+broker's services do not appear in the user's Marketplaces.
+You have to use the <code>cf enable-service-access</code> command to allow
+specific users, orgs, and spaces to access your services.</p>
 
 Your broker is automatically registered with the Cloud Controller. The
 Cloud Controller calls your broker's endpoints, and it uses basic
@@ -370,8 +374,7 @@ For an external service broker, use:
 You can include [BOSH releases](http://bosh.io/docs/release.html) in
 your tile with the `bosh-release` package type.
 
-For example, here is a
-package definition to include a Redis BOSH release:
+For example, here is a package definition for including a Redis BOSH release:
 
 ```
 - name: redis
@@ -409,8 +412,8 @@ package definition to include a Redis BOSH release:
 
 To include [BOSH documentation](https://bosh.io/docs/links.html) in your
 bosh-release package's deployment manifest, you can include the
-`consumes` and `provides` declarations *as strings* in the job's
-`templates` section, for example:
+`consumes` and `provides` declarations as strings in the
+`templates` section of the job. For example:
 
 ```
 # ...
@@ -426,6 +429,8 @@ bosh-release package's deployment manifest, you can include the
 
 #### <a id="buildpacks"></a> Buildpacks
 
+Here is an example of setting up a buildpack.
+
 ```
 - name: my-buildpack
   type: buildpack
@@ -440,8 +445,7 @@ To push a Docker image as a Cloud Foundry app, use the *Pushed Application*
 format, but use the `docker-app` or `docker-app-broker` type instead
 of `app` or `app-broker`.
 
-The Docker image to be used is a specified using
-the `image` property:
+The Docker image to be used is a specified using the `image` property:
 
 ```
 - name: app1
@@ -455,7 +459,7 @@ If this app is also a service broker, use `docker-app-broker` instead of
 `docker-app`. This option is appropriate for Docker-wrapped 12-factor apps that
 delegate their persistence to bound services.
 
-Docker apps that require persistent storage can not be deployed into
+Docker apps that require persistent storage cannot be deployed into
 <%= vars.app_runtime_abbr %>.
 
 These can be deployed to separate BOSH-managed VMs instead
@@ -523,12 +527,12 @@ This file must be a `.tgz`.
 ```
 
 To expose a container through the
-[<%= vars.app_runtime_abbr %> Routing Architecture](https://docs.cloudfoundry.org/concepts/cf-routing-architecture.html),
+[<%= vars.app_runtime_abbr %> Routing Architecture](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/6.0/tas-for-vms/cf-routing-architecture.html),
 for example, one of the Docker containers hosts an admin webapp interface,
-use the [`routes` property of the apps manifest](https://docs.cloudfoundry.org/devguide/deploy-apps/manifest-attributes.html#routes) to choose a port and prefix. The external URL
+use the [`routes` property of the apps manifest](https://docs.vmware.com/en/VMware-Tanzu-Application-Service/6.0/tas-for-vms/deploy-apps-manifest-attributes.html#routes) to choose a port and prefix. The external URL
 is `[prefix]-[package.name].[system-domain]`.
 In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sys.example.com` is the <%= vars.app_runtime_abbr %> system domain.
-`routes` is a list, so multiple containers can be exposed.
+<br>`routes` is a list, so multiple containers can be exposed.
 
 ```
 - name: docker-bosh3
@@ -558,7 +562,7 @@ In this case, the URL is `https://admin-docker-bosh3.sys.example.com`, where `sy
 ### <a id="custom-forms"></a> Custom forms and properties
 
 You can pass custom properties to all apps deployed by your tile by adding
-the to the properties section of the `tile.yml`file:
+the to the properties section of the `tile.yml` file:
 
 ```
 properties:
@@ -568,7 +572,7 @@ properties:
   value: Tile Ninja
 ```
 
-To make these properties to be configurable by the tile installer, place them on
+To make these properties configurable by the tile installer, place them on
 a custom form instead:
 
 ```
@@ -618,14 +622,14 @@ as the property name but in ALL_CAPS). They can also be referenced in other part
 of the configuration file by using `(( .properties.<property-name> ))` instead
 of a hardcoded value.
 
-All properties supported by Tanzu Operations Manager can be used. The syntax is the same
-as used by Tanzu Operations Manager, except that for simplicity property blueprints for
+All properties supported by <%= vars.platform_name %> can be used. The syntax is the same
+as used by <%= vars.platform_name %>, except that for simplicity, property blueprints for
 form fields do not need to be declared separately. Instead, the declaration
 is included in the form itself. For a complete list of supported property
 types and syntax, see the
 [Property and Template References](./property-template-references.html).
 
-Tanzu Operations Manager supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
+<%= vars.platform_name %> supports text areas for any type of multi-line credential. If you want a `secret` property to use a text area instead of the default single-line text field, you must set `display_type` to `text_area` in the `property_inputs` section of your property blueprint, as in the example below.
 
 ```
 property_inputs:
@@ -651,7 +655,7 @@ feature:
   - name: p-redis
 ```
 
-You can specify any number of service names, pecifying a specific
+You can specify any number of service names by defining a specific
 plan. During deployment, the generated tile creates an instance of each
 service if one does not already exist and bind that instance to your
 package.
@@ -659,24 +663,24 @@ package.
 Service instances provisioned this way survive updates, but are deleted
 when the tile is uninstalled.
 
-  <p class="note important">
-  <span class="note__title"> Important</span> The name variable is the name of the provided <em>service, not the broker</em>. In many cases these are not the same, and a single broker
-  might even offer multiple services. Use <code>cf service-access</code> to see the services and plans offered by installed service brokers.</p>
+<p class="note important">
+<span class="note__title"> Important</span> The name variable is the name of the provided <em>service, not the broker</em>. In many cases these are not the same, and a single broker
+might even offer multiple services. Use <code>cf service-access</code> to see the services and plans offered by installed service brokers.</p>
 
 
 If you do not specify a plan, Tile Generator uses the first plan
 listed for the service in the broker catalog. It is a good idea to always
 specify a service plan. If you *change* the plan between versions of your
 tile, Tile Generator attempts to update the plan while preserving
-the service (not causing data loss during upgrade). If the service
-does not support plan changes, this causes the upgrade to fail.
+the service (preventing data loss during upgrade). If the service
+does not support plan changes, the upgrade fails.
 
 The `configurable_persistence` type is really a special case of `auto_services`,
 letting the user choose between some standard brokers.
 
 ### <a id='declare-dependencies'></a> Declaring product dependencies
 
-When your product has dependencies on others, you can have Tanzu Operations Manager
+When your product has dependencies on others, you can have <%= vars.platform_name %>
 enforce that dependency by declaring it in your `tile.yml` file as follows:
 
 ```
@@ -685,10 +689,10 @@ requires_product_versions:
   version: '~> 1.7'
 ```
 
-If the required product is not present in the <%= vars.platform_name %> installation, Tanzu Operations Manager
+If the required product is not present in the <%= vars.platform_name %> installation, <%= vars.platform_name %>
 displays a message saying
 `<your-tile> requires 'p-mysql' version '~> 1.7' as a dependency` and
-refuses to install your tile until that dependency is satisfied.
+does not install your tile until that dependency is satisfied.
 
 When you use automatic provisioning of services, it is
 often appropriate to add those products as a dependency. Tile Generator can
@@ -724,11 +728,13 @@ apply_open_security_group: true
 
 ### <a id="stemcells"></a> Stemcells
 
-Tile Generator defaults to a recent stemcell supported by Tanzu Operations Manager.
-In most cases the default is fine, because the stemcell is only used to execute
-CF command lines and/or the Docker daemon. But if you have specific stemcell
+Tile Generator defaults to a recent stemcell supported by <%= vars.platform_name %>.
+In most cases, the default is fine because the stemcell is used only to execute
+CF command lines and/or the Docker daemon.
+
+If you have specific stemcell
 requirements, you can override the defaults in your `tile.yml` file by including
-a `stemcell-criteria` section and replacing the appopriate values:
+a `stemcell-criteria` section and replacing the appropriate values:
 
 ```yaml
 stemcell_criteria:
@@ -736,15 +742,17 @@ stemcell_criteria:
   version: '3146.5'     #NOTE: You must quote the version to force the type to be string
 ```
 
-You must quote the version to force the type to be a string.
+<p class="note important">
+<span class="note__title">Important</span>
+You must quote the version to force the type to be a string.</p>
 
 ### <a id="custom-errands"></a> Custom errands
 
-Tile Generator supplies standard errands to deploy and delete CF type packages. You can
-replace or augment those errands by specifying errand shell commands in your tile.yml
+Tile Generator supplies standard errands to deploy and delete CF-type packages. You can
+replace or augment those errands by specifying errand shell commands in your `tile.yml`
 file.
 
-Here is an example of a custom deploy errand to install a buildpack only if a newer
+Here is an example of a custom deploy errand to install a buildpack, only if a newer
 version of that same buildpack is not already present:
 
 ```
@@ -771,10 +779,12 @@ packages:
     # Intentional no-op, as others may have a dependency on this
 ```
 
-`deploy` and `delete` completely replace the standard errand commands for the
+<p class="note important">
+<span class="note__title">Important</span>
+<code>deploy</code> and <code>delete</code> completely replace the standard errand commands for the
 package in which you include them. To keep the standard commands, but
-add additional commands to run before or after the standard errand, use
-`pre_deploy`, `post_deploy`, `pre_delete`, and `post_delete` instead.
+add commands to run before or after the standard errand, use
+<code>pre_deploy</code>, <code>post_deploy</code>, <code>pre_delete</code>, and <code>post_delete</code> instead.</p>
 
 
 ## <a id="versioning"></a> Versioning
@@ -783,14 +793,14 @@ Tile Generator uses [semver versioning](http://semver.org/). By default, `tile b
 generates the next patch release. Major and minor releases can be generated
 by explicitly specifying `tile build major` or `tile build minor`. Or to
 override the version number completely, specify a valid semver version on
-the build command, e.g. `tile build 3.4.5`.
+the build command; for example, `tile build 3.4.5`.
 
-No-op content migration rules are generated for every prior release to the
-current release, so that Tanzu Operations Manager allows tile upgrades from any
+No-op content migration rules are generated for every release prior to the
+current release, so <%= vars.platform_name %> allows tile upgrades from any
 version to any newer version. This depends on the existence of the `tile-history.yml` file.
 
 If you need to be able to upgrade from a
-random old version to a new one, you can edit that file, or do:
+random old version to a new one, you can edit that file, or you can run:
 
 ```
 tile build <old-version>
@@ -804,11 +814,10 @@ The new tile supports upgrades from `old-version`.
 
 By default, Tile Generator produces all code necessary to do a blue/green,
 zero-downtime deployment of all tile components when installing a newer version
-over an older one. For most tile versions this is all that is needed.
+over an older one. For most tile versions, this is all that is needed.
 
-Tanzu Operations Manager has support for performing upgrade actions, like database migrations,
-during a tile upgrade, but this capability is not yet exposed through tile
-generator.
+<%= vars.platform_name %> has support for performing upgrade actions, such as database migrations,
+during a tile upgrade, but this capability is not yet exposed through Tile Generator.
 
 For example:
 
@@ -836,8 +845,8 @@ tile generate content-migrations
 created tile tibco-bwce-0.0.2.pivotal
 ```
 
-This tile includes a single large buildpack and takes less than 15-seconds
-to build including the CF CLI download and the BOSH release generation.
+This tile includes a single large buildpack and takes less than 15 seconds
+to build, including the CF CLI download and the BOSH release generation.
 
 
 ## <a id="commands"></a> Supported commands
@@ -846,4 +855,3 @@ to build including the CF CLI download and the BOSH release generation.
 tile init [<tile-name>]
 tile build [patch|minor|major|<version>]
 ```
-
