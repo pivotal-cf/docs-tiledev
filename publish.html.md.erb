@@ -11,13 +11,13 @@ tile for <%= vars.platform_name %>.
 The [Partner software product release cycle](./releases.html) explains how <%= vars.company_name %> works with partners to release VMware Tanzu products,
 from the private alpha and closed beta phases, to general availability and publication on [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
-After you have packaged your product's BOSH releases, stemcell, metadata, and other tile components into a single zipped download file, post it to VMware Tanzu Network in one of two ways:
+After you have packaged your product's BOSH releases, stemcell, metadata, and other tile components into a single zipped download file, post it to VMware Tanzu Network using one of these two methods:
 
   * Use the VMware Tanzu Network
-  [API command](https://docs.vmware.com/en/API-portal-for-VMware-Tanzu/index.html) `POST /api/v2/products/:product_slug/product_files`.
+  [API command](https://network.tanzu.vmware.com/docs/api): `POST /api/v2/products/:product_slug/product_files`.
   * Use the VMware Tanzu Network product upload form.
 
-  ![Use the VMware Tanzu Network product upload form.](img/pivnet-upload.png)
+  ![The VMware Tanzu Network product upload form.](img/pivnet-upload.png)
 
 ## <a id="update"></a> Update your tile
 
@@ -27,8 +27,8 @@ to maintain compatibility with the current version of the platform.
 * Tile Generator automates tile versioning and upgrades.
 For more information, see [Versioning](./tile-generator.html#versioning) in the Tile Generator documentation.
 
-* [Tile Upgrades](./tile-upgrades.html) explains how to write and include a JavaScript file that automates tile upgrades
+* See [Tile Upgrades](./tile-upgrades.html) for how to write and include a JavaScript file that automates tile upgrades
 by migrating property names and values from one tile version to another.
 
-* When changes to <%= vars.platform_name %> require tile changes, VMware distributes instructions to all of its partners through the Partners Release Notice:
-    * [<%= vars.ops_manager %> v2.10 Partners Release Notice](release-notes.html)
+* When changes to <%= vars.platform_name %> require tile changes, <%= vars.company_name %> distributes instructions to all of its partners through the Partners Release Notice:
+    * [<%= vars.ops_manager %> Partners Release Notes](./release-notes.html)
