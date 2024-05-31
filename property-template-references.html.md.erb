@@ -3,32 +3,32 @@ title: Property and template references
 owner: Ops Manager
 ---
 
-Use these instructions to describe your product template for your tile and learn how to edit it to include different properties.
+Use these instructions to describe your product template for your tile, and learn how to edit it to include different properties.
 
-The `metadata` subdirectory of a tile contains a product template file in `.yml` file format. The product template file specifies how the tile interface collects configurable properties from the user,
-and how Tanzu Operations Manager incorporates these properties into the deployment manifest.
+The `metadata` subdirectory of a tile contains a product template file in YAML file format. The product template file specifies how the tile interface collects configurable properties from the user,
+and how <%= vars.platform_name %> incorporates these properties into the deployment manifest.
 
 ## <a id="product-template"></a> Product template contents
 
-The product template, a `.yml` file in the tile's `metadata` subdirectory, includes or points to:
+The product template, a YAML file in the tile's `metadata` subdirectory, includes or points to:
 
-* **Metadata:** High-level information about your tile.
+* **Metadata:** High-level information about your tile
 
-* **Dependencies:** Specifies tile dependencies.
+* **Dependencies:** Tile dependencies
 
-* **Property blueprints:** Templates to represent values.
+* **Property blueprints:** Templates to represent values
 
-* **Form types:** Exposes property blueprints to generated forms.
+* **Form types:** Property blueprints to generated forms
 
-* **Job types:** Configuration properties for jobs defined in the BOSH release.
+* **Job types:** Configuration properties for jobs defined in the BOSH release
 
-* **Runtime configs:** Specifies the manifest for any number of global deployment configurations.
+* **Runtime configs:** The manifest for any number of global deployment configurations
 
-Use the product template use the
-[<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example),
-a functional tile that is provided by the Tanzu Operations Manager engineering team that deploys the NGINX web server.
+Use the product template in the
+[<%= vars.platform_name %> example tile](https://github.com/pivotal-cf-experimental/ops-manager-example). This is
+a functional tile provided by the <%= vars.platform_name %> engineering team; it deploys the NGINX web server.
 
-For more information about product template configuration, see [Top-Level Properties](#top-level).
+For more information about product template configuration, see [Top-level properties](#top-level).
 
 To learn how to configure your tile's forms, see [Form properties](#form-properties).
 
@@ -37,14 +37,14 @@ To learn how to configure your tile's forms, see [Form properties](#form-propert
 
 You can edit the product template to designate property values.
 
-Within the product template, there are two sections with `manifest` snippets:
+The product template contains two sections with `manifest` snippets:
 
-* `form_types`: Defines the tile interface, or how users of your tile view and interact with different tile features.
+* `form_types`: Defines the tile interface, or how users of your tile view and interact with different tile features
 
-* `job_types`: Defines the jobs that the manifest deploys, or what the tile does in response to user input, developer input, or at set intervals.
+* `job_types`: Defines the jobs that the manifest deploys, or what the tile does in response to user input, developer input, or at set intervals
 
 You can use special expressions in these snippets to include property values that the tile might
-otherwise not use, for example, user-provided configurable properties or dynamically generated
+otherwise not use; for example, user-provided configurable properties or dynamically-generated
 system properties.
 
 These special expressions take the following forms:
@@ -54,9 +54,9 @@ These special expressions take the following forms:
 
 ### <a id="double-parens"></a> Double parentheses expressions
 
-Double parentheses expressions, such as `(( PROPERTY-VALUE ))`, designate property values that Tanzu Operations Manager uses when it generates the deployment manifest. This occurs after you click **Apply Changes**.
+Double parentheses expressions, such as `(( PROPERTY-VALUE ))`, designate property values that <%= vars.platform_name %> uses when it generates the deployment manifest. These are used after you click **Apply Changes**.
 
-These values include configurable properties and properties supplied by Tanzu Operations Manager.
+These values include configurable properties and properties supplied by <%= vars.platform_name %>.
 
 To include these properties in a manifest snippet, use "double-parens" syntax, which consists of a variable name surrounded by two sets of parentheses, as shown in the following example:
 
@@ -68,7 +68,7 @@ manifest: |
 
 ### <a id="triple-parens"></a> Triple parentheses expressions
 
-Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`, designate property values that BOSH supplies when it deploys instances of the tile service. For example, CredHub credentials that are designated in triple parentheses.
+Triple-parentheses expressions, such as `((( PROPERTY-VALUE )))`, designate property values that BOSH supplies when it deploys instances of the tile service; for example, CredHub credentials are specified in triple parentheses.
 
 To include these BOSH deploy-time properties in a manifest snippet, use "triple-parens" notation, as shown in the following example:
 
@@ -79,22 +79,22 @@ manifest: |
     password: ((( credhub-password )))
 ```
 
-When Tanzu Operations Manager parses a product template and BOSH parses a manifest, they both use properties designated by double-parens syntax.
+### <a id="double-triple"> More Double / Triple parentheses rules
 
-Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by Tanzu Operations Manager.
+When <%= vars.platform_name %> parses a product template and BOSH parses a manifest, they both use properties designated by double-parens syntax.
 
-Tanzu Operations Manager gets rid of the outer parentheses from these expressions and includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
+Some property values in a product template, such as CredHub credentials, must be filled in by BOSH on the BOSH Director VM, rather than by <%= vars.platform_name %>.
 
-For more information about tile properties, see [Referencing properties](#property-refs).
+<%= vars.platform_name %> removes the outer parentheses from these expressions and includes the resulting double-parens expressions in the manifest it generates, for BOSH to evaluate at deploy time.
 
 ### <a id='property-refs'></a> Referencing properties
 
 Each property is represented by two segments:
 
-* The location of the property.
-* The information from the property you want to access, commonly known as accessors.
+* The location of the property
+* The information from the property you want to access, commonly known as "accessors"
 
-When you use these two segments, you can write an expression as:
+When you use these two segments, you can write an expression like this:
 
 ```
 (( PROPERTY-LOCATION.ACCESSOR ))
@@ -107,27 +107,26 @@ Where:
 
 #### <a id="property-location"></a> Referencing a location
 
-The method of referencing the location of the property varies.
 The following table describes the different methods of referencing a property:
 
-| Method Name | Description |
-| ----------- | ----------- |
+| Method Name | Description      |
+| ----------- | ---------------- |
 | .properties.top_level_property | The property blueprint called "top_level_property" found in the global list of properties of the same tile. |
-| .job_one.job_level_property | The property blueprint called "job_level_property" found in the list of properties of the job "job_one" of the same tile. |
-| job_level_property | The property blueprint called "top_level_property" found in the same tile and job whose manifest is being evaluated. |
+| .job_one.job_level_property    | The property blueprint called "job_level_property" found in the list of properties of the job "job_one" of the same tile. |
+| job_level_property             | The property blueprint called "top_level_property" found in the same tile and job whose manifest is being evaluated. |
 | ..other_product.properties.top_level_property | The property blueprint called "top_level_property" found in the global list of properties of the tile "other_product". |
-| ..other_product.job_two.job_level_property | The property blueprint called "job_level_property" found in the list of properties of the job "job_one" of the tile "other_product". |
+| ..other_product.job_two.job_level_property    | The property blueprint called "job_level_property" found in the list of properties of the job "job_one" of the tile "other_product". |
 
 #### <a id="accessor-location"></a> Referencing an accessor
 
-Accessors vary between property blueprint types.
+Accessors may be different from one property blueprint types to another.
 The following example uses the property blueprint type `string` with its one accessor, `value`:
 
 ```console
 (( .properties.example-string.value ))
 ```
 
-Tanzu Operations Manager allows empty arrays in double-parentheses expressions.
+<%= vars.platform_name %> allows empty arrays in double-parentheses expressions.
 
 For example:
 
@@ -135,7 +134,7 @@ For example:
 (( .properties.example-string.value || [] ))
 ```
 
-For more information about the available properties and their accessors, see [Property Blueprint reference](#property-blueprints).
+For more information about the available properties and their accessors, see the [Property Blueprint reference](#property-blueprints) section.
 
 ### <a id='product'></a> Product context
 
@@ -149,17 +148,17 @@ Where `TILE-NAME` is the name of the tile.
 
 These are the allowed accessors:
 
-| Accessor | Description |
-| -------- | ----------- |
+| Accessor        | Description |
+| --------------- | ----------- |
 | deployment_name | Provides the deployment name passed to BOSH for the tile |
-| network_name | Provides the name of the network assigned for the tile |
-| present? | Returns `true` when the tile is staged or deployed |
+| network_name    | Provides the name of the network assigned for the tile |
+| present?        | Returns `true` when the tile is staged or deployed |
 
 ### <a id='dollar'></a> Dollar contexts
 
-Outside of properties, you can also retrieve information about various configuration details of your tile and Tanzu Operations Manager.
+Outside of properties, you can also retrieve information about various configuration details of your tile and <%= vars.platform_name %>.
 
-* **$ops_manager:** Any tile uses this to obtain information about specific Tanzu Operations Manager deployments.
+* **$ops_manager:** Any tile uses this to obtain information about specific <%= vars.platform_name %> deployments.
 
 * **$director:** Any tile uses this to obtain information about the BOSH Director.
 
@@ -169,72 +168,73 @@ Outside of properties, you can also retrieve information about various configura
 
 #### <a id='ops-manager'></a> $ops_manager
 
-The following table describes the accessors you can use to retrieve information about an Tanzu Operations Manager deployment:
+The following table describes the accessors you can use to retrieve information about an <%= vars.platform_name %> deployment:
 
-| Accessor | Description |
-| -------- | ----------- |
-| `ca_certificate` | Provides the root CA certificate that signs the Director VM |
-| `trusted_certificates` | Provides a list of certificates that the Director applies to all VMs. |
-| `http_proxy` | Provides the comma-separated values (CSV) that are entered when Tanzu Operations Manager traffic is directed to an HTTP Proxy. |
-| `https_proxy` | Provides the CSVs that are entered when Tanzu Operations Manager traffic is directed to an HTTPS Proxy. |
-| `no_proxy` | Provides the CSVs that should not go through a proxy. |
-| `instance_types_catalog` | Provides a list of all available VM types. Includes custom VM types. |
-| `restricted_view_api_access_credentials` | Provides a payload for a UAA client to make read-only non-credential requests against Tanzu Operations Manager. The payload includes `uaa_client_name`, `uaa_client_secret`, `hostname`, and `port`. |
-| `iaas_type` | Provides the type of the infrastructure: `google`, `aws`, `azure`, `vsphere`, or `openstack`. |
+| Accessor                 | Description |
+| ------------------------ | ----------- |
+| `ca_certificate`         | Provides the root CA certificate that signs the Director VM |
+| `trusted_certificates`   | Provides a list of certificates that the Director applies to all VMs |
+| `http_proxy`             | Provides the comma-separated values (CSV) that are entered when <%= vars.platform_name %> traffic is directed to an HTTP proxy |
+| `https_proxy`            | Provides the CSVs that are entered when <%= vars.platform_name %> traffic is directed to an HTTPS proxy |
+| `no_proxy`               | Provides the CSVs that should not go through a proxy |
+| `instance_types_catalog` | Provides a list of all available VM types; includes custom VM types |
+| `restricted_view_api_access_credentials` | Provides a payload for a UAA client to make read-only non-credential requests against <%= vars.platform_name %>. The payload includes `uaa_client_name`, `uaa_client_secret`, `hostname`, and `port`. |
+| `iaas_type`              | Provides the type of the infrastructure: `google`, `aws`, `azure`, `vsphere`, or `openstack` |
 
+<br>
 #### <a id='director'></a> $director
 
 The following table describes the accessors you can use to retrieve information about your BOSH Director:
 
-| Accessor | Description |
-| -------- | ----------- |
-| `guid` | Unique identifier for the BOSH Director |
+| Accessor        | Description |
+| --------------- | ----------- |
+| `guid`          | Unique identifier for the BOSH Director |
 | `deployment_ip` | Provides the IP address where the BOSH Director is deployed |
-| `username` | Provides the user name for the BOSH Director VM |
-| `password` | Provides the password for the BOSH Director VM |
-| `ntp_servers` | Provides a list of Network Time Protocol (NTP) servers that the BOSH Director deploys |
+| `username`      | Provides the user name for the BOSH Director VM |
+| `password`      | Provides the password for the BOSH Director VM |
+| `ntp_servers`   | Provides a list of Network Time Protocol (NTP) servers that the BOSH Director deploys |
 | `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM |
-| `hostname` | Provides the hostname for the BOSH Director VM |
-| `tld` | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director |
-| `system_metrics_runtime_enabled` | Exposes whether the `ops_manager_system_metrics_runtime` is added to the BOSH Director. |
-| `metrics_server_enabled` | Deprecated. Always returns `false` |
-| `bosh_metrics_forwarder_client_name` | Deprecated. Always returns a constant, non-credential value |
+| `hostname`      | Provides the hostname for the BOSH Director VM |
+| `tld`           | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director |
+| `system_metrics_runtime_enabled`       | Exposes whether the `ops_manager_system_metrics_runtime` is added to the BOSH Director. |
+| `metrics_server_enabled`               | Deprecated. Always returns `false` |
+| `bosh_metrics_forwarder_client_name`   | Deprecated. Always returns a constant, non-credential value |
 | `bosh_metrics_forwarder_client_secret` | Deprecated. Always returns a constant, non-credential value |
 
 #### <a id='runtime'></a> $runtime
 
 The following table describes the accessors you can use to retrieve information about your <%= vars.app_runtime_abbr %> tile:
 
-| Accessor | Description |
-| -------- | ----------- |
-| `system_domain` | Provides domain for system-level <%= vars.app_runtime_abbr %> components, such as the API, UAA, or Apps Manager. |
-| `apps_domain` | Provides the default domain used by apps. |
-| `system_api_url` | Provides the URL to the <%= vars.app_runtime_abbr %> API component |
-| `login_url` | Provides the URL to authenticate with the <%= vars.app_runtime_abbr %> components |
-| `uaa_url` | Provides the URL to the <%= vars.app_runtime_abbr %> UAA component |
-| `console_url` | Provides the URL to the <%= vars.app_runtime_abbr %> Apps Manager component |
+| Accessor        | Description |
+| --------------- | ----------- |
+| `system_domain` | Provides domain for system-level <%= vars.app_runtime_abbr %> components, such as the API, UAA, or Apps Manager |
+| `apps_domain`   | Provides the default domain used by apps |
+| `system_api_url`| Provides the URL to the <%= vars.app_runtime_abbr %> API component |
+| `login_url`     | Provides the URL to authenticate with the <%= vars.app_runtime_abbr %> components |
+| `uaa_url`       | Provides the URL to the <%= vars.app_runtime_abbr %> UAA component |
+| `console_url`   | Provides the URL to the <%= vars.app_runtime_abbr %> Apps Manager component |
 | `default_reply_to` | Provides the default reply-to email address for the system domain |
-| `default_from` | Provides the default from email address of the system domain |
+| `default_from`  | Provides the default from email address of the system domain |
 
 #### <a id='self'></a> $self
 
 The following table describes the accessors you can use to retrieve information about your own tile:
 
-| Accessor                 | Description                                                                                           |
-|--------------------------|-------------------------------------------------------------------------------------------------------|
-| `uaa_client_name`        | Provides the UAA client name created for your tile to communicate with the BOSH Director.             |
-| `uaa_client_secret`      | Provides the UAA client secret created for your tile to communicate with the BOSH Director.           |
-| `bosh_read_creds_name`   | Provides the read-only UAA client name created for your tile to access BOSH Director.                 |
-| `bosh_read_creds_secret` | Provides the read-only UAA client secret created for your tile to communicate with the BOSH Director. |
-| `service_network`        | Provides the name of the service network assigned to your tile.                                       |
-| `stemcell_version`       | Provides the version of the stemcell your tile uses.                                                  |
+| Accessor                 | Description                                                                                          |
+|--------------------------|------------------------------------------------------------------------------------------------------|
+| `uaa_client_name`        | Provides the UAA client name created for your tile to communicate with the BOSH Director             |
+| `uaa_client_secret`      | Provides the UAA client secret created for your tile to communicate with the BOSH Director           |
+| `bosh_read_creds_name`   | Provides the read-only UAA client name created for your tile to access BOSH Director                 |
+| `bosh_read_creds_secret` | Provides the read-only UAA client secret created for your tile to communicate with the BOSH Director |
+| `service_network`        | Provides the name of the service network assigned to your tile                                       |
+| `stemcell_version`       | Provides the version of the stemcell your tile uses                                                  |
 
 ## <a id='complex'></a> Complex properties: selectors and collections
 
 Most properties are simple values, for example,  strings, integers, URL addresses, or IP addresses. Others are complex, like selectors or collections.
 
-* **Selectors**: Give you a choice of a set of inputs.
-* **Collections**: Give you the ability to enter an array of values to create a hash.
+* **Selectors**: Give you a choice of a set of inputs
+* **Collections**: Give you the ability to enter an array of values to create a hash
 
 ![Selector showing pizza toppings.](img/selector.png)
 
@@ -242,7 +242,13 @@ Most properties are simple values, for example,  strings, integers, URL addresse
 
 The selector and collections inputs are referenced by their selector and collection property blueprints.
 
-Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties, because they contain manifest snippets, which are further referenced in other manifest snippets. Selector and collection properties can only exist as top-level properties. You cannot nest selector properties inside of collection properties, nest collection properties inside of selector properties, or nest these properties inside themselves (for example, nesting a selector inside of a selector).
+Most properties are simple values such as strings, integers, URL addresses, or IP addresses. Selectors and collections are more complicated than simple properties, because they contain manifest snippets, which are further referenced in other manifest snippets. Selector and collection properties can only exist as top-level properties.
+
+You cannot nest:
+
+* selector properties inside of collection properties
+* collection properties inside of selector properties
+* these properties inside themselves (for example, nesting a selector inside of a selector)
 
 ### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
 
@@ -342,7 +348,7 @@ The internal name of the tile. You must keep the name of your tile consistent fo
 
 The version of the tile.
 
-You can only import this version into Tanzu Operations Manager once. If you want to import the same tile or version, you must delete the existing one from the `/metadata` folder and delete the installation files from Tanzu Operations Manager's disk.
+You can only import this version into <%= vars.platform_name %> once. If you want to import the same tile or version, you must delete the existing one from the `/metadata` folder and delete the installation files from the <%= vars.platform_name %> disk.
 
 The version number is important for migrations.
 
@@ -369,16 +375,16 @@ The version of the schema of the product template, the file that this documentat
 
 If you bump the version number, it activates new properties that are not present in an older `metadata_version`. It can also require you to  restructure the product template to conform to the new `metadata_version`.
 
-The `metadata_version` corresponds to a major or minor release of Tanzu Operations Manager. Tanzu Operations Manager can accept a tile with a `metadata_version` that is older than the Tanzu Operations Manager version, but Tanzu Operations Manager cannot accept a
-tile with a `metadata_version` that is newer than the Tanzu Operations Manager version. A best practice is to set the `metadata_version` to be the same as the oldest version of
-Tanzu Operations Manager that the tile version supports.
+The `metadata_version` corresponds to a major or minor release of <%= vars.platform_name %>. <%= vars.platform_name %> can accept a tile with a `metadata_version` that is older than the <%= vars.platform_name %> version, but <%= vars.platform_name %> cannot accept a
+tile with a `metadata_version` that is newer than the <%= vars.platform_name %> version. A best practice is to set the `metadata_version` to be the same as the oldest version of
+<%= vars.platform_name %> that the tile version supports.
 
 ### <a id='top-label'></a> label
 
 * **Format:** String
 * **Type:** Optional
 
-The label that is used in the tile when it appears in the Tanzu Operations Manager Dashboard.
+The label that is used in the tile when it appears in the <%= vars.platform_name %> Dashboard.
 
 ### <a id='top-description'></a> description
 
@@ -396,14 +402,14 @@ The order in which a tile appears on the dashboard. The BOSH Director always app
 
 For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100. Set it to 1.
 
-If all tiles have the same rank, Tanzu Operations Manager sorts them alphabetically.
+If all tiles have the same rank, <%= vars.platform_name %> sorts them alphabetically.
 
 ### <a id='top-pivnet_filename_regex'></a> pivnet_filename_regex
 
 * **Format:** String
 * **Type:** Optional
 
-This regular expression allows the Tanzu Operations Manager  VMware Tanzu Network integration to pull a specific tile file. You must do this when there are multiple tiles with the same product slug.
+This regular expression allows the <%= vars.platform_name %> / VMware Tanzu Network integration to pull a specific tile file. You must do this when there are multiple tiles with the same product slug.
 
 ### <a id='top-service-broker'></a> service_broker
 
@@ -474,7 +480,7 @@ additional_stemcells_criteria:
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of tile dependencies. If the required tile is not present in the <%= vars.platform_name %> installation, Tanzu Operations Manager lists the needed dependencies and does not install your tile until the dependencies are satisfied.
+A list of tile dependencies. If the required tile is not present in the <%= vars.platform_name %> installation, <%= vars.platform_name %> lists the needed dependencies and does not install your tile until the dependencies are satisfied.
 
 Supported restriction operators are `=`, `!=`, `>`, `<`, `>=`, `<=`, and `~>`.
 
@@ -484,10 +490,6 @@ The following keys are supported:
 - `version`: The version range required by your tile. This is a required key.
 - `optional`: This is an optional key that defaults to false.
 
-<p class="note caution">
-<span class="note__title">Caution</span>
-Declared dependencies are required in Tanzu Operations Manager v2.7 and earlier.
-</p>
 
 For example:
 
@@ -538,7 +540,7 @@ Each release requires the following keys:
 
 A list of errands that run after a deploy succeeds.
 
-Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Tanzu Operations Manager.
+Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in <%= vars.platform_name %>.
 
 For more information, see [Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`.
 
@@ -549,7 +551,7 @@ For more information, see [Errands](./tile-errands.html). If this property is no
 
 A list of errands that run before a deployment is deleted.
 
-Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in Tanzu Operations Manager. If you do not specify this property, the selector defaults to `On`.
+Set the `run_pre_delete_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in <%= vars.platform_name %>. If you do not specify this property, the selector defaults to `On`.
 
 For more information, see [Errands](./tile-errands.html).
 
@@ -566,7 +568,7 @@ These are keys that define global deployment configurations. For more informatio
 * **Type:** Optional
 
 Install-time verifiers confirm that properties for external services are set correctly.
-Install-time verifiers run in Tanzu Operations Manager before the changes are applied.
+Install-time verifiers run in <%= vars.platform_name %> before the changes are applied.
 You can correct invalid properties before you  deploy.
 
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by
@@ -588,7 +590,7 @@ This key is set to `false` by default.
 Defaults to `'always'`.
 
 For information about how you can manage and view verifiers,
-see [Managing Tanzu Operations Manager Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
+see [Managing <%= vars.platform_name %> Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
 
 The following table lists the available install-time verifiers:
 
@@ -622,7 +624,7 @@ The following table lists the available install-time verifiers:
         <li>(Optional) <code>use_path_style</code></li>
         <li>(Optional) <code>endpoint</code></li>
         <li>(Optional) <code>use_path_style</code></li>
-        <li>(Optional, only available after Metadata version 2.10.1, shipped in Tanzu Operations Manager v2.10.21) <code>ca_cert</code></li>
+        <li>(Optional, available only after Metadata version 2.10.1, shipped in <%= vars.platform_name %> v2.10.21) <code>ca_cert</code></li>
       </ul>
     </td>
   </tr>
@@ -801,7 +803,7 @@ install_time_verifiers:
 * **Format:** Base64 Image
 * **Type:** Required
 
-This is the icon that appears on the tile in the Tanzu Operations Manager Installation Dashboard.
+This is the icon that appears on the tile in the <%= vars.platform_name %> Installation Dashboard.
 
 ### <a id="top-bas-url"></a> base_releases_url
 
@@ -815,16 +817,16 @@ A publicly available URL that is passed to BOSH to download your releases during
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `opsmanager_syslog` to `true` to opt in to the Tanzu Operations Manager provided syslog form. If you opt in, you do not need provide the Syslog BOSH release for your tile.
+Set `opsmanager_syslog` to `true` to opt in to the <%= vars.platform_name %> provided syslog form. If you opt in, you do not need provide the Syslog BOSH release for your tile.
 
 For more information about the Syslog BOSH release, see the [Syslog BOSH Release](https://github.com/cloudfoundry/syslog-release) repository on GitHub.
 
-For more information about migrating an existing form to the Tanzu Operations Manager provided syslog form, see [Migrating existing Syslog configuration to Tanzu Operations Manager](./migrating-syslog-configuration.html).
+For more information about migrating an existing form to the syslog form provided, see [Migrating existing Syslog configuration to <%= vars.platform_name %> ](./migrating-syslog-configuration.html).
 
 
 ## <a id='form-properties'></a> Form properties
 
-Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the Tanzu Operations Manager UI. The `name` of each form appears on the left-hand side as navigational tabs.
+Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the <%= vars.platform_name %> UI. The `name` of each form appears on the left-hand side as navigational tabs.
 
 Form properties reference `property_blueprints`. Property blueprints define each text box's data type.
 
@@ -964,7 +966,7 @@ To have a verifier run when a form is saved and before you click **Apply Changes
 add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
 For information about how you can manage and view verifiers,
-see [Managing Tanzu Operations Manager Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
+see [Managing <%= vars.platform_name %> Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
 
 For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
 
@@ -1028,11 +1030,13 @@ The following is an example of the `job_types` section that appears in a product
 
 This section defines the jobs that end up in a BOSH manifest. Those jobs are defined in your BOSH release.
 
-Jobs require many different settings to function properly. That is the core of what Tanzu Operations Manager does for you: Tanzu Operations Manager asks you to designate values for those settings and generates a manifest based on what you specify.
+Jobs require many different settings to function properly. That is the core of what <%= vars.platform_name %> does for you: <%= vars.platform_name %> asks you to designate values for those settings and generates a manifest based on what you specify.
 
-Tanzu Operations Manager does not require tile authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
+<%= vars.platform_name %> does not require tile authors to provide `vm_credentials` in the `property_blueprints` for each `job_type`. This is because `vm_credentials` are generated automatically. You can find them in the release manifest.
 
-Tanzu Operations Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Tanzu Operations Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.
+<p class="note important">
+<span class="note__title">Important</span>
+Tanzu Operations Manager ignores <code>static_ip</code> and <code>dynamic_ip</code> keys. To configure the static IPs of a <code>job_type</code>, create a property blueprint with <code>name: static_ips</code> and <code>type: ip_ranges</code>.<br><code>static_ips</code> is a special keyword that Tanzu Operations Manager uses to find static IPs and pass them to the BOSH manifest. For more information about <code>ip_ranges</code>, see <a href="#ip-ranges">ip_ranges</a>.</p>
 
 ```
 job_types:
@@ -1249,7 +1253,7 @@ job_types:
 * **Format:** String
 * **Type:** Required
 
-The name of the job as it is to be created in the Tanzu Operations Manager generated BOSH manifest.
+The name of the job as it is to be created in the BOSH manifest generated by <%= vars.platform_name %>.
 
 ### <a id='job-label'></a> resource_label
 
@@ -1269,7 +1273,7 @@ Each element has the following attributes:
 
 #### <a id='migrated-from-name'></a> Name
 
-* **Format:** The previous name of the job, as it was created in the BOSH manifest generated by Tanzu Operations Manager.
+* **Format:** The previous name of the job, as it was created in the BOSH manifest generated by <%= vars.platform_name %>.
 * **Type:** Required
 
 ### <a id='job-template'></a> templates
@@ -1397,24 +1401,24 @@ If you are using the <code>zero_if</code> property, you must not set the <code>c
 * **Format:** Text snippet, prefaced by pipe symbol: `|`
 * **Type:** Optional
 
-Tanzub Operations Manager generates a BOSH manifest that defines properties for each job the manifest deploys. Some of these properties are not set until you click **Apply Changes**, because you configured them in the tile or because Tanzu Operations Manager had to generate them.
+<%= vars.platform_name %> generates a BOSH manifest that defines properties for each job the manifest deploys. Some of these properties are not set until you click **Apply Changes**, because you configured them in the tile or because <%= vars.platform_name %> had to generate them.
 
 For more information about referencing these properties, see [Referencing Properties](#property-refs).
 
 #### <a id='job-accessors'></a> Job sccessors
 
-The following table that describes the double parentheses expressions Tanzu Operations Manager provides to access information about the jobs that the manifest deploys:
+The following table that describes the double parentheses expressions <%= vars.platform_name %> provides to access information about the jobs that the manifest deploys:
 
-| Double Parentheses Expression | Description |
-| ----------------------------- | ----------- |
-| `(( name ))` | The name of the job. |
-| `(( cpu ))` | The CPU of the VM type configured for the job. |
-| `(( ram ))` | The RAM of the VM type configured for the job. |
-| `(( ephemeral_disk ))` | The ephemeral disk of the VM type configured for the job. |
-| `(( persistent_disk ))` | The persistent disk of the VM type configured for the job. |
-| `(( instances ))` | The number of instances configured for the job. |
-| `(( any_instances ))` | Returns `true` if there is a non-zero number of instances for the job. |
-| `(( subnet_cidrs ))` | A list of CIDRs associated with the job. |
+| Double Parentheses Expression | Description          |
+| ----------------------------- | -------------------- |
+| `(( name ))`                  | The name of the job. |
+| `(( cpu ))`                   | The CPU of the VM type configured for the job. |
+| `(( ram ))`                   | The RAM of the VM type configured for the job. |
+| `(( ephemeral_disk ))`        | The ephemeral disk of the VM type configured for the job.  |
+| `(( persistent_disk ))`       | The persistent disk of the VM type configured for the job. |
+| `(( instances ))`             | The number of instances configured for the job. |
+| `(( any_instances ))`         | Returns `true` if there is a non-zero number of instances for the job. |
+| `(( subnet_cidrs ))`          | A list of CIDRs associated with the job. |
 
 
 ## <a id='property-blueprints'></a> Property blueprint reference
@@ -1427,11 +1431,11 @@ All property blueprints can have the following attributes:
 
 * `type`: Required. The type of property. Must be one of the property types listed in this topic.
 
-* `optional`: Optional. Default: `false`. When set to `true`, Tanzu Operations Manager does not require this property to be set to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
+* `optional`: Optional. Default: `false`. When set to `true`, <%= vars.platform_name %> does not require this property to be set to deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
 
-* `configurable`: Optional. Default: `false`. When set to `true` for property types that support your configuration, you are not allowed to configure this value. Do not set `configurable: true` for property types that do not support your configuration. When set to `false`, Tanzu Operations Manager does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated through the API. For property types that support auto-generation of values, when `configurable` is set to `false`, Tanzu Operations Manager generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
+* `configurable`: Optional. Default: `false`. When set to `true` for property types that support your configuration, you are not allowed to configure this value. Do not set `configurable: true` for property types that do not support your configuration. When set to `false`, <%= vars.platform_name %> does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated through the API. For property types that support auto-generation of values, when `configurable` is set to `false`, <%= vars.platform_name %> generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
 
-* `freeze_on_deploy`: Optional. Default: `false`. When set to `true`, Tanzu Operations Manager does not allow this property to be changed after the tile this property belongs to is successfully deployed.
+* `freeze_on_deploy`: Optional. Default: `false`. When set to `true`, <%= vars.platform_name %> does not allow this property to be changed after the tile this property belongs to is successfully deployed.
 
 * `conditional_default`: Optional. Accepts two nested keys: `dependency_present` and `value`. The `conditional_default` key overrides the default value specified in the property blueprint only when that tile dependency is present. Otherwise, the default value is used. The `conditional_default` key is evaluated when the specified tile dependency is imported. It is reevaluated only when that tile dependency is staged or deleted. For example:
 
@@ -1461,14 +1465,14 @@ All property blueprints can have the following attributes:
 
 When a property has `configurable: true` and is added to a `form_type`, you can configure the value of that property.
 
-Alternatively, a property with `configurable: false` gets a value auto-generated by Tanzu Operations Manager.
+Alternatively, a property with `configurable: false` gets a value auto-generated by <%= vars.platform_name %>.
 For which property types support each of these, see the sections that follow.
 
 Properties with `configurable` set to `false`:
 
 * Cannot be edited by you.
 * Do not show up in forms, even if added under `form_types`.
-* Get auto-generated values filled in by Tanzu Operations Manager if that specific type of property supports auto-generation of values.
+* Get auto-generated values filled in by <%= vars.platform_name %> if that specific type of property supports auto-generation of values.
 
 ### <a id='named-manifest'></a> named_manifest for selector and collection type properties
 
@@ -1509,7 +1513,7 @@ After you define a named manifest, you can reference it using a manifest snippet
 routing_certificates: (( .properties.certificate_collection.parsed_manifest(for_routing) ))
 ```
 
-Tanzu Operations Manager renders the following manifest from this example:
+<%= vars.platform_name %> renders the following manifest from this example:
 
 ```
 routing_certificates:
