@@ -3,20 +3,20 @@ title: Partner software product release cycle
 owner: London Services
 ---
 
-Learn about the four phases of a product release.
+This topic describes the four phases of a tile release and procedures you can follow to complete your tile release.
 
 ## <a id='alpha'></a>Phase 1: Alpha
 
 A product begins development in the **Alpha** phase. The product goes through constant churn and refactoring, and might not be feature-complete.
 
-Customers do not have exposure to a product during Alpha, and there are no quality requirements in this phase. Instead, developers use this stage for internal testing.
+Your customers do not have exposure to a product during the Alpha phase, and there are no quality requirements. Developers use this stage for internal testing.
 
-## <a id='closed-beta'></a>Phase 2:  Closed Beta
+## <a id='closed-beta'></a>Phase 2: Closed Beta
 
-During **Closed Beta**, a limited pool of users gains access and provides feedback to a product. This feedback drives further development. A status of Closed (Private) Beta informs users that the product might be unstable
+During **Closed Beta**, a limited pool of users is given access and provides feedback. This feedback drives further development and uncovers bugs. A status of Closed (Private) Beta informs users that the product might be unstable
 and cannot be used in production.
 
-A product can remain in Closed Beta while:
+A product can remain in Closed Beta as long as:
 
 - Changes might break product function or cause loss of data.
 - Users might experience major bugs.
@@ -25,9 +25,10 @@ A product can remain in Closed Beta while:
 Developers make products in Closed Beta available to specific groups or individual customers on [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
 ### Requirements
-To enter Closed Beta, a product must meet the following requirements:
 
-* The product must run properly on at least one IaaS, so that customers can install and try it out. Supported infrastructures are AWS, vSphere and OpenStack.
+To enter **Closed Beta**, a product must meet the following requirements:
+
+* The product must run properly on at least one IaaS so that your customers can install and try it out. Supported infrastructures are AWS, vSphere, and OpenStack.
 
 * Customers must be able to install the product error-free through a tile in Tanzu Operations Manager, and delete the product there without any traces remaining.
 
@@ -44,17 +45,18 @@ To enter Closed Beta, a product must meet the following requirements:
 A Closed Beta product can include an easy way for users to provide feedback to the product developer.
 
 ### Steps to release
+
 To create a new Closed Beta release for your product:
 
 1. Log into [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
-1. Create a new release for your product and populate all of the required fields.
+1. Create a new release for your product and enter the required details in all of the required text boxes.
 
-1. Check that the release version states **BETA**.
+1. Check that the release version includes the word **BETA**.
 
-1. Clearly state in the release description that the product cannot be upgraded, and that you might experience data loss.
+1. Clearly state in the release description that the product cannot be upgraded, and that the customer might experience data loss.
 
-1. Email your <%= vars.company_name %> contact to request product validation and Closed Beta release. Provide basic instructions on how to validate the new feature set. <%= vars.company_name %> verifies that the release meets all requirements, make it accessible to invited customers.
+1. Email your <%= vars.company_name %> contact to request product validation and **Closed Beta** release. In the email, provide basic instructions for validating the new feature set. <%= vars.company_name %> verifies that the release meets all requirements, and makes it accessible to invited customers.
 
 ## <a id='public-beta'></a>Phase 3: Public Beta
 
@@ -71,7 +73,8 @@ Your product is a good candidate for the **Public Beta** stage if:
 Products in Public Beta are available on [VMware Tanzu Network](https://network.tanzu.vmware.com/) to any user with a free VMware Tanzu Network account.
 
 ### Requirements
-Products in Public Beta must meet the following requirements:
+
+Products in **Public Beta** must meet the following requirements:
 
 * The product meets all requirements for [**Closed Beta**](#closed-beta).
 
@@ -79,7 +82,7 @@ Products in Public Beta must meet the following requirements:
 
 * The product supports upgrade paths from any minor version or patch to the next minor version and any patches.
 
-* Tile version upgrades result in no data or configuration loss, and maintain service functionality and availability.
+* Tile version upgrades result in no data or configuration loss, and service capability and availability are maintained.
 
 * Where appropriate, <%= vars.app_runtime_full %> integrations work properly, including:
   * Registered routes
@@ -87,19 +90,19 @@ Products in Public Beta must meet the following requirements:
   * Service brokers
 
 * You can respond to discovery of a security flaw on the [Common Vulnerabilities and Exposures (CVE) list](https://cve.mitre.org/cve/index.html) within a reasonable time frame. Security flaws include vulnerabilities in your stemcell or within one of the components of your tile. <br>
-For more information about the security policy, see [<%= vars.platform_name %> Security Overview and Policy](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/2.10/vmware-tanzu-ops-manager/security-process-pcf-security.html).
+For more information about the security policy, see [<%= vars.platform_name %> Security Overview and Policy](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/3.0/vmware-tanzu-ops-manager/security-process-pcf-security.html).
 
 ### Steps to release
 
 1. Log into [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
-1. Create a new release for your product and populate all of the required fields.
+1. Create a new release for your product and enter the required details in all of the required text boxes.
 
-1. Check that the release version states **BETA**.
+1. Check that the release version includes the word **BETA**.
 
-1. Email your <%= vars.company_name %> contact to request product validation and Public Beta release. Please provide basic instructions on how to validate the new feature set. <%= vars.company_name %> also validates the upgrade scenario and data persistence. After verifying that the release meets all requirements, <%= vars.company_name %> makes it visible to customers.
+1. Email your <%= vars.company_name %> contact to request product validation and **Public Beta** release. In the email, provide basic instructions for validating the new feature set. <%= vars.company_name %> will also validate the upgrade scenario and data persistence. After verifying that the release meets all requirements, <%= vars.company_name %> will make it available to customers.
 
-## <a id='ga'></a>Phase 4: General availability
+## <a id='ga'></a>Phase 4: General Availability
 
 A product qualifies for **General Availability** when:
 
@@ -110,6 +113,7 @@ A product qualifies for **General Availability** when:
 - The product's full set of features meets the standards of quality that you wish to uphold.
 
 ### Requirements
+
 Products must meet the following requirements for **General Availability**:
 
 * The product meets all requirements for [**Public Beta**](#public-beta).
@@ -118,9 +122,9 @@ Products must meet the following requirements for **General Availability**:
 
 * You can provide customer support.
 
-* Your business team can "Go to market."
+* Your business team is ready to "Go to market."
 
-* The product can scale vertically, by increasing the amount of RAM or CPU. Vertical scaling improves performance and does not result in data loss.
+* The product can scale vertically, by increasing the amount of RAM or CPU. Vertical scaling improves performance and without resulting in data loss.
 
 * If appropriate, the product can scale horizontally for high availability.
   * Scaled-out nodes (application VMs) function correctly.
@@ -131,7 +135,9 @@ Products must meet the following requirements for **General Availability**:
 * Product installation does not require an internet connection, after initial product download.
 
 ### Steps to release
-1. Log into [VMware Tanzu Network](https://network.tanzu.vmware.com/).
 
-1. Create a new release for your product and populate all of the required fields.
-1. Email your <%= vars.company_name %>  contact to request product validation and General Availability release. Please provide basic instructions on how to validate the new feature set. <%= vars.company_name %> also validates the upgrade scenario and data persistence.
+1. Log on to [VMware Tanzu network](https://network.tanzu.vmware.com/).
+
+1. Create a new release for your product and enter the required details in all of the required text boxes.
+1. Email your <%= vars.company_name %> contact to request product validation and General Availability release. In the email, provide basic instructions for validating the new feature set. <%= vars.company_name %> will also validate the upgrade scenario and data persistence.
+<br>After verifying that the release meets all requirements, <%= vars.company_name %> will make it available to customers.
