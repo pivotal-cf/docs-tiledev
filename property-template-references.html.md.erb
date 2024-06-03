@@ -196,7 +196,7 @@ The following table describes the accessors you can use to retrieve information 
 | `ca_public_key` | Provides the public key that is used to sign the BOSH Director VM |
 | `hostname`      | Provides the hostname for the BOSH Director VM |
 | `tld`           | Returns the string `bosh` as the top-level domain (TLD) of the BOSH Director |
-| `system_metrics_runtime_enabled`       | Exposes whether the `ops_manager_system_metrics_runtime` is added to the BOSH Director. |
+| `system_metrics_runtime_enabled`       | Exposes whether the `ops_manager_system_metrics_runtime` is added to the BOSH Director |
 | `metrics_server_enabled`               | Deprecated. Always returns `false` |
 | `bosh_metrics_forwarder_client_name`   | Deprecated. Always returns a constant, non-credential value |
 | `bosh_metrics_forwarder_client_secret` | Deprecated. Always returns a constant, non-credential value |
@@ -252,7 +252,7 @@ You cannot nest:
 
 ### <a id="non-configurable-certs"></a> Non-configurable certificates are invalid within a selector
 
-The  `rsa_cert_credentials` property with `configurable: false` is invalid within a `selector` property.
+The  `rsa_cert_credentials` property with `configurable: false` is invalid inside a `selector` property.
 
 The tile does not raise any validation errors, but the following error appears during the pre-deploy check:
 
@@ -276,6 +276,7 @@ The tile does not raise any validation errors, but the following error appears d
 ```
 
 Where `EXAMPLE-CERT-PROPERTY` is the property you specify.
+
 ## <a id='top-level'></a> Top-level properties
 
 The following example shows the properties that appear at the top of a product template. The definitions of each property follow this example:
@@ -339,7 +340,9 @@ runtime_configs:
 * **Format:** String
 * **Type:** Required
 
-The internal name of the tile. You must keep the name of your tile consistent for migrations to function properly. Changing the name indicates the installation of a finished different tile.
+The internal name of the tile.
+
+You must keep the name of your tile consistent for migrations to function properly. Changing the name indicates the installation of a different finished tile.
 
 ### <a id='top-version'></a> product_version
 
@@ -348,7 +351,7 @@ The internal name of the tile. You must keep the name of your tile consistent fo
 
 The version of the tile.
 
-You can only import this version into <%= vars.platform_name %> once. If you want to import the same tile or version, you must delete the existing one from the `/metadata` folder and delete the installation files from the <%= vars.platform_name %> disk.
+You can import this version into <%= vars.platform_name %> only once. If you want to import the same tile or version, you must delete the existing one from the `/metadata` folder and delete the installation files from the <%= vars.platform_name %> disk.
 
 The version number is important for migrations.
 
@@ -359,7 +362,7 @@ For more information, see [Upgrading Tiles](./tile-upgrades.html).
 * **Format:** String
 * **Type:** Required
 
-You must set a minimum version for upgrading to your current tile version. The following example shows a current tile version of v1.7 that only upgrades from a v1.6.x version of the same tile:
+You must set a minimum version for upgrading to your current tile version. The following example shows a current tile version of v1.7 that upgrades only from a v1.6.x version of the same tile:
 
 ```
 - product_version:  1.7.0.0
@@ -371,11 +374,11 @@ You must set a minimum version for upgrading to your current tile version. The f
 * **Format:** String
 * **Type:** Required
 
-The version of the schema of the product template, the file that this documentation describes.
+The version of the schema of the product template (the file that this topic describes).
 
 If you bump the version number, it activates new properties that are not present in an older `metadata_version`. It can also require you to  restructure the product template to conform to the new `metadata_version`.
 
-The `metadata_version` corresponds to a major or minor release of <%= vars.platform_name %>. <%= vars.platform_name %> can accept a tile with a `metadata_version` that is older than the <%= vars.platform_name %> version, but <%= vars.platform_name %> cannot accept a
+The `metadata_version` corresponds to a major or minor release of <%= vars.platform_name %>. <%= vars.platform_name %> can accept a tile with a `metadata_version` that is older than the <%= vars.platform_name %> version, but not a
 tile with a `metadata_version` that is newer than the <%= vars.platform_name %> version. A best practice is to set the `metadata_version` to be the same as the oldest version of
 <%= vars.platform_name %> that the tile version supports.
 
@@ -400,9 +403,9 @@ A description of the tile.
 
 The order in which a tile appears on the dashboard. The BOSH Director always appears at rank 100.
 
-For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100. Set it to 1.
+For your tile to appear to the right of BOSH Director, you must set this value to an integer less than 100.
 
-If all tiles have the same rank, <%= vars.platform_name %> sorts them alphabetically.
+If all tiles have the same `rank`, <%= vars.platform_name %> sorts them alphabetically.
 
 ### <a id='top-pivnet_filename_regex'></a> pivnet_filename_regex
 
@@ -416,27 +419,29 @@ This regular expression allows the <%= vars.platform_name %> / VMware Tanzu Netw
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `service_broker` to `true` for on-demand service brokers. When you set `service_broker` to `true` it:
+Set `service_broker` to `true` for on-demand service brokers. This has the following results:
 
 * Activates the service network selector property type.
 
 * Requires you to select a service network during tile configuration. You can reference the selected service network with `(( $self.service_network ))`.
 
-* Include a UAA client for the service to use. Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
+* Includes a UAA client for the service to use. Tile authors can reference the UAA client credentials with `(( $self.uaa_client_name ))` and `(( $self.uaa_client_secret ))`.
 
 ### <a id='top-bosh-read-creds'></a> bosh_read_creds
 
 * **Format:** Boolean
 * **Type:** Optional, default `false`
 
-Set `bosh_read_creds` to `true` for tiles that wish to have read-only access to the BOSH director. Tile authors can reference these read-only UAA client credentials with `(( $self.bosh_read_creds_name ))` and `(( $self.bosh_read_creds_secret ))`.
+Set `bosh_read_creds` to `true` for tiles that need read-only access to the BOSH director. Tile authors can reference these read-only UAA client credentials with `(( $self.bosh_read_creds_name ))` and `(( $self.bosh_read_creds_secret ))`.
 
 ### <a id='top-stemcell-criteria'></a> stemcell_criteria
 
 * **Format:** Hash
 * **Type:** Required
 
-With the `enable_patch_security_updates` property, you can automatically use the latest patched version of a stemcell. This key is set to `true` by default. For tiles using static compilations, you can deactivate this feature. This feature increases security by automatically using the latest patched version of a stemcell. However, you might experience longer than expected upgrade times.
+This feature increases security by automatically using the latest patched version of a stemcell. Note that, with this feature enabled, you might experience longer than expected upgrade times.
+
+With the `enable_patch_security_updates` property, you can automatically use the latest patched version of a stemcell. This key is set to `true` by default. For tiles using static compilations, you can deactivate this feature.
 
 For example:
 
@@ -449,7 +454,7 @@ stemcell_criteria
 
 You must set the `enable_patch_security_updates` property to `true`. If you set the property to `false`, your tile does not receive security patches through automatic stemcell updates.
 
-You do not specify which IaaS the stemcell targets. This keeps your product template IaaS agnostic so that one product template can be deployed on any IaaS.
+Do not specify which IaaS the stemcell targets. This keeps your product template IaaS-agnostic so that one product template can be deployed on any IaaS.
 
 For a list of stemcells, including OS and version, see the [BOSH](https://bosh.io/) website.
 
@@ -480,7 +485,7 @@ additional_stemcells_criteria:
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of tile dependencies. If the required tile is not present in the <%= vars.platform_name %> installation, <%= vars.platform_name %> lists the needed dependencies and does not install your tile until the dependencies are satisfied.
+A list of tile dependencies. If the required tile is not present in the <%= vars.platform_name %> installation, <%= vars.platform_name %> lists the required dependencies and does not install your tile until the dependencies are satisfied.
 
 Supported restriction operators are `=`, `!=`, `>`, `<`, `>=`, `<=`, and `~>`.
 
@@ -524,7 +529,7 @@ Each release requires the following keys:
 * **Format:** Array of hashes
 * **Type:** Optional
 
-A list of variables, that are generated after a deploy succeeds.
+A list of variables that are generated after a deploy succeeds.
 
 You can reference variables in a manifest snippet using triple-parentheses expressions.
 
@@ -540,9 +545,9 @@ Each release requires the following keys:
 
 A list of errands that run after a deploy succeeds.
 
-Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in <%= vars.platform_name %>.
+Set the `run_post_deploy_errand_default:` property to `on` or `off` to set the default for the errand's run rule selector in <%= vars.platform_name %>. If you do not specify this property, the selector defaults to `On`.
 
-For more information, see [Errands](./tile-errands.html). If this property is not supplied, the selector defaults to `On`.
+For more information, see [Errands](./tile-errands.html).
 
 ### <a id='top-pre-delete'></a> pre_delete_errands
 
@@ -569,25 +574,25 @@ These are keys that define global deployment configurations. For more informatio
 
 Install-time verifiers confirm that properties for external services are set correctly.
 Install-time verifiers run in <%= vars.platform_name %> before the changes are applied.
-You can correct invalid properties before you  deploy.
+You can correct invalid properties before you deploy.
 
 For example, `Verifiers::MysqlDatabaseVerifier` checks that MySQL database properties are valid by
 using the properties to connect to the MySQL database. If the properties are invalid,
-the install-time verifier informs you.
+the install-time verifier provides a message.
 
-Each install-time verifier supports the following keys:
+Each `install_time_verifier` supports the following keys:
 
 * `name`: The type of verifier. The value must be one of the verifiers listed in the following table.
 
 * `properties`: A mapping of verifier inputs to either property references or static values.
-The required properties for each verifier are listed in the table that follows.
+The required properties for each verifier are listed in the following table.
 
 * `ignorable`: If this key is set to `false`, you cannot click **Apply Changes** until the verification errors are resolved.
 If this key is set to `true`, you can ignore the warning message and click **Apply Changes**.
 This key is set to `false` by default.
 
 * `run_on`: Determines when to run the verifier. Valid values include `'always'` and `'major_or_minor_upgrades'`.
-Defaults to `'always'`.
+This key defaults to `'always'`.
 
 For information about how you can manage and view verifiers,
 see [Managing <%= vars.platform_name %> Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
@@ -603,7 +608,7 @@ The following table lists the available install-time verifiers:
     <th>
       Verifies that...
     </th>
-    <th width="210px">
+    <th width="230px">
       Properties
     </th>
   </tr>
@@ -826,13 +831,11 @@ For more information about migrating an existing form to the syslog form provide
 
 ## <a id='form-properties'></a> Form properties
 
-Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the <%= vars.platform_name %> UI. The `name` of each form appears on the left-hand side as navigational tabs.
+Each form type you write is composed of form properties. Form properties dictate the structure of the form fields that appear in the <%= vars.platform_name %> UI. The names (`name`)of the forms appear on the left-hand side as navigational tabs.
 
 Form properties reference `property_blueprints`. Property blueprints define each text box's data type.
 
-For a corresponding example to the `form_types` example that follows, see [property_blueprints](#property-blueprints).
-
-The following is an example of the properties that appear in the `form_types` section of a product template:
+For an example property blueprint that corresponds to the `form_types` example that follows, see [property_blueprints](#property-blueprints).
 
 ```
 form_types:
@@ -930,7 +933,7 @@ The internal name of the form.
 * **Format:** String
 * **Type:** Required
 
-The label of the form as it appears as a link on the left hand side of each form.
+The label of the form. Appears as a link on the left hand side of each form.
 
 ### <a id='form-description'></a> description
 
@@ -965,12 +968,14 @@ Verifiers do not block deployments and only inform you that the properties you s
 To have a verifier run when a form is saved and before you click **Apply Changes**,
 add the verifier to both the `verifiers` and `install_time_verifiers` sections.
 
-For information about how you can manage and view verifiers,
+For information about:
+
+* how you can manage and view verifiers,
 see [Managing <%= vars.platform_name %> Verifiers](https://docs.vmware.com/en/VMware-Tanzu-Operations-Manager/<%= vars.dot_major_version %>/vmware-tanzu-ops-manager/install-granular-verifier-control.html).
 
-For information about how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
+* how verifiers are configured, see [install\_time\_verifiers](#top-verifier).
 
-The following is an example of a `verifiers` section:
+The following is an example `verifiers` section:
 
 ```
 form_types:
@@ -1004,7 +1009,7 @@ You can specify either a tile property reference or a static value for a form ve
 * **Format:** String
 * **Type:** Optional
 
-Specify placeholder text for a text box. The text appears in light gray to show an example value for the user. The text disappears when you type in the text box and reappears if you leave the text box empty.
+Specify placeholder text for a text box. Appears in light gray to show an example value for the user. The text disappears when you type in the text box and reappears if the text box is empty.
 
 The `placeholder` attribute displays for the following form types:
 
