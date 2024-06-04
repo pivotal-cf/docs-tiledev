@@ -21,10 +21,10 @@ This holds an array of strings selected string values.
   <tr>
     <td> default </td>
     <td>
-      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Optional. Specifies a default value. <br>When provided, must be set to a value which is valid for this type.
       Cannot be used when the property also has <code>optional: true</code>.
       <br><br>
-      The default value can be one of the options’ names.
+      The default value can be the name of one of the options.
       For example, in the example shown below, “tomato” can be used as the default.
     </td>
   </tr>
@@ -33,7 +33,7 @@ This holds an array of strings selected string values.
     <td>
       An array of hashes, each item specifying a:
       <code>name</code>, which becomes the value of the property if this option is selected, and
-      <code>label</code> shows up as the text in the dropdown for this option.
+      <code>label</code> shows up as the text in the drop-down menu for this option.
     </td>
   </tr>
 </table>
@@ -47,7 +47,7 @@ This holds an array of strings selected string values.
   </tr>
   <tr>
     <td>value_present?</td>
-    <td>Returns true if an option in selected, and that option’s name is a non-empty string.</td>
+    <td>Returns <code>true</code> if an option in selected, and if that option’s name is a non-empty string.</td>
   </tr>
 </table>
 

@@ -1266,33 +1266,19 @@ The label of the job as it is to appear in the resources page of the tile.
 Each element has the following text boxes:
 
 * `name`
+    * **Format:** Name of the job template to use
+    * **Type:** Required
 * `release`
+    * **Format:** Name of the release the template is from.
+    * **Type:** Required  
 * `consumes`
+    * **Format:** YAML string defining BOSH links that this job consumes.
+    * **Type:** Optional  
 * `provides`
+    * **Format:** YAML string that defines BOSH links that this job provides.
+    * **Type:** Optional  
 
-#### <a id='template-name'></a> name
-
-* **Format:** Name of the job template to use
-* **Type:** Required
-
-#### <a id='template-release'></a> release
-
-* **Format:** Name of the release the template is from.
-* **Type:** Required
-
-#### <a id='template-consumes'></a> consumes
-
-* **Format:** YAML string defining BOSH links that this job consumes.
-* **Type:** Optional
-
-For more information about BOSH links, see [Links](https://bosh.io/docs/links.html) in the BOSH documentation.
-
-#### <a id='template-provides'></a> provides
-
-* **Format:** YAML string that defines BOSH links that this job provides.
-* **Type:** Optional
-
-For more information about BOSH links, see [Links](https://bosh.io/docs/links.html) in the BOSH documentation.
+For more information about BOSH links, see the [BOSH documentation](https://bosh.io/docs/links.html).
 
 ### <a id='job-release'></a> release
 
@@ -1320,7 +1306,7 @@ If you change the <code>single_az_only</code> setting, your VMs can switch AZs. 
 * **Format:** Integer
 * **Type:** Required
 
-A BOSH setting that controls the number of instances of this job that BOSH deploys in parallel.
+This is a BOSH setting that controls the number of instances of this job that BOSH deploys in parallel.
 
 ### <a id='job-use-stemcell'></a> use_stemcell
 
@@ -1349,10 +1335,8 @@ The resources you can set are:
 
 For examples of supported constraint types, see [integer](#integer).
 
-If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Tanzu Operations Manager tile shows <strong>None</strong> under the persistent disk text box.
-
-<p class="note">
-<span class="note__title">Note</span>
+<p class="note important">
+<span class="note__title">Important</span>
 If you set the <code>default</code> property for <code>persistent_disk</code> to <code>0</code>, users cannot edit this value and the <strong>Resource Config</strong> pane in the Tanzu Operations Manager tile displays <strong>None</strong> under the persistent disk text box.
 </p>
 
@@ -1365,17 +1349,15 @@ The number of default instances for a job, including maximum, minimum, odd, and 
 
 If your tile uses an external service that performs the same job as a service in <%= vars.app_runtime_abbr %>, you can reduce resource usage by setting the instance count of a job to `0` with the `zero_if` property.
 
-When `zero_if` is not active for an instance group, you cannot set the instance count to 0. You can override this by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
+When `zero_if` is not active for an instance group, you cannot set the instance count to 0 (zero). You can override this by setting `allow_manual_selection_of_zero` to `true`. By default, it is set to `false`.
 
-For example, your tile uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for <%= vars.app_runtime_abbr %>. You can remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
+For example, assume that your tile uses Amazon Relational Database Service (RDS) instead of MySQL, which is the default system database for <%= vars.app_runtime_abbr %>. You can remove all instance counts of MySQL by setting `property reference` to `.properties.system.database` and `property value` to `magic value`.
 
 For examples of supported constraint types, see [integer](#integer).
 
-If you are using the <code>zero_if</code> property, you must not set the <code>can_only_increase</code> constraint to <code>true</code>.
-
-<p class="note">
-<span class="note__title">Note</span>
-If you are using the <code>zero_if</code> property, you must not set the <code>can_only_increase</code> constraint to <code>true</code>.
+<p class="note important">
+<span class="note__title">Important</span>
+If you are using the <code>zero_if</code> property, you must ensure that the <code>can_only_increase</code> constraint is set to <code>false</code>.
 </p>
 
 ### <a id='job-manifest'></a> Manifest
@@ -1393,14 +1375,14 @@ The following table that describes the double parentheses expressions <%= vars.p
 
 | Double Parentheses Expression | Description          |
 | ----------------------------- | -------------------- |
-| `(( name ))`                  | The name of the job. |
-| `(( cpu ))`                   | The CPU of the VM type configured for the job. |
-| `(( ram ))`                   | The RAM of the VM type configured for the job. |
-| `(( ephemeral_disk ))`        | The ephemeral disk of the VM type configured for the job.  |
-| `(( persistent_disk ))`       | The persistent disk of the VM type configured for the job. |
-| `(( instances ))`             | The number of instances configured for the job. |
-| `(( any_instances ))`         | Returns `true` if there is a non-zero number of instances for the job. |
-| `(( subnet_cidrs ))`          | A list of CIDRs associated with the job. |
+| `(( name ))`                  | The name of the job  |
+| `(( cpu ))`                   | The CPU of the VM type configured for the job  |
+| `(( ram ))`                   | The RAM of the VM type configured for the job  |
+| `(( ephemeral_disk ))`        | The ephemeral disk of the VM type configured for the job  |
+| `(( persistent_disk ))`       | The persistent disk of the VM type configured for the job |
+| `(( instances ))`             | The number of instances configured for the job |
+| `(( any_instances ))`         | Returns `true` if there is a non-zero number of instances for the job |
+| `(( subnet_cidrs ))`          | A list of CIDRs associated with the job        |
 
 
 ## <a id='property-blueprints'></a> Property Blueprint Reference
@@ -1409,17 +1391,17 @@ The following table that describes the double parentheses expressions <%= vars.p
 
 All property blueprints can have the following attributes:
 
-* `name`: Required. The name of the property. The name is used to reference a property in `form_types` and in `(( ))` accessors.
+* `name`: Required. The name of the property. <br>The name is used to reference a property in `form_types` and in double parens `(( ))` accessors.
 
-* `type`: Required. The type of property. Must be one of the property types listed in this topic.
+* `type`: Required. The type of property. <br>The value must be one of the property types listed in this topic.
 
-* `optional`: Optional. Default: `false`. When set to `true`, <%= vars.platform_name %> does not require this property to be set deploy, nor does it validate that this field has a value when saving a form with this property. `optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). `optional` cannot be set to `true` if the property also has `configurable: false`.
+* `optional`: Optional. Default: `false`. <br>When set to `true`, <%= vars.platform_name %> does not require this property to be set deploy, nor does it validate that this field has a value when saving a form with this property. <br>`optional` cannot be set to `true` if a `default` value is set. For more information about which types support `default`, see [All Property Blueprint Types](#all-property-types). <br>`optional` cannot be set to `true` if the property also has `configurable: false`.
 
-* `configurable`: Optional. Default: `false`. When set to `true` for property types that support your configuration, you are not allowed to configure this value. Do not set `configurable: true` for property types that do not support your configuration. When set to `false`, <%= vars.platform_name %> does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated through the API. For property types that support auto-generation of values, when `configurable` is set to `false`, <%= vars.platform_name %> generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
+* `configurable`: Optional. Default: `false`. <br>When set to `true` for property types that support your configuration, you are not allowed to configure this value. Do not set `configurable: true` for property types that do not support your configuration. <br>When set to `false`, <%= vars.platform_name %> does not render this property in any form, even if it is specified in a `form_type`, nor does it allow the property to be updated through the API. For property types that support auto-generation of values, when `configurable` is set to `false`, <%= vars.platform_name %> generates and saves a value for this property when the tile this property belongs to is deployed for the first time.
 
-* `freeze_on_deploy`: Optional. Default: `false`. When set to `true`, <%= vars.platform_name %> does not allow this property to be changed after the tile this property belongs to is successfully deployed.
+* `freeze_on_deploy`: Optional. Default: `false`. <br>When set to `true`, <%= vars.platform_name %> does not allow this property to be changed after the tile this property belongs to is successfully deployed.
 
-* `conditional_default`: Optional. Accepts two nested keys: `dependency_present` and `value`. The `conditional_default` key overrides the default value specified in the property blueprint only when that tile dependency is present. Otherwise, the default value is used. The `conditional_default` key is evaluated when the specified tile dependency is imported. It is reevaluated only when that tile dependency is staged or deleted. For example:
+* `conditional_default`: Optional. <br>Accepts two nested keys: `dependency_present` and `value`. <br>The `conditional_default` key overrides the default value specified in the property blueprint only when that tile dependency is present. Otherwise, the default value is used. <br>The `conditional_default` key is evaluated when the specified tile dependency is imported. It is re-evaluated only when that tile dependency is staged or deleted. For example:
 
     ```
     - name: example_selector
@@ -1448,7 +1430,7 @@ All property blueprints can have the following attributes:
 When a property has `configurable: true` and is added to a `form_type`, you can configure the value of that property.
 
 Alternatively, a property with `configurable: false` gets a value auto-generated by <%= vars.platform_name %>.
-For which property types support each of these, see the sections that follow.
+For the property types supported by each of these, see the sections that follow.
 
 Properties with `configurable` set to `false`:
 
@@ -1458,7 +1440,7 @@ Properties with `configurable` set to `false`:
 
 ### <a id='named-manifest'></a> named_manifest for Selector and Collection Type Properties
 
-Specify a property for collection within the `named_manifest` section of the metadata, as in the example below:
+Specify a property for collection in the `named_manifest` section of the metadata. For example:
 
 ```
 - name: certificate_collection
@@ -1480,9 +1462,7 @@ Specify a property for collection within the `named_manifest` section of the met
 
 Use the `current_record` property within a collection record to refer to other properties in the same record.
 
-For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` within this record only.
-
-The <code>current_record</code> property is reserved. You cannot create a new property named <code>current_record</code>.
+For example, the properties in the `for_routing` named manifest refer to the values for `name`, `private_key`, `public_key`, and `certificate` in this record only.
 
 <p class="note">
 <span class="note__title">Note</span>

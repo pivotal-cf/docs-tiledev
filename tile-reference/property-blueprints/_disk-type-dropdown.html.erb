@@ -23,13 +23,13 @@ This holds a single string value selected from allowed disk types.
     <td>
       Optional. An array of objects with the same schema as <code>resource_definitions</code>
       for <code>job_types</code>.
-      For <code>disk_type_dropdown</code>, <code>resource_definitions</code>
+      <br>For <code>disk_type_dropdown</code>, <code>resource_definitions</code>
       can only have one element with <code>name</code> “persistent_disk”.
-      This element can also specify a <code>default</code> which Tanzu Operations Manager uses
+      This element can also specify a <code>default</code> that Tanzu Operations Manager uses
       as a minimum bound when it selects a default value.
-      It can also specify <code>constraints</code>, which can be any set of
+      <br>It can also specify <code>constraints</code>, which can be any set of
       constraints that can be specified for an integer property.
-      For examples of supported constraint types, see <a href="#integer">integer</a> below.
+      <br>For examples of supported constraint types, see <a href="#integer">integer</a> below.
     </td>
   </tr>
 </table>
@@ -41,10 +41,10 @@ This holds a single string value selected from allowed disk types.
     <td>value</td>
     <td>
       Returns a string containing the size of the selected disk in
-      megabytes, for example, “1024”.  If the operator specifies no value or “Automatic”,
+      megabytes; for example, “1024”.  If the operator specifies no value or “Automatic”,
       then this returns the smallest disk that is greater than the <code>default</code>
       value specified in <code>resource_definitions</code>.
-      If no default was specified, then this returns the smallest disk in the catalog.
+      <br>If no default was specified, this returns the smallest disk in the catalog.
     </td>
   </tr>
   <tr>

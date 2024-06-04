@@ -23,12 +23,12 @@ You cannot nest selector properties or other collection properties inside of a c
   <tr>
     <td> default </td>
     <td>
-      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Optional. Specifies a default value. <br>When provided, must be set to a value which is valid for this type.
       Cannot be used when the property also has <code>optional: true</code>.
       <br><br>
-      If specified, the default value must be an array where each item of the array
-      has the keys and values which are appropriate for the property blueprints provided.
-      For the example below, a default value could be:
+      If specified, the default value must be an array; each item of the array
+      has the keys and values that are appropriate for the property blueprints provided.
+      For the example below, a default value can be:
       <pre class="terminal">default:
         - name: sam
           public_key: ssh-rsa AAAAB3NzaC1yc2EAAAAD...
@@ -39,19 +39,19 @@ You cannot nest selector properties or other collection properties inside of a c
   <tr>
     <td> property_blueprints </td>
     <td>
-      A group of property blueprints that each record will have. Any type and combination
-      of property types can be used except collections and selectors which cannot be nested
+      A group of property blueprints that each record has. Any type and combination
+      of property types can be used except collections and selectors, which cannot be nested
       inside of collections.
     </td>
   </tr>
   <tr>
     <td> named_manifests </td>
     <td>
-      An array of objects each containing a <code>name</code> and a <code>manifest</code>.
-      The manifest specifies the YAML which can be used with <code>parsed_manifest(name)</code>
+      An array of objects, each containing a <code>name</code> and a <code>manifest</code>.
+      The manifest specifies the YAML code that can be used with <code>parsed_manifest(name)</code>
       where the manifest will be interpolated for each record in the collection.
-      The manifest has a special property level, <code>current_record</code>, which has
-      all the properties in a record of the collection.  The provided example below shows
+      <br>The manifest has a special property level, <code>current_record</code>, which has
+      all the properties in a record of the collection. <br>The example provided below shows
       have <code>named_manifest</code>, <code>current_record</code>, and <code>parsed_manifest</code>
       together to render a collection in a BOSH manifest.
     </td>
@@ -60,12 +60,12 @@ You cannot nest selector properties or other collection properties inside of a c
     <td> Logical Keys for GitOps style workflows </td>
     <td>
       <%= vars.ops_manager %> assigns each element of a collection a GUID.
-      The GUID is to track the element lifecycle of deleting, adding, and changing an element.
+      The GUID is used to track the element life cycle: adding, changing, and deleting an element.
       <br><br>
-      The collection element GUIDs differ between Tanzu Operations Manager environments.
-      This does not allow the ability to create a common configuration between environments.
+      The collection element GUIDs differ between Tanzu Operations Manager environments, so
+      you cannot create a common configuration for different environments.
       <br><br>
-      To address this issue, newer versions of the Tanzu Operations Manager CLI uses collection element fields as logical keys.
+      To address this issue, newer versions of the Tanzu Operations Manager CLI use collection element fields as logical keys.
       <br><br>
       The <%= vars.ops_manager %> CLI uses the following fields in collection elements as logical keys:
       <ul>
@@ -74,8 +74,8 @@ You cannot nest selector properties or other collection properties inside of a c
         <li>Any field ending in <code>name</code></li>
       </ul>
       <br>
-      <%= vars.recommended_by %> recommends including a logical key and setting
-      <code>freeze_on_deploy: true</code> in each collection where you want to
+      You must include a logical key and set
+      <code>freeze_on_deploy: true</code> in each collection in which you want to
       target “update” and “delete and add” operations separately.
     </td>
   </tr>
@@ -87,8 +87,8 @@ You cannot nest selector properties or other collection properties inside of a c
   <tr>
     <td>parsed_manifest(<em>named</em>)</td>
     <td>
-      An array of interpolated YAML elements (often objects, but could be strings or numbers).
-      Where each element of the array is an interpolation of the <code>named_manifest</code> for each record.
+      An array of interpolated YAML elements (often objects, but can be strings or numbers);
+      each element of the array is an interpolation of the <code>named_manifest</code> for each record.
     </td>
   </tr>
   <tr>
