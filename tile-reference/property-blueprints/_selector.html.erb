@@ -1,12 +1,12 @@
-Provides the ability to switch between groups of properties. Shows in the UI as a radio button group,
+Provides the ability to switch between groups of properties. It is displayed in the UI as a radio button group,
 potentially with additional options nested under each radio button.
 
-Selectors are unique in the way that property information is accessed. Tanzu Operations Manager provides accessors
+Selectors are unique in the way that property information is accessed. <%= vars.platform_name %> provides accessors
 available at the top-level selector property, accessors for retrieving a specific property in an
 option group, and the ability to provide manifest snippets for a selector option group.
 
-Each selector group may provide manifest snippets. This is because Tanzu Operations Manager does not support
-conditionally adding manifest snippets. A manifest snippet should be present within all option groups,
+Each selector group can provide manifest snippets. This is because <%= vars.platform_name %> does not support
+conditionally adding manifest snippets. A manifest snippet should be present in all option groups,
 and can be used to create a simple kind of branching logic in manifest generation.
 Only one of these sets is evaluated and inserted into the job’s manifest.
 
@@ -33,15 +33,15 @@ You cannot nest collection properties or other selector properties inside of a s
   <tr>
     <td> default </td>
     <td>
-      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Optional. Specifies a default value. <br>When provided, must be set to a value that is valid for this type.
       Cannot be used when the property also has <code>optional: true</code>.
       <br><br>
       If specified, the default value should be one of the values of <code>select_value</code>.
     </td>
   </tr>
   <tr>
-    <td> option_templates </td>
-    <td> An array of objects which defines the options available.  See example below.</td>
+    <td> option_templates</td>
+    <td> An array of objects that defines the options available. See example below.</td>
   </tr>
 </table>
 
@@ -51,8 +51,8 @@ You cannot nest collection properties or other selector properties inside of a s
   <tr>
     <td>selected_option.parsed_manifest(manifest_snippet_name)</td>
     <td>
-      Returns a parsed named manifest snippet for the currently selected option.
-      <br>Example: <code>.properties.example_selector.selected_option.parsed_manifest(my_snippet)</code>
+      Returns a parsed named manifest snippet for the selected option.
+      <br>Example: <br><code>.properties.example_selector.selected_option.parsed_manifest(my_snippet)</code>
     </td>
   </tr>
   <tr>
@@ -61,7 +61,7 @@ You cannot nest collection properties or other selector properties inside of a s
       Scopes the accessor to a specific selector option group.
       <br>Does not return meaningful information alone.
       Must be followed with the name and accessor of a specific property in the option group.
-      <br>Example: <code>.properties.example_selector.filet_mignon_option.review.value</code>
+      <br>Example: <br><code>.properties.example_selector.filet_mignon_option.review.value</code>
     </td>
   </tr>
   <tr>
