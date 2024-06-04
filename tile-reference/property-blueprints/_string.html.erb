@@ -23,17 +23,17 @@ This holds a single string value.
     <td>
       A regular expression that the user input must match.
       Create a validator that runs on the form save event.
-      If the user input does not match the <code>must_match_regex</code> constraint,
+      <br>If the user input does not match the <code>must_match_regex</code> constraint,
       the form displays the specified <code>error_message</code>.
-      Multiple <code>must_match_regex</code> constraints for a single property
-      blueprint are evaluated in the order listed. See the following example.
+      <br>Multiple <code>must_match_regex</code> constraints for a single property
+      blueprint are evaluated in the order listed. <br>See the following example.
     </td>
   </tr>
   <tr>
     <td> constraints.must_be_cron_schedule </td>
     <td>
       Creates a validator that ensures the value of the string satisfies a cron schedule expression.
-      If the user input is not a valid cron schedule expression, the form displays
+      <br>If the user input is not a valid cron schedule expression, the form displays
       the specified <code>error_message</code>. See the following example.
     </td>
   </tr>
@@ -44,11 +44,11 @@ This holds a single string value.
 <table class="nice">
   <tr>
     <td>value</td>
-    <td>Returns the string value or null.</td>
+    <td>Returns the string value or null</td>
   </tr>
   <tr>
     <td>value_present?</td>
-    <td>Returns true only if the value is a non-empty string.</td>
+    <td>Returns <code>true</code> only if the value is a non-empty string</td>
   </tr>
 </table>
 

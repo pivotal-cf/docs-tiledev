@@ -1,4 +1,4 @@
-Provides the ability to select between all available stemcell criteria. The stemcell selector is automatically
+Provides the ability to select among all available stemcell criteria. The stemcell selector is automatically
 populated with a list of all stemcell operating systems that are listed in the <code>stemcell_criteria</code> and
 <code>additional_stemcells_criteria</code> top-level properties.
 
@@ -31,7 +31,7 @@ property, see <a href="#top-additional-stemcells-criteria">additional_stemcells_
   <tr>
     <td> default </td>
     <td>
-      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Optional. Specifies a default value. <br>When provided, must be set to a value that is valid for this type.
       Cannot be used when the property also has <code>optional: true</code>.
       <br><br>
       If specified, the default value is the operating system of a stemcell criteria.
@@ -60,16 +60,16 @@ property, see <a href="#top-additional-stemcells-criteria">additional_stemcells_
   <tr>
     <td>assigned?</td>
     <td>
-      Boolean. Returns true if there is an assigned stemcell that matches the selected stemcell.
+      Boolean. Returns <code>true</code> if there is an assigned stemcell that matches the selected stemcell
     </td>
   </tr>
   <tr>
     <td>value</td>
-    <td>Returns the selected operating system.</td>
+    <td>Returns the selected operating system</td>
   </tr>
   <tr>
     <td>value_present?</td>
-    <td>Returns true if the operator has selected an operating system.</td>
+    <td>Returns <code>true</code> if the operator has selected an operating system</td>
   </tr>
 </table>
 
