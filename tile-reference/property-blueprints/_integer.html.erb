@@ -21,7 +21,7 @@ This holds a single integer value.
   <tr>
     <td> default </td>
     <td>
-      Optional. Specifies a default value. When provided, must be set to a value which is valid for this type.
+      Optional. Specifies a default value. <br>When provided, must be set to a value which is valid for this type.
       Cannot be used when the property also has <code>optional: true</code>.
     </td>
   </tr>
@@ -29,7 +29,7 @@ This holds a single integer value.
     <td> constraints </td>
     <td>
       Constrains which integer values are considered valid.
-      See the below table for all supported constraint types.
+      See the table for all supported constraint types.
     </td>
   </tr>
 </table>
@@ -39,31 +39,31 @@ This holds a single integer value.
 <table class="nice">
   <tr>
     <td> max </td>
-    <td> Sets the maximum value of the integer. </td>
+    <td> Sets the maximum value of the integer</td>
   </tr>
   <tr>
     <td> may_only_be_odd_or_zero </td>
-    <td> Sets the integer to only allow odd or zero values. </td>
+    <td> Sets the integer to only allow odd or zero values</td>
   </tr>
   <tr>
     <td> may_only_increase </td>
-    <td> Sets the integer to only increase in value. </td>
+    <td> Sets the integer to only increase in value</td>
   </tr>
   <tr>
     <td> min </td>
-    <td> Sets the minimum value of the integer. </td>
+    <td> Sets the minimum value of the integer</td>
   </tr>
   <tr>
     <td> modulo </td>
-    <td> Sets the integer to only be divisable by the given value. </td>
+    <td> Sets the integer to only be divisable by the given value</td>
   </tr>
   <tr>
     <td> power_of_two </td>
-    <td> Sets the integer to only be a power of two. </td>
+    <td> Sets the integer to only be a power of two</td>
   </tr>
   <tr>
     <td> zero_or_min </td>
-    <td> Sets the minimum value of the integer but allows zero. </td>
+    <td> Sets the minimum value of the integer, but allows zero</td>
   </tr>
 </table>
 
@@ -76,7 +76,7 @@ This holds a single integer value.
   </tr>
   <tr>
     <td>value_present?</td>
-    <td>Returns true if value is an integer.</td>
+    <td>Returns <code>true</code> if value is an integer.</td>
   </tr>
 </table>
 
