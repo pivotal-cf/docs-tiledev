@@ -179,7 +179,7 @@ The `tile init` command creates an initial version for you that can serve as a t
 The first section in the file describes the branding of your tile:
 
 ```yaml
-name: tile-name # Match VMware Tanzu Network product name, lowercase with dashes
+name: tile-name # Match Broadcom Support portal product name, lowercase with dashes
 icon_file: resources/icon.png
 label: Brief Text for the Tile Icon
 description: Longer description of the tile's purpose
@@ -187,18 +187,18 @@ description: Longer description of the tile's purpose
 
 - The `name` must be informative.
   For example, use a name composed of your company and product names such as `acme-anvil`.
-  The name must also match your product slug on
-  VMware Tanzu Network, which enables update notifications for customers. Coordinate
+  The name must also match your product slug on the
+  Broadcom Support portal, which enables update notifications for customers. Coordinate
   with your product team to agree on a name. Marketing teams often care about the
-  name because it appears in VMware Tanzu Network URLs.
+  name because it appears in Broadcom Support portal URLs.
 
 - The `icon_file` must be a 128 x 128 pixel image that appears on your tile in the <%= vars.platform_name %> UI.
   By convention, place any resources used by the tile in the `resources` sub-directory of your repository.
 
 - The `label` text appears on the tile under your icon. This must
-  match your product name on VMware Tanzu Network. Coordinate with your
-  product team to agree on a product name.  Marketing teams often care about
-  the product name because it appears on VMware Tanzu Network.
+  match your product name on the Broadcom Support portal. Coordinate with your
+  product team to agree on a product name. Marketing teams often care about
+  the product name because it appears on the Broadcom Support portal.
 
 - The `description` must contain a description of the product. This
   is not currently used, but might be displayed in a future version of

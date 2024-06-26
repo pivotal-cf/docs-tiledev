@@ -7,14 +7,14 @@ template_variables:
   title_image: images/icon-p-green.jpg
   hero_text: "Detailed documentation to help you install, understand, and succeed with VMware's enterprise-grade software."
   product_dev_local: Pivotal Dev
-  product_link: <div class="header-item"><a href="https://network.tanzu.vmware.com/products/pivotal-cf">Back to Product Page</a></div>
-  product_url: https://network.tanzu.vmware.com/products/pivotal-cf
-  support_link: <a href="https://tanzu.vmware.com/support" target="_blank">Support</a>
-  support_call_to_action: <a href="https://tanzu.vmware.com/support" target="_blank">Need Support?</a>
-  support_url: https://tanzu.vmware.com/support
+  product_link: <div class="header-item"><a href="https://support.broadcom.com/group/ecx/downloads">Back to Product Page</a></div>
+  product_url: https://support.broadcom.com/group/ecx/downloads
+  support_link: <a href="https://support.broadcom.com/group/ecx/software-contact-support" target="_blank">Support</a>
+  support_call_to_action: <a href="https://support.broadcom.com/group/ecx/software-contact-support" target="_blank">Need Support?</a>
+  support_url: https://support.broadcom.com/group/ecx/software-contact-support
   path_to_partials: /pcf
   use_global_header: true
-  global_header_product_href: https://network.tanzu.vmware.com/
+  global_header_product_href: https://support.broadcom.com/group/ecx/downloads
   global_header_product_link_text: Downloads
   guide_name: Tile Developer
   current_major_version: "3-0"
